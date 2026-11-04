@@ -347,29 +347,6 @@ function createRealisticCloudTexture() {
 }
 
 /**
- * Generates radiant starlight backlight corona disk placed directly behind the planet
- */
-function createBacklightCoronaTexture() {
-  const size = 512;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d')!;
-
-  const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  gradient.addColorStop(0, 'rgba(94, 155, 255, 0.85)'); // Core starlight sapphire
-  gradient.addColorStop(0.24, 'rgba(76, 111, 209, 0.55)'); // Nebula indigo halo
-  gradient.addColorStop(0.48, 'rgba(245, 176, 39, 0.32)'); // Solar Gold starlight corona
-  gradient.addColorStop(0.72, 'rgba(22, 33, 63, 0.15)');
-  gradient.addColorStop(1, 'rgba(10, 16, 32, 0)');
-
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, size, size);
-
-  return new THREE.CanvasTexture(canvas);
-}
-
-/**
  * Miniature sleek satellite moon
  */
 function createSatelliteTexture() {
@@ -421,7 +398,7 @@ export const Hero3D: React.FC = () => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1. High Performance WebGL Renderer
+    // 1. High Performance WebGL Renderer with Balanced Cinematic Exposure
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -439,72 +416,56 @@ export const Hero3D: React.FC = () => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.35;
+    renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
     // 2. Camera & Scene with Generous Margin (Zero Clipping Guaranteed!)
     const scene = new THREE.Scene();
-    // Compact FOV and distance ensuring the planet fits comfortably with plenty of space on all screen sizes
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
     camera.position.set(0, 0, 5.0);
 
-    // 3. Radiant Backlight Corona Plane (Directly Behind Planet)
-    // Creates a luminous cosmic starlight aura behind the planet
-    const coronaTexture = createBacklightCoronaTexture();
-    const coronaGeometry = new THREE.PlaneGeometry(3.8, 3.8);
-    const coronaMaterial = new THREE.MeshBasicMaterial({
-      map: coronaTexture,
-      transparent: true,
-      opacity: 0.85,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const coronaMesh = new THREE.Mesh(coronaGeometry, coronaMaterial);
-    coronaMesh.position.set(0, 0, -0.65);
-    scene.add(coronaMesh);
-
-    // 4. Planet Celestial Group (with natural 23.5° axial tilt)
+    // 3. Planet Celestial Group (with natural 23.5° axial tilt)
     const planetGroup = new THREE.Group();
     const defaultAxialTilt = THREE.MathUtils.degToRad(23.5);
     planetGroup.rotation.z = -defaultAxialTilt * 0.45;
     planetGroup.rotation.x = defaultAxialTilt * 0.65;
     scene.add(planetGroup);
 
-    // 5. Procedural Photorealistic Planet Textures
+    // 4. Procedural Photorealistic Planet Textures
     const { albedoTexture, bumpTexture, emissiveTexture, roughnessTexture } = createRealisticPlanetTextures();
     const cloudTexture = createRealisticCloudTexture();
     const satelliteTexture = createSatelliteTexture();
 
-    // 6. Photorealistic Planet Surface Mesh
+    // 5. Dark Photorealistic Planet Surface Mesh
     const planetGeometry = new THREE.SphereGeometry(1.22, 96, 96);
     const planetMaterial = new THREE.MeshStandardMaterial({
       map: albedoTexture,
       bumpMap: bumpTexture,
-      bumpScale: 0.042,
+      bumpScale: 0.055,
       emissiveMap: emissiveTexture,
       emissive: new THREE.Color(0xFFFFFF),
-      emissiveIntensity: 1.35,
+      emissiveIntensity: 1.1,
       roughnessMap: roughnessTexture,
-      metalness: 0.08,
+      metalness: 0.06,
     });
     const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
     planetGroup.add(planetMesh);
 
-    // 7. Dynamic Atmospheric Cloud Layer (Hovering just above surface)
-    const cloudGeometry = new THREE.SphereGeometry(1.238, 96, 96);
+    // 6. Translucent Atmospheric Cloud Layer (Hovering gently above surface)
+    const cloudGeometry = new THREE.SphereGeometry(1.232, 96, 96);
     const cloudMaterial = new THREE.MeshStandardMaterial({
       map: cloudTexture,
       transparent: true,
-      opacity: 0.82,
-      roughness: 0.75,
+      opacity: 0.42,
+      roughness: 0.85,
       metalness: 0.0,
       depthWrite: false,
     });
     const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
     planetGroup.add(cloudMesh);
 
-    // 8. Atmospheric Rayleigh Scattering Glow (Luminous Blue Limb)
-    const atmosphereGeometry = new THREE.SphereGeometry(1.28, 64, 64);
+    // 7. Atmospheric Rayleigh Scattering Glow (Delicate thin blue limb - no cartoon outline!)
+    const atmosphereGeometry = new THREE.SphereGeometry(1.228, 64, 64);
     const atmosphereMaterial = new THREE.ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
@@ -523,15 +484,15 @@ export const Hero3D: React.FC = () => {
         void main() {
           vec3 viewDir = normalize(-vPosition);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float intensity = pow(rim, 3.0) * 1.4;
+          float intensity = pow(rim, 4.2) * 1.0;
           float sunFactor = max(dot(vNormal, normalize(sunDir)), 0.0);
-          float atmosphericScatter = intensity * (0.35 + 0.65 * pow(sunFactor, 0.9));
-          gl_FragColor = vec4(glowColor, clamp(atmosphericScatter, 0.0, 1.0) * 0.92);
+          float atmosphericScatter = intensity * (0.25 + 0.75 * pow(sunFactor, 1.1));
+          gl_FragColor = vec4(glowColor, clamp(atmosphericScatter, 0.0, 0.72));
         }
       `,
       uniforms: {
-        glowColor: { value: new THREE.Color(0x4C8DFF) },
-        sunDir: { value: new THREE.Vector3(3.8, 2.0, 3.0) },
+        glowColor: { value: new THREE.Color(0x3B82F6) },
+        sunDir: { value: new THREE.Vector3(3.0, 1.6, 2.0) },
       },
       blending: THREE.AdditiveBlending,
       side: THREE.FrontSide,
@@ -541,7 +502,7 @@ export const Hero3D: React.FC = () => {
     const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     planetGroup.add(atmosphereMesh);
 
-    // 9. Compact Orbiting Satellite (Stays strictly within viewport, never clips!)
+    // 8. Compact Orbiting Satellite (Stays strictly within viewport, never clips!)
     const satelliteGeometry = new THREE.SphereGeometry(0.09, 32, 32);
     const satelliteMaterial = new THREE.MeshStandardMaterial({
       map: satelliteTexture,
@@ -551,7 +512,7 @@ export const Hero3D: React.FC = () => {
     const satelliteMesh = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
     scene.add(satelliteMesh);
 
-    // 10. Cosmic Stardust Dust Particles (55 points)
+    // 9. Cosmic Stardust Dust Particles (55 points)
     const particlesCount = 55;
     const particlePositions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount * 3; i += 3) {
@@ -570,28 +531,28 @@ export const Hero3D: React.FC = () => {
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    // 11. Multi-Point Cinematic Astrophysical Lighting Setup
-    // Primary Star / Sun Light (Crisp, warm starlight illuminating front-right 65% of the planet)
-    const primarySun = new THREE.DirectionalLight(0xFFF7EC, 3.6);
-    primarySun.position.set(3.8, 2.0, 3.0);
+    // 10. Multi-Point Cinematic Astrophysical Lighting Setup (Dark, Moody, High-Contrast)
+    // Primary Star / Sun Light (Crisp, natural starlight with rich chiaroscuro)
+    const primarySun = new THREE.DirectionalLight(0xFFF2DE, 1.85);
+    primarySun.position.set(3.0, 1.6, 2.0);
     scene.add(primarySun);
 
     // Warm Solar Gold Terminator Light (Golden sunrise/sunset glow along day-night boundary)
-    const terminatorLight = new THREE.DirectionalLight(0xF5B027, 1.4);
-    terminatorLight.position.set(-2.8, -1.0, 2.0);
+    const terminatorLight = new THREE.DirectionalLight(0xF5B027, 0.65);
+    terminatorLight.position.set(-2.4, -0.8, 1.4);
     scene.add(terminatorLight);
 
-    // Space Ambient / Earthshine Fill (Rich deep celestial fill so shadow side is NEVER pitch black)
-    const spaceAmbient = new THREE.AmbientLight(0x283E6A, 1.6);
+    // Space Ambient Fill (Moody deep space navy - keeps night hemisphere visible without blowout)
+    const spaceAmbient = new THREE.AmbientLight(0x0C152B, 0.32);
     scene.add(spaceAmbient);
 
-    // Hemisphere Light for natural atmospheric color gradient between sky & ground
-    const hemiLight = new THREE.HemisphereLight(0x5C80D8, 0x14203D, 1.2);
+    // Hemisphere Light for natural atmospheric contrast
+    const hemiLight = new THREE.HemisphereLight(0x243E70, 0x070D18, 0.40);
     scene.add(hemiLight);
 
     // Soft Edge Rim Light from behind top-left for crisp celestial separation
-    const backRimLight = new THREE.DirectionalLight(0x7EB3FF, 2.8);
-    backRimLight.position.set(-3.2, 2.6, -2.6);
+    const backRimLight = new THREE.DirectionalLight(0x60A5FA, 1.1);
+    backRimLight.position.set(-2.8, 2.2, -2.4);
     scene.add(backRimLight);
 
     // 12. Physics, Inertia & Mouse/Touch Drag Interaction State
@@ -716,12 +677,6 @@ export const Hero3D: React.FC = () => {
       // Gentle stardust rotation
       particles.rotation.y += delta * 0.018;
 
-      // Gentle breathing pulse on the radiant corona
-      if (!prefersReducedMotion) {
-        const timeElapsed = clock.getElapsedTime();
-        coronaMesh.scale.setScalar(1.0 + Math.sin(timeElapsed * 1.2) * 0.04);
-      }
-
       renderer.render(scene, camera);
     };
 
@@ -760,8 +715,6 @@ export const Hero3D: React.FC = () => {
       atmosphereMaterial.dispose();
       satelliteGeometry.dispose();
       satelliteMaterial.dispose();
-      coronaGeometry.dispose();
-      coronaMaterial.dispose();
       particleGeometry.dispose();
       particleMaterial.dispose();
 
@@ -771,7 +724,6 @@ export const Hero3D: React.FC = () => {
       roughnessTexture.dispose();
       cloudTexture.dispose();
       satelliteTexture.dispose();
-      coronaTexture.dispose();
 
       renderer.dispose();
     };
@@ -793,15 +745,41 @@ export const Hero3D: React.FC = () => {
 
   return (
     <div className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] flex items-center justify-center select-none overflow-visible">
-      {/* Radiant Cosmic Backlight Corona Glow behind the Planet */}
-      <div className="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-sapphire/35 blur-[95px] pointer-events-none animate-pulse" style={{ animationDuration: '6s' }} />
-      <div className="absolute w-60 h-60 rounded-full bg-champagne/25 blur-[80px] pointer-events-none translate-x-4 -translate-y-4" />
-      <div className="absolute w-44 h-44 rounded-full bg-status-success/15 blur-[65px] pointer-events-none -translate-x-6 translate-y-6" />
+      {/* 
+        ULTRA-SMOOTH CELESTIAL BACKLIGHT CORONA & RAYS (Zero Clipping, 100% Silky Smooth Glow)
+        Positioned directly behind the 3D Planet, spreading seamlessly into the cosmos
+      */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible" aria-hidden="true">
+        {/* Layer 1: Core Radiant Stellar Beacon (Pure white-blue starlight brilliance directly behind planet silhouette) */}
+        <div
+          className="w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full blur-[30px] opacity-85"
+          style={{
+            background: 'radial-gradient(circle, #FFFFFF 0%, #BAE6FD 35%, #3B82F6 65%, transparent 80%)',
+          }}
+        />
+
+        {/* Layer 2: Silky Volumetric Solar Corona Ray Flare (Smooth continuous expansion with zero hard edges) */}
+        <div
+          className="absolute w-[440px] h-[440px] sm:w-[540px] sm:h-[540px] rounded-full blur-[65px] opacity-65 animate-pulse"
+          style={{
+            background: 'radial-gradient(circle, rgba(96, 165, 250, 0.75) 0%, rgba(59, 130, 246, 0.45) 40%, rgba(245, 176, 39, 0.22) 65%, transparent 85%)',
+            animationDuration: '7s',
+          }}
+        />
+
+        {/* Layer 3: Deep Atmospheric Space Haze (Smooth infinite falloff into the midnight space background) */}
+        <div
+          className="absolute w-[600px] h-[600px] sm:w-[740px] sm:h-[740px] rounded-full blur-[100px] opacity-40"
+          style={{
+            background: 'radial-gradient(circle, rgba(76, 111, 209, 0.45) 0%, rgba(30, 48, 92, 0.25) 45%, transparent 75%)',
+          }}
+        />
+      </div>
 
       {/* 3D WebGL Canvas Container with tactile grab cursor and ZERO clipping */}
       <div
         ref={mountRef}
-        className={`w-full h-full flex items-center justify-center touch-none transition-cursor ${
+        className={`w-full h-full flex items-center justify-center touch-none transition-cursor relative z-10 ${
           isInteracting ? 'cursor-grabbing' : 'cursor-grab'
         }`}
         title="Geser untuk rotasi 360°"

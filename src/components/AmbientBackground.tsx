@@ -279,12 +279,12 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* Majestic Spiral Galaxy (Andromeda-Class Cosmic Vortex) */}
+          {/* Majestic Spiral Galaxy (Andromeda-Class Cosmic Vortex - Elevated to Upper Horizon) */}
           <div
-            className="absolute top-[50px] sm:top-[80px] -left-10 sm:left-[3%] md:left-[4%] z-0 sm:z-10 flex items-center justify-center opacity-70 sm:opacity-85 hover:opacity-100 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
+            className="absolute top-[-70px] sm:top-[-50px] md:top-[-40px] -left-28 sm:-left-20 md:-left-16 z-0 flex items-center justify-center opacity-55 sm:opacity-75 hover:opacity-95 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
             title="Galaksi Spiral Andromeda (Supermassive Core & Star Clusters)"
           >
-            <div className="relative w-52 h-36 sm:w-72 sm:h-52 md:w-88 md:h-60 flex items-center justify-center">
+            <div className="relative w-52 h-36 sm:w-68 sm:h-48 md:w-80 md:h-56 flex items-center justify-center">
               {/* Diffuse Outer Galactic Corona & Volumetric Cosmic Haze */}
               <div
                 className="absolute inset-0 rounded-full blur-[45px] opacity-60 pointer-events-none group-hover:opacity-85 transition-opacity duration-700"
@@ -518,6 +518,126 @@ export const AmbientBackground: React.FC = () => {
                 </svg>
               </div>
             </div>
+          </div>
+
+          {/* SPREAD CELESTIAL BODY 1: Ringed Sapphire Gas Giant (Upper-Right Deep Sky) */}
+          <div
+            className="absolute top-[40px] sm:top-[55px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-75 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Gas Giant Exoplanet (Kepler-186f Orbit)"
+          >
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center">
+              {/* Volumetric Planetary Starlight Haze */}
+              <div
+                className="absolute inset-0 rounded-full blur-[24px] opacity-50 pointer-events-none group-hover:opacity-80 transition-opacity duration-700"
+                style={{
+                  background: 'radial-gradient(circle, rgba(76, 111, 209, 0.45) 0%, rgba(245, 176, 39, 0.2) 50%, transparent 75%)',
+                }}
+              />
+
+              {/* 3D Tilted Dual Planetary Ring (Tilted at -18deg) */}
+              <div
+                className="absolute w-36 sm:w-44 md:w-48 h-14 sm:h-16 md:h-18 rounded-full border-[2.5px] border-champagne/45 pointer-events-none group-hover:border-champagne/75 transition-colors duration-500 shadow-[0_0_12px_rgba(245,176,39,0.3)]"
+                style={{
+                  transform: 'rotate(-18deg)',
+                  boxShadow: 'inset 0 0 10px rgba(76, 111, 209, 0.35)',
+                }}
+              >
+                <div className="absolute inset-[3px] rounded-full border border-champagne/20" />
+              </div>
+
+              {/* Planet Sphere Body */}
+              <div
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-22 md:h-22 rounded-full relative overflow-hidden group-hover:scale-105 transition-transform duration-700 z-10"
+                style={{
+                  background: 'radial-gradient(circle at 30% 28%, #5E9BFF 0%, #2A4893 42%, #0C152B 88%)',
+                  boxShadow:
+                    'inset -8px -8px 18px rgba(0, 0, 0, 0.95), inset 4px 4px 10px rgba(191, 219, 254, 0.65), 0 0 26px rgba(59, 130, 246, 0.35)',
+                }}
+              >
+                {/* Subtle Horizontal Atmospheric Cloud Stripes */}
+                <div className="absolute inset-0 opacity-25 bg-[repeating-linear-gradient(to_bottom,transparent,transparent_4px,rgba(255,255,255,0.3)_6px,transparent_8px)]" />
+                <div className="absolute inset-0 opacity-35 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.5),transparent_60%)]" />
+              </div>
+            </div>
+          </div>
+
+          {/* SPREAD CELESTIAL BODY 2: Deep Terrestrial Exoplanet (Lower-Left Deep Space) */}
+          <div
+            className="absolute top-[640px] sm:top-[680px] left-[3%] sm:left-[5%] md:left-[6%] z-0 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Terrestrial Exoplanet (Proxima Centauri b)"
+          >
+            <div className="relative w-22 h-22 sm:w-26 sm:h-26 md:w-28 md:h-28 flex items-center justify-center">
+              {/* Soft Oceanic Atmosphere Halo */}
+              <div
+                className="absolute inset-0 rounded-full blur-[20px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                style={{
+                  background: 'radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, transparent 70%)',
+                }}
+              />
+
+              {/* Dashed Orbital Starlight Ring */}
+              <div className="absolute w-36 sm:w-40 md:w-44 h-36 sm:h-40 md:h-44 rounded-full border border-dashed border-sapphire/30 pointer-events-none animate-[spin_60s_linear_infinite]" />
+
+              {/* Planet Sphere Body */}
+              <div
+                className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full relative overflow-hidden group-hover:scale-105 transition-transform duration-700 z-10"
+                style={{
+                  background: 'radial-gradient(circle at 28% 28%, #38BDF8 0%, #1E40AF 45%, #0B132B 90%)',
+                  boxShadow:
+                    'inset -7px -7px 16px rgba(0, 0, 0, 0.95), inset 4px 4px 8px rgba(186, 230, 253, 0.6), 0 0 24px rgba(56, 189, 248, 0.3)',
+                }}
+              >
+                {/* Surface Continent Silhouettes */}
+                <div className="absolute w-7 h-5 rounded-full bg-[#1E3A8A]/40 top-3 left-3 blur-[1px]" />
+                <div className="absolute w-8 h-6 rounded-full bg-[#1E3A8A]/40 bottom-3 right-3 blur-[1px]" />
+                <div className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.45),transparent_60%)]" />
+              </div>
+            </div>
+          </div>
+
+          {/* SPREAD CELESTIAL BODY 3: Starlight Lunar Satellite (Lower-Right Cosmic Horizon) */}
+          <div
+            className="absolute top-[730px] sm:top-[770px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-65 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Starlight Lunar Satellite (Titan Minor)"
+          >
+            <div className="relative w-18 h-18 sm:w-20 sm:h-20 md:w-22 md:h-22 flex items-center justify-center">
+              {/* Solar Warmth Backlight Halo */}
+              <div
+                className="absolute inset-0 rounded-full blur-[16px] opacity-40 pointer-events-none group-hover:opacity-70 transition-opacity duration-700"
+                style={{
+                  background: 'radial-gradient(circle, rgba(245, 176, 39, 0.4) 0%, transparent 70%)',
+                }}
+              />
+
+              {/* Tilted Elliptical Orbit Path */}
+              <div className="absolute w-28 sm:w-32 md:w-34 h-28 sm:h-32 md:h-34 rounded-full border border-champagne/25 pointer-events-none -rotate-45" />
+
+              {/* Satellite Moon Sphere */}
+              <div
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-15 md:h-15 rounded-full relative overflow-hidden group-hover:scale-110 transition-transform duration-700 z-10"
+                style={{
+                  background: 'radial-gradient(circle at 35% 35%, #FDE68A 0%, #D97706 60%, #1E1B18 92%)',
+                  boxShadow:
+                    'inset -5px -5px 12px rgba(0, 0, 0, 0.9), inset 3px 3px 6px rgba(254, 243, 199, 0.8), 0 0 20px rgba(245, 176, 39, 0.35)',
+                }}
+              >
+                {/* Surface Crater Dots */}
+                <div className="absolute w-1.5 h-1.5 rounded-full bg-black/45 top-2.5 left-3" />
+                <div className="absolute w-2 h-2 rounded-full bg-black/40 bottom-3 right-3" />
+                <div className="absolute w-1 h-1 rounded-full bg-black/35 top-5 right-2" />
+              </div>
+            </div>
+          </div>
+
+          {/* Subtle Cosmic Constellation Web in Negative Space */}
+          <div className="absolute top-[220px] right-[2%] sm:right-[4%] z-0 hidden lg:block opacity-35 pointer-events-none">
+            <svg width="120" height="160" viewBox="0 0 120 160" fill="none">
+              <line x1="20" y1="30" x2="65" y2="80" stroke="rgba(245, 176, 39, 0.35)" strokeWidth="0.8" strokeDasharray="3 3" />
+              <line x1="65" y1="80" x2="100" y2="140" stroke="rgba(96, 165, 250, 0.35)" strokeWidth="0.8" strokeDasharray="3 3" />
+              <circle cx="20" cy="30" r="2" fill="#F5B027" />
+              <circle cx="65" cy="80" r="2.5" fill="#FFFFFF" />
+              <circle cx="100" cy="140" r="2" fill="#60A5FA" />
+            </svg>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import {
   Mail,
   ArrowUpRight,
   Sparkles,
-  Trophy,
+  Layers,
   CheckCircle2,
   Terminal,
 } from 'lucide-react';
@@ -91,15 +91,6 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
         {/* Left Column: Typography, Dynamic Typewriter & Intentional Persona Actions */}
         <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-6 z-10">
-          
-          {/* Eyebrow Availability Capsule */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-2 border border-white/10 shadow-glass-sm backdrop-blur-md self-start">
-            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-            <span className="text-xs font-mono text-mist">
-              {lang === 'id' ? 'Tersedia untuk Proyek & Rekayasa Web' : 'Available for Projects & Engineering'}
-            </span>
-          </div>
-
           {/* Headline in Montserrat Display */}
           <div className="space-y-3">
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-pearl tracking-tight leading-[1.08]">
@@ -174,10 +165,14 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
 
             <div className="flex flex-col space-y-0.5">
               <div className="flex items-center gap-1.5">
-                <Trophy className="w-3 h-3 text-champagne shrink-0" />
-                <span className="font-mono text-xs sm:text-sm font-bold text-pearl">Top 7 Nasional</span>
+                <Layers className="w-3 h-3 text-champagne shrink-0" />
+                <span className="font-mono text-xs sm:text-sm font-bold text-pearl">
+                  {lang === 'id' ? '5+ Proyek Rilis' : '5+ Projects'}
+                </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] text-fog truncate">Turnamen Sains Data</span>
+              <span className="text-[10px] sm:text-[11px] text-fog truncate">
+                {lang === 'id' ? 'Web & Cloud System' : 'Web & Cloud'}
+              </span>
             </div>
 
             <div className="flex flex-col space-y-0.5">
