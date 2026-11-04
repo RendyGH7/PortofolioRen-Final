@@ -81,9 +81,9 @@ function createSeededNoise() {
 }
 
 /**
- * Generates vivid, photorealistic exoplanet textures with rich sapphire/azure oceans,
- * turquoise continental shelves, emerald living continents, warm savannah highlands,
- * glaciated polar ice caps, and bioluminescent night city constellations.
+ * Generates dark, moody, photorealistic exoplanet textures with deep sapphire oceans,
+ * rich emerald-forest and weathered stone continents, crisp 3D mountain topography,
+ * and delicate bioluminescent night city constellations.
  */
 function createRealisticPlanetTextures() {
   const { noise3D, fbm3D } = createSeededNoise();
@@ -158,85 +158,84 @@ function createRealisticPlanetTextures() {
       let emitB = 0;
 
       if (isPolar) {
-        // Glacial Brilliant Polar Ice Caps (Gleaming white with starlight cyan fissures)
-        const iceDetail = Math.sin(nx * 30 + ny * 30) * 12;
-        r = Math.min(255, 242 + iceDetail);
-        g = Math.min(255, 248 + iceDetail);
-        b = 255;
-        bump = 200;
-        roughness = 60; // Semi-gloss ice reflection
-      } else if (elevation < -0.22) {
-        // Deep Oceanic Abyss (Deep Royal Sapphire #0F2D6B)
-        r = 15;
-        g = 45;
-        b = 107;
-        bump = 10;
-        roughness = 22; // Ultra glossy water for brilliant specular sun glints
-      } else if (elevation < -0.06) {
-        // Mid-depth Ocean Basin (Vibrant Azure Oceanic #164E9E)
-        r = 22;
-        g = 78;
-        b = 158;
-        bump = 20;
-        roughness = 25;
-      } else if (elevation < 0.03) {
-        // Continental Shelf & Shallow Waters (Vibrant Tropical Turquoise #1C96B8)
-        r = 28;
-        g = 150;
-        b = 184;
-        bump = 38;
-        roughness = 32;
-      } else if (elevation < 0.07) {
-        // Coral Reefs, Lagoons & Coastal Estuaries (Luminous Teal-Aquamarine #26BBA5)
-        r = 38;
-        g = 187;
-        b = 165;
-        bump = 55;
-        roughness = 45;
-      } else if (elevation < 0.11) {
-        // Golden Sandy Beaches & Coastal Margins (#D8BA84)
-        r = 216;
-        g = 186;
-        b = 132;
-        bump = 85;
-        roughness = 215;
-      } else if (elevation < 0.32) {
-        // Fertile Lowlands, River Basins & Lush Living Forests
-        if (isSubPolar) {
-          // Subpolar Taiga / Boreal Forest (#2C5D4B)
-          r = 44;
-          g = 93;
-          b = 75;
-        } else {
-          // Lush Vibrant Emerald Greenery (#2F855A - #38A169)
-          const biomeVar = (elevation - 0.11) / 0.21;
-          r = Math.floor(40 + biomeVar * 20);
-          g = Math.floor(128 + biomeVar * 38);
-          b = Math.floor(65 + biomeVar * 15);
-        }
-        bump = 130;
-        roughness = 225;
-      } else if (elevation < 0.52) {
-        // Highland Savannah, Plateaus & Warm Olive Valleys (#8A7E48 to #A68652)
-        r = 150;
-        g = 136;
-        b = 78;
+        // Starlight Polar Ice Sheets (Frost blue-white)
+        const iceDetail = Math.sin(nx * 30 + ny * 30) * 8;
+        r = Math.min(255, 175 + iceDetail);
+        g = Math.min(255, 195 + iceDetail);
+        b = Math.min(255, 220 + iceDetail);
         bump = 180;
-        roughness = 235;
+        roughness = 75;
+      } else if (elevation < -0.22) {
+        // Deep Oceanic Abyss (#0A183A)
+        r = 10;
+        g = 24;
+        b = 58;
+        bump = 8;
+        roughness = 18; // Glassy water with crisp specular glint
+      } else if (elevation < -0.06) {
+        // Mid-depth Ocean Basin (#0E2656)
+        r = 14;
+        g = 38;
+        b = 86;
+        bump = 16;
+        roughness = 20;
+      } else if (elevation < 0.03) {
+        // Coastal Shelf & Shallows (#145276)
+        r = 20;
+        g = 82;
+        b = 118;
+        bump = 30;
+        roughness = 26;
+      } else if (elevation < 0.07) {
+        // Coastal Lagoons & Reefs (#1A7078)
+        r = 26;
+        g = 112;
+        b = 120;
+        bump = 45;
+        roughness = 38;
+      } else if (elevation < 0.11) {
+        // Muted Coastal Sand & Shores (#7D6E50)
+        r = 125;
+        g = 110;
+        b = 80;
+        bump = 75;
+        roughness = 220;
+      } else if (elevation < 0.32) {
+        // Rich Deep Living Forest & Lowland Biomes (#184028 to #205030)
+        if (isSubPolar) {
+          // Subpolar Taiga (#163228)
+          r = 22;
+          g = 50;
+          b = 40;
+        } else {
+          const biomeVar = (elevation - 0.11) / 0.21;
+          r = Math.floor(24 + biomeVar * 10);
+          g = Math.floor(64 + biomeVar * 20);
+          b = Math.floor(40 + biomeVar * 12);
+        }
+        bump = 135;
+        roughness = 230;
+      } else if (elevation < 0.52) {
+        // Weathered Highlands, Terracotta Plateaus & Valleys (#524834 to #5F5038)
+        r = 86;
+        g = 76;
+        b = 54;
+        bump = 185;
+        roughness = 240;
       } else if (elevation < 0.72) {
-        // Rugged Mountain Ranges & Slate Granite Ridges (#6B6258)
-        r = 107;
-        g = 98;
-        b = 88;
-        bump = 225;
+        // Rugged Mountain Ranges & Slate Granite Ridges (#3C4048)
+        r = 60;
+        g = 64;
+        b = 72;
+        bump = 230;
         roughness = 245;
       } else {
-        // High Alpine Peaks & Glaciated Summits (Crisp Snow White #F1F5F9)
-        r = 241;
-        g = 245;
-        b = 249;
+        // High Alpine Peaks & Glaciated Summits (#A0AFC3)
+        r = 160;
+        g = 175;
+        b = 195;
         bump = 255;
-        roughness = 120;
+        roughness = 140;
       }
 
       // Bioluminescent Civilization & City Lights (Glowing Constellations on Night Side)
@@ -247,9 +246,9 @@ function createRealisticPlanetTextures() {
         if (cityNoise > 0.65 && gridNoise > 0.58) {
           // Metropolitan Mega-Hubs (Solar Gold) & Coastal Cyber-Ports (Cyan)
           const isGold = cityNoise > 0.76;
-          emitR = isGold ? 255 : 85;
-          emitG = isGold ? 195 : 225;
-          emitB = isGold ? 45 : 255;
+          emitR = isGold ? 245 : 70;
+          emitG = isGold ? 176 : 190;
+          emitB = isGold ? 39 : 240;
 
           // Subtle blend into daylight surface
           r = Math.min(255, r + (emitR >> 3));
@@ -257,9 +256,9 @@ function createRealisticPlanetTextures() {
           b = Math.min(255, b + (emitB >> 3));
         } else if (cityNoise > 0.58 && gridNoise > 0.68) {
           // Inter-city transport filaments
-          emitR = 210;
-          emitG = 160;
-          emitB = 50;
+          emitR = 190;
+          emitG = 140;
+          emitB = 40;
         }
       }
 
@@ -330,15 +329,15 @@ function createRealisticCloudTexture() {
       const cloudNoise = fbm3D(nx * 3.4 + 12.0, ny * 3.4 + 12.0, nz * 3.4 + 12.0, 5) + tradeWind;
 
       let alpha = 0;
-      if (cloudNoise > 0.06) {
-        // Organic feathered cloud density (up to ~84% opacity at storm epicenters)
-        alpha = Math.min(215, Math.floor((cloudNoise - 0.06) * 440));
+      if (cloudNoise > 0.08) {
+        // Delicate, organic cloud wisps (feathered smoothly up to ~55% max opacity)
+        alpha = Math.min(140, Math.floor((cloudNoise - 0.08) * 320));
       }
 
       const idx = (y * width + x) * 4;
-      data[idx] = 255;
-      data[idx + 1] = 255;
-      data[idx + 2] = 255;
+      data[idx] = 215;
+      data[idx + 1] = 228;
+      data[idx + 2] = 245;
       data[idx + 3] = alpha;
     }
   }
