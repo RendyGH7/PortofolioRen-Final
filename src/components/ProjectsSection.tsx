@@ -38,30 +38,40 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+      {/* Ambient Celestial Atmospheric Haze */}
+      <div className="absolute top-1/3 -left-24 w-96 h-96 rounded-full bg-sapphire/20 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-24 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
+
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 relative z-10">
         <div className="text-left space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+            <span className="text-[11px] font-mono uppercase tracking-widest text-champagne font-semibold">
+              {lang === 'id' ? 'Karya Pilihan & Arsitektur Riil' : 'Selected Work & Verified Architecture'}
+            </span>
+          </div>
           <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
             {lang === 'id' ? 'Karya Pilihan' : 'Selected Work'}
           </h2>
-          <p className="text-mist text-xs sm:text-sm">
+          <p className="text-mist text-xs sm:text-sm max-w-xl">
             {lang === 'id'
-              ? 'Aplikasi web dan platform nyata dengan arsitektur teruji.'
-              : 'Production web apps and platforms backed by verified architecture.'}
+              ? 'Aplikasi web dan platform nyata dengan arsitektur teruji, performa instan, dan skala transaksi produksi.'
+              : 'Production web apps and platforms backed by verified architecture, instant performance, and production scale.'}
           </p>
         </div>
 
         {/* Controls: Category Filter Pills + View Mode */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1 glass-1 p-1 rounded-full">
+          <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-full text-xs transition-all ${
+                className={`px-3.5 py-1 rounded-full text-xs transition-all ${
                   selectedCategory === cat
-                    ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.3)]'
+                    ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.35)]'
                     : 'text-mist hover:text-pearl'
                 }`}
               >
@@ -70,11 +80,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
             ))}
           </div>
 
-          <div className="hidden sm:flex items-center gap-1 glass-1 p-1 rounded-full">
+          <div className="hidden sm:flex items-center gap-1 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
             <button
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-full transition-colors ${
-                viewMode === 'grid' ? 'bg-white/10 text-pearl' : 'text-fog hover:text-pearl'
+                viewMode === 'grid' ? 'bg-white/15 text-pearl' : 'text-fog hover:text-pearl'
               }`}
               aria-label="Tampilan Grid"
             >
@@ -83,7 +93,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
             <button
               onClick={() => setViewMode('list')}
               className={`p-1.5 rounded-full transition-colors ${
-                viewMode === 'list' ? 'bg-white/10 text-pearl' : 'text-fog hover:text-pearl'
+                viewMode === 'list' ? 'bg-white/15 text-pearl' : 'text-fog hover:text-pearl'
               }`}
               aria-label="Tampilan List"
             >
@@ -95,43 +105,53 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
 
       {/* Projects Grid / List View */}
       {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredProjects.map((project) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
+          {filteredProjects.map((project, idx) => (
             <div
               key={project.id}
               onClick={() => setActiveModalProject(project)}
-              className="glass-2 rounded-xl p-6 flex flex-col justify-between group cursor-pointer hover:border-champagne/40 transition-all duration-300 relative overflow-hidden"
+              className={`glass-2 rounded-3xl p-6 sm:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 ${
+                idx === 1 ? 'md:translate-y-6' : ''
+              }`}
             >
-              {/* Subtle top-right accent glow */}
+              {/* Subtle accent glow */}
               <div
-                className="absolute top-0 right-0 w-36 h-36 rounded-full blur-[60px] pointer-events-none opacity-20 transition-opacity group-hover:opacity-40"
+                className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-[80px] pointer-events-none opacity-20 transition-opacity group-hover:opacity-40"
                 style={{ backgroundColor: project.accentColor }}
               />
 
               {/* Project Showcase Illustration Thumbnail */}
               {project.imageUrl ? (
-                <div className="relative w-full aspect-[16/9] mb-4 rounded-lg overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1">
+                <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
                   <img
                     src={project.imageUrl}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
                 </div>
               ) : (
-                <div className="relative w-full aspect-[16/9] mb-4 rounded-lg overflow-hidden border border-white/10 group-hover:border-sapphire/40 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex items-center justify-center p-6 group">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.25),transparent_70%)]" />
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-2">
-                    <div className="w-11 h-11 rounded-2xl bg-sapphire/25 border border-sapphire/45 flex items-center justify-center text-pearl shadow-[0_0_20px_rgba(76,111,209,0.35)] group-hover:scale-110 transition-transform">
-                      <Mic className="w-5 h-5 text-sapphire" />
+                <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-sapphire/45 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 group shadow-inner">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.3),transparent_70%)]" />
+                  
+                  {/* High-Tech Animated Waveform Visualizer for Monetra Voice DSP */}
+                  <div className="relative z-10 flex flex-col items-center text-center space-y-3">
+                    <div className="flex items-center gap-1.5 h-10 px-4 py-2 rounded-full glass-3 border border-sapphire/40 shadow-[0_0_20px_rgba(76,111,209,0.3)]">
+                      <Mic className="w-4 h-4 text-sapphire mr-1 shrink-0 animate-pulse" />
+                      <div className="w-1 bg-[#4C6FD1] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-4" />
+                      <div className="w-1 bg-[#60A5FA] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-6" />
+                      <div className="w-1 bg-[#93C5FD] rounded-full animate-[pulse_1.4s_ease-in-out_infinite] h-8" />
+                      <div className="w-1 bg-[#F5B027] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-5" />
+                      <div className="w-1 bg-[#10B981] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-3" />
                     </div>
+
                     <div>
                       <span className="font-display font-semibold text-pearl text-sm tracking-wide block">
                         Monetra AI & Voice DSP Engine
                       </span>
                       <span className="font-mono text-[10px] text-fog mt-0.5 block">
-                        Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20
+                        Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20 Rule
                       </span>
                     </div>
                   </div>
@@ -140,24 +160,24 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
 
               <div>
                 <div className="flex items-center justify-between text-xs text-fog mb-3">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-mono px-2 py-0.5 rounded bg-white/5 text-mist">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
                       {project.category}
                     </span>
                     {project.liveUrl && (
-                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
+                      <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                         <span>Live Web</span>
                       </span>
                     )}
                   </div>
-                  <span className="font-mono">{project.year}</span>
+                  <span className="font-mono text-fog text-[11px]">{project.year}</span>
                 </div>
 
-                <h3 className="font-display text-2xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-xs text-sapphire font-medium mt-0.5 mb-2">
+                <p className="text-xs text-sapphire font-medium mt-1 mb-2.5">
                   {project.subtitle}
                 </p>
 
@@ -166,10 +186,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                 </p>
 
                 {/* Metrics Badges */}
-                <div className="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-white/5">
+                <div className="grid grid-cols-3 gap-2 my-5 pt-3.5 border-t border-white/10">
                   {project.metrics.map((metric) => (
                     <div key={metric.label} className="flex flex-col">
-                      <span className="font-mono text-sm font-bold text-pearl">
+                      <span className="font-mono text-base font-bold text-pearl group-hover:text-champagne transition-colors">
                         {metric.value}
                       </span>
                       <span className="text-[10px] text-fog truncate">{metric.label}</span>
@@ -179,12 +199,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
               </div>
 
               {/* Bottom Footer Tags & CTA */}
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between">
+              <div className="pt-3.5 border-t border-white/10 flex items-center justify-between">
                 <div className="flex flex-wrap gap-1.5">
                   {project.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-mist"
+                      className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5"
                     >
                       {tag}
                     </span>

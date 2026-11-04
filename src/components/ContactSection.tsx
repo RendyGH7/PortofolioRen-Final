@@ -67,22 +67,32 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
+      {/* Ambient Cosmic Contact Haze */}
+      <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
+
       {/* Section Header */}
-      <div className="text-left space-y-2 mb-10">
+      <div className="text-left space-y-2 mb-10 relative z-10">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+          <span className="text-[11px] font-mono uppercase tracking-widest text-champagne font-semibold">
+            {lang === 'id' ? 'Komunikasi & Kolaborasi Terbuka' : 'Direct Communication & Collaboration'}
+          </span>
+        </div>
         <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Mari Berdiskusi' : 'Get In Touch'}
         </h2>
-        <p className="text-mist text-xs sm:text-sm">
+        <p className="text-mist text-xs sm:text-sm max-w-xl">
           {lang === 'id'
-            ? 'Terbuka untuk peluang kerja, kemitraan proyek digital, dan konsultasi teknis.'
-            : 'Available for career opportunities, digital collaborations, and engineering consulting.'}
+            ? 'Terbuka untuk peluang kerja, kemitraan proyek digital, konsultasi arsitektur web, dan integrasi sistem.'
+            : 'Available for engineering opportunities, digital partnerships, web architecture consulting, and production systems.'}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
         {/* Left Info Column */}
-        <div className="md:col-span-5 glass-2 rounded-2xl p-6 sm:p-7 text-left space-y-6 shadow-glass-md">
+        <div className="md:col-span-5 glass-2 rounded-3xl p-6 sm:p-7 text-left space-y-6 shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
           <div className="space-y-3">
             <span className="text-xs font-mono text-champagne uppercase tracking-wider block">
               Kontak Langsung
@@ -95,10 +105,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
             </p>
           </div>
 
-          <div className="space-y-3 pt-2 border-t border-white/5 text-xs text-mist">
+          <div className="space-y-3 pt-2 border-t border-white/10 text-xs text-mist">
             {/* Email item with copy */}
-            <div className="flex items-center justify-between p-2.5 rounded-lg glass-1 border border-white/5">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-champagne/40 transition-all">
+              <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-champagne" />
                 <span className="font-mono text-pearl">{PERSONAL_DATA.email}</span>
               </div>
@@ -117,8 +127,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
             </div>
 
             {/* Phone item */}
-            <div className="flex items-center justify-between p-2.5 rounded-lg glass-1 border border-white/5">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-sapphire/40 transition-all">
+              <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-sapphire" />
                 <span className="font-mono text-pearl">{PERSONAL_DATA.phone}</span>
               </div>
@@ -126,22 +136,23 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 href={`https://wa.me/6289669557444`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] text-champagne hover:underline"
+                className="text-[11px] text-champagne hover:underline font-mono flex items-center gap-1"
               >
-                WhatsApp
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span>WhatsApp</span>
               </a>
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-2 p-2.5 rounded-lg glass-1 border border-white/5">
+            <div className="flex items-center gap-2.5 p-3 rounded-xl glass-1 border border-white/10">
               <MapPin className="w-4 h-4 text-petrol" />
               <span className="text-pearl">{PERSONAL_DATA.location} (WIB)</span>
             </div>
           </div>
 
           {/* Social Profiles Grid */}
-          <div className="pt-2 border-t border-white/5">
-            <span className="text-[10px] font-mono uppercase text-fog block mb-2">
+          <div className="pt-2 border-t border-white/10">
+            <span className="text-[10px] font-mono uppercase text-fog block mb-2.5">
               Jejaring Profesional
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs">
@@ -149,7 +160,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 href={PERSONAL_DATA.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-1 hover:border-champagne/40 p-2 rounded-md flex items-center justify-between text-mist hover:text-pearl transition-all group"
+                className="glass-1 hover:border-champagne/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
                 <span className="flex items-center gap-1.5">
                   <GithubIcon className="w-3.5 h-3.5" />
@@ -162,7 +173,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 href={PERSONAL_DATA.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-1 hover:border-sapphire/40 p-2 rounded-md flex items-center justify-between text-mist hover:text-pearl transition-all group"
+                className="glass-1 hover:border-sapphire/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
                 <span className="flex items-center gap-1.5">
                   <LinkedinIcon className="w-3.5 h-3.5" />
@@ -175,7 +186,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 href={PERSONAL_DATA.socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-1 hover:border-champagne/40 p-2 rounded-md flex items-center justify-between text-mist hover:text-pearl transition-all group"
+                className="glass-1 hover:border-champagne/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
                 <span className="flex items-center gap-1.5">
                   <InstagramIcon className="w-3.5 h-3.5" />
@@ -188,7 +199,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 href={PERSONAL_DATA.socials.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-1 hover:border-petrol/40 p-2 rounded-md flex items-center justify-between text-mist hover:text-pearl transition-all group"
+                className="glass-1 hover:border-petrol/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
                 <span className="flex items-center gap-1.5">
                   <TikTokIcon className="w-3.5 h-3.5" />
@@ -201,7 +212,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
         </div>
 
         {/* Right Form Column (3 fields strictly conforming to design.md) */}
-        <div className="md:col-span-7 glass-2 rounded-2xl p-6 sm:p-8 text-left shadow-glass-md">
+        <div className="md:col-span-7 glass-2 rounded-3xl p-6 sm:p-8 text-left shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
           {isSubmitted ? (
             <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
               <div className="w-12 h-12 rounded-full bg-[#064E3B]/80 border border-[#10B981]/60 flex items-center justify-center mx-auto text-[#6EE7B7]">

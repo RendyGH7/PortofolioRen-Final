@@ -84,7 +84,11 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
       id="hero"
       className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      {/* Dynamic Ambient Hero Cosmic Haze */}
+      <div className="absolute top-1/4 -left-28 w-[500px] h-[500px] rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
+
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
         {/* Left Column: Typography, Dynamic Typewriter & Intentional Persona Actions */}
         <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-6 z-10">
           

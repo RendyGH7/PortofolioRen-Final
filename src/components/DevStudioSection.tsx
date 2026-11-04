@@ -209,9 +209,13 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="studio" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="studio" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+      {/* Ambient Cosmic Studio Haze */}
+      <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
+      <div className="absolute -top-10 -right-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
+
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 text-left">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 text-left relative z-10">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-champagne animate-pulse" />
@@ -230,7 +234,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         </div>
 
         {/* Studio Mode Selector Pills */}
-        <div className="flex items-center gap-1 glass-1 p-1.5 rounded-full self-start md:self-auto">
+        <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full self-start md:self-auto border border-white/10 shadow-glass-sm">
           <button
             onClick={() => setActiveTab('api')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
@@ -268,7 +272,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       </div>
 
       {/* Main Studio Console Window (Glass 2) */}
-      <div className="glass-2 rounded-2xl border border-white/10 overflow-hidden shadow-glass-lg text-left">
+      <div className="glass-2 rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg text-left relative z-10">
         {/* Terminal Header Bar */}
         <div className="px-4 py-3 bg-midnight-1/60 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2">
