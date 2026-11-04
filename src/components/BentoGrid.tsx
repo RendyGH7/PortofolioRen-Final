@@ -263,8 +263,8 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               exit={{ opacity: 0, y: -10 }}
               className="absolute top-28 z-30 bg-champagne text-midnight-0 px-4 py-2 rounded-full text-xs font-semibold shadow-glass-lg flex items-center gap-1.5 pointer-events-none"
             >
-              <Sparkles className="w-3.5 h-3.5 text-midnight-0" />
-              <span>Halo! Senang bertemu dengan Anda ✨</span>
+              <Hand className="w-3.5 h-3.5 text-midnight-0" />
+              <span>Halo! Senang bertemu dengan Anda</span>
             </motion.div>
           )}
         </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Sparkles } from 'lucide-react';
+import { Menu, X, Globe, Command } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
 
 interface NavbarProps {
@@ -196,7 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-2 text-xs text-pearl"
               >
-                <Sparkles className="w-3.5 h-3.5 text-champagne" />
+                <Command className="w-3.5 h-3.5 text-champagne" />
                 <span>Command Palette</span>
               </button>
             </div>

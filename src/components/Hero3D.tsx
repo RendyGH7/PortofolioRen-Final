@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
-import { RotateCcw, Sparkles } from 'lucide-react';
+import { RotateCcw, Orbit } from 'lucide-react';
 
 /**
  * Seeded 3D Perlin Noise generator for deterministic, seamless procedural planet textures
@@ -802,7 +802,7 @@ export const Hero3D: React.FC = () => {
         >
           <RotateCcw className="w-3 h-3" />
         </button>
-        <Sparkles className="w-3 h-3 text-champagne/80 hidden sm:block" />
+        <Orbit className="w-3.5 h-3.5 text-champagne/80 hidden sm:block animate-[spin_12s_linear_infinite]" />
       </div>
     </div>
   );

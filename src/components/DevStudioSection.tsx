@@ -7,7 +7,7 @@ import {
   Copy,
   Check,
   RotateCcw,
-  Sparkles,
+  Layers,
   Code2,
   Terminal,
 } from 'lucide-react';
@@ -624,7 +624,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                         >
                           Live Glass Card
                         </span>
-                        <Sparkles className="w-3.5 h-3.5" style={{ color: tintHexMap[tintColor] }} />
+                        <Layers className="w-3.5 h-3.5" style={{ color: tintHexMap[tintColor] }} />
                       </div>
                       <p className="text-sm font-semibold text-pearl">Midnight Glass Physics</p>
                       <p className="text-xs text-mist mt-0.5">
