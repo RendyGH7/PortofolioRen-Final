@@ -1,0 +1,235 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --bg-0: #0A1020;
+  --bg-1: #0F1830;
+  --bg-2: #16213F;
+  --champagne: #F5B027;
+  --champagne-deep: #D98218;
+  --champagne-light: #FFD369;
+  --sapphire: #4C6FD1;
+  --petrol: #2C7A85;
+  --pearl: #F3F5FA;
+  --mist: #A8B2C7;
+  --fog: #76819B;
+  --hairline: rgba(255, 255, 255, 0.10);
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-ui: "Montserrat", system-ui, sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A1020;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 176, 39, 0.45);
+}
+
+/* Glassmorphism System conforming to design.md */
+.glass-1 {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-2 {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.10) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.55);
+}
+
+.glass-3 {
+  background: rgba(15, 24, 48, 0.85);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.14) inset, 0 32px 64px -24px rgba(0, 0, 0, 0.7);
+}
+
+/* Interactive Spotlight Card effect */
+.glass-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.07), transparent 45%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.glass-spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Gold Gradient Button */
+.btn-champagne {
+  background: linear-gradient(135deg, #F5B027 0%, #D98218 100%);
+  color: #0A1020;
+  font-weight: 600;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btn-champagne:hover {
+  filter: brightness(1.10);
+  box-shadow: 0 0 26px -2px rgba(245, 176, 39, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-champagne:active {
+  transform: translateY(0);
+}
+
+/* Subtle Film Grain */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Ambient Background Blobs */
+.ambient-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.ambient-blob-1 {
+  position: absolute;
+  width: 55vw;
+  height: 55vw;
+  left: -10vw;
+  top: -15vw;
+  border-radius: 50%;
+  background: #3A58B8;
+  opacity: 0.28;
+  filter: blur(140px);
+  will-change: transform;
+}
+
+.ambient-blob-2 {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  right: -5vw;
+  top: 30vh;
+  border-radius: 50%;
+  background: #1F6670;
+  opacity: 0.22;
+  filter: blur(150px);
+  will-change: transform;
+}
+
+.ambient-blob-3 {
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  left: 10vw;
+  bottom: -10vw;
+  border-radius: 50%;
+  background: #B8955A;
+  opacity: 0.14;
+  filter: blur(160px);
+  will-change: transform;
+}
+
+/* Smooth Fade & Modal Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-pop {
+  animation: modalPopIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced Transparency & Reduced Motion */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-1, .glass-2, .glass-3 {
+    background: #16213F !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
