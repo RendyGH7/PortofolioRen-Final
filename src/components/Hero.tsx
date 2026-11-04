@@ -3,7 +3,7 @@ import {
   FolderGit2,
   Mail,
   ArrowUpRight,
-  Sparkles,
+  ShoppingBag,
   Layers,
   CheckCircle2,
   Terminal,
@@ -157,7 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           <div className="pt-6 grid grid-cols-3 gap-3 sm:gap-4 border-t border-white/[0.08] max-w-lg">
             <div className="flex flex-col space-y-0.5">
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-champagne shrink-0" />
+                <ShoppingBag className="w-3 h-3 text-champagne shrink-0" />
                 <span className="font-mono text-xs sm:text-sm font-bold text-pearl">1.000+ Ulasan</span>
               </div>
               <span className="text-[10px] sm:text-[11px] text-fog truncate">Founder RenStore</span>

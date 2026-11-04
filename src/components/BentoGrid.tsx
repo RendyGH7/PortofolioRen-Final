@@ -5,7 +5,6 @@ import {
   ShoppingBag,
   Code2,
   Terminal,
-  CheckCircle2,
   GraduationCap,
   Hand,
   ArrowUpRight,
@@ -135,12 +134,6 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
     <section id="bento" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       {/* Section Header */}
       <div className="mb-10 text-left space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-          <span className="text-[11px] font-mono uppercase tracking-widest text-champagne font-semibold">
-            {lang === 'id' ? 'Profil & Kapabilitas Terverifikasi' : 'Verified Profile & Capabilities'}
-          </span>
-        </div>
         <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Profil, Keahlian & Rekam Jejak' : 'Profile, Stack & Track Record'}
         </h2>
@@ -163,37 +156,44 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
         {/* 3-Column Decoupled Spatial Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
           
-          {/* ================= LEFT WING (4 Cols): INTERACTIVE STACK CONSOLE ================= */}
-          <div className="lg:col-span-4 flex flex-col space-y-4 text-left order-2 lg:order-1 glass-2 p-5 sm:p-6 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
-            {/* Header Telemetry Pill */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-sapphire" />
-                <span className="text-xs font-semibold text-pearl">Interactive Stack Diagnostic</span>
+          {/* ================= LEFT WING (5 Cols): SPACIOUS & CLEAN SYSTEM ARCHITECTURE CONSOLE ================= */}
+          <div className="lg:col-span-5 flex flex-col space-y-5 text-left order-2 lg:order-1 glass-2 p-6 sm:p-7 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
+            {/* Header Telemetry Bar */}
+            <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-sapphire/20 border border-sapphire/30 text-sapphire">
+                  <Terminal className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <span className="text-xs font-semibold text-pearl block tracking-tight">
+                    {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
+                  </span>
+                  <span className="text-[10px] font-mono text-fog">Production Verified Mastery</span>
+                </div>
               </div>
               <span className="text-[10px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 px-2.5 py-0.5 rounded-full border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
                 Live Inspect
               </span>
             </div>
 
-            {/* Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+            {/* Segmented Category Filter Control */}
+            <div className="p-1 rounded-xl bg-midnight-0/60 border border-white/10 flex items-center gap-1">
               {(
                 [
-                  { id: 'all', label: 'Semua' },
+                  { id: 'all', label: lang === 'id' ? 'Semua' : 'All' },
                   { id: 'frontend', label: 'Frontend' },
                   { id: 'backend', label: 'Backend' },
-                  { id: 'data', label: 'Data & DB' },
+                  { id: 'data', label: 'Data & Cloud' },
                 ] as const
               ).map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`text-[11px] font-mono px-2.5 py-1 rounded-md transition-all ${
+                  className={`flex-1 text-[11px] font-mono py-1.5 rounded-lg transition-all text-center ${
                     selectedCategory === cat.id
-                      ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_12px_rgba(245,176,39,0.3)]'
-                      : 'glass-1 text-mist hover:text-pearl border border-white/5'
+                      ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
+                      : 'text-fog hover:text-pearl border border-transparent'
                   }`}
                 >
                   {cat.label}
@@ -201,32 +201,37 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Interactive Skills Grid */}
-            <div className="grid grid-cols-2 gap-2 my-1">
+            {/* Spacious, Clean & Minimalist Skills Grid */}
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
               {filteredSkills.map((skill) => {
                 const isSelected = activeSkill.name === skill.name;
                 return (
                   <button
                     key={skill.name}
                     onClick={() => setActiveSkill(skill)}
-                    className={`p-2.5 rounded-xl text-left transition-all relative overflow-hidden group ${
+                    className={`p-3 sm:p-3.5 rounded-2xl text-left transition-all relative overflow-hidden group ${
                       isSelected
-                        ? 'glass-2 border-champagne/50 shadow-[0_0_16px_rgba(245,176,39,0.2)] bg-white/[0.08]'
-                        : 'glass-1 hover:border-white/20 border-white/5'
+                        ? 'bg-white/[0.08] border border-champagne/60 shadow-[0_0_18px_rgba(245,176,39,0.18)]'
+                        : 'bg-midnight-0/35 hover:bg-white/[0.05] border border-white/[0.08] hover:border-white/20'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-pearl truncate mr-1 group-hover:text-champagne transition-colors">
+                      <span className="text-xs font-semibold text-pearl truncate mr-1.5 group-hover:text-champagne transition-colors">
                         {skill.name}
                       </span>
-                      <span className="font-mono text-[11px] font-bold text-[#F5B027] shrink-0 drop-shadow-[0_0_8px_rgba(245,176,39,0.4)]">
+                      <span className="font-mono text-xs font-bold text-champagne shrink-0">
                         {skill.level}%
                       </span>
                     </div>
-                    {/* Progress Bar with radiant solar amber gradient matching Kirim Request */}
-                    <div className="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden">
+
+                    <span className="text-[10px] text-fog font-mono truncate block mt-0.5">
+                      {skill.role}
+                    </span>
+
+                    {/* Minimalist Razor-Thin Starlight Track */}
+                    <div className="w-full bg-white/10 h-1 rounded-full mt-2.5 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#F5B027] to-[#D98218] shadow-[0_0_10px_rgba(245,176,39,0.4)] transition-all duration-500"
+                        className="h-full rounded-full bg-gradient-to-r from-champagne to-[#D98218] transition-all duration-500"
                         style={{ width: `${skill.level}%` }}
                       />
                     </div>
@@ -235,34 +240,47 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               })}
             </div>
 
-            {/* Live Context Inspector Box (Dynamically shows real-world usage of selected tech) */}
-            <div className="glass-1 p-3.5 rounded-xl border border-champagne/25 space-y-1.5 shadow-glass-sm bg-gradient-to-br from-white/[0.05] to-transparent">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="font-mono text-champagne font-semibold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-champagne" />
-                  {activeSkill.name} • {activeSkill.role}
+            {/* Architecture Telemetry HUD (Live Context Inspector) */}
+            <div className="p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
+                  <span className="font-mono font-bold text-pearl">
+                    {activeSkill.name}
+                  </span>
+                  <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-full border border-champagne/25">
+                    {activeSkill.role}
+                  </span>
+                </div>
+                <span className="text-[10px] text-[#6EE7B7] font-mono bg-[#064E3B]/70 px-2 py-0.5 rounded-full border border-[#10B981]/50 hidden sm:inline-block">
+                  Verified in Prod
                 </span>
-                <span className="text-[10px] text-fog font-mono">Implementasi Riil</span>
               </div>
-              <p className="text-[11px] text-mist leading-relaxed">{activeSkill.context}</p>
-            </div>
 
-            {/* Tags Strip */}
-            <div className="pt-2 border-t border-white/10 flex flex-wrap gap-1.5 text-[10px] font-mono text-fog">
-              <span className="px-2 py-0.5 rounded bg-white/5">PostgreSQL</span>
-              <span className="px-2 py-0.5 rounded bg-white/5">REST API</span>
-              <span className="px-2 py-0.5 rounded bg-white/5">Git Workflow</span>
-              <span className="px-2 py-0.5 rounded bg-white/5">Linux Server</span>
+              <p className="text-xs text-mist leading-relaxed">
+                {activeSkill.context}
+              </p>
+
+              {/* Real-time Telemetry Spec Ribbon */}
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-fog">
+                <span className="flex items-center gap-1">
+                  <span className="text-mist">Runtime:</span> Modern Modular
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="text-mist">Scale:</span> Production Tested
+                </span>
+                <span className="text-champagne font-semibold">Latency &lt; 16ms</span>
+              </div>
             </div>
           </div>
 
-          {/* ================= CENTER STAGE (4 Cols): FREE-STANDING PROFILE CENTERPIECE ================= */}
+          {/* ================= CENTER STAGE (3 Cols): FREE-STANDING PROFILE CENTERPIECE ================= */}
           <div
             ref={centerStageRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handlePhotoClick}
-            className="lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[480px] sm:min-h-[540px] select-none cursor-pointer group py-4"
+            className="lg:col-span-3 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[480px] sm:min-h-[540px] select-none cursor-pointer group py-4"
             title="Klik untuk sapaan interaktif Rendy"
             aria-label="Foto Profil Interaktif Rendy Fernando"
           >

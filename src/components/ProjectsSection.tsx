@@ -46,12 +46,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 relative z-10">
         <div className="text-left space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-            <span className="text-[11px] font-mono uppercase tracking-widest text-champagne font-semibold">
-              {lang === 'id' ? 'Karya Pilihan & Arsitektur Riil' : 'Selected Work & Verified Architecture'}
-            </span>
-          </div>
           <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
             {lang === 'id' ? 'Karya Pilihan' : 'Selected Work'}
           </h2>

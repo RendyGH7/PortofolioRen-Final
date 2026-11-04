@@ -8,7 +8,7 @@ import {
   MapPin,
   Trophy,
   CheckCircle2,
-  Sparkles,
+  ShoppingBag,
   Code2,
   Server,
   Users,
@@ -17,6 +17,25 @@ import { EXPERIENCES, AWARDS, PERSONAL_DATA } from '../data/portfolioData';
 
 interface ExperienceTimelineProps {
   lang: 'id' | 'en';
+}
+
+function renderHighlightIcon(highlight: string, isNationalAward: boolean) {
+  if (highlight.includes('1.000+')) {
+    return <ShoppingBag className="w-3.5 h-3.5 text-champagne shrink-0" />;
+  }
+  if (isNationalAward || highlight.includes('Top 7') || highlight.includes('Nasional')) {
+    return <Trophy className="w-3.5 h-3.5 text-champagne shrink-0" />;
+  }
+  if (highlight.includes('Klien') || highlight.includes('UMKM') || highlight.includes('Startup')) {
+    return <Briefcase className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+  }
+  if (highlight.includes('Siswa') || highlight.includes('Membina')) {
+    return <Users className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+  }
+  if (highlight.includes('Tim') || highlight.includes('Pengembangan')) {
+    return <Code2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+  }
+  return <CheckCircle2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
 }
 
 export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) => {
@@ -210,7 +229,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                                   : 'text-[#6EE7B7] bg-[#064E3B]/85 border-[#10B981]/60 shadow-sm'
                               }`}
                             >
-                              <Sparkles className={`w-3.5 h-3.5 ${isNationalAward || exp.highlight.includes('1.000+') ? 'text-champagne' : 'text-[#10B981]'}`} />
+                              {renderHighlightIcon(exp.highlight, isNationalAward)}
                               <span>{exp.highlight}</span>
                             </div>
                           )}
