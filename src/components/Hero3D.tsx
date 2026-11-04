@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { RotateCcw, Orbit } from 'lucide-react';
 
 /**
  * Seeded 3D Perlin Noise generator for deterministic, seamless procedural planet textures
@@ -370,7 +369,6 @@ function createSatelliteTexture() {
 export const Hero3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
-  const resetHandlerRef = useRef<(() => void) | null>(null);
 
   const [hasWebGL] = useState(() => {
     try {
@@ -567,13 +565,6 @@ export const Hero3D: React.FC = () => {
       moonAngle: 0,
     };
 
-    resetHandlerRef.current = () => {
-      interactionState.velX = 0;
-      interactionState.velY = 0;
-      interactionState.rotX = defaultAxialTilt * 0.75;
-      interactionState.rotY = 0.6;
-    };
-
     const onPointerDown = (e: PointerEvent) => {
       interactionState.isDragging = true;
       interactionState.lastPointerX = e.clientX;
@@ -741,12 +732,6 @@ export const Hero3D: React.FC = () => {
     };
   }, [hasWebGL]);
 
-  const handleReset = useCallback(() => {
-    if (resetHandlerRef.current) {
-      resetHandlerRef.current();
-    }
-  }, []);
-
   if (!hasWebGL) {
     return (
       <div className="w-full h-full flex items-center justify-center p-8">
@@ -774,29 +759,8 @@ export const Hero3D: React.FC = () => {
         className={`w-full h-full flex items-center justify-center touch-none transition-cursor ${
           isInteracting ? 'cursor-grabbing' : 'cursor-grab'
         }`}
-        title="Exoplanet R-26 • Geser untuk rotasi 360°"
+        title="Geser untuk rotasi 360°"
       />
-
-      {/* Interactive Status HUD Badge */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-4 z-20 flex items-center gap-2.5 px-3.5 py-1.5 rounded-full glass-2 border border-white/10 shadow-glass-sm backdrop-blur-md">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-          <span className="font-mono text-[11px] font-semibold text-pearl tracking-wide">Exoplanet R-26</span>
-        </div>
-        <span className="w-1 h-3 border-r border-white/10" />
-        <span className="text-[10px] text-fog hidden sm:inline">
-          {isInteracting ? 'Memutar 360°...' : 'Geser untuk Eksplorasi'}
-        </span>
-        <button
-          onClick={handleReset}
-          className="p-1 rounded-full hover:bg-white/10 text-mist hover:text-champagne transition-colors"
-          title="Reset Sudut Pandang"
-          aria-label="Reset Sudut Pandang"
-        >
-          <RotateCcw className="w-3 h-3" />
-        </button>
-        <Orbit className="w-3.5 h-3.5 text-champagne/80 hidden sm:block animate-[spin_12s_linear_infinite]" />
-      </div>
     </div>
   );
 };
