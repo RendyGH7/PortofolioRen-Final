@@ -82,13 +82,15 @@ function createSeededNoise() {
 }
 
 /**
- * Generates seamless procedural canvas textures for the planet surface, elevation, and roughness
+ * Generates dark, atmospheric exoplanet textures matching Midnight Glass (#0A1020)
+ * with bioluminescent city lights and obsidian continental topography
  */
-function createPlanetSurfaceTextures() {
+function createDarkPlanetTextures() {
   const { noise3D, fbm3D } = createSeededNoise();
   const width = 1024;
   const height = 512;
 
+  // Albedo (Color Map)
   const albedoCanvas = document.createElement('canvas');
   albedoCanvas.width = width;
   albedoCanvas.height = height;
@@ -96,6 +98,7 @@ function createPlanetSurfaceTextures() {
   const albedoImg = albedoCtx.createImageData(width, height);
   const albedoData = albedoImg.data;
 
+  // Bump Map (Elevation)
   const bumpCanvas = document.createElement('canvas');
   bumpCanvas.width = width;
   bumpCanvas.height = height;
@@ -103,6 +106,15 @@ function createPlanetSurfaceTextures() {
   const bumpImg = bumpCtx.createImageData(width, height);
   const bumpData = bumpImg.data;
 
+  // Emissive Map (Bioluminescent night city clusters & energy networks)
+  const emissiveCanvas = document.createElement('canvas');
+  emissiveCanvas.width = width;
+  emissiveCanvas.height = height;
+  const emissiveCtx = emissiveCanvas.getContext('2d')!;
+  const emissiveImg = emissiveCtx.createImageData(width, height);
+  const emissiveData = emissiveImg.data;
+
+  // Roughness Map (Glossy water, matte land)
   const roughnessCanvas = document.createElement('canvas');
   roughnessCanvas.width = width;
   roughnessCanvas.height = height;
@@ -121,87 +133,101 @@ function createPlanetSurfaceTextures() {
       const nx = cosPhi * Math.cos(lam);
       const nz = cosPhi * Math.sin(lam);
 
-      // Continent & terrain elevation
+      // Continent & topography elevation
       const continent = fbm3D(nx * 1.85, ny * 1.85, nz * 1.85, 4);
       const mountain = Math.pow(Math.abs(noise3D(nx * 4.8, ny * 4.8, nz * 4.8)), 2.0);
 
       let elevation = continent;
       if (elevation > 0.04) {
-        elevation += mountain * 0.42;
+        elevation += mountain * 0.45;
       }
 
       // Polar ice cap formation
-      const isPolar = absLat > 0.74 + noise3D(nx * 3.0, ny * 3.0, nz * 3.0) * 0.05;
+      const isPolar = absLat > 0.76 + noise3D(nx * 3.0, ny * 3.0, nz * 3.0) * 0.05;
 
       let r = 0;
       let g = 0;
       let b = 0;
       let bump = 0;
       let roughness = 0;
+      let emitR = 0;
+      let emitG = 0;
+      let emitB = 0;
 
       if (isPolar) {
-        // Polar Ice Sheets
-        r = 232;
-        g = 244;
-        b = 255;
-        bump = 185;
-        roughness = 170;
+        // Deep starlight polar ice
+        r = 110;
+        g = 135;
+        b = 175;
+        bump = 160;
+        roughness = 140;
       } else if (elevation < -0.09) {
-        // Deep Oceanic Abyss (Midnight Sapphire)
-        r = 10;
-        g = 18;
-        b = 38;
+        // Deep Midnight Ocean Abyss (#070E1C)
+        r = 7;
+        g = 13;
+        b = 26;
         bump = 15;
-        roughness = 40;
+        roughness = 30; // High specular reflection
       } else if (elevation < 0.02) {
-        // Mid-depth Ocean Basin
-        r = 16;
-        g = 36;
-        b = 75;
+        // Mid-depth Ocean Basin (#0B172E)
+        r = 11;
+        g = 22;
+        b = 44;
         bump = 35;
-        roughness = 40;
+        roughness = 35;
       } else if (elevation < 0.07) {
-        // Coastal Turquoise Continental Shelf
-        r = 32;
-        g = 96;
-        b = 118;
-        bump = 70;
-        roughness = 65;
-      } else if (elevation < 0.12) {
-        // Solar Gold Coastal Sands
-        r = 245;
-        g = 176;
-        b = 39;
-        bump = 115;
-        roughness = 220;
-      } else if (elevation < 0.28) {
-        // Deep Emerald Lowland Rainforest
-        r = 26;
-        g = 68;
-        b = 58;
-        bump = 155;
-        roughness = 230;
-      } else if (elevation < 0.45) {
-        // Highland Savannah & Plateau
-        r = 62;
-        g = 92;
-        b = 72;
-        bump = 190;
-        roughness = 240;
+        // Deep Cyan Continental Shelf (#122B42)
+        r = 16;
+        g = 40;
+        b = 62;
+        bump = 65;
+        roughness = 55;
+      } else if (elevation < 0.16) {
+        // Dark Coastal Plain / Lowlands (#141E30)
+        r = 18;
+        g = 28;
+        b = 44;
+        bump = 110;
+        roughness = 210;
+      } else if (elevation < 0.38) {
+        // Obsidian Slate Continents (#18253A)
+        r = 22;
+        g = 34;
+        b = 52;
+        bump = 160;
+        roughness = 225;
       } else if (elevation < 0.65) {
-        // Mountain Rock & Ridge Formations
-        r = 138;
-        g = 118;
-        b = 92;
-        bump = 225;
-        roughness = 245;
+        // Mountain Ridges (#243550)
+        r = 32;
+        g = 48;
+        b = 72;
+        bump = 215;
+        roughness = 240;
       } else {
-        // Alpine Snow Peaks
-        r = 225;
-        g = 235;
-        b = 248;
-        bump = 255;
-        roughness = 190;
+        // High Alpine Peaks (#486088)
+        r = 60;
+        g = 82;
+        b = 118;
+        bump = 250;
+        roughness = 180;
+      }
+
+      // Bioluminescent City Lights & Energy Networks on Land
+      if (!isPolar && elevation > 0.07) {
+        const cityNoise = Math.abs(noise3D(nx * 18.0, ny * 18.0, nz * 18.0));
+        const microGrid = Math.abs(noise3D(nx * 42.0, ny * 42.0, nz * 42.0));
+
+        if (cityNoise > 0.68 && microGrid > 0.62) {
+          // Warm gold and cyan starlight energy networks
+          const isGold = cityNoise > 0.78;
+          emitR = isGold ? 245 : 0;
+          emitG = isGold ? 176 : 220;
+          emitB = isGold ? 39 : 130;
+          // Add subtle boost to surface color
+          r = Math.min(255, r + (emitR >> 2));
+          g = Math.min(255, g + (emitG >> 2));
+          b = Math.min(255, b + (emitB >> 2));
+        }
       }
 
       const idx = (y * width + x) * 4;
@@ -215,6 +241,11 @@ function createPlanetSurfaceTextures() {
       bumpData[idx + 2] = bump;
       bumpData[idx + 3] = 255;
 
+      emissiveData[idx] = emitR;
+      emissiveData[idx + 1] = emitG;
+      emissiveData[idx + 2] = emitB;
+      emissiveData[idx + 3] = 255;
+
       roughnessData[idx] = roughness;
       roughnessData[idx + 1] = roughness;
       roughnessData[idx + 2] = roughness;
@@ -224,19 +255,21 @@ function createPlanetSurfaceTextures() {
 
   albedoCtx.putImageData(albedoImg, 0, 0);
   bumpCtx.putImageData(bumpImg, 0, 0);
+  emissiveCtx.putImageData(emissiveImg, 0, 0);
   roughnessCtx.putImageData(roughnessImg, 0, 0);
 
   const albedoTexture = new THREE.CanvasTexture(albedoCanvas);
   const bumpTexture = new THREE.CanvasTexture(bumpCanvas);
+  const emissiveTexture = new THREE.CanvasTexture(emissiveCanvas);
   const roughnessTexture = new THREE.CanvasTexture(roughnessCanvas);
 
-  return { albedoTexture, bumpTexture, roughnessTexture };
+  return { albedoTexture, bumpTexture, emissiveTexture, roughnessTexture };
 }
 
 /**
- * Generates dynamic atmospheric cloud swirls with alpha transparency
+ * Generates dark, subtle atmospheric cosmic clouds
  */
-function createCloudTexture() {
+function createDarkCloudTexture() {
   const { fbm3D } = createSeededNoise();
   const width = 1024;
   const height = 512;
@@ -259,17 +292,18 @@ function createCloudTexture() {
       const nx = cosPhi * Math.cos(lam);
       const nz = cosPhi * Math.sin(lam);
 
-      const cloudNoise = fbm3D(nx * 3.1 + 10.5, ny * 3.1 + 10.5, nz * 3.1 + 10.5, 4) + tradeWind;
+      const cloudNoise = fbm3D(nx * 3.2 + 8.5, ny * 3.2 + 8.5, nz * 3.2 + 8.5, 4) + tradeWind;
 
       let alpha = 0;
-      if (cloudNoise > 0.12) {
-        alpha = Math.min(255, Math.floor((cloudNoise - 0.12) * 580));
+      if (cloudNoise > 0.14) {
+        // Soft cloud transparency (up to ~48% opacity)
+        alpha = Math.min(125, Math.floor((cloudNoise - 0.14) * 360));
       }
 
       const idx = (y * width + x) * 4;
-      data[idx] = 255;
-      data[idx + 1] = 255;
-      data[idx + 2] = 255;
+      data[idx] = 160;
+      data[idx + 1] = 185;
+      data[idx + 2] = 230;
       data[idx + 3] = alpha;
     }
   }
@@ -279,80 +313,32 @@ function createCloudTexture() {
 }
 
 /**
- * Generates concentric luxury planetary ring texture with Cassini division
+ * Generates radiant starlight backlight corona disk placed directly behind the planet
  */
-function createRingTexture() {
-  const width = 512;
-  const height = 16;
+function createBacklightCoronaTexture() {
+  const size = 512;
   const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = size;
+  canvas.height = size;
   const ctx = canvas.getContext('2d')!;
-  const img = ctx.createImageData(width, height);
-  const data = img.data;
 
-  for (let x = 0; x < width; x++) {
-    const u = x / width;
-    let r = 245;
-    let g = 176;
-    let b = 39;
-    let a = 0;
+  const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gradient.addColorStop(0, 'rgba(76, 111, 209, 0.95)'); // Core starlight sapphire
+  gradient.addColorStop(0.22, 'rgba(0, 220, 130, 0.55)'); // Mint electric auroral halo
+  gradient.addColorStop(0.45, 'rgba(245, 176, 39, 0.40)'); // Solar Gold starlight corona
+  gradient.addColorStop(0.70, 'rgba(30, 45, 84, 0.20)');
+  gradient.addColorStop(1, 'rgba(10, 16, 32, 0)');
 
-    if (u < 0.15) {
-      // Inner Crepe Ring (translucent solar gold)
-      a = Math.floor((u / 0.15) * 115);
-      r = 245;
-      g = 176;
-      b = 39;
-    } else if (u < 0.55) {
-      // Main B-Ring (dense bright gold starlight bands)
-      const band = Math.sin(u * 140) * 0.18 + 0.82;
-      a = Math.floor(band * 235);
-      r = 250;
-      g = 195;
-      b = 65;
-    } else if (u < 0.62) {
-      // Cassini Division (transparent space gap)
-      a = 0;
-    } else if (u < 0.88) {
-      // Outer A-Ring (ice sapphire with fine striae)
-      const band = Math.sin(u * 95) * 0.22 + 0.78;
-      a = Math.floor(band * 180);
-      r = 160;
-      g = 195;
-      b = 245;
-    } else if (u < 0.94) {
-      // Encke Gap
-      a = 25;
-      r = 170;
-      g = 200;
-      b = 245;
-    } else {
-      // Outer stardust boundary
-      const fade = 1 - (u - 0.94) / 0.06;
-      a = Math.floor(Math.max(0, fade) * 125);
-      r = 180;
-      g = 210;
-      b = 250;
-    }
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
 
-    for (let y = 0; y < height; y++) {
-      const idx = (y * width + x) * 4;
-      data[idx] = r;
-      data[idx + 1] = g;
-      data[idx + 2] = b;
-      data[idx + 3] = a;
-    }
-  }
-
-  ctx.putImageData(img, 0, 0);
   return new THREE.CanvasTexture(canvas);
 }
 
 /**
- * Generates miniature moon rocky texture
+ * Miniature sleek satellite moon
  */
-function createMoonTexture() {
+function createSatelliteTexture() {
   const { noise3D } = createSeededNoise();
   const width = 256;
   const height = 128;
@@ -368,11 +354,11 @@ function createMoonTexture() {
     for (let x = 0; x < width; x++) {
       const nx = (x / width - 0.5) * 2;
       const crater = Math.abs(noise3D(nx * 4, ny * 4, 1.2));
-      const val = Math.floor(130 + crater * 90);
+      const val = Math.floor(70 + crater * 60);
       const idx = (y * width + x) * 4;
       data[idx] = Math.min(255, val + 15);
       data[idx + 1] = val;
-      data[idx + 2] = Math.floor(val * 0.85);
+      data[idx + 2] = Math.floor(val * 0.9);
       data[idx + 3] = 255;
     }
   }
@@ -402,7 +388,7 @@ export const Hero3D: React.FC = () => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 1. Renderer Setup
+    // 1. High Performance WebGL Renderer
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -420,54 +406,73 @@ export const Hero3D: React.FC = () => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
 
-    // 2. Scene & Camera
+    // 2. Camera & Scene with Generous Margin (Zero Clipping Guaranteed!)
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 0, 5.0);
+    // Compact FOV and distance ensuring the planet fits comfortably with plenty of space on all screen sizes
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 0, 5.2);
 
-    // 3. Planet Celestial Group (with realistic 23.5° axial tilt)
+    // 3. Radiant Backlight Corona Plane (Directly Behind Planet)
+    // Makes the dark planet look brilliantly backlit, alive and glowing like an eclipse!
+    const coronaTexture = createBacklightCoronaTexture();
+    const coronaGeometry = new THREE.PlaneGeometry(3.6, 3.6);
+    const coronaMaterial = new THREE.MeshBasicMaterial({
+      map: coronaTexture,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const coronaMesh = new THREE.Mesh(coronaGeometry, coronaMaterial);
+    coronaMesh.position.set(0.15, 0.1, -0.65); // Placed directly behind planet center
+    scene.add(coronaMesh);
+
+    // 4. Planet Celestial Group (with 23.5° axial tilt)
     const planetGroup = new THREE.Group();
     const defaultAxialTilt = THREE.MathUtils.degToRad(23.5);
-    planetGroup.rotation.z = -defaultAxialTilt * 0.6; // Visual tilt towards viewer
-    planetGroup.rotation.x = defaultAxialTilt * 0.8;
+    planetGroup.rotation.z = -defaultAxialTilt * 0.55;
+    planetGroup.rotation.x = defaultAxialTilt * 0.75;
     scene.add(planetGroup);
 
-    // 4. Procedural Textures
-    const { albedoTexture, bumpTexture, roughnessTexture } = createPlanetSurfaceTextures();
-    const cloudTexture = createCloudTexture();
-    const ringTexture = createRingTexture();
-    const moonTexture = createMoonTexture();
+    // 5. Procedural Dark Planet Textures
+    const { albedoTexture, bumpTexture, emissiveTexture, roughnessTexture } = createDarkPlanetTextures();
+    const cloudTexture = createDarkCloudTexture();
+    const satelliteTexture = createSatelliteTexture();
 
-    // 5. Planet Surface Mesh
-    const planetGeometry = new THREE.SphereGeometry(1.35, 96, 96);
+    // 6. Dark Planet Surface Mesh (Radius 1.22 gives generous padding from canvas boundaries)
+    const planetGeometry = new THREE.SphereGeometry(1.22, 96, 96);
     const planetMaterial = new THREE.MeshStandardMaterial({
       map: albedoTexture,
       bumpMap: bumpTexture,
-      bumpScale: 0.045,
+      bumpScale: 0.038,
+      emissiveMap: emissiveTexture,
+      emissive: new THREE.Color(0xFFFFFF),
+      emissiveIntensity: 0.85,
       roughnessMap: roughnessTexture,
-      metalness: 0.08,
+      metalness: 0.1,
     });
     const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
     planetGroup.add(planetMesh);
 
-    // 6. Atmospheric Cloud Layer (rotates independently)
-    const cloudGeometry = new THREE.SphereGeometry(1.38, 96, 96);
+    // 7. Subtle Cosmic Cloud Layer (Radius 1.24)
+    const cloudGeometry = new THREE.SphereGeometry(1.24, 96, 96);
     const cloudMaterial = new THREE.MeshStandardMaterial({
       map: cloudTexture,
       transparent: true,
-      opacity: 0.85,
-      roughness: 0.9,
+      opacity: 0.65,
+      roughness: 0.85,
       metalness: 0.0,
       depthWrite: false,
     });
     const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
     planetGroup.add(cloudMesh);
 
-    // 7. Atmospheric Fresnel Glow (Rayleigh scattering halo)
-    const atmosphereGeometry = new THREE.SphereGeometry(1.52, 64, 64);
+    // 8. Atmospheric Fresnel Glow (Rayleigh scattering halo)
+    // Produces a glowing rim silhouette around the dark planet
+    const atmosphereGeometry = new THREE.SphereGeometry(1.36, 64, 64);
     const atmosphereMaterial = new THREE.ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
@@ -480,9 +485,10 @@ export const Hero3D: React.FC = () => {
         varying vec3 vNormal;
         uniform vec3 glowColor;
         void main() {
-          float intensity = pow(0.66 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.6);
+          // Sharp glowing halo around the edge silhouette
+          float intensity = pow(0.70 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.6);
           intensity = clamp(intensity, 0.0, 1.0);
-          gl_FragColor = vec4(glowColor, intensity * 0.92);
+          gl_FragColor = vec4(glowColor, intensity * 1.5);
         }
       `,
       uniforms: {
@@ -496,82 +502,64 @@ export const Hero3D: React.FC = () => {
     const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     planetGroup.add(atmosphereMesh);
 
-    // 8. Luxury Planetary Ring System
-    const ringGeometry = new THREE.RingGeometry(1.9, 3.25, 128);
-    const pos = ringGeometry.attributes.position;
-    const uvs = ringGeometry.attributes.uv;
-    for (let i = 0; i < pos.count; i++) {
-      const px = pos.getX(i);
-      const py = pos.getY(i);
-      const r = Math.sqrt(px * px + py * py);
-      const u = (r - 1.9) / (3.25 - 1.9);
-      uvs.setXY(i, u, 0.5);
-    }
-    ringGeometry.attributes.uv.needsUpdate = true;
-    ringGeometry.rotateX(Math.PI / 2); // Aligns ring with planet's equatorial plane
-
-    const ringMaterial = new THREE.MeshStandardMaterial({
-      map: ringTexture,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.9,
-      roughness: 0.45,
-      metalness: 0.15,
-      depthWrite: false,
-    });
-    const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
-    planetGroup.add(ringMesh);
-
-    // 9. Orbiting Moon (Satellite)
-    const moonGeometry = new THREE.SphereGeometry(0.22, 32, 32);
-    const moonMaterial = new THREE.MeshStandardMaterial({
-      map: moonTexture,
+    // 9. Compact Orbiting Satellite (Stays strictly within viewport, never clips!)
+    const satelliteGeometry = new THREE.SphereGeometry(0.12, 32, 32);
+    const satelliteMaterial = new THREE.MeshStandardMaterial({
+      map: satelliteTexture,
       roughness: 0.85,
       metalness: 0.1,
     });
-    const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
-    scene.add(moonMesh);
+    const satelliteMesh = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
+    scene.add(satelliteMesh);
 
-    // 10. Cosmic Stardust Particles (70 points)
-    const particlesCount = 70;
+    // 10. Cosmic Stardust Dust Particles (55 points)
+    const particlesCount = 55;
     const particlePositions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      particlePositions[i] = (Math.random() - 0.5) * 10;
-      particlePositions[i + 1] = (Math.random() - 0.5) * 8;
-      particlePositions[i + 2] = (Math.random() - 0.5) * 6;
+      particlePositions[i] = (Math.random() - 0.5) * 8;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 7;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 4;
     }
     const particleGeometry = new THREE.BufferGeometry();
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
     const particleMaterial = new THREE.PointsMaterial({
       color: 0xF3F5FA,
-      size: 0.026,
+      size: 0.022,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.5,
     });
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    // 11. Starlight Lighting Setup
-    const sunLight = new THREE.DirectionalLight(0xFFF4E0, 4.2);
-    sunLight.position.set(5.5, 3.2, 4.5);
-    scene.add(sunLight);
+    // 11. Dramatic Backlit Eclipse Lighting Setup
+    // Key Rim Light from behind & top-right (creates brilliant glowing crescent on top-right edge)
+    const keyRimLight = new THREE.DirectionalLight(0x7EB3FF, 5.8);
+    keyRimLight.position.set(2.8, 2.2, -3.2);
+    scene.add(keyRimLight);
 
-    const ambientLight = new THREE.AmbientLight(0x0C1528, 1.35);
-    scene.add(ambientLight);
+    // Warm Solar Gold Rim Light from behind & bottom-left
+    const warmRimLight = new THREE.DirectionalLight(0xF5B027, 4.0);
+    warmRimLight.position.set(-2.6, -1.8, -2.8);
+    scene.add(warmRimLight);
 
-    const rimLight = new THREE.DirectionalLight(0x3B62C2, 1.85);
-    rimLight.position.set(-5, -2, -3.5);
-    scene.add(rimLight);
+    // Subtle dark ambient fill so the front dark hemisphere is moody deep navy, NOT pitch black
+    const darkAmbient = new THREE.AmbientLight(0x0A1224, 0.95);
+    scene.add(darkAmbient);
 
-    // 12. Physics, Inertia & Mouse/Touch Interaction State
+    // Very soft front fill light to bring out continental obsidian textures and glossy ocean speculars
+    const frontFill = new THREE.DirectionalLight(0x2A3E70, 0.85);
+    frontFill.position.set(0.5, 0.8, 4.2);
+    scene.add(frontFill);
+
+    // 12. Physics, Inertia & Mouse/Touch Drag Interaction State
     const interactionState = {
       isDragging: false,
       lastPointerX: 0,
       lastPointerY: 0,
       velX: 0,
       velY: 0,
-      rotX: defaultAxialTilt * 0.8,
-      rotY: 0.5,
+      rotX: defaultAxialTilt * 0.75,
+      rotY: 0.6,
       targetParallaxX: 0,
       targetParallaxY: 0,
       parallaxX: 0,
@@ -579,12 +567,11 @@ export const Hero3D: React.FC = () => {
       moonAngle: 0,
     };
 
-    // Reset handler for the HUD action
     resetHandlerRef.current = () => {
       interactionState.velX = 0;
       interactionState.velY = 0;
-      interactionState.rotX = defaultAxialTilt * 0.8;
-      interactionState.rotY = 0.5;
+      interactionState.rotX = defaultAxialTilt * 0.75;
+      interactionState.rotY = 0.6;
     };
 
     const onPointerDown = (e: PointerEvent) => {
@@ -608,17 +595,15 @@ export const Hero3D: React.FC = () => {
         interactionState.rotY += dx * sensitivity;
         interactionState.rotX += dy * sensitivity;
 
-        // Pitch clamp to prevent polar inversion
         interactionState.rotX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, interactionState.rotX));
-
         interactionState.velX = dx * sensitivity;
         interactionState.velY = dy * sensitivity;
       } else {
         const rect = container.getBoundingClientRect();
         const nx = (e.clientX - rect.left) / rect.width - 0.5;
         const ny = (e.clientY - rect.top) / rect.height - 0.5;
-        interactionState.targetParallaxX = nx * 0.35;
-        interactionState.targetParallaxY = ny * 0.25;
+        interactionState.targetParallaxX = nx * 0.3;
+        interactionState.targetParallaxY = ny * 0.2;
       }
     };
 
@@ -628,7 +613,7 @@ export const Hero3D: React.FC = () => {
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
       } catch {
-        // Ignore if pointer capture release is not supported
+        // Safe fallback
       }
     };
 
@@ -646,7 +631,7 @@ export const Hero3D: React.FC = () => {
     window.addEventListener('pointerup', onPointerUp);
     container.addEventListener('pointerleave', onPointerLeave);
 
-    // 13. Animation Loop (60 FPS Smooth Rendering)
+    // 13. Animation Loop (Smooth 60 FPS)
     let animationFrameId: number;
     const clock = new THREE.Clock();
 
@@ -660,12 +645,12 @@ export const Hero3D: React.FC = () => {
       interactionState.parallaxY += (interactionState.targetParallaxY - interactionState.parallaxY) * 0.06;
 
       if (!interactionState.isDragging) {
-        // Natural friction decay
+        // Friction decay
         interactionState.velX *= 0.94;
         interactionState.velY *= 0.94;
 
         // Auto planetary spin
-        const autoSpin = prefersReducedMotion ? 0 : delta * 0.14;
+        const autoSpin = prefersReducedMotion ? 0 : delta * 0.12;
         interactionState.rotY += interactionState.velX + autoSpin;
         interactionState.rotX += interactionState.velY;
         interactionState.rotX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, interactionState.rotX));
@@ -675,25 +660,31 @@ export const Hero3D: React.FC = () => {
       planetGroup.rotation.y = interactionState.rotY + interactionState.parallaxX;
       planetGroup.rotation.x = interactionState.rotX + interactionState.parallaxY;
 
-      // Atmospheric Clouds dynamic drift (rotates faster than ground)
+      // Clouds dynamic drift
       if (!prefersReducedMotion) {
-        cloudMesh.rotation.y += delta * 0.055;
+        cloudMesh.rotation.y += delta * 0.045;
       }
 
-      // Orbiting Moon physics
+      // Orbiting Satellite Physics (Tight orbit, never clips!)
       if (!prefersReducedMotion) {
-        interactionState.moonAngle += delta * 0.38;
+        interactionState.moonAngle += delta * 0.42;
       }
       const mAngle = interactionState.moonAngle;
-      const orbitRadiusX = 3.8;
-      const orbitRadiusZ = 3.4;
-      moonMesh.position.x = Math.cos(mAngle) * orbitRadiusX;
-      moonMesh.position.z = Math.sin(mAngle) * orbitRadiusZ;
-      moonMesh.position.y = Math.sin(mAngle * 1.1) * 0.95;
-      moonMesh.rotation.y += delta * 0.25;
+      const orbitX = 2.05;
+      const orbitZ = 1.85;
+      satelliteMesh.position.x = Math.cos(mAngle) * orbitX;
+      satelliteMesh.position.z = Math.sin(mAngle) * orbitZ;
+      satelliteMesh.position.y = Math.sin(mAngle * 1.15) * 0.65;
+      satelliteMesh.rotation.y += delta * 0.25;
 
-      // Stardust gentle rotation
-      particles.rotation.y += delta * 0.02;
+      // Gentle stardust rotation
+      particles.rotation.y += delta * 0.018;
+
+      // Gentle breathing pulse on the radiant corona
+      if (!prefersReducedMotion) {
+        const timeElapsed = clock.getElapsedTime();
+        coronaMesh.scale.setScalar(1.0 + Math.sin(timeElapsed * 1.2) * 0.04);
+      }
 
       renderer.render(scene, camera);
     };
@@ -731,19 +722,20 @@ export const Hero3D: React.FC = () => {
       cloudMaterial.dispose();
       atmosphereGeometry.dispose();
       atmosphereMaterial.dispose();
-      ringGeometry.dispose();
-      ringMaterial.dispose();
-      moonGeometry.dispose();
-      moonMaterial.dispose();
+      satelliteGeometry.dispose();
+      satelliteMaterial.dispose();
+      coronaGeometry.dispose();
+      coronaMaterial.dispose();
       particleGeometry.dispose();
       particleMaterial.dispose();
 
       albedoTexture.dispose();
       bumpTexture.dispose();
+      emissiveTexture.dispose();
       roughnessTexture.dispose();
       cloudTexture.dispose();
-      ringTexture.dispose();
-      moonTexture.dispose();
+      satelliteTexture.dispose();
+      coronaTexture.dispose();
 
       renderer.dispose();
     };
@@ -770,24 +762,25 @@ export const Hero3D: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] flex items-center justify-center select-none">
-      {/* Cinematic Deep Space Aura Behind Planet */}
-      <div className="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-sapphire/25 blur-[100px] pointer-events-none" />
-      <div className="absolute w-56 h-56 rounded-full bg-champagne/20 blur-[80px] pointer-events-none translate-x-14 translate-y-10" />
+    <div className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] flex items-center justify-center select-none overflow-visible">
+      {/* Radiant Cosmic Backlight Corona Glow behind the Planet */}
+      <div className="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-sapphire/35 blur-[95px] pointer-events-none animate-pulse" style={{ animationDuration: '6s' }} />
+      <div className="absolute w-60 h-60 rounded-full bg-champagne/25 blur-[80px] pointer-events-none translate-x-4 -translate-y-4" />
+      <div className="absolute w-44 h-44 rounded-full bg-status-success/15 blur-[65px] pointer-events-none -translate-x-6 translate-y-6" />
 
-      {/* 3D WebGL Canvas Container with tactile grab cursor */}
+      {/* 3D WebGL Canvas Container with tactile grab cursor and ZERO clipping */}
       <div
         ref={mountRef}
         className={`w-full h-full flex items-center justify-center touch-none transition-cursor ${
           isInteracting ? 'cursor-grabbing' : 'cursor-grab'
         }`}
-        title="Planet 3D Realistis • Geser untuk rotasi 360°"
+        title="Exoplanet R-26 • Geser untuk rotasi 360°"
       />
 
       {/* Interactive Status HUD Badge */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-4 z-20 flex items-center gap-2.5 px-3.5 py-1.5 rounded-full glass-2 border border-white/10 shadow-glass-sm backdrop-blur-md">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34D399]" />
+          <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shadow-[0_0_8px_#00DC82]" />
           <span className="font-mono text-[11px] font-semibold text-pearl tracking-wide">Exoplanet R-26</span>
         </div>
         <span className="w-1 h-3 border-r border-white/10" />

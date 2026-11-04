@@ -10,6 +10,7 @@ import {
   X,
   LayoutGrid,
   List,
+  Mic,
 } from 'lucide-react';
 import { PROJECTS, type ProjectItem } from '../data/portfolioData';
 import { GithubIcon } from './SocialIcons';
@@ -24,7 +25,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
 
-  const categories = ['All', 'Web App', 'E-Commerce', 'Data & AI', 'Architecture'];
+  const categories = ['All', 'E-Commerce', 'Web App'];
 
   const filteredProjects = selectedCategory === 'All'
     ? PROJECTS
@@ -60,7 +61,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 py-1 rounded-full text-xs transition-all ${
                   selectedCategory === cat
-                    ? 'bg-champagne text-midnight-0 font-semibold shadow-sm'
+                    ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.3)]'
                     : 'text-mist hover:text-pearl'
                 }`}
               >
@@ -107,8 +108,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                 style={{ backgroundColor: project.accentColor }}
               />
 
-              {/* Project Showcase Illustration Thumbnail if available */}
-              {project.imageUrl && (
+              {/* Project Showcase Illustration Thumbnail */}
+              {project.imageUrl ? (
                 <div className="relative w-full aspect-[16/9] mb-4 rounded-lg overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1">
                   <img
                     src={project.imageUrl}
@@ -117,6 +118,23 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/60 via-transparent to-transparent pointer-events-none" />
+                </div>
+              ) : (
+                <div className="relative w-full aspect-[16/9] mb-4 rounded-lg overflow-hidden border border-white/10 group-hover:border-sapphire/40 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex items-center justify-center p-6 group">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.25),transparent_70%)]" />
+                  <div className="relative z-10 flex flex-col items-center text-center space-y-2">
+                    <div className="w-11 h-11 rounded-2xl bg-sapphire/25 border border-sapphire/45 flex items-center justify-center text-pearl shadow-[0_0_20px_rgba(76,111,209,0.35)] group-hover:scale-110 transition-transform">
+                      <Mic className="w-5 h-5 text-sapphire" />
+                    </div>
+                    <div>
+                      <span className="font-display font-semibold text-pearl text-sm tracking-wide block">
+                        Monetra AI & Voice DSP Engine
+                      </span>
+                      <span className="font-mono text-[10px] text-fog mt-0.5 block">
+                        Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20
+                      </span>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -266,7 +284,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
             </div>
 
             {/* Showcase Illustration / Mockup */}
-            {activeModalProject.imageUrl && (
+            {activeModalProject.imageUrl ? (
               <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-glass-md bg-midnight-1">
                 <img
                   src={activeModalProject.imageUrl}
@@ -287,6 +305,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     >
                       <span>Kunjungi Web</span>
                       <ExternalLink className="w-3 h-3 text-midnight-0" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-glass-md bg-gradient-to-br from-sapphire/25 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 text-center">
+                <div className="w-14 h-14 rounded-2xl bg-sapphire/30 border border-sapphire/50 flex items-center justify-center text-pearl shadow-[0_0_24px_rgba(76,111,209,0.4)] mb-3">
+                  <Mic className="w-7 h-7 text-sapphire" />
+                </div>
+                <h4 className="font-display text-lg font-semibold text-pearl">Monetra AI & Voice DSP Engine</h4>
+                <p className="text-xs text-mist max-w-md mt-1">
+                  Pencatatan keuangan cerdas secepat berbicara dengan Google Gemini 2.5 Flash, Web Audio DSP, dan Aturan 50/30/20.
+                </p>
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-pearl">
+                  <span className="bg-midnight-1/90 backdrop-blur-sm px-2.5 py-1 rounded border border-white/15">
+                    Live Production Web App
+                  </span>
+                  {activeModalProject.liveUrl && (
+                    <a
+                      href={activeModalProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-sapphire text-pearl font-semibold px-2.5 py-1 rounded flex items-center gap-1 hover:brightness-110 transition-all shadow-sm"
+                    >
+                      <span>Kunjungi Web</span>
+                      <ExternalLink className="w-3 h-3 text-pearl" />
                     </a>
                   )}
                 </div>

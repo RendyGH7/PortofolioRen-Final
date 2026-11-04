@@ -35,7 +35,10 @@ export default {
         mist: '#A8B2C7',
         fog: '#76819B',
         status: {
-          success: '#00DC82',
+          success: '#10B981',
+          'success-bg': 'rgba(6, 78, 59, 0.85)',
+          'success-border': 'rgba(16, 185, 129, 0.60)',
+          'success-text': '#6EE7B7',
           warning: '#F5B027',
           error: '#EF4444',
         }

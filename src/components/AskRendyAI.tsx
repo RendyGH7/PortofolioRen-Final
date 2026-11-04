@@ -48,7 +48,7 @@ export const AskRendyAI: React.FC = () => {
 
     if (q.includes('proyek') || q.includes('project')) {
       return {
-        text: 'Rendy memiliki 4 karya utama: Monetra (Financial Management live di monetra-apps.vercel.app), RenStore (E-Commerce Platform live di renstore-project.vercel.app), TSDN Analytics Platform (Top 7 Nasional), dan Midnight Glass Web Engine.',
+        text: 'Rendy berfokus pada 2 platform web unggulan: RenStore (Modern Full-Stack E-Commerce Platform live di renstore-project.vercel.app) dan Monetra (AI Personal Finance Assistant & Expense Tracker live di monetra-apps.vercel.app). Rendy juga merupakan Grand Finalis Top 7 Turnamen Sains Data Nasional (TSDN).',
         link: { text: 'Buka Bagian Karya', sectionId: 'work' },
       };
     }
@@ -209,7 +209,7 @@ export const AskRendyAI: React.FC = () => {
                 <div
                   className={`max-w-[80%] p-3 rounded-xl ${
                     msg.sender === 'user'
-                      ? 'bg-champagne text-midnight-0 font-medium rounded-tr-xs'
+                      ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-medium rounded-tr-xs shadow-[0_0_12px_rgba(245,176,39,0.25)]'
                       : 'glass-1 text-mist rounded-tl-xs border border-white/5'
                   }`}
                 >

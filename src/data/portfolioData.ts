@@ -138,6 +138,17 @@ export const EXPERIENCES: ExperienceItem[] = [
     highlight: "1.000+ Ulasan Positif",
   },
   {
+    id: "exp-tsdn",
+    role: "Data Science & Predictive Modeling Finalist",
+    organization: "Turnamen Sains Data Nasional (TSDN) • Data Academy",
+    period: "Oktober - Desember 2024",
+    type: "Kompetisi Nasional",
+    location: "Nasional",
+    description: "Menganalisis dataset skala besar (500k+ baris data), rekayasa fitur data statistik, dan merancang model prediktif machine learning hingga meraih posisi Top 7 Grand Finalis tingkat nasional.",
+    technologies: ["Python", "SQL", "Pandas", "Scikit-Learn", "Statistical Modeling"],
+    highlight: "Top 7 Finalis Nasional",
+  },
+  {
     id: "exp-2",
     role: "Freelance UI/UX & Frontend Developer",
     organization: "Independen",
@@ -163,7 +174,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     id: "exp-4",
     role: "Game Developer (Kontrak)",
     organization: "PT Sollu Filantropi Teknologi",
-    period: "Agustus - Desember",
+    period: "Agustus - Desember 2024",
     type: "Kontrak On Site",
     location: "Jakarta",
     description: "Mengembangkan logika permainan interaktif, optimalisasi aset grafis, dan sinkronisasi data antar sesi pengguna.",
@@ -174,96 +185,62 @@ export const EXPERIENCES: ExperienceItem[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
-    id: "monetra",
-    title: "Monetra",
-    subtitle: "Web & Mobile Financial Management",
-    category: "Web App",
-    year: "2026",
-    role: "Full Stack Lead",
-    summary: "Platform pengelolaan finansial komprehensif dengan analitik real-time, grafik arus kas, dan kategorisasi transaksi otomatis.",
-    metrics: [
-      { label: "Waktu Pencatatan", value: "-45%" },
-      { label: "Kecepatan Render", value: "<120ms" },
-      { label: "Uptime Sistem", value: "99.9%" },
-    ],
-    tags: ["React", "TypeScript", "Tailwind", "Node.js", "PostgreSQL"],
-    features: [
-      "Dashboard analitik multi-periode dengan grafik interaktif",
-      "Sistem pemantauan anggaran bulanan otomatis",
-      "Ekspor laporan keuangan format PDF dan CSV",
-      "Autentikasi sesi terenkripsi dengan proteksi CSRF",
-    ],
-    problem: "Pencatatan keuangan manual memakan waktu dan menyulitkan pengguna dalam memantau tren pengeluaran bulanan secara terpadu.",
-    solution: "Membangun arsitektur SPA ringan dengan sinkronisasi data instan, visualisasi visual yang jernih, dan struktur database berelasi yang cepat diakses.",
-    architectureNodes: [
-      { name: "Client Browser", role: "React SPA + Tailwind UI", latency: "0ms" },
-      { name: "API Gateway", role: "Node.js Express + JWT Auth", latency: "42ms" },
-      { name: "Database", role: "PostgreSQL Database Engine", latency: "15ms" },
-      { name: "Export Worker", role: "Serverless PDF Generator", latency: "85ms" },
-    ],
-    codeSnippet: `// Monetra Transaction Aggregator Service
-export async function calculateMonthlyMetrics(userId: string, month: number) {
-  const records = await db.transactions.findMany({
-    where: { userId, periodMonth: month },
-    orderBy: { timestamp: 'desc' }
-  });
-  
-  return records.reduce((acc, item) => {
-    if (item.type === 'income') acc.totalIncome += item.amount;
-    else acc.totalExpense += item.amount;
-    acc.categories[item.category] = (acc.categories[item.category] || 0) + item.amount;
-    return acc;
-  }, { totalIncome: 0, totalExpense: 0, categories: {} });
-}`,
-    accentColor: "#4C6FD1",
-    githubUrl: "https://github.com/RendyGH7",
-    liveUrl: "https://monetra-apps.vercel.app/",
-  },
-  {
     id: "renstore",
     title: "RenStore",
     subtitle: "Modern Full-Stack E-Commerce & Tech Lifestyle Platform",
     category: "E-Commerce",
     year: "2026",
     role: "Founder & Full Stack Developer",
-    summary: "Platform e-commerce modern & tech lifestyle dengan arsitektur responsif multi-device, checkout pembayaran QRIS dinamis, katalog gadget unggulan, flash sale, dan admin dashboard analitik penjualan terpadu.",
+    summary: "Platform e-commerce modern & tech lifestyle dengan arsitektur decoupled (Laravel 11 REST API + React 19 Vite), checkout pembayaran QRIS dinamis, flash sale engine dengan countdown, shipment tracking, serta dashboard analitik administrator komprehensif.",
     metrics: [
       { label: "Ulasan Positif", value: "1.000+" },
-      { label: "Tingkat Kepuasan", value: "99.4%" },
+      { label: "Arsitektur API", value: "Laravel 11" },
       { label: "Pembayaran QRIS", value: "Instan" },
     ],
-    tags: ["React", "TypeScript", "Tailwind CSS", "QRIS Payment", "Vercel"],
+    tags: ["Laravel 11", "React 19", "PostgreSQL", "TypeScript", "Tailwind CSS", "QRIS Payment"],
     features: [
-      "Antarmuka responsif presisi multi-device (Desktop, Tablet, Mobile, Laptop)",
-      "Alur pembayaran checkout QRIS dinamis dengan countdown timer",
-      "Katalog gadget unggulan (iPhone 15 Pro, MacBook Pro, Audio) & sistem Flash Sale",
-      "Dashboard administrator: metrik pendapatan, tren penjualan, & manajemen pesanan",
-      "Arsitektur frontend teroptimasi tinggi dengan deployment instan di Vercel",
+      "Arsitektur decoupled: Frontend React 19 SPA + Backend Laravel 11 RESTful API berkinerja tinggi",
+      "Checkout pembayaran dinamis QRIS sekali pindai dengan hitung mundur sesi dan validasi status otomatis",
+      "Katalog gadget tech lifestyle unggulan, sistem Flash Sale dengan countdown timer, dan kupon diskon promo (DISKON50, RENSTORE2026)",
+      "Dashboard analitik admin dengan grafik garis SVG interaktif, order tracking, dan manajemen pengguna",
+      "Database PostgreSQL terindeks dengan seeder data akun role Administrator dan Customer bawaan",
     ],
-    problem: "Platform e-commerce konvensional seringkali lambat, tidak ramah mobile, dan membutuhkan alur pembayaran berbelit-belit yang menurunkan tingkat konversi pelanggan.",
-    solution: "Merancang platform e-commerce tech lifestyle terpadu dengan tema clean modern, checkout QRIS sekali pindai, dan dashboard analitik real-time untuk memantau performa bisnis.",
+    problem: "Platform e-commerce konvensional seringkali lambat, sulit dikelola di perangkat mobile, dan memiliki alur pembayaran checkout yang kaku sehingga menurunkan konversi penjualan.",
+    solution: "Merancang platform decoupled modern dengan integrasi API Laravel yang bersih, database relasional PostgreSQL terstruktur, dan antarmuka responsif multi-device berkecepatan tinggi.",
     architectureNodes: [
-      { name: "Storefront UI", role: "React SPA + Responsive Viewport", latency: "0ms" },
-      { name: "QRIS Checkout", role: "Dynamic Payment Gateway Engine", latency: "25ms" },
-      { name: "Admin Dashboard", role: "CMS & Real-Time Analytics", latency: "18ms" },
-      { name: "Vercel Edge", role: "Global Low-Latency Deployment", latency: "12ms" },
+      { name: "Frontend SPA", role: "React 19 + TypeScript + Vite", latency: "< 16ms" },
+      { name: "Backend API", role: "Laravel 11 + Eloquent ORM + Sanctum", latency: "38ms" },
+      { name: "Database Engine", role: "PostgreSQL 17 Relational Schema", latency: "12ms" },
+      { name: "Payment Gateway", role: "Dynamic QRIS & Invoicing Engine", latency: "25ms" },
     ],
-    codeSnippet: `// RenStore Dynamic QRIS Payment & Transaction Flow
-export async function createQrisCheckoutSession(order: OrderPayload) {
-  const session = await qrisGateway.generateDynamicQR({
-    orderId: order.id,
-    amount: order.totalAmount,
-    currency: 'IDR',
-    expiresInSeconds: 900 // 15 mins countdown
-  });
+    codeSnippet: `// RenStore Dynamic QRIS Payment & Order Controller (Laravel 11)
+namespace App\\Http\\Controllers\\Api;
 
-  await orderRepository.updateStatus(order.id, 'WAITING_PAYMENT');
-  
-  return {
-    qrString: session.qrPayload,
-    checkoutUrl: session.invoiceUrl,
-    expiresAt: session.expiryTimestamp
-  };
+use App\\Models\\Order;
+use App\\Services\\Payment\\QrisService;
+use Illuminate\\Http\\Request;
+use Illuminate\\Http\\JsonResponse;
+
+class CheckoutController extends Controller
+{
+    public function processQrisCheckout(Request $request, QrisService $qris): JsonResponse
+    {
+        $validated = $request->validate([
+            'cart_items' => 'required|array|min:1',
+            'shipping_address' => 'required|string',
+            'voucher_code' => 'nullable|string'
+        ]);
+
+        $order = Order::createFromCart(auth()->user(), $validated);
+        $qrisPayload = $qris->generateDynamicInvoice($order);
+
+        return response()->json([
+            'success' => true,
+            'order_id' => $order->id,
+            'qr_string' => $qrisPayload->qrString,
+            'expires_at' => now()->addMinutes(15)->toIso8601String()
+        ], 201);
+    }
 }`,
     accentColor: "#F5B027",
     githubUrl: "https://github.com/RendyGH7/renstore-project",
@@ -271,83 +248,58 @@ export async function createQrisCheckoutSession(order: OrderPayload) {
     imageUrl: "/assets/projects/renstore-showcase.jpg",
   },
   {
-    id: "tsdn-platform",
-    title: "TSDN Analytics Showcase",
-    subtitle: "National Data Science Competition Platform",
-    category: "Data & AI",
-    year: "2024",
-    role: "Data Analyst & Frontend Architect",
-    summary: "Dashboard pemodelan data prediktif yang mengantarkan tim mencapai Top 7 Finalis Nasional Turnamen Sains Data Nasional.",
-    metrics: [
-      { label: "Peringkat Nasional", value: "Top 7" },
-      { label: "Dataset Diproses", value: "500k+ Baris" },
-      { label: "Akurasi Prediksi", value: "92.3%" },
-    ],
-    tags: ["Python", "SQL", "React", "Data Modeling", "Statistical Analysis"],
-    features: [
-      "Visualisasi multi-dimensi korelasi variabel data",
-      "Simulasi parameter skenario masa depan secara interaktif",
-      "Pembersihan data dan deteksi anomali otomatis",
-      "Tampilan insight ringkas siap presentasi dewan juri",
-    ],
-    problem: "Kumpulan data berskala besar sulit dicerna secara cepat oleh penilai tanpa media visual yang intuitif dan interaktif.",
-    solution: "Merancang pipeline data terstruktur yang mengubah hasil komputasi Python menjadi komponen visual interaktif berbasis web.",
-    architectureNodes: [
-      { name: "Visual Client", role: "React Data Charts Dashboard", latency: "0ms" },
-      { name: "Python Core", role: "Statistical Model Engine", latency: "65ms" },
-      { name: "Data Pipeline", role: "SQL ETL Aggregator", latency: "35ms" },
-    ],
-    codeSnippet: `# TSDN Predictive Feature Scorer
-def evaluate_feature_importance(df, target_col):
-    corr_matrix = df.corr()
-    weights = corr_matrix[target_col].abs().sort_values(ascending=False)
-    selected_features = weights[weights > 0.35].index.tolist()
-    return {
-        "features": selected_features,
-        "score_variance": float(df[selected_features].var().mean()),
-        "model_readiness": True
-    }`,
-    accentColor: "#2C7A85",
-    githubUrl: "https://github.com/RendyGH7",
-  },
-  {
-    id: "portfolio-engine",
-    title: "Midnight Glass Web Platform",
-    subtitle: "High-Performance Interactive Portfolio",
-    category: "Architecture",
+    id: "monetra",
+    title: "Monetra",
+    subtitle: "Asisten Keuangan Pribadi Berbasis AI & Pelacak Pengeluaran Pintar",
+    category: "Web App",
     year: "2026",
-    role: "Design & Full Stack Engineer",
-    summary: "Sistem web portofolio interaktif dengan Three.js 3D, command palette, estimator proyek otomatis, dan kepatuhan ketat antislop.",
+    role: "Full Stack Lead & AI Engineer",
+    summary: "Asisten keuangan pribadi berbasis AI yang memungkinkan pencatatan transaksi secepat berbicara melalui rekaman suara (Voice AI), pemfilteran vokal Web Audio DSP, manajemen anggaran dengan aturan 50/30/20, dan evaluasi kesehatan finansial real-time berbasis Google Gemini 2.5 Flash.",
     metrics: [
-      { label: "Lighthouse Performance", value: "98+" },
-      { label: "Aksesibilitas", value: "100" },
-      { label: "Cumulative Layout Shift", value: "0.00" },
+      { label: "Pemrosesan Voice AI", value: "< 2.5s" },
+      { label: "Filter Vokal DSP", value: "85Hz - 7.5kHz" },
+      { label: "Isolasi Data", value: "100% RLS" },
     ],
-    tags: ["React 19", "TypeScript", "Tailwind CSS", "Three.js WebGL"],
+    tags: ["React 19", "TypeScript", "Tailwind CSS v4", "Google Gemini 2.5", "Supabase", "PostgreSQL RLS", "Web Audio API"],
     features: [
-      "Hero 3D WebGL responsif kursor tanpa membebani performa",
-      "Command Palette (Cmd/Ctrl+K) dengan navigasi keyboard penuh",
-      "Wizard Project Estimator dengan output ringkasan terstruktur",
-      "Mode dwi-bahasa (ID/EN) dan kepatuhan WCAG 2.2 AA",
+      "Pencatatan suara pintar (Voice AI): ekstraksi multi-transaksi dalam satu ucapan dengan pemahaman istilah nominal kasual (ceban, goceng, seceng, 50 rebu, 1,5 juta)",
+      "Rangkaian pemrosesan audio Web Audio DSP (85Hz High-Pass, 2.400Hz Vocal Peaking, 7.500Hz Low-Pass, Dynamics Compressor -32dB) untuk kejernihan vokal di lingkungan bising",
+      "Dashboard finansial komprehensif: Saldo Bersih (Net Worth) dan alokasi anggaran otomatis berbasis Aturan 50/30/20 (Kebutuhan, Keinginan, Tabungan)",
+      "AI Financial Advisor & Health Score: evaluasi kesehatan finansial proaktif berbasis Google Gemini 2.5 Flash",
+      "Keamanan & isolasi data pengguna dengan Row Level Security (RLS) PostgreSQL di Supabase serta ekspor data format CSV/Excel",
     ],
-    problem: "Banyak portofolio developer terlihat seragam dan pasif, tanpa interaksi nyata yang membuktikan kemampuan rekayasa.",
-    solution: "Membangun produk digital yang berfungsi sebagai studi kasus langsung dengan kedalaman interaksi, presisi desain, dan efisiensi kode.",
+    problem: "Banyak orang gagal mengelola keuangan pribadi karena pencatatan manual yang lambat, melelahkan, dan buku kas pasif tanpa arahan perbaikan finansial.",
+    solution: "Menggabungkan pemrosesan sinyal vokal Web Audio DSP dengan LLM Gemini 2.5 Flash untuk mencatat transaksi secepat berbicara, dikelompokkan otomatis ke aturan 50/30/20 dengan proteksi RLS PostgreSQL.",
     architectureNodes: [
-      { name: "Vite + React 19", role: "Zero-latency Static Hydration", latency: "0ms" },
-      { name: "WebGL 3D Core", role: "Three.js Crystalline Simulation", latency: "16ms" },
-      { name: "Command Bus", role: "Keyboard & Shortcut Dispatcher", latency: "1ms" },
+      { name: "Client Browser", role: "React 19 + Tailwind v4 + Web Audio DSP", latency: "< 16ms" },
+      { name: "Voice AI Engine", role: "Google Gemini 2.5 Flash Natural Parser", latency: "1.8s" },
+      { name: "Backend & DB", role: "Supabase + PostgreSQL Row Level Security", latency: "28ms" },
+      { name: "Budget Engine", role: "Aturan 50/30/20 Dynamic Calculator", latency: "5ms" },
     ],
-    codeSnippet: `// Midnight Glass Dynamic Light Calculation
-export function getRefractiveLight(cursorX: number, cursorY: number) {
-  const normX = (cursorX / window.innerWidth) * 2 - 1;
-  const normY = -(cursorY / window.innerHeight) * 2 + 1;
-  return {
-    rotationTarget: [normY * 0.45, normX * 0.45, 0],
-    intensity: Math.min(1.2, 0.8 + Math.hypot(normX, normY) * 0.3)
-  };
+    codeSnippet: `// Monetra Web Audio DSP Pipeline & Gemini Voice-to-Transaction Parser
+export async function processVoiceTransaction(audioBlob: Blob): Promise<ParsedTransaction[]> {
+  // 1. Web Audio DSP Filtering: High-Pass (85Hz) + Vocal Peaking (2.4kHz) + Low-Pass (7.5kHz)
+  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const dspStream = await applyVocalDspFilters(audioBlob, audioContext);
+  
+  // 2. Stream to Google Gemini 2.5 Flash for casual Indonesian currency parsing
+  const response = await geminiAi.generateContent({
+    model: "gemini-2.5-flash",
+    contents: [{
+      role: "user",
+      parts: [
+        { text: "Ekstrak ucapan menjadi transaksi terstruktur (nominal kasual: ceban, goceng, 50 rebu):" },
+        { inlineData: { mimeType: "audio/wav", data: dspStream.toBase64() } }
+      ]
+    }],
+    generationConfig: { responseMimeType: "application/json" }
+  });
+  
+  return JSON.parse(response.text()) as ParsedTransaction[];
 }`,
-    accentColor: "#F5B027",
-    githubUrl: "https://github.com/RendyGH7",
+    accentColor: "#4C6FD1",
+    githubUrl: "https://github.com/RendyGH7/Monetra-Apps",
+    liveUrl: "https://monetra-apps.vercel.app",
   },
 ];
 

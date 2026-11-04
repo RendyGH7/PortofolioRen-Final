@@ -235,7 +235,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             onClick={() => setActiveTab('api')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
               activeTab === 'api'
-                ? 'bg-champagne text-midnight-0 font-semibold shadow-sm'
+                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
             }`}
           >
@@ -246,7 +246,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             onClick={() => setActiveTab('sql')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
               activeTab === 'sql'
-                ? 'bg-champagne text-midnight-0 font-semibold shadow-sm'
+                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
             }`}
           >
@@ -257,7 +257,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             onClick={() => setActiveTab('glass')}
             className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
               activeTab === 'glass'
-                ? 'bg-champagne text-midnight-0 font-semibold shadow-sm'
+                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
             }`}
           >
