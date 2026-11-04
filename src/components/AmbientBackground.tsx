@@ -77,7 +77,7 @@ export const AmbientBackground: React.FC = () => {
       '#8EA8F5', // Ice Sapphire
       '#F5B027', // Radiant Gold
       '#7CE5E8', // Cyan Stardust
-      '#A3E635', // Emerald Starlight
+      '#10B981', // Emerald Starlight
     ];
 
     // Multi-depth star field (360 stars distributed across 3 depth planes)

@@ -780,7 +780,7 @@ export const Hero3D: React.FC = () => {
       {/* Interactive Status HUD Badge */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-4 z-20 flex items-center gap-2.5 px-3.5 py-1.5 rounded-full glass-2 border border-white/10 shadow-glass-sm backdrop-blur-md">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shadow-[0_0_8px_#00DC82]" />
+          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
           <span className="font-mono text-[11px] font-semibold text-pearl tracking-wide">Exoplanet R-26</span>
         </div>
         <span className="w-1 h-3 border-r border-white/10" />

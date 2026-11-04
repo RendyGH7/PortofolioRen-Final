@@ -237,7 +237,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
         {/* Toast alert if active */}
         {toastMessage && (
-          <div className="px-3 py-2 rounded-lg bg-status-success/20 border border-status-success/30 text-status-success text-xs flex items-center gap-2">
+          <div className="px-3 py-2 rounded-lg bg-[#064E3B]/85 border border-[#10B981]/60 text-[#6EE7B7] text-xs font-semibold flex items-center gap-2 shadow-sm">
             <span>{toastMessage}</span>
           </div>
         )}

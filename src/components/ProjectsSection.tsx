@@ -145,8 +145,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                       {project.category}
                     </span>
                     {project.liveUrl && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-status-success/15 text-status-success border border-status-success/25 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse" />
+                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                         <span>Live Web</span>
                       </span>
                     )}

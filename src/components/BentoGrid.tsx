@@ -120,7 +120,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
       particleCount: 50,
       spread: 65,
       origin: { y: 0.6 },
-      colors: ['#F5B027', '#4C6FD1', '#00DC82', '#F3F5FA'],
+      colors: ['#F5B027', '#4C6FD1', '#10B981', '#F3F5FA'],
     });
     setGreetingToast(true);
     setTimeout(() => setGreetingToast(false), 2600);
@@ -136,7 +136,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
       {/* Section Header */}
       <div className="mb-10 text-left space-y-2">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shadow-[0_0_8px_#00DC82]" />
+          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
           <span className="text-[11px] font-mono uppercase tracking-widest text-champagne font-semibold">
             {lang === 'id' ? 'Profil & Kapabilitas Terverifikasi' : 'Verified Profile & Capabilities'}
           </span>
@@ -170,8 +170,8 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 <Terminal className="w-4 h-4 text-sapphire" />
                 <span className="text-xs font-semibold text-pearl">Interactive Stack Diagnostic</span>
               </div>
-              <span className="text-[10px] font-mono text-status-success bg-status-success/15 px-2 py-0.5 rounded-full border border-status-success/30 flex items-center gap-1 shadow-[0_0_8px_rgba(0,220,130,0.15)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-status-success shadow-[0_0_6px_#00DC82]" />
+              <span className="text-[10px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 px-2.5 py-0.5 rounded-full border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                 Live Inspect
               </span>
             </div>
@@ -327,7 +327,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             {/* Bottom Floating Identity Capsule */}
             <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
               <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
-                <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shadow-[0_0_8px_#00DC82]" />
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
                 <span className="text-[10px] font-mono bg-white/10 px-2 py-0.5 rounded-full text-champagne">
                   SIJA 2023 - 2027
@@ -385,8 +385,8 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 <div className="p-2 rounded-xl bg-gradient-to-br from-[#F5B027]/25 to-[#D98218]/25 border border-[#F5B027]/50 text-[#F5B027] shadow-[0_0_16px_rgba(245,176,39,0.35)]">
                   <ShoppingBag className="w-4 h-4 text-[#F5B027]" />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-status-success font-semibold px-2.5 py-0.5 rounded-full bg-status-success/15 border border-status-success/35 flex items-center gap-1.5 shadow-[0_0_12px_rgba(0,220,130,0.2)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-status-success shadow-[0_0_6px_#00DC82]" />
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#6EE7B7] font-semibold px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                   Terverifikasi
                 </span>
               </div>

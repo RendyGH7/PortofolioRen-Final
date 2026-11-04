@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerminal }) => {
             </p>
 
             <div className="flex items-center gap-2 pt-1 text-xs text-mist">
-              <span className="w-2 h-2 rounded-full bg-status-success animate-pulse inline-block shadow-[0_0_8px_#00DC82]" />
+              <span className="w-2 h-2 rounded-full bg-[#10B981] inline-block" />
               <span>Tersedia untuk proyek inovatif & kolaborasi</span>
             </div>
           </div>

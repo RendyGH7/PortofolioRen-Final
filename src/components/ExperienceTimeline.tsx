@@ -116,14 +116,14 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                           isNationalAward
                             ? 'bg-midnight-0 border-2 border-champagne text-champagne shadow-[0_0_18px_rgba(245,176,39,0.45)] group-hover:scale-110'
                             : isCurrent
-                            ? 'bg-midnight-0 border-2 border-[#00DC82] text-[#00DC82] shadow-[0_0_18px_rgba(0,220,130,0.35)] group-hover:scale-110'
+                            ? 'bg-midnight-0 border-2 border-[#059669] text-[#10B981] shadow-sm group-hover:scale-110'
                             : 'bg-midnight-0 border-2 border-sapphire/70 text-sapphire shadow-[0_0_12px_rgba(76,111,209,0.25)] group-hover:border-sapphire group-hover:scale-110'
                         }`}
                       >
                         {isNationalAward ? (
                           <Trophy className="w-4 h-4 text-champagne" />
                         ) : isCurrent ? (
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#00DC82] animate-pulse" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />
                         ) : (
                           <Briefcase className="w-4 h-4 text-sapphire" />
                         )}
@@ -146,7 +146,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                                 isNationalAward
                                   ? 'text-champagne bg-champagne/10 border-champagne/30'
                                   : isCurrent
-                                  ? 'text-[#00DC82] bg-[#00DC82]/10 border-[#00DC82]/30'
+                                  ? 'text-[#6EE7B7] bg-[#064E3B]/85 border-[#10B981]/60 font-semibold'
                                   : 'text-sapphire bg-sapphire/10 border-sapphire/30'
                               }`}
                             >
@@ -154,8 +154,8 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                             </span>
 
                             {isCurrent && (
-                              <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#00DC82] font-semibold bg-[#00DC82]/15 px-2.5 py-0.5 rounded-full border border-[#00DC82]/35 shadow-[0_0_10px_rgba(0,220,130,0.15)]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#00DC82] animate-ping" />
+                              <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#6EE7B7] font-semibold bg-[#064E3B]/85 px-2.5 py-0.5 rounded-full border border-[#10B981]/60 shadow-sm">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                                 <span>{lang === 'id' ? 'Aktif' : 'Active'}</span>
                               </span>
                             )}
@@ -204,15 +204,13 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
                           {exp.highlight && (
                             <div
-                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold border transition-all ${
-                                isNationalAward
-                                  ? 'text-champagne bg-champagne/15 border-champagne/40 shadow-[0_0_14px_rgba(245,176,39,0.25)]'
-                                  : exp.highlight.includes('1.000+')
-                                  ? 'text-[#00DC82] bg-[#00DC82]/15 border-[#00DC82]/40 shadow-[0_0_14px_rgba(0,220,130,0.25)]'
-                                  : 'text-pearl bg-sapphire/20 border-sapphire/40 shadow-[0_0_14px_rgba(76,111,209,0.2)]'
+                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all ${
+                                isNationalAward || exp.highlight.includes('1.000+')
+                                  ? 'text-champagne bg-champagne/15 border-champagne/40 shadow-sm'
+                                  : 'text-[#6EE7B7] bg-[#064E3B]/85 border-[#10B981]/60 shadow-sm'
                               }`}
                             >
-                              <Sparkles className="w-3.5 h-3.5" />
+                              <Sparkles className={`w-3.5 h-3.5 ${isNationalAward || exp.highlight.includes('1.000+') ? 'text-champagne' : 'text-[#10B981]'}`} />
                               <span>{exp.highlight}</span>
                             </div>
                           )}
@@ -325,8 +323,8 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                   <span className="font-mono text-xs text-pearl bg-white/10 px-3 py-1 rounded-full border border-white/15">
                     {PERSONAL_DATA.education.period}
                   </span>
-                  <span className="text-[11px] font-mono text-status-success flex items-center gap-1 mt-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse" />
+                  <span className="text-[11px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 border border-[#10B981]/60 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 mt-1 shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span>Siswa Aktif</span>
                   </span>
                 </div>
@@ -369,9 +367,9 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 </p>
               </div>
 
-              <div className="rounded-xl p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-status-success/40 transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-status-success/20 border border-status-success/35 flex items-center justify-center text-status-success mb-3 group-hover:scale-105 transition-transform">
-                  <Users className="w-5 h-5 text-status-success" />
+              <div className="rounded-xl p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-[#10B981]/50 transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-[#064E3B]/80 border border-[#10B981]/50 flex items-center justify-center text-[#6EE7B7] mb-3 group-hover:scale-105 transition-transform">
+                  <Users className="w-5 h-5 text-[#6EE7B7]" />
                 </div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
                   Pilar Utama 03

@@ -149,7 +149,7 @@ export const AskRendyAI: React.FC = () => {
           <span className="hidden sm:inline text-xs font-semibold text-pearl">
             Tanya Rendy
           </span>
-          <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shadow-[0_0_8px_#00DC82]" />
+          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
         </button>
       </div>
 

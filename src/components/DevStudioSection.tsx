@@ -306,7 +306,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                     <span
                       className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded ${
                         currentEndpoint.method === 'GET'
-                          ? 'bg-status-success/15 text-status-success border border-status-success/30'
+                          ? 'bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60'
                           : 'bg-sapphire/20 text-sapphire border border-sapphire/30'
                       }`}
                     >
@@ -354,8 +354,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               {/* Response Stats Bar */}
               <div className="flex flex-wrap items-center justify-between gap-3 pt-2 pb-1 border-b border-white/5 text-xs font-mono">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5 text-status-success">
-                    <span className="w-2 h-2 rounded-full bg-status-success" />
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 font-semibold shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span>Status: 200 OK</span>
                   </span>
                   <span className="text-mist">

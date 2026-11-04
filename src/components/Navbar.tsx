@@ -186,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="border-t border-white/10 pt-4 flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-mist">
-                <span className="w-2 h-2 rounded-full bg-status-success shadow-[0_0_8px_#00DC82]" />
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span>{PERSONAL_DATA.status.text}</span>
               </div>
               <button

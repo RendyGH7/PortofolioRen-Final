@@ -204,7 +204,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
         <div className="md:col-span-7 glass-2 rounded-xl p-6 sm:p-8 text-left">
           {isSubmitted ? (
             <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
-              <div className="w-12 h-12 rounded-full bg-status-success/20 border border-status-success/40 flex items-center justify-center mx-auto text-status-success">
+              <div className="w-12 h-12 rounded-full bg-[#064E3B]/80 border border-[#10B981]/60 flex items-center justify-center mx-auto text-[#6EE7B7]">
                 <CheckCircle className="w-6 h-6" />
               </div>
               <h3 className="font-display text-2xl text-pearl font-normal">
