@@ -82,7 +82,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         {/* Left Info Column */}
-        <div className="md:col-span-5 glass-2 rounded-xl p-6 text-left space-y-6">
+        <div className="md:col-span-5 glass-2 rounded-2xl p-6 sm:p-7 text-left space-y-6 shadow-glass-md">
           <div className="space-y-3">
             <span className="text-xs font-mono text-champagne uppercase tracking-wider block">
               Kontak Langsung
@@ -201,7 +201,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
         </div>
 
         {/* Right Form Column (3 fields strictly conforming to design.md) */}
-        <div className="md:col-span-7 glass-2 rounded-xl p-6 sm:p-8 text-left">
+        <div className="md:col-span-7 glass-2 rounded-2xl p-6 sm:p-8 text-left shadow-glass-md">
           {isSubmitted ? (
             <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
               <div className="w-12 h-12 rounded-full bg-[#064E3B]/80 border border-[#10B981]/60 flex items-center justify-center mx-auto text-[#6EE7B7]">
@@ -246,10 +246,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                   }}
                   placeholder="Nama lengkap atau perusahaan"
-                  className={`w-full h-[48px] rounded-sm px-3.5 text-xs text-pearl bg-midnight-0/70 border transition-colors focus:outline-none ${
+                  className={`w-full h-[48px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
                     errors.name
                       ? 'border-status-error'
-                      : 'border-white/10 focus:border-sapphire'
+                      : 'border-white/15 focus:border-sapphire'
                   }`}
                 />
                 {errors.name && (
@@ -270,10 +270,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                   }}
                   placeholder="alamat@domain.com"
-                  className={`w-full h-[48px] rounded-sm px-3.5 text-xs text-pearl bg-midnight-0/70 border transition-colors focus:outline-none ${
+                  className={`w-full h-[48px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
                     errors.email
                       ? 'border-status-error'
-                      : 'border-white/10 focus:border-sapphire'
+                      : 'border-white/15 focus:border-sapphire'
                   }`}
                 />
                 {errors.email && (
@@ -294,10 +294,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                     if (errors.message) setErrors((prev) => ({ ...prev, message: '' }));
                   }}
                   placeholder="Ceritakan gambaran singkat kebutuhan atau posisi yang sedang dicari..."
-                  className={`w-full rounded-sm p-3.5 text-xs text-pearl bg-midnight-0/70 border transition-colors focus:outline-none resize-none ${
+                  className={`w-full rounded-xl p-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 resize-none ${
                     errors.message
                       ? 'border-status-error'
-                      : 'border-white/10 focus:border-sapphire'
+                      : 'border-white/15 focus:border-sapphire'
                   }`}
                 />
                 {errors.message && (

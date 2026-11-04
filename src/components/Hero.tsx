@@ -39,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
   // Smooth Typewriter Animation Engine
   useEffect(() => {
     const currentRole = roles[roleIndex % roles.length];
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
 
     if (!isDeleting) {
       if (displayText.length < currentRole.length) {
@@ -57,8 +57,10 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           setDisplayText(currentRole.slice(0, displayText.length - 1));
         }, 32);
       } else {
-        setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
+        timer = setTimeout(() => {
+          setIsDeleting(false);
+          setRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 300);
       }
     }
 

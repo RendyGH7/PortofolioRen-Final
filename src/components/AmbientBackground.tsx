@@ -279,43 +279,244 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* Far Upper-Left Ringed Gas Giant (Exoplanet Alpha) */}
+          {/* Majestic Spiral Galaxy (Andromeda-Class Cosmic Vortex) */}
           <div
-            className="absolute top-[120px] left-[3%] md:left-[5%] z-10 hidden sm:flex items-center justify-center opacity-75 hover:opacity-100 transition-opacity duration-700 pointer-events-auto cursor-pointer group"
-            title="Exoplanet Alpha (Ringed Gas Giant)"
+            className="absolute top-[50px] sm:top-[80px] -left-10 sm:left-[3%] md:left-[4%] z-0 sm:z-10 flex items-center justify-center opacity-70 sm:opacity-85 hover:opacity-100 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
+            title="Galaksi Spiral Andromeda (Supermassive Core & Star Clusters)"
           >
-            <div className="relative w-28 h-28 md:w-36 md:h-36 flex items-center justify-center">
-              {/* Planetary Ring */}
+            <div className="relative w-52 h-36 sm:w-72 sm:h-52 md:w-88 md:h-60 flex items-center justify-center">
+              {/* Diffuse Outer Galactic Corona & Volumetric Cosmic Haze */}
               <div
-                className="absolute w-44 h-14 md:w-56 md:h-18 rounded-full border-[3px] border-champagne/45 border-t-champagne/80 border-b-sapphire/35 shadow-[0_0_28px_rgba(245,176,39,0.3)] pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                className="absolute inset-0 rounded-full blur-[45px] opacity-60 pointer-events-none group-hover:opacity-85 transition-opacity duration-700"
                 style={{
-                  transform: 'rotate(-26deg)',
                   background:
-                    'radial-gradient(ellipse, transparent 55%, rgba(245, 176, 39, 0.16) 65%, rgba(76, 111, 209, 0.22) 75%, transparent 85%)',
+                    'radial-gradient(ellipse 75% 55% at 50% 50%, rgba(76, 111, 209, 0.45) 0%, rgba(139, 92, 246, 0.3) 45%, rgba(245, 176, 39, 0.15) 70%, transparent 85%)',
+                  transform: 'rotate(-24deg)',
                 }}
               />
 
-              {/* Planet Sphere */}
+              {/* Realistic SVG Spiral Galaxy Disc with Slow Cinematic Rotation */}
               <div
-                className="w-20 h-20 md:w-26 md:h-26 rounded-full relative overflow-hidden shadow-[0_0_40px_rgba(76,111,209,0.35)] group-hover:scale-105 transition-transform duration-700"
+                className="relative w-full h-full flex items-center justify-center"
                 style={{
-                  background: 'radial-gradient(circle at 35% 35%, #4C6FD1 0%, #1F3366 45%, #0A1020 90%)',
-                  boxShadow:
-                    'inset -12px -12px 25px rgba(0, 0, 0, 0.9), inset 6px 6px 15px rgba(245, 176, 39, 0.45), 0 0 35px rgba(76, 111, 209, 0.35)',
+                  transform: 'perspective(600px) rotateX(25deg) rotateZ(-20deg)',
                 }}
               >
-                <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[repeating-linear-gradient(45deg,transparent,transparent_6px,rgba(255,255,255,0.18)_6px,rgba(255,255,255,0.18)_12px)]" />
-                <div
-                  className="absolute w-full h-2.5 bg-midnight-0/80 blur-[2px] top-1/2 -translate-y-1/2"
-                  style={{ transform: 'rotate(-26deg)' }}
-                />
-              </div>
+                <svg
+                  viewBox="0 0 360 260"
+                  className="w-full h-full overflow-visible animate-[spin_100s_linear_infinite]"
+                  style={{ willChange: 'transform' }}
+                >
+                  <defs>
+                    {/* Core Bulge Radial Glow */}
+                    <radialGradient id="galaxyNucleus" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+                      <stop offset="14%" stopColor="#FFF4D0" stopOpacity="0.95" />
+                      <stop offset="32%" stopColor="#F5B027" stopOpacity="0.85" />
+                      <stop offset="55%" stopColor="#8EA8F5" stopOpacity="0.55" />
+                      <stop offset="78%" stopColor="#4C6FD1" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </radialGradient>
 
-              {/* Orbiting Moon */}
-              <div
-                className="absolute w-3 h-3 rounded-full bg-champagne shadow-[0_0_12px_#F5B027] -top-2 left-6 animate-pulse"
-                style={{ animationDuration: '4s' }}
-              />
+                    {/* Spiral Arm 1 Gradient */}
+                    <linearGradient id="armGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFF2C2" stopOpacity="0.9" />
+                      <stop offset="20%" stopColor="#F5B027" stopOpacity="0.85" />
+                      <stop offset="45%" stopColor="#8EA8F5" stopOpacity="0.75" />
+                      <stop offset="70%" stopColor="#4C6FD1" stopOpacity="0.65" />
+                      <stop offset="90%" stopColor="#A855F7" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </linearGradient>
+
+                    {/* Spiral Arm 2 Gradient */}
+                    <linearGradient id="armGrad2" x1="100%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stopColor="#FFF2C2" stopOpacity="0.9" />
+                      <stop offset="20%" stopColor="#F5B027" stopOpacity="0.85" />
+                      <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.75" />
+                      <stop offset="75%" stopColor="#3B82F6" stopOpacity="0.55" />
+                      <stop offset="92%" stopColor="#4C6FD1" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </linearGradient>
+
+                    {/* Gaussian Blur Filters */}
+                    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <filter id="dustBlur" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="2.5" />
+                    </filter>
+                  </defs>
+
+                  {/* Outer Gaseous Halo Ring */}
+                  <ellipse
+                    cx="180"
+                    cy="130"
+                    rx="145"
+                    ry="95"
+                    fill="none"
+                    stroke="rgba(76, 111, 209, 0.18)"
+                    strokeWidth="16"
+                    filter="url(#softGlow)"
+                  />
+                  <ellipse
+                    cx="180"
+                    cy="130"
+                    rx="110"
+                    ry="70"
+                    fill="none"
+                    stroke="rgba(168, 85, 247, 0.16)"
+                    strokeWidth="12"
+                    filter="url(#softGlow)"
+                  />
+
+                  {/* Spiral Arm 1: Primary Sweeping Arm */}
+                  <path
+                    d="M 180 130 C 215 115 250 110 280 130 C 315 152 325 185 305 215 C 280 245 220 252 170 235 C 120 218 80 165 92 120 C 102 80 148 45 200 40 C 255 35 305 60 335 95"
+                    fill="none"
+                    stroke="url(#armGrad1)"
+                    strokeWidth="11"
+                    strokeLinecap="round"
+                    filter="url(#softGlow)"
+                  />
+                  <path
+                    d="M 180 130 C 215 115 250 110 280 130 C 315 152 325 185 305 215 C 280 245 220 252 170 235 C 120 218 80 165 92 120 C 102 80 148 45 200 40 C 255 35 305 60 335 95"
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.5"
+                    strokeOpacity="0.45"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Spiral Arm 2: Counter Sweeping Arm */}
+                  <path
+                    d="M 180 130 C 145 145 110 150 80 130 C 45 108 35 75 55 45 C 80 15 140 8 190 25 C 240 42 280 95 268 140 C 258 180 212 215 160 220 C 105 225 55 200 25 165"
+                    fill="none"
+                    stroke="url(#armGrad2)"
+                    strokeWidth="11"
+                    strokeLinecap="round"
+                    filter="url(#softGlow)"
+                  />
+                  <path
+                    d="M 180 130 C 145 145 110 150 80 130 C 45 108 35 75 55 45 C 80 15 140 8 190 25 C 240 42 280 95 268 140 C 258 180 212 215 160 220 C 105 225 55 200 25 165"
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.5"
+                    strokeOpacity="0.45"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Realistic Interstellar Dark Dust Lanes (Crucial for Hubble/JWST Realism) */}
+                  <path
+                    d="M 184 130 C 212 118 245 114 272 132 C 302 152 310 180 292 206 C 270 232 218 238 174 224"
+                    fill="none"
+                    stroke="#0A1020"
+                    strokeWidth="4"
+                    strokeOpacity="0.75"
+                    strokeLinecap="round"
+                    filter="url(#dustBlur)"
+                  />
+                  <path
+                    d="M 176 130 C 148 142 115 146 88 128 C 58 108 50 80 68 54 C 90 28 142 22 186 36"
+                    fill="none"
+                    stroke="#0A1020"
+                    strokeWidth="4"
+                    strokeOpacity="0.75"
+                    strokeLinecap="round"
+                    filter="url(#dustBlur)"
+                  />
+
+                  {/* Sparkling Star Clusters & HII Emission Regions along Arms */}
+                  <g className="stellar-clusters">
+                    {/* Blue & Gold Young Stars on Arm 1 */}
+                    <circle cx="218" cy="116" r="1.8" fill="#FFFFFF" />
+                    <circle cx="235" cy="113" r="2.2" fill="#F5B027" opacity="0.9" />
+                    <circle cx="258" cy="118" r="1.6" fill="#60A5FA" />
+                    <circle cx="282" cy="135" r="2.0" fill="#FFFFFF" />
+                    <circle cx="304" cy="162" r="1.7" fill="#8EA8F5" />
+                    <circle cx="312" cy="186" r="2.2" fill="#EC4899" opacity="0.85" />
+                    <circle cx="295" cy="218" r="1.9" fill="#60A5FA" />
+                    <circle cx="265" cy="242" r="1.5" fill="#FFFFFF" />
+                    <circle cx="228" cy="248" r="1.8" fill="#F5B027" />
+                    <circle cx="185" cy="238" r="2.0" fill="#8EA8F5" />
+                    <circle cx="140" cy="218" r="1.5" fill="#FFFFFF" />
+                    <circle cx="98" cy="162" r="1.7" fill="#38BDF8" />
+                    <circle cx="94" cy="122" r="2.2" fill="#F472B6" opacity="0.8" />
+                    <circle cx="108" cy="85" r="1.8" fill="#FFFFFF" />
+                    <circle cx="142" cy="52" r="2.0" fill="#60A5FA" />
+                    <circle cx="188" cy="40" r="1.6" fill="#F5B027" />
+                    <circle cx="242" cy="38" r="2.1" fill="#FFFFFF" />
+                    <circle cx="288" cy="55" r="1.8" fill="#8EA8F5" />
+                    <circle cx="325" cy="88" r="1.5" fill="#F5B027" />
+
+                    {/* Blue & Pink Young Stars on Arm 2 */}
+                    <circle cx="142" cy="144" r="1.8" fill="#FFFFFF" />
+                    <circle cx="125" cy="147" r="2.2" fill="#F5B027" opacity="0.9" />
+                    <circle cx="102" cy="142" r="1.6" fill="#60A5FA" />
+                    <circle cx="78" cy="125" r="2.0" fill="#FFFFFF" />
+                    <circle cx="56" cy="98" r="1.7" fill="#8EA8F5" />
+                    <circle cx="48" cy="74" r="2.2" fill="#EC4899" opacity="0.85" />
+                    <circle cx="65" cy="42" r="1.9" fill="#60A5FA" />
+                    <circle cx="95" cy="18" r="1.5" fill="#FFFFFF" />
+                    <circle cx="132" cy="12" r="1.8" fill="#F5B027" />
+                    <circle cx="175" cy="22" r="2.0" fill="#8EA8F5" />
+                    <circle cx="220" cy="42" r="1.5" fill="#FFFFFF" />
+                    <circle cx="262" cy="98" r="1.7" fill="#38BDF8" />
+                    <circle cx="266" cy="138" r="2.2" fill="#F472B6" opacity="0.8" />
+                    <circle cx="252" cy="175" r="1.8" fill="#FFFFFF" />
+                    <circle cx="218" cy="208" r="2.0" fill="#60A5FA" />
+                    <circle cx="172" cy="220" r="1.6" fill="#F5B027" />
+                    <circle cx="118" cy="222" r="2.1" fill="#FFFFFF" />
+                    <circle cx="72" cy="205" r="1.8" fill="#8EA8F5" />
+                    <circle cx="35" cy="172" r="1.5" fill="#F5B027" />
+                  </g>
+
+                  {/* Supermassive Galactic Core (Nucleus Bulge) */}
+                  <ellipse
+                    cx="180"
+                    cy="130"
+                    rx="32"
+                    ry="22"
+                    fill="url(#galaxyNucleus)"
+                    filter="url(#softGlow)"
+                    className="animate-pulse"
+                    style={{ animationDuration: '4s' }}
+                  />
+                  <ellipse
+                    cx="180"
+                    cy="130"
+                    rx="14"
+                    ry="10"
+                    fill="#FFFFFF"
+                    className="shadow-[0_0_20px_#FFFFFF]"
+                  />
+
+                  {/* Stellar Diffraction Ray / Starlight Spike at Core */}
+                  <line
+                    x1="180"
+                    y1="102"
+                    x2="180"
+                    y2="158"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.2"
+                    strokeOpacity="0.75"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1="148"
+                    y1="130"
+                    x2="212"
+                    y2="130"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.2"
+                    strokeOpacity="0.75"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>

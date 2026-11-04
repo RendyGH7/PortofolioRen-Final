@@ -154,7 +154,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
       {/* 
         MASTER COHESIVE COCKPIT DECK (Unified Glass Frame - No Chunky Disconnected Boxes)
       */}
-      <div className="relative glass-2 rounded-3xl p-6 sm:p-8 lg:p-9 border border-white/10 shadow-glass-lg backdrop-blur-2xl overflow-hidden">
+      <div className="relative glass-2 rounded-3xl p-6 sm:p-8 lg:p-9 border border-white/10 shadow-glass-lg overflow-hidden">
         {/* Subtle Ambient Cosmic Haze inside Deck */}
         <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-sapphire/20 blur-[100px] pointer-events-none" />
         <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-champagne/15 blur-[100px] pointer-events-none" />
