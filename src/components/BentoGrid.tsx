@@ -156,41 +156,36 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
         {/* 3-Column Decoupled Spatial Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
           
-          {/* ================= LEFT WING (5 Cols): SPACIOUS & CLEAN SYSTEM ARCHITECTURE CONSOLE ================= */}
-          <div className="lg:col-span-5 flex flex-col space-y-5 text-left order-2 lg:order-1 glass-2 p-6 sm:p-7 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
+          {/* ================= LEFT WING (4 Cols): ULTRA-CLEAN & MINIMALIST STACK CONSOLE ================= */}
+          <div className="lg:col-span-4 flex flex-col space-y-4 text-left order-2 lg:order-1 glass-2 p-5 sm:p-6 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
             {/* Header Telemetry Bar */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-sapphire/20 border border-sapphire/30 text-sapphire">
-                  <Terminal className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <span className="text-xs font-semibold text-pearl block tracking-tight">
-                    {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
-                  </span>
-                  <span className="text-[10px] font-mono text-fog">Production Verified Mastery</span>
-                </div>
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-sapphire" />
+                <span className="text-xs font-semibold text-pearl tracking-tight">
+                  {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
+                </span>
               </div>
-              <span className="text-[10px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 px-2.5 py-0.5 rounded-full border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
+              <span className="text-[10px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 px-2 py-0.5 rounded-full border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
                 Live Inspect
               </span>
             </div>
 
-            {/* Segmented Category Filter Control */}
+            {/* Minimalist Segmented Category Filter */}
             <div className="p-1 rounded-xl bg-midnight-0/60 border border-white/10 flex items-center gap-1">
               {(
                 [
                   { id: 'all', label: lang === 'id' ? 'Semua' : 'All' },
                   { id: 'frontend', label: 'Frontend' },
                   { id: 'backend', label: 'Backend' },
-                  { id: 'data', label: 'Data & Cloud' },
+                  { id: 'data', label: 'Data & DB' },
                 ] as const
               ).map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex-1 text-[11px] font-mono py-1.5 rounded-lg transition-all text-center ${
+                  className={`flex-1 text-[11px] font-mono py-1 rounded-lg transition-all text-center ${
                     selectedCategory === cat.id
                       ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
                       : 'text-fog hover:text-pearl border border-transparent'
@@ -201,51 +196,45 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Spacious, Clean & Minimalist Skills Grid */}
-            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+            {/* Clean & Tactile Skills Matrix (Zero Clutter, Zero Truncation) */}
+            <div className="grid grid-cols-2 gap-2">
               {filteredSkills.map((skill) => {
                 const isSelected = activeSkill.name === skill.name;
                 return (
                   <button
                     key={skill.name}
                     onClick={() => setActiveSkill(skill)}
-                    className={`p-3 sm:p-3.5 rounded-2xl text-left transition-all relative overflow-hidden group ${
+                    className={`h-[42px] px-3 rounded-xl text-left transition-all flex items-center justify-between border group ${
                       isSelected
-                        ? 'bg-white/[0.08] border border-champagne/60 shadow-[0_0_18px_rgba(245,176,39,0.18)]'
-                        : 'bg-midnight-0/35 hover:bg-white/[0.05] border border-white/[0.08] hover:border-white/20'
+                        ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_14px_rgba(245,176,39,0.2)]'
+                        : 'bg-midnight-0/40 hover:bg-white/[0.05] border-white/10 hover:border-white/20 text-mist'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-pearl truncate mr-1.5 group-hover:text-champagne transition-colors">
+                    <div className="flex items-center gap-2 truncate">
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
+                          isSelected ? 'bg-champagne animate-pulse' : 'bg-white/25 group-hover:bg-champagne/60'
+                        }`}
+                      />
+                      <span className="text-xs font-medium text-pearl truncate group-hover:text-champagne transition-colors">
                         {skill.name}
                       </span>
-                      <span className="font-mono text-xs font-bold text-champagne shrink-0">
-                        {skill.level}%
-                      </span>
                     </div>
 
-                    <span className="text-[10px] text-fog font-mono truncate block mt-0.5">
-                      {skill.role}
+                    <span className="font-mono text-xs font-semibold text-champagne shrink-0 ml-1.5">
+                      {skill.level}%
                     </span>
-
-                    {/* Minimalist Razor-Thin Starlight Track */}
-                    <div className="w-full bg-white/10 h-1 rounded-full mt-2.5 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-champagne to-[#D98218] transition-all duration-500"
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
                   </button>
                 );
               })}
             </div>
 
             {/* Architecture Telemetry HUD (Live Context Inspector) */}
-            <div className="p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2 shadow-glass-sm transition-all">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
-                  <span className="font-mono font-bold text-pearl">
+                  <span className="font-mono font-bold text-pearl text-xs">
                     {activeSkill.name}
                   </span>
                   <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-full border border-champagne/25">
@@ -274,25 +263,25 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             </div>
           </div>
 
-          {/* ================= CENTER STAGE (3 Cols): FREE-STANDING PROFILE CENTERPIECE ================= */}
+          {/* ================= CENTER STAGE (4 Cols): ENLARGED & PROMINENT PROFILE CENTERPIECE ================= */}
           <div
             ref={centerStageRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handlePhotoClick}
-            className="lg:col-span-3 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[480px] sm:min-h-[540px] select-none cursor-pointer group py-4"
+            className="lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[520px] sm:min-h-[580px] lg:min-h-[620px] select-none cursor-pointer group py-2"
             title="Klik untuk sapaan interaktif Rendy"
             aria-label="Foto Profil Interaktif Rendy Fernando"
           >
             {/* Ambient Multi-Layer Glow behind Cutout */}
             <div
-              className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full bg-sapphire/30 blur-[100px] pointer-events-none transition-transform duration-300"
+              className="absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-sapphire/35 blur-[110px] pointer-events-none transition-transform duration-300"
               style={{
                 transform: `translate(${tilt.shadowX * 1.6}px, ${tilt.shadowY * 1.6}px)`,
               }}
             />
             <div
-              className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-champagne/25 blur-[85px] pointer-events-none transition-transform duration-300 translate-y-10"
+              className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-champagne/30 blur-[90px] pointer-events-none transition-transform duration-300 translate-y-12"
               style={{
                 transform: `translate(${-tilt.shadowX}px, ${-tilt.shadowY}px)`,
               }}
@@ -302,7 +291,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-4 left-1 sm:left-2 z-20 pointer-events-none"
+              className="absolute top-2 left-0 sm:left-2 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
@@ -317,7 +306,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-              className="absolute top-14 right-1 sm:right-2 z-20 pointer-events-none"
+              className="absolute top-12 right-0 sm:right-2 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
@@ -328,23 +317,23 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               </div>
             </motion.div>
 
-            {/* Cutout Photo of Rendy with 3D Mouse Parallax Tilt & Soft Rim Shadow */}
+            {/* Cutout Photo of Rendy - HERO-SCALE, ENLARGED & CINEMATIC */}
             <div
-              className="relative z-10 w-full max-w-[320px] sm:max-w-[360px] flex items-end justify-center transition-transform duration-200 ease-out"
+              className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[450px] flex items-end justify-center transition-transform duration-200 ease-out"
               style={{
-                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.08, 1.08, 1.08)`,
               }}
             >
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[460px] sm:max-h-[500px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300"
+                className="w-full h-auto object-contain max-h-[520px] sm:max-h-[580px] lg:max-h-[620px] filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_40px_rgba(245,176,39,0.4)] transition-all duration-300"
                 loading="lazy"
               />
             </div>
 
             {/* Bottom Floating Identity Capsule */}
-            <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
+            <div className="absolute -bottom-2 z-20 pointer-events-none flex flex-col items-center text-center">
               <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
                 <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
