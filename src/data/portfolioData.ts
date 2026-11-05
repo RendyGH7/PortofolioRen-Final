@@ -1,3 +1,8 @@
+export interface ProjectFeature {
+  title: string;
+  desc: string;
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -8,7 +13,7 @@ export interface ProjectItem {
   summary: string;
   metrics: { label: string; value: string }[];
   tags: string[];
-  features: string[];
+  features: ProjectFeature[];
   problem: string;
   solution: string;
   architectureNodes: { name: string; role: string; latency?: string }[];
@@ -191,7 +196,7 @@ export const PROJECTS: ProjectItem[] = [
     category: "E-Commerce",
     year: "2026",
     role: "Founder & Full Stack Developer",
-    summary: "Platform e-commerce modern & tech lifestyle dengan arsitektur decoupled (Laravel 11 REST API + React 19 Vite), checkout pembayaran QRIS dinamis, flash sale engine dengan countdown, shipment tracking, serta dashboard analitik administrator komprehensif.",
+    summary: "Platform e-commerce modern dengan arsitektur decoupled (Laravel 11 REST API + React 19), checkout QRIS dinamis, flash sale engine, dan dashboard analitik admin.",
     metrics: [
       { label: "Ulasan Positif", value: "1.000+" },
       { label: "Arsitektur API", value: "Laravel 11" },
@@ -199,19 +204,30 @@ export const PROJECTS: ProjectItem[] = [
     ],
     tags: ["Laravel 11", "React 19", "PostgreSQL", "TypeScript", "Tailwind CSS", "QRIS Payment"],
     features: [
-      "Arsitektur decoupled: Frontend React 19 SPA + Backend Laravel 11 RESTful API berkinerja tinggi",
-      "Checkout pembayaran dinamis QRIS sekali pindai dengan hitung mundur sesi dan validasi status otomatis",
-      "Katalog gadget tech lifestyle unggulan, sistem Flash Sale dengan countdown timer, dan kupon diskon promo (DISKON50, RENSTORE2026)",
-      "Dashboard analitik admin dengan grafik garis SVG interaktif, order tracking, dan manajemen pengguna",
-      "Database PostgreSQL terindeks dengan seeder data akun role Administrator dan Customer bawaan",
+      {
+        title: "Decoupled Architecture",
+        desc: "Frontend React 19 SPA terhubung cepat dengan RESTful API Laravel 11.",
+      },
+      {
+        title: "Dynamic QRIS Payment",
+        desc: "Generate invoice kode QR otomatis dengan validasi sesi transaksi instan.",
+      },
+      {
+        title: "Flash Sale Engine",
+        desc: "Sistem promo produk berbatas waktu dengan hitung mundur presisi.",
+      },
+      {
+        title: "Admin Analytics",
+        desc: "Dashboard metrik penjualan, grafik interaktif, dan kontrol pesanan.",
+      },
     ],
-    problem: "Platform e-commerce konvensional seringkali lambat, sulit dikelola di perangkat mobile, dan memiliki alur pembayaran checkout yang kaku sehingga menurunkan konversi penjualan.",
-    solution: "Merancang platform decoupled modern dengan integrasi API Laravel yang bersih, database relasional PostgreSQL terstruktur, dan antarmuka responsif multi-device berkecepatan tinggi.",
+    problem: "Alur belanja web konvensional yang kaku dan lambat menurunkan tingkat konversi checkout pengguna.",
+    solution: "Arsitektur terpisah React 19 dan Laravel 11 dengan integrasi QRIS otomatis berkecepatan tinggi.",
     architectureNodes: [
-      { name: "Frontend SPA", role: "React 19 + TypeScript + Vite", latency: "< 16ms" },
-      { name: "Backend API", role: "Laravel 11 + Eloquent ORM + Sanctum", latency: "38ms" },
-      { name: "Database Engine", role: "PostgreSQL 17 Relational Schema", latency: "12ms" },
-      { name: "Payment Gateway", role: "Dynamic QRIS & Invoicing Engine", latency: "25ms" },
+      { name: "Frontend SPA", role: "React 19 & TypeScript", latency: "< 16ms" },
+      { name: "Backend API", role: "Laravel 11 RESTful", latency: "38ms" },
+      { name: "Database Engine", role: "PostgreSQL 17 Schema", latency: "12ms" },
+      { name: "Payment Gateway", role: "Dynamic QRIS Service", latency: "25ms" },
     ],
     codeSnippet: `// RenStore Dynamic QRIS Payment & Order Controller (Laravel 11)
 namespace App\\Http\\Controllers\\Api;
@@ -254,7 +270,7 @@ class CheckoutController extends Controller
     category: "Web App",
     year: "2026",
     role: "Full Stack Lead & AI Engineer",
-    summary: "Asisten keuangan pribadi bertenaga Google Gemini 2.5 Flash dan Web Audio DSP 4-tahap yang memungkinkan pencatatan transaksi secepat berbicara (Voice-to-Transaction), alokasi anggaran otomatis berbasis Aturan 50/30/20, kalkulasi sisa aman harian (Dynamic Daily Safe Spend), serta proteksi data Row Level Security (RLS) PostgreSQL di Supabase.",
+    summary: "Asisten keuangan pribadi cerdas bertenaga Gemini AI dan Web Audio DSP untuk pencatatan transaksi instan lewat suara, alokasi Aturan 50/30/20, dan isolasi keamanan PostgreSQL RLS.",
     metrics: [
       { label: "Voice AI Latency", value: "< 2.5s" },
       { label: "Filter Vokal DSP", value: "4-Stage" },
@@ -273,22 +289,30 @@ class CheckoutController extends Controller
       "PWA"
     ],
     features: [
-      "Pencatatan Suara Pintar (Voice-to-Transaction): Ekstraksi multi-transaksi dalam satu ucapan dengan pemahaman istilah nominal gaul rupiah (ceban, goceng, seceng, noceng, goban, 50 rebu, 1,5 juta)",
-      "Rangkaian Filter Vokal Web Audio DSP 4-Tahap: 70Hz High-Pass (potong gemuruh/angin), 2.200Hz Peaking (+7.5dB artikulasi konsonan), 7.500Hz Low-Pass (potong desis/AC), dan Dynamics Compressor (-38dB)",
-      "Alokasi Anggaran 50/30/20 & Dynamic Daily Safe Spend: Pengelompokan otomatis pos Kebutuhan (50%), Keinginan (30%), Tabungan (20%), serta kalkulasi sisa aman belanja harian",
-      "Beranda Finansial & Visualisasi Arus Kas: Ringkasan Saldo Bersih (Net Worth), diagram arus kas Recharts interaktif (Mingguan, Bulanan, Tahunan), dan evaluasi skor kesehatan finansial",
-      "FinAI Assistant & Adaptive Memory Engine: Konsultan keuangan interaktif bertenaga Google Gemini yang mempelajari preferensi pengguna, kebiasaan belanja, dan target tabungan",
-      "Target Impian (Financial Goals) & Buku Utang-Piutang: Pemantauan batas anggaran kategori, estimasi waktu deadline tabungan, dan pelacakan utang-piutang dengan status lunas",
-      "Keamanan Berstandar Bank: Isolasi penuh tiap baris data pengguna dengan Row Level Security (RLS) PostgreSQL di Supabase, autentikasi Google OAuth, dan ekspor riwayat data",
-      "Desain Titanium & Ember serta PWA: Estetika dark titanium dengan aksen tembaga hangat (ember copper), kebijakan Zero-Emoji dengan Lucide SVG murni, dan instalasi PWA di iOS & Android",
+      {
+        title: "Voice-to-Transaction",
+        desc: "Ekstraksi ucapan suara menjadi transaksi terstruktur via Gemini AI.",
+      },
+      {
+        title: "Web Audio DSP 4-Tahap",
+        desc: "Peredam derau dan penajaman frekuensi sinyal vokal secara real-time.",
+      },
+      {
+        title: "Alokasi Anggaran 50/30/20",
+        desc: "Pembagian pos otomatis (Kebutuhan, Keinginan, Tabungan) & batas harian.",
+      },
+      {
+        title: "PostgreSQL Row Level Security",
+        desc: "Isolasi privasi data multi-pengguna dengan keamanan ketat di Supabase.",
+      },
     ],
-    problem: "Banyak orang gagal mengelola keuangan pribadi bukan karena tidak memiliki niat, melainkan karena proses pencatatan manual yang lambat, melelahkan, dan buku kas pasif tanpa arahan perbaikan finansial.",
-    solution: "Menggabungkan Voice-to-Transaction bertenaga Gemini 2.5 Flash dengan pemrosesan sinyal vokal Web Audio DSP 4-tahap, kalkulasi otomatis Aturan 50/30/20, dan perlindungan privasi isolasi PostgreSQL RLS di Supabase.",
+    problem: "Pencatatan manual yang lambat dan rumit membuat pengguna enggan melacak pengeluaran harian secara konsisten.",
+    solution: "Ekstraksi transaksi instan berbasis suara via Gemini AI, filter audio DSP, dan alokasi otomatis 50/30/20.",
     architectureNodes: [
-      { name: "Client PWA (React 19)", role: "Zustand State, Web Speech Streaming, Recharts & PWA Cache", latency: "< 16ms" },
-      { name: "Web Audio DSP Chain", role: "70Hz HPF + 2.2kHz Peaking + 7.5kHz LPF + Compressor", latency: "2ms" },
-      { name: "Gemini 2.5 Multimodal AI", role: "Vocal Isolation, Multi-Transaction Extraction, Slang Currency Parser", latency: "1.8s" },
-      { name: "Supabase PostgreSQL", role: "Row Level Security (auth.uid) + 50/30/20 Budget Engine", latency: "24ms" },
+      { name: "Client PWA", role: "React 19 & Zustand", latency: "< 16ms" },
+      { name: "DSP Audio Engine", role: "Web Audio 4-Filter", latency: "2ms" },
+      { name: "Multimodal AI", role: "Gemini 2.5 Flash", latency: "1.8s" },
+      { name: "Supabase DB", role: "PostgreSQL RLS Engine", latency: "24ms" },
     ],
     codeSnippet: `// Monetra Web Audio Vocal DSP Enhancement Chain (Production VoiceModal.tsx)
 export function initVocalDspChain(stream: MediaStream, audioCtx: AudioContext) {
@@ -304,7 +328,7 @@ export function initVocalDspChain(stream: MediaStream, audioCtx: AudioContext) {
   vocalBoost.type = 'peaking';
   vocalBoost.frequency.value = 2200;
   vocalBoost.Q.value = 1.0;
-  vocalBoost.gain.value = 7.5; // +7.5dB vocal boost for casual speech sensitivity
+  vocalBoost.gain.value = 7.5;
 
   // 3. Low-Pass Filter: Cuts off high-frequency hiss, fan noise, & AC (> 7500 Hz)
   const lowPass = audioCtx.createBiquadFilter();
