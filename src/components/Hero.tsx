@@ -82,15 +82,15 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-visible"
     >
       {/* Dynamic Ambient Hero Cosmic Haze */}
       <div className="absolute top-1/4 -left-28 w-[500px] h-[500px] rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
 
-      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
         {/* Left Column: Typography, Dynamic Typewriter & Intentional Persona Actions */}
-        <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-6 z-10">
+        <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-6 z-10">
           {/* Headline in Montserrat Display */}
           <div className="space-y-3">
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-pearl tracking-tight leading-[1.08]">
@@ -185,8 +185,8 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Right Column: Interactive 3D WebGL Crystal Canvas */}
-        <div className="lg:col-span-5 flex items-center justify-center relative">
+        {/* Right Column: Interactive 3D WebGL Crystal Canvas (Unconstrained, Zero Layout Clipping) */}
+        <div className="lg:col-span-6 flex items-center justify-center relative overflow-visible">
           <Hero3D />
         </div>
       </div>

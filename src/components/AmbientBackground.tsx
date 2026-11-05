@@ -520,9 +520,9 @@ export const AmbientBackground: React.FC = () => {
             </div>
           </div>
 
-          {/* SPREAD CELESTIAL BODY 1: Ringed Sapphire Gas Giant (Upper-Right Deep Sky) */}
+          {/* SPREAD CELESTIAL BODY 1: Ringed Sapphire Gas Giant (Upper-Right Deep Sky, with zero top clipping) */}
           <div
-            className="absolute top-[40px] sm:top-[55px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-75 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            className="absolute top-[85px] sm:top-[100px] md:top-[115px] right-[5%] sm:right-[8%] md:right-[10%] z-0 flex items-center justify-center opacity-75 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
             title="Gas Giant Exoplanet (Kepler-186f Orbit)"
           >
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center">

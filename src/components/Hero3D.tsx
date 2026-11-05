@@ -419,10 +419,26 @@ export const Hero3D: React.FC = () => {
     renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
-    // 2. Camera & Scene with Generous Margin (Zero Clipping Guaranteed!)
+    // 2. Camera & Scene with Dynamic Frustum Margin (Zero Clipping Guaranteed!)
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 0, 5.0);
+    const baseFov = 38;
+    const camera = new THREE.PerspectiveCamera(baseFov, width / height, 0.1, 100);
+
+    const updateCameraProjection = (w: number, h: number) => {
+      const aspect = w / h;
+      camera.aspect = aspect;
+      // The entire planetary orbit system has a bounding radius of ~1.75 units.
+      // To ensure zero clipping on any screen width or aspect ratio:
+      // If aspect < 1.05 (tall or square canvas), dynamically pull camera back
+      // so the horizontal visible bounds are always at least 2.20 units!
+      const targetHorizontalHalf = 2.20;
+      const tanHalfFov = Math.tan(THREE.MathUtils.degToRad(baseFov / 2));
+      const neededDistance = targetHorizontalHalf / (tanHalfFov * aspect);
+      camera.position.set(0, 0, Math.max(5.5, neededDistance));
+      camera.updateProjectionMatrix();
+    };
+
+    updateCameraProjection(width, height);
 
     // 3. Planet Celestial Group (with natural 23.5° axial tilt)
     const planetGroup = new THREE.Group();
@@ -502,8 +518,32 @@ export const Hero3D: React.FC = () => {
     const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     planetGroup.add(atmosphereMesh);
 
-    // 8. Compact Orbiting Satellite (Stays strictly within viewport, never clips!)
-    const satelliteGeometry = new THREE.SphereGeometry(0.09, 32, 32);
+    // 8. Compact Orbiting Satellite & Luminous Orbital Trajectory Ring (Full 360°, Zero Clipping)
+    const orbitX = 1.56;
+    const orbitZ = 1.36;
+    const orbitInclination = 0.42;
+
+    // 8a. Luminous 3D Orbit Ring (Full, seamless, never clipped)
+    const orbitPoints: THREE.Vector3[] = [];
+    const orbitSegments = 128;
+    for (let i = 0; i <= orbitSegments; i++) {
+      const theta = (i / orbitSegments) * Math.PI * 2;
+      const ox = Math.cos(theta) * orbitX;
+      const oz = Math.sin(theta) * orbitZ;
+      const oy = Math.sin(theta * 1.15) * orbitInclination;
+      orbitPoints.push(new THREE.Vector3(ox, oy, oz));
+    }
+    const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+    const orbitMaterial = new THREE.LineBasicMaterial({
+      color: 0xF5B027,
+      transparent: true,
+      opacity: 0.35,
+      blending: THREE.AdditiveBlending,
+    });
+    const orbitLine = new THREE.Line(orbitGeometry, orbitMaterial);
+    scene.add(orbitLine);
+
+    const satelliteGeometry = new THREE.SphereGeometry(0.08, 32, 32);
     const satelliteMaterial = new THREE.MeshStandardMaterial({
       map: satelliteTexture,
       roughness: 0.85,
@@ -662,16 +702,14 @@ export const Hero3D: React.FC = () => {
         cloudMesh.rotation.y += delta * 0.045;
       }
 
-      // Orbiting Satellite Physics (Tight orbit, never clips!)
+      // Orbiting Satellite Physics (Gliding along visible 3D orbit ring, never clips!)
       if (!prefersReducedMotion) {
         interactionState.moonAngle += delta * 0.42;
       }
       const mAngle = interactionState.moonAngle;
-      const orbitX = 1.70;
-      const orbitZ = 1.45;
       satelliteMesh.position.x = Math.cos(mAngle) * orbitX;
       satelliteMesh.position.z = Math.sin(mAngle) * orbitZ;
-      satelliteMesh.position.y = Math.sin(mAngle * 1.15) * 0.45;
+      satelliteMesh.position.y = Math.sin(mAngle * 1.15) * orbitInclination;
       satelliteMesh.rotation.y += delta * 0.25;
 
       // Gentle stardust rotation
@@ -682,13 +720,12 @@ export const Hero3D: React.FC = () => {
 
     animate();
 
-    // 14. Responsive Viewport Handler
+    // 14. Responsive Viewport Handler (Maintains Dynamic Margin & Zero Frustum Clipping)
     const handleResize = () => {
       if (!container) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+      updateCameraProjection(w, h);
       renderer.setSize(w, h);
     };
 
@@ -713,6 +750,8 @@ export const Hero3D: React.FC = () => {
       cloudMaterial.dispose();
       atmosphereGeometry.dispose();
       atmosphereMaterial.dispose();
+      orbitGeometry.dispose();
+      orbitMaterial.dispose();
       satelliteGeometry.dispose();
       satelliteMaterial.dispose();
       particleGeometry.dispose();
@@ -744,7 +783,7 @@ export const Hero3D: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-[380px] sm:h-[440px] md:h-[500px] lg:h-[540px] flex items-center justify-center select-none overflow-visible">
+    <div className="relative w-full h-[400px] sm:h-[460px] md:h-[520px] lg:h-[560px] flex items-center justify-center select-none overflow-visible">
       {/* 
         ULTRA-SMOOTH CELESTIAL BACKLIGHT CORONA & RAYS (Zero Clipping, 100% Silky Smooth Glow)
         Positioned directly behind the 3D Planet, spreading seamlessly into the cosmos
