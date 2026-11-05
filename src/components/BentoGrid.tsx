@@ -4,7 +4,6 @@ import {
   Award,
   ShoppingBag,
   Code2,
-  Terminal,
   GraduationCap,
   Hand,
   ArrowUpRight,
@@ -49,7 +48,7 @@ const SKILL_DETAILS: SkillDetail[] = [
     context: 'Pondasi RESTful API, Eloquent ORM, webhook pembayaran otomatis, dan autentikasi sesi aman pada RenStore.',
   },
   {
-    name: 'Database (SQL)',
+    name: 'SQL Database',
     category: 'data',
     level: 85,
     role: 'Relational Schema & Indexing',
@@ -152,7 +151,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   const safeActiveSkill = activeSkill || filteredSkills[0] || SKILL_DETAILS[0];
 
   return (
-    <section id="bento" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="bento" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto">
       {/* Section Header */}
       <div className="mb-10 text-left space-y-2">
         <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
@@ -182,14 +181,17 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             {/* Header Telemetry Bar */}
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-sapphire" />
+                <Code2 className="w-4 h-4 text-champagne" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">
                   {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
                 </span>
               </div>
+              <span className="text-[10px] font-mono text-fog uppercase tracking-wider">
+                {filteredSkills.length} {lang === 'id' ? 'Keahlian' : 'Skills'}
+              </span>
             </div>
 
-            {/* Minimalist Segmented Category Filter */}
+            {/* Minimalist Segmented Category Filter (Single-Line, Zero Awkward Wrapping) */}
             <div className="p-1 rounded-xl bg-midnight-0/60 border border-white/10 flex items-center gap-1">
               {(
                 [
@@ -203,7 +205,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                   key={cat.id}
                   type="button"
                   onClick={() => handleCategoryChange(cat.id)}
-                  className={`flex-1 text-[11px] font-mono py-1 rounded-lg transition-all text-center ${
+                  className={`flex-1 text-[10.5px] sm:text-[11px] font-mono py-1.5 px-1 rounded-lg transition-all text-center whitespace-nowrap ${
                     selectedCategory === cat.id
                       ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
                       : 'text-fog hover:text-pearl border border-transparent'
@@ -214,7 +216,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Clean & Tactile Skills Matrix with Razor-Thin Starlight Tracks */}
+            {/* Clean & Tactile Skills Matrix with Razor-Thin Starlight Tracks (No Truncation) */}
             <div className="grid grid-cols-2 gap-2">
               {filteredSkills.map((skill) => {
                 const isSelected = safeActiveSkill.name === skill.name;
@@ -229,20 +231,11 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                         : 'bg-midnight-0/40 hover:bg-white/[0.05] border-white/10 hover:border-white/20 text-mist'
                     }`}
                   >
-                    <div className="flex items-center justify-between w-full mb-1.5">
-                      <div className="flex items-center gap-1.5 truncate pr-1">
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
-                            isSelected
-                              ? 'bg-champagne animate-pulse'
-                              : 'bg-white/25 group-hover:bg-champagne/60'
-                          }`}
-                        />
-                        <span className="text-xs font-medium text-pearl truncate group-hover:text-champagne transition-colors">
-                          {skill.name}
-                        </span>
-                      </div>
-                      <span className="font-mono text-xs font-semibold text-champagne shrink-0">
+                    <div className="flex items-center justify-between w-full mb-1.5 gap-1">
+                      <span className="text-[11.5px] sm:text-xs font-medium text-pearl group-hover:text-champagne transition-colors truncate">
+                        {skill.name}
+                      </span>
+                      <span className="font-mono text-[10.5px] sm:text-xs font-semibold text-champagne shrink-0">
                         {skill.level}%
                       </span>
                     </div>
@@ -259,33 +252,44 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               })}
             </div>
 
-            {/* Architecture Telemetry HUD (Live Context Inspector) */}
+            {/* Architecture Telemetry HUD (Live Context Inspector with Non-Overlapping Grid) */}
             <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm transition-all">
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-champagne shrink-0" />
-                  <span className="font-mono font-bold text-pearl text-xs">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-champagne shrink-0 mt-0.5" />
+                  <span className="font-mono font-bold text-pearl text-xs sm:text-sm truncate">
                     {safeActiveSkill.name}
                   </span>
-                  <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-full border border-champagne/25">
-                    {safeActiveSkill.role}
-                  </span>
                 </div>
+                <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-md border border-champagne/25 shrink-0 text-right">
+                  {safeActiveSkill.role}
+                </span>
               </div>
 
               <p className="text-xs text-mist leading-relaxed">
                 {safeActiveSkill.context}
               </p>
 
-              {/* Real-time Telemetry Spec Ribbon */}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-fog">
-                <span className="flex items-center gap-1">
-                  <span className="text-mist">Runtime:</span> Modern Modular
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="text-mist">Scale:</span> Production Tested
-                </span>
-                <span className="text-champagne font-semibold">Latency &lt; 16ms</span>
+              {/* Real-time Telemetry Spec Ribbon (Clean 3-Metric Grid with zero text overlap) */}
+              <div className="pt-2.5 border-t border-white/10 grid grid-cols-3 gap-2 text-center font-mono">
+                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                  <span className="text-[9px] uppercase tracking-wider text-fog block">
+                    {lang === 'id' ? 'Arsitektur' : 'Architecture'}
+                  </span>
+                  <span className="text-[11px] font-medium text-pearl">Modular</span>
+                </div>
+                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                  <span className="text-[9px] uppercase tracking-wider text-fog block">
+                    {lang === 'id' ? 'Standar' : 'Standard'}
+                  </span>
+                  <span className="text-[11px] font-medium text-pearl">Produksi</span>
+                </div>
+                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                  <span className="text-[9px] uppercase tracking-wider text-fog block">
+                    {lang === 'id' ? 'Respons' : 'Latency'}
+                  </span>
+                  <span className="text-[11px] font-semibold text-champagne">&lt; 16ms</span>
+                </div>
               </div>
             </div>
           </div>
@@ -368,7 +372,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             {/* Bottom Floating Identity Capsule */}
             <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
               <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
-                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                <span className="w-2 h-2 rounded-full bg-champagne" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
                 <span className="text-[10px] font-mono bg-white/10 px-2 py-0.5 rounded-full text-champagne">
                   SIJA 2023 - 2027
