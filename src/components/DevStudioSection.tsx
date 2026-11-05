@@ -379,10 +379,6 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               {/* Response Stats Bar */}
               <div className="flex flex-wrap items-center justify-between gap-3 pt-2 pb-1 border-b border-white/5 text-xs font-mono">
                 <div className="flex items-center gap-4">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 font-semibold shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                    <span>Status: 200 OK</span>
-                  </span>
                   <span className="text-mist">
                     Latensi:{' '}
                     <span className="text-champagne font-semibold">{apiLatency}ms</span>
