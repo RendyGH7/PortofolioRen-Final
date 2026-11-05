@@ -280,405 +280,202 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* Majestic Photorealistic Spiral Galaxy (JWST / Andromeda-Class Deep Cosmic Vortex) */}
+          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Replaces Spiral Galaxy) */}
           <div
-            className="absolute top-[-70px] sm:top-[-50px] md:top-[-35px] -left-28 sm:-left-20 md:-left-14 z-0 flex items-center justify-center opacity-70 sm:opacity-85 hover:opacity-100 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
-            title="Galaksi Spiral Andromeda (Supermassive Core, Dust Lanes & Star Clusters)"
+            className="absolute top-[45px] sm:top-[60px] md:top-[75px] left-[-20px] sm:left-[1%] md:left-[3%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Golden Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Belts and 3D Rings)"
           >
-            <div className="relative w-64 h-48 sm:w-80 sm:h-60 md:w-96 md:h-72 lg:w-[440px] lg:h-[320px] flex items-center justify-center">
-              {/* Volumetric Deep-Space Galactic Haze & Corona Bloom */}
+            <div className="relative w-56 h-40 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+              {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-0 rounded-full blur-[60px] opacity-70 pointer-events-none group-hover:opacity-95 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
-                    'radial-gradient(ellipse 85% 65% at 50% 50%, rgba(59, 130, 246, 0.45) 0%, rgba(139, 92, 246, 0.3) 38%, rgba(245, 176, 39, 0.2) 62%, rgba(15, 23, 42, 0) 85%)',
-                  transform: 'rotate(-24deg)',
-                }}
-              />
-              <div
-                className="absolute w-3/4 h-3/4 rounded-full blur-[35px] opacity-60 pointer-events-none"
-                style={{
-                  background:
-                    'radial-gradient(circle at 50% 50%, rgba(245, 176, 39, 0.35) 0%, rgba(99, 102, 241, 0.25) 50%, transparent 80%)',
+                    'radial-gradient(circle, rgba(245, 176, 39, 0.45) 0%, rgba(227, 154, 94, 0.25) 45%, rgba(99, 102, 241, 0.15) 70%, transparent 80%)',
                 }}
               />
 
-              {/* Realistic SVG Spiral Galaxy Disc with 3D Inclination & Slow Cosmic Drift */}
-              <div
-                className="relative w-full h-full flex items-center justify-center"
-                style={{
-                  transform: 'perspective(900px) rotateX(32deg) rotateZ(-24deg)',
-                }}
+              {/* Photorealistic 3D Ringed Gas Giant (Warm Amber/Champagne with Ice-Sapphire Rings) */}
+              <svg
+                viewBox="0 0 320 220"
+                className="w-full h-full overflow-visible"
               >
-                <svg
-                  viewBox="0 0 460 340"
-                  className="w-full h-full overflow-visible animate-[spin_160s_linear_infinite]"
-                  style={{ willChange: 'transform' }}
-                >
-                  <defs>
-                    {/* Supermassive Galactic Core (Astrophysical Radial Bulge) */}
-                    <radialGradient id="deepGalaxyCore" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                      <stop offset="10%" stopColor="#FFF9E6" stopOpacity="0.98" />
-                      <stop offset="22%" stopColor="#F5B027" stopOpacity="0.9" />
-                      <stop offset="42%" stopColor="#93C5FD" stopOpacity="0.65" />
-                      <stop offset="65%" stopColor="#6366F1" stopOpacity="0.35" />
-                      <stop offset="85%" stopColor="#3B82F6" stopOpacity="0.12" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </radialGradient>
+                <defs>
+                  {/* Gas Giant Atmospheric Surface Shading (Warm Champagne & Radiant Amber) */}
+                  <radialGradient id="goldPlanetSurface" cx="32%" cy="28%" r="68%">
+                    <stop offset="0%" stopColor="#FFF9E6" />
+                    <stop offset="18%" stopColor="#FDE047" />
+                    <stop offset="38%" stopColor="#F5B027" />
+                    <stop offset="60%" stopColor="#D97706" />
+                    <stop offset="80%" stopColor="#78350F" />
+                    <stop offset="100%" stopColor="#1C0F05" />
+                  </radialGradient>
 
-                    {/* Diffuse Outer Halo Gradient */}
-                    <radialGradient id="galacticHalo" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#818CF8" stopOpacity="0.25" />
-                      <stop offset="35%" stopColor="#4F46E5" stopOpacity="0.18" />
-                      <stop offset="70%" stopColor="#2563EB" stopOpacity="0.08" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </radialGradient>
+                  {/* Atmospheric Rayleigh Limb Scattering */}
+                  <radialGradient id="goldLimbScatter" cx="30%" cy="26%" r="72%">
+                    <stop offset="70%" stopColor="transparent" />
+                    <stop offset="88%" stopColor="#FDE047" stopOpacity="0.35" />
+                    <stop offset="98%" stopColor="#FFF7E6" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                  </radialGradient>
 
-                    {/* Primary Spiral Arm Nebula Gradients */}
-                    <linearGradient id="armGasA" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FFF8E7" stopOpacity="0.95" />
-                      <stop offset="18%" stopColor="#F5B027" stopOpacity="0.88" />
-                      <stop offset="38%" stopColor="#93C5FD" stopOpacity="0.75" />
-                      <stop offset="62%" stopColor="#60A5FA" stopOpacity="0.65" />
-                      <stop offset="82%" stopColor="#818CF8" stopOpacity="0.45" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </linearGradient>
+                  {/* Ring System Gradients (Icy Sapphire & Platinum Crystal with Gold Trim) */}
+                  <linearGradient id="goldBRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#93C5FD" stopOpacity="0.85" />
+                    <stop offset="25%" stopColor="#FFFFFF" stopOpacity="0.98" />
+                    <stop offset="52%" stopColor="#BAE6FD" stopOpacity="0.92" />
+                    <stop offset="76%" stopColor="#F5B027" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#60A5FA" stopOpacity="0.82" />
+                  </linearGradient>
 
-                    <linearGradient id="armGasB" x1="100%" y1="100%" x2="0%" y2="0%">
-                      <stop offset="0%" stopColor="#FFF8E7" stopOpacity="0.95" />
-                      <stop offset="18%" stopColor="#F5B027" stopOpacity="0.88" />
-                      <stop offset="40%" stopColor="#A78BFA" stopOpacity="0.72" />
-                      <stop offset="65%" stopColor="#38BDF8" stopOpacity="0.60" />
-                      <stop offset="85%" stopColor="#4F46E5" stopOpacity="0.40" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </linearGradient>
+                  <linearGradient id="goldARingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F5B027" stopOpacity="0.75" />
+                    <stop offset="42%" stopColor="#BAE6FD" stopOpacity="0.85" />
+                    <stop offset="75%" stopColor="#93C5FD" stopOpacity="0.72" />
+                    <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.6" />
+                  </linearGradient>
 
-                    {/* High-Energy Star-Forming Ridge Gradients */}
-                    <linearGradient id="armSpineA" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                      <stop offset="25%" stopColor="#BAE6FD" stopOpacity="0.85" />
-                      <stop offset="60%" stopColor="#67E8F9" stopOpacity="0.65" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </linearGradient>
+                  <linearGradient id="goldCRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#78350F" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#B45309" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#78350F" stopOpacity="0.45" />
+                  </linearGradient>
 
-                    <linearGradient id="armSpineB" x1="100%" y1="100%" x2="0%" y2="0%">
-                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                      <stop offset="25%" stopColor="#E0E7FF" stopOpacity="0.85" />
-                      <stop offset="60%" stopColor="#93C5FD" stopOpacity="0.65" />
-                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-                    </linearGradient>
+                  {/* Cloud Band Gradients */}
+                  <linearGradient id="goldBandGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FDE047" stopOpacity="0.55" />
+                    <stop offset="40%" stopColor="#FFFBEB" stopOpacity="0.75" />
+                    <stop offset="85%" stopColor="#B45309" stopOpacity="0.35" />
+                  </linearGradient>
 
-                    {/* Volumetric Astrophotography Filters */}
-                    <filter id="deepNebulaBlur" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="15" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
+                  <linearGradient id="goldBandGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F5B027" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#FFFFFF" stopOpacity="0.85" />
+                    <stop offset="80%" stopColor="#92400E" stopOpacity="0.4" />
+                  </linearGradient>
 
-                    <filter id="armSoftGlow" x="-25%" y="-25%" width="150%" height="150%">
-                      <feGaussianBlur stdDeviation="5.5" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
+                  {/* Blur Filters */}
+                  <filter id="goldCloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.8" />
+                  </filter>
+                  <filter id="goldShadowSoft" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.2" />
+                  </filter>
 
-                    <filter id="dustLaneBlur" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="2.4" />
-                    </filter>
+                  {/* Clips */}
+                  <clipPath id="goldPlanetBodyClip">
+                    <circle cx="160" cy="110" r="46" />
+                  </clipPath>
 
-                    <filter id="coreStarlightBloom" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="4.5" result="bloom" />
-                      <feMerge>
-                        <feMergeNode in="bloom" />
-                        <feMergeNode in="bloom" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  </defs>
+                  {/* Clip for Back Half of Rings (Upper Hemisphere: y <= 1) */}
+                  <clipPath id="goldRingBackClip">
+                    <rect x="-160" y="-120" width="320" height="121" />
+                  </clipPath>
 
-                  {/* 1. Diffuse Outer Galactic Disc & Corona Halo */}
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="195"
-                    ry="125"
-                    fill="url(#galacticHalo)"
-                    filter="url(#deepNebulaBlur)"
-                  />
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="155"
-                    ry="100"
-                    fill="none"
-                    stroke="rgba(129, 140, 248, 0.15)"
-                    strokeWidth="24"
-                    filter="url(#deepNebulaBlur)"
-                  />
+                  {/* Clip for Front Half of Rings (Lower Hemisphere: y >= -1) */}
+                  <clipPath id="goldRingFrontClip">
+                    <rect x="-160" y="-1" width="320" height="121" />
+                  </clipPath>
+                </defs>
 
-                  {/* 2. Soft Volumetric Gas Clouds along Arm A (Diffuse Nebula Base) */}
-                  <path
-                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
-                    fill="none"
-                    stroke="url(#armGasA)"
-                    strokeWidth="26"
-                    strokeLinecap="round"
-                    filter="url(#deepNebulaBlur)"
-                    opacity="0.55"
-                  />
-                  {/* Dense Luminous Gas Layer Arm A */}
-                  <path
-                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
-                    fill="none"
-                    stroke="url(#armGasA)"
-                    strokeWidth="13"
-                    strokeLinecap="round"
-                    filter="url(#armSoftGlow)"
-                    opacity="0.85"
-                  />
-                  {/* High-Energy Star Ridge Arm A */}
-                  <path
-                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
-                    fill="none"
-                    stroke="url(#armSpineA)"
-                    strokeWidth="2.8"
-                    strokeLinecap="round"
-                    opacity="0.80"
-                  />
+                {/* ================= LAYER 1: BACK HALF OF RINGS (Passes BEHIND Planet) ================= */}
+                <g transform="translate(160, 110) rotate(22)" clipPath="url(#goldRingBackClip)">
+                  {/* Outer Faint F-Ring */}
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#FDE047" strokeWidth="1" opacity="0.45" />
 
-                  {/* 3. Soft Volumetric Gas Clouds along Arm B (Diffuse Nebula Base) */}
-                  <path
-                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
-                    fill="none"
-                    stroke="url(#armGasB)"
-                    strokeWidth="26"
-                    strokeLinecap="round"
-                    filter="url(#deepNebulaBlur)"
-                    opacity="0.55"
-                  />
-                  {/* Dense Luminous Gas Layer Arm B */}
-                  <path
-                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
-                    fill="none"
-                    stroke="url(#armGasB)"
-                    strokeWidth="13"
-                    strokeLinecap="round"
-                    filter="url(#armSoftGlow)"
-                    opacity="0.85"
-                  />
-                  {/* High-Energy Star Ridge Arm B */}
-                  <path
-                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
-                    fill="none"
-                    stroke="url(#armSpineB)"
-                    strokeWidth="2.8"
-                    strokeLinecap="round"
-                    opacity="0.80"
-                  />
+                  {/* Outer A-Ring */}
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#goldARingGrad)" strokeWidth="15" opacity="0.75" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#0A0502" strokeWidth="0.8" opacity="0.65" />
 
-                  {/* 4. Natural Branching Secondary Spiral Spurs */}
-                  <path
-                    d="M 340 170 C 375 148 415 156 440 188 C 452 208 448 234 425 256"
-                    fill="none"
-                    stroke="url(#armGasA)"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    filter="url(#armSoftGlow)"
-                    opacity="0.50"
-                  />
-                  <path
-                    d="M 120 170 C 85 192 45 184 20 152 C 8 132 12 106 35 84"
-                    fill="none"
-                    stroke="url(#armGasB)"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    filter="url(#armSoftGlow)"
-                    opacity="0.50"
-                  />
+                  {/* Cassini Division Gap (True Empty Space) */}
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#0A0502" strokeWidth="3" opacity="0.85" />
 
-                  {/* 5. Photorealistic Interstellar Dark Dust Lanes (Silhouetted against Starlight) */}
-                  <path
-                    d="M 235 170 C 262 154 298 150 332 170 C 372 195 384 232 362 268 C 334 304 270 314 212 300 C 148 282 104 228 112 170 C 122 122 174 80 238 72 C 306 64 364 90 406 130"
-                    fill="none"
-                    stroke="#02040A"
-                    strokeWidth="5"
-                    strokeOpacity="0.85"
-                    strokeLinecap="round"
-                    filter="url(#dustLaneBlur)"
-                  />
-                  <path
-                    d="M 225 170 C 198 186 162 190 128 170 C 88 145 76 108 98 72 C 126 36 190 26 248 40 C 312 58 356 112 348 170 C 338 218 286 260 222 268 C 154 276 96 250 54 210"
-                    fill="none"
-                    stroke="#02040A"
-                    strokeWidth="5"
-                    strokeOpacity="0.85"
-                    strokeLinecap="round"
-                    filter="url(#dustLaneBlur)"
-                  />
+                  {/* Dense Luminous B-Ring */}
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#goldBRingGrad)" strokeWidth="18" opacity="0.9" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.4" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.8" opacity="0.45" />
 
-                  {/* 6. Realistic Star Clusters & HII Starburst Emission Regions (100+ Astrophotography Points) */}
-                  <g className="stellar-field" filter="url(#armSoftGlow)">
-                    {/* Core Surround High-Density Stars */}
-                    <circle cx="236" cy="164" r="1.1" fill="#FFFFFF" />
-                    <circle cx="224" cy="175" r="1.2" fill="#FFFFFF" />
-                    <circle cx="242" cy="178" r="0.9" fill="#FFF2C2" />
-                    <circle cx="218" cy="165" r="1.0" fill="#BAE6FD" />
-                    <circle cx="248" cy="162" r="1.3" fill="#FDE047" opacity="0.9" />
-                    <circle cx="212" cy="176" r="1.1" fill="#FFFFFF" />
+                  {/* Translucent Inner Crepe C-Ring */}
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#goldCRingGrad)" strokeWidth="10" opacity="0.4" />
 
-                    {/* Arm A: Young Blue Hypergiants & Golden Star Clusters */}
-                    <circle cx="268" cy="154" r="1.2" fill="#FFFFFF" />
-                    <circle cx="282" cy="150" r="1.5" fill="#F5B027" opacity="0.95" />
-                    <circle cx="305" cy="154" r="1.3" fill="#7DD3FC" />
-                    <circle cx="328" cy="168" r="1.4" fill="#FFFFFF" />
-                    <circle cx="348" cy="186" r="1.6" fill="#F472B6" opacity="0.85" />
-                    <circle cx="362" cy="208" r="1.3" fill="#93C5FD" />
-                    <circle cx="374" cy="232" r="1.6" fill="#FFFFFF" />
-                    <circle cx="368" cy="256" r="1.5" fill="#F5B027" opacity="0.9" />
-                    <circle cx="348" cy="282" r="1.2" fill="#67E8F9" />
-                    <circle cx="320" cy="302" r="1.4" fill="#FFFFFF" />
-                    <circle cx="288" cy="316" r="1.3" fill="#FDE047" />
-                    <circle cx="252" cy="320" r="1.5" fill="#BAE6FD" />
-                    <circle cx="214" cy="312" r="1.4" fill="#FFFFFF" />
-                    <circle cx="178" cy="298" r="1.2" fill="#7DD3FC" />
-                    <circle cx="145" cy="275" r="1.5" fill="#F472B6" opacity="0.85" />
-                    <circle cx="118" cy="244" r="1.2" fill="#FFFFFF" />
-                    <circle cx="102" cy="208" r="1.4" fill="#F5B027" />
-                    <circle cx="98" cy="172" r="1.5" fill="#93C5FD" />
-                    <circle cx="105" cy="138" r="1.3" fill="#FFFFFF" />
-                    <circle cx="125" cy="106" r="1.5" fill="#67E8F9" />
-                    <circle cx="152" cy="80" r="1.2" fill="#FDE047" />
-                    <circle cx="186" cy="64" r="1.4" fill="#FFFFFF" />
-                    <circle cx="225" cy="56" r="1.3" fill="#BAE6FD" />
-                    <circle cx="265" cy="55" r="1.6" fill="#F5B027" opacity="0.9" />
-                    <circle cx="308" cy="62" r="1.3" fill="#FFFFFF" />
-                    <circle cx="348" cy="78" r="1.4" fill="#7DD3FC" />
-                    <circle cx="385" cy="102" r="1.5" fill="#F472B6" opacity="0.85" />
-                    <circle cx="414" cy="130" r="1.3" fill="#FFFFFF" />
-                    <circle cx="432" cy="162" r="1.4" fill="#93C5FD" />
-                    <circle cx="438" cy="195" r="1.5" fill="#FDE047" />
-                    <circle cx="426" cy="228" r="1.2" fill="#FFFFFF" />
+                  {/* Planet's Soft Spherical Shadow cast onto the Back Rings */}
+                  <ellipse cx="-22" cy="-30" rx="44" ry="24" fill="#0A0502" opacity="0.92" filter="url(#goldShadowSoft)" />
+                </g>
 
-                    {/* Arm B: Young Blue Hypergiants & Golden Star Clusters */}
-                    <circle cx="192" cy="186" r="1.2" fill="#FFFFFF" />
-                    <circle cx="178" cy="190" r="1.5" fill="#F5B027" opacity="0.95" />
-                    <circle cx="155" cy="186" r="1.3" fill="#7DD3FC" />
-                    <circle cx="132" cy="172" r="1.4" fill="#FFFFFF" />
-                    <circle cx="112" cy="154" r="1.6" fill="#F472B6" opacity="0.85" />
-                    <circle cx="98" cy="132" r="1.3" fill="#93C5FD" />
-                    <circle cx="86" cy="108" r="1.6" fill="#FFFFFF" />
-                    <circle cx="92" cy="84" r="1.5" fill="#F5B027" opacity="0.9" />
-                    <circle cx="112" cy="58" r="1.2" fill="#67E8F9" />
-                    <circle cx="140" cy="38" r="1.4" fill="#FFFFFF" />
-                    <circle cx="172" cy="24" r="1.3" fill="#FDE047" />
-                    <circle cx="208" cy="20" r="1.5" fill="#BAE6FD" />
-                    <circle cx="246" cy="28" r="1.4" fill="#FFFFFF" />
-                    <circle cx="282" cy="42" r="1.2" fill="#7DD3FC" />
-                    <circle cx="315" cy="65" r="1.5" fill="#F472B6" opacity="0.85" />
-                    <circle cx="342" cy="96" r="1.2" fill="#FFFFFF" />
-                    <circle cx="358" cy="132" r="1.4" fill="#F5B027" />
-                    <circle cx="362" cy="168" r="1.5" fill="#93C5FD" />
-                    <circle cx="355" cy="202" r="1.3" fill="#FFFFFF" />
-                    <circle cx="335" cy="234" r="1.5" fill="#67E8F9" />
-                    <circle cx="308" cy="260" r="1.2" fill="#FDE047" />
-                    <circle cx="274" cy="276" r="1.4" fill="#FFFFFF" />
-                    <circle cx="235" cy="284" r="1.3" fill="#BAE6FD" />
-                    <circle cx="195" cy="285" r="1.6" fill="#F5B027" opacity="0.9" />
-                    <circle cx="152" cy="278" r="1.3" fill="#FFFFFF" />
-                    <circle cx="112" cy="262" r="1.4" fill="#7DD3FC" />
-                    <circle cx="75" cy="238" r="1.5" fill="#F472B6" opacity="0.85" />
-                    <circle cx="46" cy="210" r="1.3" fill="#FFFFFF" />
-                    <circle cx="28" cy="178" r="1.4" fill="#93C5FD" />
-                    <circle cx="22" cy="145" r="1.5" fill="#FDE047" />
-                    <circle cx="34" cy="112" r="1.2" fill="#FFFFFF" />
+                {/* ================= LAYER 2: THE PLANET SPHERE ================= */}
+                <g>
+                  {/* Base Spherical Gas Giant Body */}
+                  <circle cx="160" cy="110" r="46" fill="url(#goldPlanetSurface)" />
+
+                  {/* Atmospheric Cloud Belts & Ring Shadows (Clipped strictly to Planet Sphere) */}
+                  <g clipPath="url(#goldPlanetBodyClip)">
+                    {/* Tilted Cloud Belts (Aligned parallel to equatorial ring plane) */}
+                    <g transform="rotate(22 160 110)">
+                      {/* North Temperate Jet Stream */}
+                      <path
+                        d="M 112 94 Q 160 102 208 94 L 208 102 Q 160 110 112 102 Z"
+                        fill="url(#goldBandGrad1)"
+                        opacity="0.55"
+                        filter="url(#goldCloudSoft)"
+                      />
+                      {/* Bright Equatorial Zone */}
+                      <path
+                        d="M 112 106 Q 160 115 208 106 L 208 116 Q 160 125 112 116 Z"
+                        fill="url(#goldBandGrad2)"
+                        opacity="0.65"
+                        filter="url(#goldCloudSoft)"
+                      />
+                      {/* South Tropical Belt */}
+                      <path
+                        d="M 112 120 Q 160 128 208 120 L 208 127 Q 160 135 112 127 Z"
+                        fill="url(#goldBandGrad1)"
+                        opacity="0.45"
+                        filter="url(#goldCloudSoft)"
+                      />
+
+                      {/* Turbulent Cloud Storm Eddies */}
+                      <ellipse cx="145" cy="108" rx="8" ry="3" fill="#FFFBEB" opacity="0.45" filter="url(#goldCloudSoft)" />
+                      <ellipse cx="178" cy="95" rx="6" ry="2.2" fill="#FDE047" opacity="0.35" filter="url(#goldCloudSoft)" />
+
+                      {/* Dramatic Ring Shadow on Planet's Cloud Tops (Cast by front rings) */}
+                      <path
+                        d="M 112 116 Q 160 126 208 116 L 208 123 Q 160 133 112 123 Z"
+                        fill="#0A0502"
+                        opacity="0.78"
+                        filter="url(#goldShadowSoft)"
+                      />
+                    </g>
                   </g>
 
-                  {/* 7. Supermassive Galactic Core (Astrophysical Bulge & Event Horizon Radiance) */}
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="44"
-                    ry="30"
-                    fill="url(#deepGalaxyCore)"
-                    filter="url(#coreStarlightBloom)"
-                    className="animate-pulse"
-                    style={{ animationDuration: '5s' }}
-                  />
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="22"
-                    ry="15"
-                    fill="#FFF7E6"
-                    filter="url(#armSoftGlow)"
-                    opacity="0.95"
-                  />
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="10"
-                    ry="7"
-                    fill="#FFFFFF"
-                    className="shadow-[0_0_24px_#FFFFFF]"
-                  />
+                  {/* Atmospheric Rayleigh Limb Scatter (Crescent Glow on Illuminated Edge) */}
+                  <circle cx="160" cy="110" r="46" fill="url(#goldLimbScatter)" />
+                </g>
 
-                  {/* 8. Optical Telescope Astrophotography Lens Diffraction Rays (JWST / Hubble 6-Point Spike) */}
-                  {/* Anamorphic Horizontal Stellar Flare */}
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="85"
-                    ry="1.4"
-                    fill="#FFFFFF"
-                    opacity="0.85"
-                    filter="url(#armSoftGlow)"
-                  />
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="48"
-                    ry="2.4"
-                    fill="#BAE6FD"
-                    opacity="0.65"
-                    filter="url(#armSoftGlow)"
-                  />
-                  {/* Vertical Primary Diffraction Spike */}
-                  <ellipse
-                    cx="230"
-                    cy="170"
-                    rx="1.4"
-                    ry="55"
-                    fill="#FFFFFF"
-                    opacity="0.75"
-                    filter="url(#armSoftGlow)"
-                  />
-                  {/* Diagonal Secondary Diffraction Spikes */}
-                  <line
-                    x1="195"
-                    y1="135"
-                    x2="265"
-                    y2="205"
-                    stroke="#FFFFFF"
-                    strokeWidth="0.9"
-                    strokeOpacity="0.45"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="195"
-                    y1="205"
-                    x2="265"
-                    y2="135"
-                    stroke="#FFFFFF"
-                    strokeWidth="0.9"
-                    strokeOpacity="0.45"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+                {/* ================= LAYER 3: FRONT HALF OF RINGS (Passes IN FRONT OF Planet) ================= */}
+                <g transform="translate(160, 110) rotate(22)" clipPath="url(#goldRingFrontClip)">
+                  {/* Outer Faint F-Ring */}
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#FDE047" strokeWidth="1" opacity="0.55" />
+
+                  {/* Outer A-Ring */}
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#goldARingGrad)" strokeWidth="15" opacity="0.82" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#0A0502" strokeWidth="0.9" opacity="0.7" />
+
+                  {/* Cassini Division Gap (True Empty Space) */}
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#0A0502" strokeWidth="3" opacity="0.85" />
+
+                  {/* Dense Luminous B-Ring */}
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#goldBRingGrad)" strokeWidth="18" opacity="0.95" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.9" opacity="0.5" />
+
+                  {/* Translucent Inner Crepe C-Ring */}
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#goldCRingGrad)" strokeWidth="10" opacity="0.45" />
+                </g>
+
+                {/* ================= LAYER 4: ICY SHEPHERD MOON ================= */}
+                <circle cx="52" cy="76" r="1.8" fill="#FFF9E6" />
+                <circle cx="52" cy="76" r="4" fill="#FDE047" opacity="0.5" filter="url(#goldCloudSoft)" />
+              </svg>
             </div>
           </div>
 
