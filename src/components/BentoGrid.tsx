@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Award,
@@ -89,6 +89,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'frontend' | 'backend' | 'data'>('all');
   const [activeSkill, setActiveSkill] = useState<SkillDetail>(SKILL_DETAILS[0]);
   const [greetingToast, setGreetingToast] = useState(false);
+  const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Mouse Parallax tracking for the center cutout
   const centerStageRef = useRef<HTMLDivElement>(null);
@@ -122,13 +123,33 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
       colors: ['#F5B027', '#4C6FD1', '#10B981', '#F3F5FA'],
     });
     setGreetingToast(true);
-    setTimeout(() => setGreetingToast(false), 2600);
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    toastTimeoutRef.current = setTimeout(() => setGreetingToast(false), 2600);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    };
+  }, []);
+
+  const handleCategoryChange = (catId: 'all' | 'frontend' | 'backend' | 'data') => {
+    setSelectedCategory(catId);
+    const nextFiltered =
+      catId === 'all'
+        ? SKILL_DETAILS
+        : SKILL_DETAILS.filter((s) => s.category === catId);
+    if (nextFiltered.length > 0 && !nextFiltered.some((s) => s.name === activeSkill.name)) {
+      setActiveSkill(nextFiltered[0]);
+    }
   };
 
   const filteredSkills =
     selectedCategory === 'all'
       ? SKILL_DETAILS
       : SKILL_DETAILS.filter((s) => s.category === selectedCategory);
+
+  const safeActiveSkill = activeSkill || filteredSkills[0] || SKILL_DETAILS[0];
 
   return (
     <section id="bento" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
@@ -179,12 +200,13 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                   { id: 'all', label: lang === 'id' ? 'Semua' : 'All' },
                   { id: 'frontend', label: 'Frontend' },
                   { id: 'backend', label: 'Backend' },
-                  { id: 'data', label: 'Data & DB' },
+                  { id: 'data', label: 'Data & Cloud' },
                 ] as const
               ).map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  type="button"
+                  onClick={() => handleCategoryChange(cat.id)}
                   className={`flex-1 text-[11px] font-mono py-1 rounded-lg transition-all text-center ${
                     selectedCategory === cat.id
                       ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
@@ -196,49 +218,61 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               ))}
             </div>
 
-            {/* Clean & Tactile Skills Matrix (Zero Clutter, Zero Truncation) */}
+            {/* Clean & Tactile Skills Matrix with Razor-Thin Starlight Tracks */}
             <div className="grid grid-cols-2 gap-2">
               {filteredSkills.map((skill) => {
-                const isSelected = activeSkill.name === skill.name;
+                const isSelected = safeActiveSkill.name === skill.name;
                 return (
                   <button
                     key={skill.name}
+                    type="button"
                     onClick={() => setActiveSkill(skill)}
-                    className={`h-[42px] px-3 rounded-xl text-left transition-all flex items-center justify-between border group ${
+                    className={`p-2.5 rounded-xl text-left transition-all flex flex-col justify-between border group ${
                       isSelected
                         ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_14px_rgba(245,176,39,0.2)]'
                         : 'bg-midnight-0/40 hover:bg-white/[0.05] border-white/10 hover:border-white/20 text-mist'
                     }`}
                   >
-                    <div className="flex items-center gap-2 truncate">
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
-                          isSelected ? 'bg-champagne animate-pulse' : 'bg-white/25 group-hover:bg-champagne/60'
-                        }`}
-                      />
-                      <span className="text-xs font-medium text-pearl truncate group-hover:text-champagne transition-colors">
-                        {skill.name}
+                    <div className="flex items-center justify-between w-full mb-1.5">
+                      <div className="flex items-center gap-1.5 truncate pr-1">
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
+                            isSelected
+                              ? 'bg-champagne animate-pulse'
+                              : 'bg-white/25 group-hover:bg-champagne/60'
+                          }`}
+                        />
+                        <span className="text-xs font-medium text-pearl truncate group-hover:text-champagne transition-colors">
+                          {skill.name}
+                        </span>
+                      </div>
+                      <span className="font-mono text-xs font-semibold text-champagne shrink-0">
+                        {skill.level}%
                       </span>
                     </div>
 
-                    <span className="font-mono text-xs font-semibold text-champagne shrink-0 ml-1.5">
-                      {skill.level}%
-                    </span>
+                    {/* Minimalist Micro Progress Track */}
+                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-champagne to-amber-500 rounded-full transition-all duration-300"
+                        style={{ width: `${skill.level}%` }}
+                      />
+                    </div>
                   </button>
                 );
               })}
             </div>
 
             {/* Architecture Telemetry HUD (Live Context Inspector) */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2 shadow-glass-sm transition-all">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm transition-all">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
                   <span className="font-mono font-bold text-pearl text-xs">
-                    {activeSkill.name}
+                    {safeActiveSkill.name}
                   </span>
                   <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-full border border-champagne/25">
-                    {activeSkill.role}
+                    {safeActiveSkill.role}
                   </span>
                 </div>
                 <span className="text-[10px] text-[#6EE7B7] font-mono bg-[#064E3B]/70 px-2 py-0.5 rounded-full border border-[#10B981]/50 hidden sm:inline-block">
@@ -247,7 +281,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               </div>
 
               <p className="text-xs text-mist leading-relaxed">
-                {activeSkill.context}
+                {safeActiveSkill.context}
               </p>
 
               {/* Real-time Telemetry Spec Ribbon */}
@@ -288,52 +322,58 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             />
 
             {/* Floating Holographic Pill 1: Full Stack Developer (Top Left) */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+            <div
               className="absolute top-2 left-0 sm:left-2 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
             >
-              <div className="glass-3 px-3.5 py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
-                <Code2 className="w-3.5 h-3.5 text-sapphire" />
-                <span className="text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
-              </div>
-            </motion.div>
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="glass-3 px-3.5 py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
+                  <Code2 className="w-3.5 h-3.5 text-sapphire" />
+                  <span className="text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
+                </div>
+              </motion.div>
+            </div>
 
             {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right) */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+            <div
               className="absolute top-12 right-0 sm:right-2 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
             >
-              <div className="glass-3 px-3.5 py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
-                <GraduationCap className="w-3.5 h-3.5 text-champagne" />
-                <span className="text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
-              </div>
-            </motion.div>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+              >
+                <div className="glass-3 px-3.5 py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
+                  <GraduationCap className="w-3.5 h-3.5 text-champagne" />
+                  <span className="text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
+                </div>
+              </motion.div>
+            </div>
 
             {/* Cutout Photo of Rendy - HERO-SCALE, ENLARGED & CINEMATIC */}
             <div
               className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[450px] flex items-end justify-center transition-transform duration-200 ease-out"
               style={{
-                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.08, 1.08, 1.08)`,
+                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.06, 1.06, 1.06)`,
               }}
             >
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[520px] sm:max-h-[580px] lg:max-h-[620px] filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_40px_rgba(245,176,39,0.4)] transition-all duration-300"
+                className="w-full h-auto object-contain max-h-[500px] sm:max-h-[560px] lg:max-h-[600px] filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_40px_rgba(245,176,39,0.4)] transition-all duration-300"
                 loading="lazy"
               />
             </div>
 
             {/* Bottom Floating Identity Capsule */}
-            <div className="absolute -bottom-2 z-20 pointer-events-none flex flex-col items-center text-center">
+            <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
               <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
                 <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
