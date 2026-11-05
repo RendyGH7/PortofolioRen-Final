@@ -16,6 +16,21 @@ export function App() {
   const [lang, setLang] = useState<'id' | 'en'>('id');
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+  const isAnyModalOpen = commandPaletteOpen || terminalOpen || isProjectModalOpen;
+
+  // Prevent background scroll when any modal or pop-up is active
+  useEffect(() => {
+    if (isAnyModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isAnyModalOpen]);
 
   // Global keyboard shortcuts: Ctrl+K or Cmd+K for Command Palette, `~` for Terminal
   useEffect(() => {
@@ -45,11 +60,12 @@ export function App() {
       {/* Subtle Ambient Background Mesh & Luxury Grain */}
       <AmbientBackground />
 
-      {/* Floating Glass Navigation */}
+      {/* Floating Glass Navigation (Hidden smoothly during active popups/modals) */}
       <Navbar
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         lang={lang}
         onToggleLang={toggleLanguage}
+        isModalOpen={isAnyModalOpen}
       />
 
       {/* Main Content Sections */}
@@ -61,7 +77,7 @@ export function App() {
         <BentoGrid lang={lang} />
 
         {/* Selected Work: Filterable, Case Study Modal, Architecture & Code Tabs */}
-        <ProjectsSection lang={lang} />
+        <ProjectsSection lang={lang} onModalOpenChange={setIsProjectModalOpen} />
 
         {/* Dev Studio & Sandbox: Live REST API Client, SQL Query Runner, Glass UI Physics Lab */}
         <DevStudioSection lang={lang} />
@@ -76,8 +92,8 @@ export function App() {
       {/* Deep Navy Glass Footer */}
       <Footer onOpenTerminal={() => setTerminalOpen(true)} />
 
-      {/* Floating Ask Rendy AI Chat Assistant */}
-      <AskRendyAI />
+      {/* Floating Ask Rendy AI Chat Assistant (Hides during active modals) */}
+      <AskRendyAI isModalOpen={isAnyModalOpen} />
 
       {/* Command Palette (Ctrl+K) */}
       <CommandPalette

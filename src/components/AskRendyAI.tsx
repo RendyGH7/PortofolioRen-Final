@@ -9,7 +9,11 @@ interface Message {
   link?: { text: string; sectionId: string };
 }
 
-export const AskRendyAI: React.FC = () => {
+interface AskRendyAIProps {
+  isModalOpen?: boolean;
+}
+
+export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputQuery, setInputQuery] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -137,7 +141,13 @@ export const AskRendyAI: React.FC = () => {
   return (
     <>
       {/* Floating Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div
+        className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ease-out ${
+          isModalOpen
+            ? 'opacity-0 translate-y-12 pointer-events-none'
+            : 'opacity-100 translate-y-0'
+        }`}
+      >
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="group relative p-3 sm:px-4 sm:py-3 rounded-full glass-2 hover:border-champagne/60 shadow-glass-md flex items-center gap-2 text-pearl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne"
@@ -149,7 +159,7 @@ export const AskRendyAI: React.FC = () => {
           <span className="hidden sm:inline text-xs font-semibold text-pearl">
             Tanya Rendy
           </span>
-          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+          <span className="w-2 h-2 rounded-full bg-champagne" />
         </button>
       </div>
 

@@ -200,7 +200,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-28 px-4 bg-midnight-0/80 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-start justify-center pt-20 sm:pt-28 px-4 bg-midnight-0/80 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div

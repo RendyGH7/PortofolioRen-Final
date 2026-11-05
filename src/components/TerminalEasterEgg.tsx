@@ -132,7 +132,7 @@ export const TerminalEasterEgg: React.FC<TerminalEasterEggProps> = ({ isOpen, on
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-midnight-0/80 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-midnight-0/80 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div

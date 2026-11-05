@@ -7,12 +7,14 @@ interface NavbarProps {
   onOpenCommandPalette: () => void;
   lang: 'id' | 'en';
   onToggleLang: () => void;
+  isModalOpen?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenCommandPalette,
   lang,
   onToggleLang,
+  isModalOpen = false,
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -63,7 +65,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 flex justify-center px-4 sm:px-6 pt-4 sm:pt-5 pointer-events-none`}
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ease-out flex justify-center px-4 sm:px-6 pt-4 sm:pt-5 pointer-events-none ${
+          isModalOpen
+            ? 'opacity-0 -translate-y-16 pointer-events-none'
+            : 'opacity-100 translate-y-0'
+        }`}
       >
         <nav
           className={`pointer-events-auto w-full max-w-5xl rounded-full transition-all duration-300 px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between ${

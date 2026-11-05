@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink,
@@ -17,13 +18,18 @@ import { GithubIcon } from './SocialIcons';
 
 interface ProjectsSectionProps {
   lang: 'id' | 'en';
+  onModalOpenChange?: (isOpen: boolean) => void;
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalOpenChange }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
+
+  useEffect(() => {
+    onModalOpenChange?.(!!activeModalProject);
+  }, [activeModalProject, onModalOpenChange]);
 
   const categories = ['All', 'E-Commerce', 'Web App'];
 
@@ -249,20 +255,22 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
         </div>
       )}
 
-      {/* Case Study Modal (Glass 3) */}
-      <AnimatePresence>
-        {activeModalProject && (
-          <motion.div
-            key="case-study-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-midnight-0/80 backdrop-blur-md"
-            onClick={() => setActiveModalProject(null)}
-            onKeyDown={(e) => e.key === 'Escape' && setActiveModalProject(null)}
-            tabIndex={0}
-          >
+      {/* Case Study Modal (Glass 3) rendered via createPortal so it is always at top-level body */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {activeModalProject && (
+              <motion.div
+                key="case-study-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-midnight-0/85 backdrop-blur-md"
+                onClick={() => setActiveModalProject(null)}
+                onKeyDown={(e) => e.key === 'Escape' && setActiveModalProject(null)}
+                tabIndex={0}
+              >
             <motion.div
               key="case-study-dialog"
               initial={{ opacity: 0, scale: 0.94, y: 16 }}
@@ -490,7 +498,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
+  )}
     </section>
   );
 };
