@@ -769,23 +769,130 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* Cyan Ice World (Kepler-452) */}
+          {/* SPREAD CELESTIAL BODY 4: Photorealistic Cyan Ice Gas Giant (Kepler-452b Frosted Rings) */}
           <div
-            className="absolute top-[320px] left-[3%] md:left-[5%] z-10 hidden md:flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-700 pointer-events-auto cursor-pointer group"
-            title="Cyan Exoplanet (Kepler-452)"
+            className="absolute top-[260px] left-[2%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Cyan Ice Gas Giant (Kepler-452b Frosted Rings)"
           >
-            <div className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+              {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="w-18 h-18 md:w-24 md:h-24 rounded-full relative overflow-hidden group-hover:scale-105 transition-transform duration-700"
+                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
-                  background: 'radial-gradient(circle at 30% 30%, #2C7A85 0%, #16434B 50%, #0A1020 90%)',
-                  boxShadow:
-                    'inset -10px -10px 22px rgba(0, 0, 0, 0.95), inset 5px 5px 14px rgba(124, 229, 232, 0.6), 0 0 35px rgba(44, 122, 133, 0.4)',
+                  background:
+                    'radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, rgba(44, 122, 133, 0.25) 45%, transparent 75%)',
                 }}
-              >
-                <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.45),transparent_60%)]" />
-              </div>
-              <div className="absolute w-44 h-44 rounded-full border border-dashed border-petrol/25 pointer-events-none -rotate-12 animate-[spin_40s_linear_infinite]" />
+              />
+
+              <svg viewBox="0 0 320 220" className="w-full h-full overflow-visible">
+                <defs>
+                  <radialGradient id="cyanPlanetSurface" cx="32%" cy="28%" r="68%">
+                    <stop offset="0%" stopColor="#E0F2FE" />
+                    <stop offset="20%" stopColor="#67E8F9" />
+                    <stop offset="45%" stopColor="#06B6D4" />
+                    <stop offset="70%" stopColor="#0E7490" />
+                    <stop offset="100%" stopColor="#082F49" />
+                  </radialGradient>
+
+                  <radialGradient id="cyanLimbScatter" cx="30%" cy="26%" r="72%">
+                    <stop offset="70%" stopColor="transparent" />
+                    <stop offset="88%" stopColor="#67E8F9" stopOpacity="0.35" />
+                    <stop offset="98%" stopColor="#A5F3FC" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                  </radialGradient>
+
+                  <linearGradient id="cyanBRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#67E8F9" stopOpacity="0.85" />
+                    <stop offset="25%" stopColor="#FFFFFF" stopOpacity="0.98" />
+                    <stop offset="52%" stopColor="#A5F3FC" stopOpacity="0.92" />
+                    <stop offset="76%" stopColor="#22D3EE" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#0891B2" stopOpacity="0.82" />
+                  </linearGradient>
+
+                  <linearGradient id="cyanARingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#A5F3FC" stopOpacity="0.75" />
+                    <stop offset="42%" stopColor="#22D3EE" stopOpacity="0.85" />
+                    <stop offset="75%" stopColor="#67E8F9" stopOpacity="0.72" />
+                    <stop offset="100%" stopColor="#0E7490" stopOpacity="0.6" />
+                  </linearGradient>
+
+                  <linearGradient id="cyanCRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#082F49" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#155E75" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#082F49" stopOpacity="0.45" />
+                  </linearGradient>
+
+                  <linearGradient id="cyanBandGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#67E8F9" stopOpacity="0.55" />
+                    <stop offset="40%" stopColor="#ECFEFF" stopOpacity="0.75" />
+                    <stop offset="85%" stopColor="#0E7490" stopOpacity="0.35" />
+                  </linearGradient>
+
+                  <linearGradient id="cyanBandGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#FFFFFF" stopOpacity="0.85" />
+                    <stop offset="80%" stopColor="#164E63" stopOpacity="0.4" />
+                  </linearGradient>
+
+                  <filter id="cyanCloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.8" />
+                  </filter>
+                  <filter id="cyanShadowSoft" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.2" />
+                  </filter>
+
+                  <clipPath id="cyanPlanetBodyClip">
+                    <circle cx="160" cy="110" r="46" />
+                  </clipPath>
+                  <clipPath id="cyanRingBackClip">
+                    <rect x="-160" y="-120" width="320" height="121" />
+                  </clipPath>
+                  <clipPath id="cyanRingFrontClip">
+                    <rect x="-160" y="-1" width="320" height="121" />
+                  </clipPath>
+                </defs>
+
+                <g transform="translate(160, 110) rotate(-18)" clipPath="url(#cyanRingBackClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#A5F3FC" strokeWidth="1" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#cyanARingGrad)" strokeWidth="15" opacity="0.75" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#04121F" strokeWidth="0.8" opacity="0.65" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#04121F" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#cyanBRingGrad)" strokeWidth="18" opacity="0.9" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.4" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#22D3EE" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#cyanCRingGrad)" strokeWidth="10" opacity="0.4" />
+                  <ellipse cx="22" cy="-30" rx="44" ry="24" fill="#04121F" opacity="0.92" filter="url(#cyanShadowSoft)" />
+                </g>
+
+                <g>
+                  <circle cx="160" cy="110" r="46" fill="url(#cyanPlanetSurface)" />
+                  <g clipPath="url(#cyanPlanetBodyClip)">
+                    <g transform="rotate(-18 160 110)">
+                      <path d="M 112 94 Q 160 102 208 94 L 208 102 Q 160 110 112 102 Z" fill="url(#cyanBandGrad1)" opacity="0.55" filter="url(#cyanCloudSoft)" />
+                      <path d="M 112 106 Q 160 115 208 106 L 208 116 Q 160 125 112 116 Z" fill="url(#cyanBandGrad2)" opacity="0.65" filter="url(#cyanCloudSoft)" />
+                      <path d="M 112 120 Q 160 128 208 120 L 208 127 Q 160 135 112 127 Z" fill="url(#cyanBandGrad1)" opacity="0.45" filter="url(#cyanCloudSoft)" />
+                      <ellipse cx="145" cy="108" rx="8" ry="3" fill="#ECFEFF" opacity="0.45" filter="url(#cyanCloudSoft)" />
+                      <ellipse cx="178" cy="95" rx="6" ry="2.2" fill="#67E8F9" opacity="0.35" filter="url(#cyanCloudSoft)" />
+                      <path d="M 112 116 Q 160 126 208 116 L 208 123 Q 160 133 112 123 Z" fill="#04121F" opacity="0.78" filter="url(#cyanShadowSoft)" />
+                    </g>
+                  </g>
+                  <circle cx="160" cy="110" r="46" fill="url(#cyanLimbScatter)" />
+                </g>
+
+                <g transform="translate(160, 110) rotate(-18)" clipPath="url(#cyanRingFrontClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#A5F3FC" strokeWidth="1" opacity="0.55" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#cyanARingGrad)" strokeWidth="15" opacity="0.82" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#04121F" strokeWidth="0.9" opacity="0.7" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#04121F" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#cyanBRingGrad)" strokeWidth="18" opacity="0.95" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#22D3EE" strokeWidth="0.9" opacity="0.5" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#cyanCRingGrad)" strokeWidth="10" opacity="0.45" />
+                </g>
+
+                <circle cx="268" cy="76" r="1.8" fill="#ECFEFF" />
+                <circle cx="268" cy="76" r="4" fill="#67E8F9" opacity="0.5" filter="url(#cyanCloudSoft)" />
+              </svg>
             </div>
           </div>
 
@@ -808,6 +915,134 @@ export const AmbientBackground: React.FC = () => {
               background: 'radial-gradient(circle, #3A58B8 0%, #1E336B 45%, #0F1830 75%, transparent 90%)',
             }}
           />
+
+          {/* SPREAD CELESTIAL BODY 5: Photorealistic Amethyst Gas Giant (Kepler-16b Orbital Rings) */}
+          <div
+            className="absolute top-[320px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Amethyst Gas Giant Exoplanet (Kepler-16b Orbital Rings)"
+          >
+            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+              {/* Volumetric Planetary Starlight Haze */}
+              <div
+                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(107, 33, 168, 0.25) 45%, transparent 75%)',
+                }}
+              />
+
+              <svg viewBox="0 0 320 220" className="w-full h-full overflow-visible">
+                <defs>
+                  <radialGradient id="violetPlanetSurface" cx="32%" cy="28%" r="68%">
+                    <stop offset="0%" stopColor="#F3E8FF" />
+                    <stop offset="18%" stopColor="#C084FC" />
+                    <stop offset="40%" stopColor="#9333EA" />
+                    <stop offset="65%" stopColor="#6B21A8" />
+                    <stop offset="85%" stopColor="#3B0764" />
+                    <stop offset="100%" stopColor="#130324" />
+                  </radialGradient>
+
+                  <radialGradient id="violetLimbScatter" cx="30%" cy="26%" r="72%">
+                    <stop offset="70%" stopColor="transparent" />
+                    <stop offset="88%" stopColor="#C084FC" stopOpacity="0.35" />
+                    <stop offset="98%" stopColor="#E9D5FF" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                  </radialGradient>
+
+                  <linearGradient id="violetBRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#E9D5FF" stopOpacity="0.85" />
+                    <stop offset="25%" stopColor="#FFFFFF" stopOpacity="0.98" />
+                    <stop offset="52%" stopColor="#D8B4FE" stopOpacity="0.92" />
+                    <stop offset="76%" stopColor="#A855F7" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#7E22CE" stopOpacity="0.82" />
+                  </linearGradient>
+
+                  <linearGradient id="violetARingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#D8B4FE" stopOpacity="0.75" />
+                    <stop offset="42%" stopColor="#C084FC" stopOpacity="0.85" />
+                    <stop offset="75%" stopColor="#A855F7" stopOpacity="0.72" />
+                    <stop offset="100%" stopColor="#6B21A8" stopOpacity="0.6" />
+                  </linearGradient>
+
+                  <linearGradient id="violetCRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3B0764" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#581C87" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#3B0764" stopOpacity="0.45" />
+                  </linearGradient>
+
+                  <linearGradient id="violetBandGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#C084FC" stopOpacity="0.55" />
+                    <stop offset="40%" stopColor="#FAF5FF" stopOpacity="0.75" />
+                    <stop offset="85%" stopColor="#581C87" stopOpacity="0.35" />
+                  </linearGradient>
+
+                  <linearGradient id="violetBandGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#A855F7" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#FFFFFF" stopOpacity="0.85" />
+                    <stop offset="80%" stopColor="#3B0764" stopOpacity="0.4" />
+                  </linearGradient>
+
+                  <filter id="violetCloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.8" />
+                  </filter>
+                  <filter id="violetShadowSoft" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.2" />
+                  </filter>
+
+                  <clipPath id="violetPlanetBodyClip">
+                    <circle cx="160" cy="110" r="46" />
+                  </clipPath>
+                  <clipPath id="violetRingBackClip">
+                    <rect x="-160" y="-120" width="320" height="121" />
+                  </clipPath>
+                  <clipPath id="violetRingFrontClip">
+                    <rect x="-160" y="-1" width="320" height="121" />
+                  </clipPath>
+                </defs>
+
+                <g transform="translate(160, 110) rotate(24)" clipPath="url(#violetRingBackClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#E9D5FF" strokeWidth="1" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#violetARingGrad)" strokeWidth="15" opacity="0.75" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#0E021A" strokeWidth="0.8" opacity="0.65" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#0E021A" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#violetBRingGrad)" strokeWidth="18" opacity="0.9" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.4" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#C084FC" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#violetCRingGrad)" strokeWidth="10" opacity="0.4" />
+                  <ellipse cx="-22" cy="-30" rx="44" ry="24" fill="#0E021A" opacity="0.92" filter="url(#violetShadowSoft)" />
+                </g>
+
+                <g>
+                  <circle cx="160" cy="110" r="46" fill="url(#violetPlanetSurface)" />
+                  <g clipPath="url(#violetPlanetBodyClip)">
+                    <g transform="rotate(24 160 110)">
+                      <path d="M 112 94 Q 160 102 208 94 L 208 102 Q 160 110 112 102 Z" fill="url(#violetBandGrad1)" opacity="0.55" filter="url(#violetCloudSoft)" />
+                      <path d="M 112 106 Q 160 115 208 106 L 208 116 Q 160 125 112 116 Z" fill="url(#violetBandGrad2)" opacity="0.65" filter="url(#violetCloudSoft)" />
+                      <path d="M 112 120 Q 160 128 208 120 L 208 127 Q 160 135 112 127 Z" fill="url(#violetBandGrad1)" opacity="0.45" filter="url(#violetCloudSoft)" />
+                      <ellipse cx="145" cy="108" rx="8" ry="3" fill="#FAF5FF" opacity="0.45" filter="url(#violetCloudSoft)" />
+                      <ellipse cx="178" cy="95" rx="6" ry="2.2" fill="#E9D5FF" opacity="0.35" filter="url(#violetCloudSoft)" />
+                      <path d="M 112 116 Q 160 126 208 116 L 208 123 Q 160 133 112 123 Z" fill="#0E021A" opacity="0.78" filter="url(#violetShadowSoft)" />
+                    </g>
+                  </g>
+                  <circle cx="160" cy="110" r="46" fill="url(#violetLimbScatter)" />
+                </g>
+
+                <g transform="translate(160, 110) rotate(24)" clipPath="url(#violetRingFrontClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#E9D5FF" strokeWidth="1" opacity="0.55" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#violetARingGrad)" strokeWidth="15" opacity="0.82" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#0E021A" strokeWidth="0.9" opacity="0.7" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#0E021A" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#violetBRingGrad)" strokeWidth="18" opacity="0.95" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#C084FC" strokeWidth="0.9" opacity="0.5" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#violetCRingGrad)" strokeWidth="10" opacity="0.45" />
+                </g>
+
+                <circle cx="52" cy="76" r="1.8" fill="#FAF5FF" />
+                <circle cx="52" cy="76" r="4" fill="#C084FC" opacity="0.5" filter="url(#violetCloudSoft)" />
+              </svg>
+            </div>
+          </div>
 
           {/* Pulsar Beacon Starlight Wave */}
           <div className="absolute top-[280px] right-[6%] md:right-[10%] z-10 hidden sm:flex items-center justify-center pointer-events-none">
@@ -883,6 +1118,134 @@ export const AmbientBackground: React.FC = () => {
               background: 'radial-gradient(circle, #1E2D54 0%, #0F1830 65%, transparent 85%)',
             }}
           />
+
+          {/* SPREAD CELESTIAL BODY 6: Photorealistic Copper Ember Gas Giant (Proxima Centauri Rings) */}
+          <div
+            className="absolute top-[220px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Copper Ember Gas Giant Exoplanet (Proxima Centauri Rings)"
+          >
+            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+              {/* Volumetric Planetary Starlight Haze */}
+              <div
+                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(244, 63, 94, 0.45) 0%, rgba(190, 18, 60, 0.25) 45%, rgba(245, 176, 39, 0.15) 70%, transparent 80%)',
+                }}
+              />
+
+              <svg viewBox="0 0 320 220" className="w-full h-full overflow-visible">
+                <defs>
+                  <radialGradient id="emberPlanetSurface" cx="32%" cy="28%" r="68%">
+                    <stop offset="0%" stopColor="#FFF1F2" />
+                    <stop offset="18%" stopColor="#FDA4AF" />
+                    <stop offset="40%" stopColor="#F43F5E" />
+                    <stop offset="65%" stopColor="#BE123C" />
+                    <stop offset="85%" stopColor="#881337" />
+                    <stop offset="100%" stopColor="#28050E" />
+                  </radialGradient>
+
+                  <radialGradient id="emberLimbScatter" cx="30%" cy="26%" r="72%">
+                    <stop offset="70%" stopColor="transparent" />
+                    <stop offset="88%" stopColor="#FB7185" stopOpacity="0.35" />
+                    <stop offset="98%" stopColor="#FFE4E6" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                  </radialGradient>
+
+                  <linearGradient id="emberBRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FECDD3" stopOpacity="0.85" />
+                    <stop offset="25%" stopColor="#FFFFFF" stopOpacity="0.98" />
+                    <stop offset="52%" stopColor="#FDE047" stopOpacity="0.92" />
+                    <stop offset="76%" stopColor="#F5B027" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#E11D48" stopOpacity="0.82" />
+                  </linearGradient>
+
+                  <linearGradient id="emberARingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F5B027" stopOpacity="0.75" />
+                    <stop offset="42%" stopColor="#FDA4AF" stopOpacity="0.85" />
+                    <stop offset="75%" stopColor="#FB7185" stopOpacity="0.72" />
+                    <stop offset="100%" stopColor="#BE123C" stopOpacity="0.6" />
+                  </linearGradient>
+
+                  <linearGradient id="emberCRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#4C0519" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#9F1239" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#4C0519" stopOpacity="0.45" />
+                  </linearGradient>
+
+                  <linearGradient id="emberBandGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FB7185" stopOpacity="0.55" />
+                    <stop offset="40%" stopColor="#FFF1F2" stopOpacity="0.75" />
+                    <stop offset="85%" stopColor="#881337" stopOpacity="0.35" />
+                  </linearGradient>
+
+                  <linearGradient id="emberBandGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F43F5E" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#FFFFFF" stopOpacity="0.85" />
+                    <stop offset="80%" stopColor="#4C0519" stopOpacity="0.4" />
+                  </linearGradient>
+
+                  <filter id="emberCloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.8" />
+                  </filter>
+                  <filter id="emberShadowSoft" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.2" />
+                  </filter>
+
+                  <clipPath id="emberPlanetBodyClip">
+                    <circle cx="160" cy="110" r="46" />
+                  </clipPath>
+                  <clipPath id="emberRingBackClip">
+                    <rect x="-160" y="-120" width="320" height="121" />
+                  </clipPath>
+                  <clipPath id="emberRingFrontClip">
+                    <rect x="-160" y="-1" width="320" height="121" />
+                  </clipPath>
+                </defs>
+
+                <g transform="translate(160, 110) rotate(-20)" clipPath="url(#emberRingBackClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#FDA4AF" strokeWidth="1" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#emberARingGrad)" strokeWidth="15" opacity="0.75" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#140206" strokeWidth="0.8" opacity="0.65" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#140206" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#emberBRingGrad)" strokeWidth="18" opacity="0.9" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.4" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#emberCRingGrad)" strokeWidth="10" opacity="0.4" />
+                  <ellipse cx="22" cy="-30" rx="44" ry="24" fill="#140206" opacity="0.92" filter="url(#emberShadowSoft)" />
+                </g>
+
+                <g>
+                  <circle cx="160" cy="110" r="46" fill="url(#emberPlanetSurface)" />
+                  <g clipPath="url(#emberPlanetBodyClip)">
+                    <g transform="rotate(-20 160 110)">
+                      <path d="M 112 94 Q 160 102 208 94 L 208 102 Q 160 110 112 102 Z" fill="url(#emberBandGrad1)" opacity="0.55" filter="url(#emberCloudSoft)" />
+                      <path d="M 112 106 Q 160 115 208 106 L 208 116 Q 160 125 112 116 Z" fill="url(#emberBandGrad2)" opacity="0.65" filter="url(#emberCloudSoft)" />
+                      <path d="M 112 120 Q 160 128 208 120 L 208 127 Q 160 135 112 127 Z" fill="url(#emberBandGrad1)" opacity="0.45" filter="url(#emberCloudSoft)" />
+                      <ellipse cx="145" cy="108" rx="8" ry="3" fill="#FFF1F2" opacity="0.45" filter="url(#emberCloudSoft)" />
+                      <ellipse cx="178" cy="95" rx="6" ry="2.2" fill="#FDA4AF" opacity="0.35" filter="url(#emberCloudSoft)" />
+                      <path d="M 112 116 Q 160 126 208 116 L 208 123 Q 160 133 112 123 Z" fill="#140206" opacity="0.78" filter="url(#emberShadowSoft)" />
+                    </g>
+                  </g>
+                  <circle cx="160" cy="110" r="46" fill="url(#emberLimbScatter)" />
+                </g>
+
+                <g transform="translate(160, 110) rotate(-20)" clipPath="url(#emberRingFrontClip)">
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#FDA4AF" strokeWidth="1" opacity="0.55" />
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#emberARingGrad)" strokeWidth="15" opacity="0.82" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#140206" strokeWidth="0.9" opacity="0.7" />
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#140206" strokeWidth="3" opacity="0.85" />
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#emberBRingGrad)" strokeWidth="18" opacity="0.95" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.9" opacity="0.5" />
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#emberCRingGrad)" strokeWidth="10" opacity="0.45" />
+                </g>
+
+                <circle cx="268" cy="76" r="1.8" fill="#FFF1F2" />
+                <circle cx="268" cy="76" r="4" fill="#FDA4AF" opacity="0.5" filter="url(#emberCloudSoft)" />
+              </svg>
+            </div>
+          </div>
 
           {/* Binary Stars System (Twin Cosmic Orbiters) */}
           <div
