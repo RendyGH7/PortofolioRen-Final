@@ -16,7 +16,6 @@ import {
   FileText,
   RotateCcw,
   Loader2,
-  ShieldCheck,
   ArrowRight,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -41,18 +40,10 @@ const CATEGORIES: CategoryOption[] = [
   { id: 'general', labelId: 'Kolaborasi', labelEn: 'Collaboration', icon: MessageSquare },
 ];
 
-const BUDGET_OPTIONS = [
-  { id: 'discuss', labelId: 'Fleksibel', labelEn: 'Flexible' },
-  { id: 'tier1', labelId: '< Rp 5 Juta', labelEn: '< $350' },
-  { id: 'tier2', labelId: 'Rp 5 - 15 Jt', labelEn: '$350 - $1K' },
-  { id: 'tier3', labelId: '> Rp 15 Juta', labelEn: '> $1K' },
-];
-
 export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('web-app');
-  const [selectedBudget, setSelectedBudget] = useState<string>('discuss');
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -64,10 +55,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const [copiedFormat, setCopiedFormat] = useState(false);
 
   const activeCategory = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0];
-  const activeBudget = BUDGET_OPTIONS.find((b) => b.id === selectedBudget) || BUDGET_OPTIONS[0];
 
   const categoryLabel = lang === 'id' ? activeCategory.labelId : activeCategory.labelEn;
-  const budgetLabel = lang === 'id' ? activeBudget.labelId : activeBudget.labelEn;
 
   const getFormattedBlueprint = useCallback(() => {
     const timeStr = submissionTime || (lang === 'id' ? 'Format Resmi Portofolio' : 'Official Portfolio Dispatch');
@@ -82,7 +71,6 @@ SURAT INQUIRY & PENAWARAN KERJASAMA
    • Nama Lengkap / Perusahaan : ${name.trim() || '[Nama Pengirim / Perusahaan]'}
    • Alamat Email Kontak       : ${email.trim() || '[email@domain.com]'}
    • Kategori Kebutuhan        : ${categoryLabel}
-   • Estimasi Anggaran / Skala : ${budgetLabel}
    • Waktu Pengiriman          : ${timeStr}
 
 2. RINCIAN SPESIFIKASI & KEBUTUHAN:
@@ -92,7 +80,7 @@ ${message.trim() || '[Tuliskan rincian kebutuhan atau tawaran proyek di formulir
 Pesan ini dikirim secara resmi melalui formulir kontak portofolio Rendy Fernando Tambunan.
 https://github.com/RendyGH7
 ----------------------------------------------------------------------`;
-  }, [submissionTime, lang, name, email, categoryLabel, budgetLabel, message]);
+  }, [submissionTime, lang, name, email, categoryLabel, message]);
 
   const validate = () => {
     const errs: { [key: string]: string } = {};
@@ -148,7 +136,6 @@ https://github.com/RendyGH7
           'Nama Pengirim': name.trim(),
           'Email Kontak': email.trim(),
           'Kategori Kebutuhan': categoryLabel,
-          'Estimasi Skala': budgetLabel,
           'Waktu Kirim': timeFormatted,
           'Rincian Pesan': message.trim(),
           'Dokumen Surat Lengkap': bodyContent,
@@ -197,7 +184,7 @@ https://github.com/RendyGH7
   };
 
   const handleOpenWhatsApp = () => {
-    const waText = `*Halo Rendy Fernando,*\n\nSaya ingin mendiskusikan peluang proyek/kerjasama melalui portofolio Anda:\n\n*Data Pengirim:*\n• *Nama:* ${name.trim()}\n• *Email:* ${email.trim()}\n• *Kategori:* ${categoryLabel}\n• *Estimasi Skala:* ${budgetLabel}\n\n*Rincian Pesan:*\n"${message.trim()}"\n\n_Terima kasih!_`;
+    const waText = `*Halo Rendy Fernando,*\n\nSaya ingin mendiskusikan peluang proyek/kerjasama melalui portofolio Anda:\n\n*Data Pengirim:*\n• *Nama:* ${name.trim()}\n• *Email:* ${email.trim()}\n• *Kategori:* ${categoryLabel}\n\n*Rincian Pesan:*\n"${message.trim()}"\n\n_Terima kasih!_`;
     const waUrl = `https://wa.me/6289669557444?text=${encodeURIComponent(waText)}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
@@ -584,37 +571,6 @@ https://github.com/RendyGH7
                 </div>
               </div>
 
-              {/* Budget / Scale Selector: Clean, symmetrical, guaranteed 1-line text */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-mist">
-                    {lang === 'id' ? 'Estimasi Anggaran / Skala' : 'Estimated Budget / Scale'}
-                  </label>
-                  <span className="text-[10px] font-mono text-fog">
-                    {lang === 'id' ? 'Opsional' : 'Optional'}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {BUDGET_OPTIONS.map((b) => {
-                    const isSelected = selectedBudget === b.id;
-                    return (
-                      <button
-                        key={b.id}
-                        type="button"
-                        onClick={() => setSelectedBudget(b.id)}
-                        className={`py-2 px-2 rounded-lg border text-center text-xs font-mono transition-all whitespace-nowrap truncate ${
-                          isSelected
-                            ? 'bg-sapphire/20 border-sapphire/60 text-pearl font-medium'
-                            : 'bg-midnight-0/40 border-white/10 text-fog hover:text-mist hover:border-white/20'
-                        }`}
-                      >
-                        {lang === 'id' ? b.labelId : b.labelEn}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Field 3: Message */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
@@ -648,8 +604,8 @@ https://github.com/RendyGH7
                 )}
               </div>
 
-              {/* Submit Button & Sub-footer */}
-              <div className="pt-1.5 space-y-2.5">
+              {/* Submit Button */}
+              <div className="pt-1.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -658,15 +614,6 @@ https://github.com/RendyGH7
                   <Send className="w-4 h-4 text-midnight-0 transition-transform group-hover:translate-x-1" />
                   <span>{lang === 'id' ? 'Kirim Pesan Sekarang' : 'Send Message Now'}</span>
                 </button>
-
-                <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-fog text-center">
-                  <ShieldCheck className="w-3.5 h-3.5 text-champagne shrink-0" />
-                  <span>
-                    {lang === 'id'
-                      ? 'Transmisi Langsung & Terenkripsi • rendyftbaru@gmail.com'
-                      : 'Direct & Encrypted Transmission • rendyftbaru@gmail.com'}
-                  </span>
-                </div>
               </div>
             </form>
           )}
