@@ -518,30 +518,10 @@ export const Hero3D: React.FC = () => {
     const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     planetGroup.add(atmosphereMesh);
 
-    // 8. Compact Orbiting Satellite & Luminous Orbital Trajectory Ring (Full 360°, Zero Clipping)
+    // 8. Compact Orbiting Satellite Moon (Full 360°, Zero Clipping)
     const orbitX = 1.56;
     const orbitZ = 1.36;
     const orbitInclination = 0.42;
-
-    // 8a. Luminous 3D Orbit Ring (Full, seamless, never clipped)
-    const orbitPoints: THREE.Vector3[] = [];
-    const orbitSegments = 128;
-    for (let i = 0; i <= orbitSegments; i++) {
-      const theta = (i / orbitSegments) * Math.PI * 2;
-      const ox = Math.cos(theta) * orbitX;
-      const oz = Math.sin(theta) * orbitZ;
-      const oy = Math.sin(theta * 1.15) * orbitInclination;
-      orbitPoints.push(new THREE.Vector3(ox, oy, oz));
-    }
-    const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
-    const orbitMaterial = new THREE.LineBasicMaterial({
-      color: 0xF5B027,
-      transparent: true,
-      opacity: 0.35,
-      blending: THREE.AdditiveBlending,
-    });
-    const orbitLine = new THREE.Line(orbitGeometry, orbitMaterial);
-    scene.add(orbitLine);
 
     const satelliteGeometry = new THREE.SphereGeometry(0.08, 32, 32);
     const satelliteMaterial = new THREE.MeshStandardMaterial({
@@ -750,8 +730,6 @@ export const Hero3D: React.FC = () => {
       cloudMaterial.dispose();
       atmosphereGeometry.dispose();
       atmosphereMaterial.dispose();
-      orbitGeometry.dispose();
-      orbitMaterial.dispose();
       satelliteGeometry.dispose();
       satelliteMaterial.dispose();
       particleGeometry.dispose();
