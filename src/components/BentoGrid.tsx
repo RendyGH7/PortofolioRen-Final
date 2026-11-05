@@ -187,10 +187,6 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                   {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
                 </span>
               </div>
-              <span className="text-[10px] font-mono font-semibold text-[#6EE7B7] bg-[#064E3B]/85 px-2 py-0.5 rounded-full border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-                Live Inspect
-              </span>
             </div>
 
             {/* Minimalist Segmented Category Filter */}
@@ -267,7 +263,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm transition-all">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-champagne shrink-0" />
                   <span className="font-mono font-bold text-pearl text-xs">
                     {safeActiveSkill.name}
                   </span>
@@ -275,9 +271,6 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                     {safeActiveSkill.role}
                   </span>
                 </div>
-                <span className="text-[10px] text-[#6EE7B7] font-mono bg-[#064E3B]/70 px-2 py-0.5 rounded-full border border-[#10B981]/50 hidden sm:inline-block">
-                  Verified in Prod
-                </span>
               </div>
 
               <p className="text-xs text-mist leading-relaxed">
@@ -433,9 +426,8 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 <div className="p-2 rounded-xl bg-gradient-to-br from-[#F5B027]/25 to-[#D98218]/25 border border-[#F5B027]/50 text-[#F5B027] shadow-[0_0_16px_rgba(245,176,39,0.35)]">
                   <ShoppingBag className="w-4 h-4 text-[#F5B027]" />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#6EE7B7] font-semibold px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                  Terverifikasi
+                <span className="text-[10px] font-mono uppercase tracking-wider text-fog px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10">
+                  Global Commerce
                 </span>
               </div>
 
