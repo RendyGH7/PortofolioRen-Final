@@ -3,9 +3,6 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink,
-  Code2,
-  Workflow,
-  Copy,
   Check,
   X,
   LayoutGrid,
@@ -24,8 +21,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [modalTab, setModalTab] = useState<'overview' | 'tech'>('overview');
 
   useEffect(() => {
     onModalOpenChange?.(!!activeModalProject);
@@ -33,7 +28,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
 
   const handleOpenModal = (project: ProjectItem) => {
     setActiveModalProject(project);
-    setModalTab('overview');
   };
 
   const categories = ['All', 'E-Commerce', 'Web App'];
@@ -41,12 +35,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
   const filteredProjects = selectedCategory === 'All'
     ? PROJECTS
     : PROJECTS.filter((p) => p.category === selectedCategory);
-
-  const handleCopyCode = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  };
 
   return (
     <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
@@ -376,144 +364,51 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
               ))}
             </div>
 
-            {/* Tab Navigation: Ringkasan vs Arsitektur & Kode */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl glass-1 border border-white/5 w-fit">
-              <button
-                onClick={() => setModalTab('overview')}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                  modalTab === 'overview'
-                    ? 'bg-champagne/15 text-champagne border border-champagne/30 shadow-sm font-semibold'
-                    : 'text-mist hover:text-pearl'
-                }`}
-              >
-                Ringkasan & Fitur
-              </button>
-              <button
-                onClick={() => setModalTab('tech')}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                  modalTab === 'tech'
-                    ? 'bg-champagne/15 text-champagne border border-champagne/30 shadow-sm font-semibold'
-                    : 'text-mist hover:text-pearl'
-                }`}
-              >
-                Arsitektur & Kode
-              </button>
-            </div>
-
-            {/* Tab 1: Ringkasan & Fitur */}
-            {modalTab === 'overview' && (
-              <div className="space-y-3.5">
-                {/* Tantangan & Solusi Teknis */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
-                    <span className="text-[11px] font-semibold text-champagne uppercase tracking-wider block">
-                      Tantangan
-                    </span>
-                    <p className="text-xs text-mist leading-relaxed">{activeModalProject.problem}</p>
-                  </div>
-                  <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
-                    <span className="text-[11px] font-semibold text-sapphire uppercase tracking-wider block">
-                      Solusi Teknis
-                    </span>
-                    <p className="text-xs text-mist leading-relaxed">{activeModalProject.solution}</p>
-                  </div>
+            {/* Ringkasan & Fitur Proyek */}
+            <div className="space-y-3.5">
+              {/* Tantangan & Solusi Teknis */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
+                  <span className="text-[11px] font-semibold text-champagne uppercase tracking-wider block">
+                    Tantangan
+                  </span>
+                  <p className="text-xs text-mist leading-relaxed">{activeModalProject.problem}</p>
                 </div>
-
-                {/* Fitur Utama Sistem (Clean 2x2 Grid) */}
-                <div className="space-y-2">
-                  <h4 className="text-[11px] font-semibold text-fog uppercase tracking-wider">
-                    Fitur Utama Sistem
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {activeModalProject.features.map((feat) => (
-                      <div
-                        key={feat.title}
-                        className="glass-1 p-3 rounded-xl border border-white/5 flex items-start gap-2.5"
-                      >
-                        <div className="w-5 h-5 rounded-md bg-champagne/10 text-champagne flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="w-3 h-3 text-champagne" />
-                        </div>
-                        <div className="min-w-0">
-                          <span className="text-xs font-medium text-pearl block truncate">
-                            {feat.title}
-                          </span>
-                          <p className="text-[11px] text-mist leading-relaxed mt-0.5">
-                            {feat.desc}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
+                  <span className="text-[11px] font-semibold text-sapphire uppercase tracking-wider block">
+                    Solusi Teknis
+                  </span>
+                  <p className="text-xs text-mist leading-relaxed">{activeModalProject.solution}</p>
                 </div>
               </div>
-            )}
 
-            {/* Tab 2: Arsitektur & Kode */}
-            {modalTab === 'tech' && (
-              <div className="space-y-3.5">
-                {/* Alur Arsitektur Sistem */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-1.5">
-                    <Workflow className="w-3.5 h-3.5 text-sapphire" />
-                    <h4 className="text-[11px] font-semibold text-fog uppercase tracking-wider">
-                      Alur Arsitektur Sistem
-                    </h4>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {activeModalProject.architectureNodes.map((node, i) => (
-                      <div
-                        key={node.name}
-                        className="glass-1 p-2.5 rounded-xl border border-white/5 relative"
-                      >
-                        <span className="text-[10px] font-mono text-fog block">Node 0{i + 1}</span>
-                        <span className="text-xs font-medium text-pearl block mt-0.5 truncate">
-                          {node.name}
-                        </span>
-                        <span className="text-[11px] text-mist block mt-0.5 leading-snug">
-                          {node.role}
-                        </span>
-                        {node.latency && (
-                          <span className="text-[10px] font-mono text-champagne mt-1.5 inline-block bg-champagne/10 px-1.5 py-0.5 rounded border border-champagne/20">
-                            {node.latency}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cuplikan Logika Teknis */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <Code2 className="w-3.5 h-3.5 text-champagne" />
-                      <h4 className="text-[11px] font-semibold text-fog uppercase tracking-wider">
-                        Cuplikan Logika Teknis
-                      </h4>
-                    </div>
-                    <button
-                      onClick={() => handleCopyCode(activeModalProject.codeSnippet)}
-                      className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-xs text-mist hover:text-pearl font-mono transition-colors"
+              {/* Fitur Utama Sistem (Clean 2x2 Grid) */}
+              <div className="space-y-2">
+                <h4 className="text-[11px] font-semibold text-fog uppercase tracking-wider">
+                  Fitur Utama Sistem
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {activeModalProject.features.map((feat) => (
+                    <div
+                      key={feat.title}
+                      className="glass-1 p-3 rounded-xl border border-white/5 flex items-start gap-2.5"
                     >
-                      {copiedCode ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-champagne" />
-                          <span className="text-champagne">Tersalin</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>Salin Kode</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <div className="rounded-xl bg-midnight-0/95 border border-white/10 p-3.5 font-mono text-xs text-mist overflow-x-auto max-h-56">
-                    <pre>{activeModalProject.codeSnippet}</pre>
-                  </div>
+                      <div className="w-5 h-5 rounded-md bg-champagne/10 text-champagne flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 text-champagne" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-xs font-medium text-pearl block truncate">
+                          {feat.title}
+                        </span>
+                        <p className="text-[11px] text-mist leading-relaxed mt-0.5">
+                          {feat.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
+            </div>
 
             {/* Modal Footer */}
             <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
