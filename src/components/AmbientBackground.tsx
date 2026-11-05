@@ -70,14 +70,15 @@ export const AmbientBackground: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Cosmic starlight color spectrum
+    // Cosmic starlight color spectrum (Authentic astronomical stellar classifications)
     const starColors = [
-      '#FFFFFF', // Pure Starlight
-      '#F3F5FA', // Pearl
-      '#8EA8F5', // Ice Sapphire
-      '#F5B027', // Radiant Gold
-      '#7CE5E8', // Cyan Stardust
-      '#10B981', // Emerald Starlight
+      '#FFFFFF', // O/A-Class Pure Starlight
+      '#F8FAFC', // Diamond Starlight
+      '#BAE6FD', // B-Class Blue Giant
+      '#93C5FD', // Ice Sapphire
+      '#FFFBEB', // F-Class Warm White
+      '#FDE047', // G-Class Solar Yellow
+      '#F5B027', // K-Class Radiant Amber
     ];
 
     // Multi-depth star field (360 stars distributed across 3 depth planes)
@@ -681,44 +682,201 @@ export const AmbientBackground: React.FC = () => {
             </div>
           </div>
 
-          {/* SPREAD CELESTIAL BODY 1: Ringed Sapphire Gas Giant (Upper-Right Deep Sky, with zero top clipping) */}
+          {/* SPREAD CELESTIAL BODY 1: Photorealistic Ringed Gas Giant (Cassini / Kepler-186f Orbit) */}
           <div
-            className="absolute top-[85px] sm:top-[100px] md:top-[115px] right-[5%] sm:right-[8%] md:right-[10%] z-0 flex items-center justify-center opacity-75 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
-            title="Gas Giant Exoplanet (Kepler-186f Orbit)"
+            className="absolute top-[75px] sm:top-[90px] md:top-[105px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-auto cursor-pointer group"
+            title="Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Bands & 3D Rings)"
           >
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center">
+            <div className="relative w-56 h-40 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-0 rounded-full blur-[24px] opacity-50 pointer-events-none group-hover:opacity-80 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
-                  background: 'radial-gradient(circle, rgba(76, 111, 209, 0.45) 0%, rgba(245, 176, 39, 0.2) 50%, transparent 75%)',
+                  background:
+                    'radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(245, 176, 39, 0.22) 50%, transparent 75%)',
                 }}
               />
 
-              {/* 3D Tilted Dual Planetary Ring (Tilted at -18deg) */}
-              <div
-                className="absolute w-36 sm:w-44 md:w-48 h-14 sm:h-16 md:h-18 rounded-full border-[2.5px] border-champagne/45 pointer-events-none group-hover:border-champagne/75 transition-colors duration-500 shadow-[0_0_12px_rgba(245,176,39,0.3)]"
-                style={{
-                  transform: 'rotate(-18deg)',
-                  boxShadow: 'inset 0 0 10px rgba(76, 111, 209, 0.35)',
-                }}
+              {/* Photorealistic 3D Ringed Gas Giant (True Front/Back Ring Overlap + Shadows) */}
+              <svg
+                viewBox="0 0 320 220"
+                className="w-full h-full overflow-visible"
               >
-                <div className="absolute inset-[3px] rounded-full border border-champagne/20" />
-              </div>
+                <defs>
+                  {/* Gas Giant Atmospheric Surface Shading */}
+                  <radialGradient id="gasGiantSurface" cx="32%" cy="28%" r="68%">
+                    <stop offset="0%" stopColor="#93C5FD" />
+                    <stop offset="22%" stopColor="#3B82F6" />
+                    <stop offset="48%" stopColor="#1D4ED8" />
+                    <stop offset="74%" stopColor="#0F172A" />
+                    <stop offset="100%" stopColor="#020617" />
+                  </radialGradient>
 
-              {/* Planet Sphere Body */}
-              <div
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-22 md:h-22 rounded-full relative overflow-hidden group-hover:scale-105 transition-transform duration-700 z-10"
-                style={{
-                  background: 'radial-gradient(circle at 30% 28%, #5E9BFF 0%, #2A4893 42%, #0C152B 88%)',
-                  boxShadow:
-                    'inset -8px -8px 18px rgba(0, 0, 0, 0.95), inset 4px 4px 10px rgba(191, 219, 254, 0.65), 0 0 26px rgba(59, 130, 246, 0.35)',
-                }}
-              >
-                {/* Subtle Horizontal Atmospheric Cloud Stripes */}
-                <div className="absolute inset-0 opacity-25 bg-[repeating-linear-gradient(to_bottom,transparent,transparent_4px,rgba(255,255,255,0.3)_6px,transparent_8px)]" />
-                <div className="absolute inset-0 opacity-35 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.5),transparent_60%)]" />
-              </div>
+                  {/* Atmospheric Rayleigh Limb Scattering */}
+                  <radialGradient id="atmosphereLimbScatter" cx="30%" cy="26%" r="72%">
+                    <stop offset="70%" stopColor="transparent" />
+                    <stop offset="88%" stopColor="#67E8F9" stopOpacity="0.4" />
+                    <stop offset="98%" stopColor="#93C5FD" stopOpacity="0.75" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.9" />
+                  </radialGradient>
+
+                  {/* Ring System Gradients */}
+                  <linearGradient id="bRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F5B027" stopOpacity="0.85" />
+                    <stop offset="28%" stopColor="#FFF7E6" stopOpacity="0.98" />
+                    <stop offset="55%" stopColor="#FDE047" stopOpacity="0.92" />
+                    <stop offset="75%" stopColor="#93C5FD" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#F5B027" stopOpacity="0.8" />
+                  </linearGradient>
+
+                  <linearGradient id="aRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#93C5FD" stopOpacity="0.75" />
+                    <stop offset="45%" stopColor="#60A5FA" stopOpacity="0.85" />
+                    <stop offset="78%" stopColor="#F5B027" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.6" />
+                  </linearGradient>
+
+                  <linearGradient id="cRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#2563EB" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0.45" />
+                  </linearGradient>
+
+                  {/* Cloud Band Gradients */}
+                  <linearGradient id="bandGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.5" />
+                    <stop offset="40%" stopColor="#BAE6FD" stopOpacity="0.7" />
+                    <stop offset="85%" stopColor="#1E40AF" stopOpacity="0.3" />
+                  </linearGradient>
+
+                  <linearGradient id="bandGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#93C5FD" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#FFFFFF" stopOpacity="0.8" />
+                    <stop offset="80%" stopColor="#1D4ED8" stopOpacity="0.35" />
+                  </linearGradient>
+
+                  {/* Blur Filters */}
+                  <filter id="cloudSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.8" />
+                  </filter>
+                  <filter id="shadowSoft" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="3.2" />
+                  </filter>
+
+                  {/* Clips */}
+                  <clipPath id="planetBodyClip">
+                    <circle cx="160" cy="110" r="46" />
+                  </clipPath>
+
+                  {/* Clip for Back Half of Rings (Upper Hemisphere: y <= 1) */}
+                  <clipPath id="ringBackClip">
+                    <rect x="-160" y="-120" width="320" height="121" />
+                  </clipPath>
+
+                  {/* Clip for Front Half of Rings (Lower Hemisphere: y >= -1) */}
+                  <clipPath id="ringFrontClip">
+                    <rect x="-160" y="-1" width="320" height="121" />
+                  </clipPath>
+                </defs>
+
+                {/* ================= LAYER 1: BACK HALF OF RINGS (Passes BEHIND Planet) ================= */}
+                <g transform="translate(160, 110) rotate(-22)" clipPath="url(#ringBackClip)">
+                  {/* Outer Faint F-Ring */}
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#BAE6FD" strokeWidth="1" opacity="0.45" />
+
+                  {/* Outer A-Ring */}
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#aRingGrad)" strokeWidth="15" opacity="0.75" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#020617" strokeWidth="0.8" opacity="0.65" />
+
+                  {/* Cassini Division Gap (True Empty Space) */}
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#020617" strokeWidth="3" opacity="0.85" />
+
+                  {/* Dense Luminous B-Ring */}
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#bRingGrad)" strokeWidth="18" opacity="0.9" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.35" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.8" opacity="0.45" />
+
+                  {/* Translucent Inner Crepe C-Ring */}
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#cRingGrad)" strokeWidth="10" opacity="0.4" />
+
+                  {/* Planet's Soft Spherical Shadow cast onto the Back Rings */}
+                  <ellipse cx="22" cy="-30" rx="44" ry="24" fill="#020617" opacity="0.92" filter="url(#shadowSoft)" />
+                </g>
+
+                {/* ================= LAYER 2: THE PLANET SPHERE ================= */}
+                <g>
+                  {/* Base Spherical Gas Giant Body */}
+                  <circle cx="160" cy="110" r="46" fill="url(#gasGiantSurface)" />
+
+                  {/* Atmospheric Cloud Belts & Ring Shadows (Clipped strictly to Planet Sphere) */}
+                  <g clipPath="url(#planetBodyClip)">
+                    {/* Tilted Cloud Belts (Aligned parallel to equatorial ring plane) */}
+                    <g transform="rotate(-22 160 110)">
+                      {/* North Temperate Jet Stream */}
+                      <path
+                        d="M 112 94 Q 160 102 208 94 L 208 102 Q 160 110 112 102 Z"
+                        fill="url(#bandGrad1)"
+                        opacity="0.55"
+                        filter="url(#cloudSoft)"
+                      />
+                      {/* Bright Equatorial Zone */}
+                      <path
+                        d="M 112 106 Q 160 115 208 106 L 208 116 Q 160 125 112 116 Z"
+                        fill="url(#bandGrad2)"
+                        opacity="0.65"
+                        filter="url(#cloudSoft)"
+                      />
+                      {/* South Tropical Belt */}
+                      <path
+                        d="M 112 120 Q 160 128 208 120 L 208 127 Q 160 135 112 127 Z"
+                        fill="url(#bandGrad1)"
+                        opacity="0.45"
+                        filter="url(#cloudSoft)"
+                      />
+
+                      {/* Turbulent Cirrus Storm Eddies */}
+                      <ellipse cx="145" cy="108" rx="8" ry="3" fill="#BAE6FD" opacity="0.45" filter="url(#cloudSoft)" />
+                      <ellipse cx="178" cy="95" rx="6" ry="2.2" fill="#67E8F9" opacity="0.35" filter="url(#cloudSoft)" />
+
+                      {/* Dramatic Ring Shadow on Planet's Cloud Tops (Cast by front rings) */}
+                      <path
+                        d="M 112 116 Q 160 126 208 116 L 208 123 Q 160 133 112 123 Z"
+                        fill="#020617"
+                        opacity="0.78"
+                        filter="url(#shadowSoft)"
+                      />
+                    </g>
+                  </g>
+
+                  {/* Atmospheric Rayleigh Limb Scatter (Crescent Glow on Illuminated Edge) */}
+                  <circle cx="160" cy="110" r="46" fill="url(#atmosphereLimbScatter)" />
+                </g>
+
+                {/* ================= LAYER 3: FRONT HALF OF RINGS (Passes IN FRONT OF Planet) ================= */}
+                <g transform="translate(160, 110) rotate(-22)" clipPath="url(#ringFrontClip)">
+                  {/* Outer Faint F-Ring */}
+                  <ellipse cx="0" cy="0" rx="114" ry="41" fill="none" stroke="#BAE6FD" strokeWidth="1" opacity="0.55" />
+
+                  {/* Outer A-Ring */}
+                  <ellipse cx="0" cy="0" rx="103" ry="37" fill="none" stroke="url(#aRingGrad)" strokeWidth="15" opacity="0.82" />
+                  <ellipse cx="0" cy="0" rx="107" ry="38.5" fill="none" stroke="#020617" strokeWidth="0.9" opacity="0.7" />
+
+                  {/* Cassini Division Gap (True Empty Space) */}
+                  <ellipse cx="0" cy="0" rx="93" ry="33.5" fill="none" stroke="#020617" strokeWidth="3" opacity="0.85" />
+
+                  {/* Dense Luminous B-Ring */}
+                  <ellipse cx="0" cy="0" rx="81" ry="29" fill="none" stroke="url(#bRingGrad)" strokeWidth="18" opacity="0.95" />
+                  <ellipse cx="0" cy="0" rx="85" ry="30.5" fill="none" stroke="#FFFFFF" strokeWidth="0.8" opacity="0.45" />
+                  <ellipse cx="0" cy="0" rx="76" ry="27.2" fill="none" stroke="#F5B027" strokeWidth="0.9" opacity="0.5" />
+
+                  {/* Translucent Inner Crepe C-Ring (Gas giant clouds faintly visible through it) */}
+                  <ellipse cx="0" cy="0" rx="64" ry="23" fill="none" stroke="url(#cRingGrad)" strokeWidth="10" opacity="0.45" />
+                </g>
+
+                {/* ================= LAYER 4: ICY SHEPHERD MOON ================= */}
+                <circle cx="268" cy="76" r="1.8" fill="#F8FAFC" />
+                <circle cx="268" cy="76" r="4" fill="#93C5FD" opacity="0.5" filter="url(#cloudSoft)" />
+              </svg>
             </div>
           </div>
 
