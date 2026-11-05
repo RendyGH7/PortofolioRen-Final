@@ -254,52 +254,81 @@ class CheckoutController extends Controller
     category: "Web App",
     year: "2026",
     role: "Full Stack Lead & AI Engineer",
-    summary: "Asisten keuangan pribadi berbasis AI yang memungkinkan pencatatan transaksi secepat berbicara melalui rekaman suara (Voice AI), pemfilteran vokal Web Audio DSP, manajemen anggaran dengan aturan 50/30/20, dan evaluasi kesehatan finansial real-time berbasis Google Gemini 2.5 Flash.",
+    summary: "Asisten keuangan pribadi bertenaga Google Gemini 2.5 Flash dan Web Audio DSP 4-tahap yang memungkinkan pencatatan transaksi secepat berbicara (Voice-to-Transaction), alokasi anggaran otomatis berbasis Aturan 50/30/20, kalkulasi sisa aman harian (Dynamic Daily Safe Spend), serta proteksi data Row Level Security (RLS) PostgreSQL di Supabase.",
     metrics: [
-      { label: "Pemrosesan Voice AI", value: "< 2.5s" },
-      { label: "Filter Vokal DSP", value: "85Hz - 7.5kHz" },
+      { label: "Voice AI Latency", value: "< 2.5s" },
+      { label: "Filter Vokal DSP", value: "4-Stage" },
       { label: "Isolasi Data", value: "100% RLS" },
     ],
-    tags: ["React 19", "TypeScript", "Tailwind CSS v4", "Google Gemini 2.5", "Supabase", "PostgreSQL RLS", "Web Audio API"],
+    tags: [
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS v4",
+      "Google Gemini 2.5 Flash",
+      "Supabase",
+      "PostgreSQL RLS",
+      "Web Audio API",
+      "Zustand",
+      "Recharts",
+      "PWA"
+    ],
     features: [
-      "Pencatatan suara pintar (Voice AI): ekstraksi multi-transaksi dalam satu ucapan dengan pemahaman istilah nominal kasual (ceban, goceng, seceng, 50 rebu, 1,5 juta)",
-      "Rangkaian pemrosesan audio Web Audio DSP (85Hz High-Pass, 2.400Hz Vocal Peaking, 7.500Hz Low-Pass, Dynamics Compressor -32dB) untuk kejernihan vokal di lingkungan bising",
-      "Dashboard finansial komprehensif: Saldo Bersih (Net Worth) dan alokasi anggaran otomatis berbasis Aturan 50/30/20 (Kebutuhan, Keinginan, Tabungan)",
-      "AI Financial Advisor & Health Score: evaluasi kesehatan finansial proaktif berbasis Google Gemini 2.5 Flash",
-      "Keamanan & isolasi data pengguna dengan Row Level Security (RLS) PostgreSQL di Supabase serta ekspor data format CSV/Excel",
+      "Pencatatan Suara Pintar (Voice-to-Transaction): Ekstraksi multi-transaksi dalam satu ucapan dengan pemahaman istilah nominal gaul rupiah (ceban, goceng, seceng, noceng, goban, 50 rebu, 1,5 juta)",
+      "Rangkaian Filter Vokal Web Audio DSP 4-Tahap: 70Hz High-Pass (potong gemuruh/angin), 2.200Hz Peaking (+7.5dB artikulasi konsonan), 7.500Hz Low-Pass (potong desis/AC), dan Dynamics Compressor (-38dB)",
+      "Alokasi Anggaran 50/30/20 & Dynamic Daily Safe Spend: Pengelompokan otomatis pos Kebutuhan (50%), Keinginan (30%), Tabungan (20%), serta kalkulasi sisa aman belanja harian",
+      "Beranda Finansial & Visualisasi Arus Kas: Ringkasan Saldo Bersih (Net Worth), diagram arus kas Recharts interaktif (Mingguan, Bulanan, Tahunan), dan evaluasi skor kesehatan finansial",
+      "FinAI Assistant & Adaptive Memory Engine: Konsultan keuangan interaktif bertenaga Google Gemini yang mempelajari preferensi pengguna, kebiasaan belanja, dan target tabungan",
+      "Target Impian (Financial Goals) & Buku Utang-Piutang: Pemantauan batas anggaran kategori, estimasi waktu deadline tabungan, dan pelacakan utang-piutang dengan status lunas",
+      "Keamanan Berstandar Bank: Isolasi penuh tiap baris data pengguna dengan Row Level Security (RLS) PostgreSQL di Supabase, autentikasi Google OAuth, dan ekspor riwayat data",
+      "Desain Titanium & Ember serta PWA: Estetika dark titanium dengan aksen tembaga hangat (ember copper), kebijakan Zero-Emoji dengan Lucide SVG murni, dan instalasi PWA di iOS & Android",
     ],
-    problem: "Banyak orang gagal mengelola keuangan pribadi karena pencatatan manual yang lambat, melelahkan, dan buku kas pasif tanpa arahan perbaikan finansial.",
-    solution: "Menggabungkan pemrosesan sinyal vokal Web Audio DSP dengan LLM Gemini 2.5 Flash untuk mencatat transaksi secepat berbicara, dikelompokkan otomatis ke aturan 50/30/20 dengan proteksi RLS PostgreSQL.",
+    problem: "Banyak orang gagal mengelola keuangan pribadi bukan karena tidak memiliki niat, melainkan karena proses pencatatan manual yang lambat, melelahkan, dan buku kas pasif tanpa arahan perbaikan finansial.",
+    solution: "Menggabungkan Voice-to-Transaction bertenaga Gemini 2.5 Flash dengan pemrosesan sinyal vokal Web Audio DSP 4-tahap, kalkulasi otomatis Aturan 50/30/20, dan perlindungan privasi isolasi PostgreSQL RLS di Supabase.",
     architectureNodes: [
-      { name: "Client Browser", role: "React 19 + Tailwind v4 + Web Audio DSP", latency: "< 16ms" },
-      { name: "Voice AI Engine", role: "Google Gemini 2.5 Flash Natural Parser", latency: "1.8s" },
-      { name: "Backend & DB", role: "Supabase + PostgreSQL Row Level Security", latency: "28ms" },
-      { name: "Budget Engine", role: "Aturan 50/30/20 Dynamic Calculator", latency: "5ms" },
+      { name: "Client PWA (React 19)", role: "Zustand State, Web Speech Streaming, Recharts & PWA Cache", latency: "< 16ms" },
+      { name: "Web Audio DSP Chain", role: "70Hz HPF + 2.2kHz Peaking + 7.5kHz LPF + Compressor", latency: "2ms" },
+      { name: "Gemini 2.5 Multimodal AI", role: "Vocal Isolation, Multi-Transaction Extraction, Slang Currency Parser", latency: "1.8s" },
+      { name: "Supabase PostgreSQL", role: "Row Level Security (auth.uid) + 50/30/20 Budget Engine", latency: "24ms" },
     ],
-    codeSnippet: `// Monetra Web Audio DSP Pipeline & Gemini Voice-to-Transaction Parser
-export async function processVoiceTransaction(audioBlob: Blob): Promise<ParsedTransaction[]> {
-  // 1. Web Audio DSP Filtering: High-Pass (85Hz) + Vocal Peaking (2.4kHz) + Low-Pass (7.5kHz)
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-  const dspStream = await applyVocalDspFilters(audioBlob, audioContext);
-  
-  // 2. Stream to Google Gemini 2.5 Flash for casual Indonesian currency parsing
-  const response = await geminiAi.generateContent({
-    model: "gemini-2.5-flash",
-    contents: [{
-      role: "user",
-      parts: [
-        { text: "Ekstrak ucapan menjadi transaksi terstruktur (nominal kasual: ceban, goceng, 50 rebu):" },
-        { inlineData: { mimeType: "audio/wav", data: dspStream.toBase64() } }
-      ]
-    }],
-    generationConfig: { responseMimeType: "application/json" }
-  });
-  
-  return JSON.parse(response.text()) as ParsedTransaction[];
+    codeSnippet: `// Monetra Web Audio Vocal DSP Enhancement Chain (Production VoiceModal.tsx)
+export function initVocalDspChain(stream: MediaStream, audioCtx: AudioContext) {
+  const source = audioCtx.createMediaStreamSource(stream);
+
+  // 1. High-Pass Filter: Strips ambient sub-bass rumble, wind, phone vibrations (< 70 Hz)
+  const highPass = audioCtx.createBiquadFilter();
+  highPass.type = 'highpass';
+  highPass.frequency.value = 70;
+
+  // 2. Vocal Formant Peaking Filter: Boosts speech clarity (1800-3400Hz) by +7.5dB
+  const vocalBoost = audioCtx.createBiquadFilter();
+  vocalBoost.type = 'peaking';
+  vocalBoost.frequency.value = 2200;
+  vocalBoost.Q.value = 1.0;
+  vocalBoost.gain.value = 7.5; // +7.5dB vocal boost for casual speech sensitivity
+
+  // 3. Low-Pass Filter: Cuts off high-frequency hiss, fan noise, & AC (> 7500 Hz)
+  const lowPass = audioCtx.createBiquadFilter();
+  lowPass.type = 'lowpass';
+  lowPass.frequency.value = 7500;
+
+  // 4. Dynamics Compressor: Elevates soft speech & whispers to high clarity
+  const compressor = audioCtx.createDynamicsCompressor();
+  compressor.threshold.value = -38;
+  compressor.knee.value = 25;
+  compressor.ratio.value = 6.0;
+
+  // Connect DSP chain -> Gemini Multimodal Voice-to-Transaction Pipeline
+  source.connect(highPass);
+  highPass.connect(vocalBoost);
+  vocalBoost.connect(lowPass);
+  lowPass.connect(compressor);
+
+  return compressor;
 }`,
-    accentColor: "#4C6FD1",
+    accentColor: "#E39A5E",
     githubUrl: "https://github.com/RendyGH7/Monetra-Apps",
     liveUrl: "https://monetra-apps.vercel.app",
+    imageUrl: "/assets/projects/monetra-showcase.jpg",
   },
 ];
 

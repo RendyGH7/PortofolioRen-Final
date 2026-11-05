@@ -171,7 +171,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                 <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-xs text-sapphire font-medium mt-1 mb-2.5">
+                <p
+                  className="text-xs font-medium mt-1 mb-2.5"
+                  style={{ color: project.accentColor }}
+                >
                   {project.subtitle}
                 </p>
 
@@ -284,7 +287,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                 <h3 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
                   {activeModalProject.title}
                 </h3>
-                <p className="text-xs text-sapphire font-medium mt-1">
+                <p
+                  className="text-xs font-medium mt-1"
+                  style={{ color: activeModalProject.accentColor }}
+                >
                   {activeModalProject.subtitle} • Peran: {activeModalProject.role}
                 </p>
               </div>

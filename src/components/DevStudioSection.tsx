@@ -76,6 +76,27 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       },
     },
     {
+      id: 'monetra',
+      method: 'GET',
+      path: '/api/v1/monetra/telemetry',
+      summary: lang === 'id' ? 'Arsitektur Voice AI & Filter Vokal DSP Monetra' : 'Monetra Voice AI & Vocal DSP Architecture',
+      latencyMs: 19,
+      response: {
+        status: 200,
+        application: 'Monetra - AI Personal Finance Assistant',
+        liveUrl: 'https://monetra-apps.vercel.app',
+        vocalDspChain: {
+          highPass: '70 Hz (strips rumble & wind)',
+          peakingFilter: '2,200 Hz (+7.5 dB vocal boost)',
+          lowPass: '7,500 Hz (cuts hiss & AC noise)',
+          dynamicsCompressor: '-38 dB threshold, 6.0 ratio',
+        },
+        budgetEngine: 'Aturan 50/30/20 & Dynamic Daily Safe Spend',
+        security: '100% PostgreSQL Row Level Security (RLS)',
+        aiEngine: 'Google Gemini 2.5 Flash Multimodal',
+      },
+    },
+    {
       id: 'tsdn',
       method: 'GET',
       path: '/api/v1/tsdn/predictive-model',

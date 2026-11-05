@@ -41,7 +41,7 @@ export const AskRendyAI: React.FC = () => {
 
     if (q.includes('monetra')) {
       return {
-        text: 'Monetra adalah platform financial management dengan analitik real-time yang dibangun oleh Rendy. Web app ini sudah live dan dapat langsung diakses di https://monetra-apps.vercel.app/.',
+        text: 'Monetra adalah asisten keuangan pribadi cerdas bertenaga Google Gemini 2.5 Flash dan Web Audio DSP 4-tahap (Voice-to-Transaction), dilengkapi evaluasi Aturan 50/30/20, Dynamic Daily Safe Spend, serta keamanan penuh PostgreSQL Row Level Security (RLS) di Supabase. Web app ini sudah live di https://monetra-apps.vercel.app/.',
         link: { text: 'Lihat Detail Monetra di Portofolio', sectionId: 'work' },
       };
     }
