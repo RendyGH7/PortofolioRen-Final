@@ -158,12 +158,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang }) => {
                     <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
                       {project.category}
                     </span>
-                    {project.liveUrl && (
-                      <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60 flex items-center gap-1.5 shadow-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                        <span>Live Web</span>
-                      </span>
-                    )}
                   </div>
                   <span className="font-mono text-fog text-[11px]">{project.year}</span>
                 </div>
