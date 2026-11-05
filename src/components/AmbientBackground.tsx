@@ -279,240 +279,401 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* Majestic Spiral Galaxy (Andromeda-Class Cosmic Vortex - Elevated to Upper Horizon) */}
+          {/* Majestic Photorealistic Spiral Galaxy (JWST / Andromeda-Class Deep Cosmic Vortex) */}
           <div
-            className="absolute top-[-70px] sm:top-[-50px] md:top-[-40px] -left-28 sm:-left-20 md:-left-16 z-0 flex items-center justify-center opacity-55 sm:opacity-75 hover:opacity-95 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
-            title="Galaksi Spiral Andromeda (Supermassive Core & Star Clusters)"
+            className="absolute top-[-70px] sm:top-[-50px] md:top-[-35px] -left-28 sm:-left-20 md:-left-14 z-0 flex items-center justify-center opacity-70 sm:opacity-85 hover:opacity-100 transition-opacity duration-700 pointer-events-none sm:pointer-events-auto cursor-pointer group"
+            title="Galaksi Spiral Andromeda (Supermassive Core, Dust Lanes & Star Clusters)"
           >
-            <div className="relative w-52 h-36 sm:w-68 sm:h-48 md:w-80 md:h-56 flex items-center justify-center">
-              {/* Diffuse Outer Galactic Corona & Volumetric Cosmic Haze */}
+            <div className="relative w-64 h-48 sm:w-80 sm:h-60 md:w-96 md:h-72 lg:w-[440px] lg:h-[320px] flex items-center justify-center">
+              {/* Volumetric Deep-Space Galactic Haze & Corona Bloom */}
               <div
-                className="absolute inset-0 rounded-full blur-[45px] opacity-60 pointer-events-none group-hover:opacity-85 transition-opacity duration-700"
+                className="absolute inset-0 rounded-full blur-[60px] opacity-70 pointer-events-none group-hover:opacity-95 transition-opacity duration-700"
                 style={{
                   background:
-                    'radial-gradient(ellipse 75% 55% at 50% 50%, rgba(76, 111, 209, 0.45) 0%, rgba(139, 92, 246, 0.3) 45%, rgba(245, 176, 39, 0.15) 70%, transparent 85%)',
+                    'radial-gradient(ellipse 85% 65% at 50% 50%, rgba(59, 130, 246, 0.45) 0%, rgba(139, 92, 246, 0.3) 38%, rgba(245, 176, 39, 0.2) 62%, rgba(15, 23, 42, 0) 85%)',
                   transform: 'rotate(-24deg)',
                 }}
               />
+              <div
+                className="absolute w-3/4 h-3/4 rounded-full blur-[35px] opacity-60 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle at 50% 50%, rgba(245, 176, 39, 0.35) 0%, rgba(99, 102, 241, 0.25) 50%, transparent 80%)',
+                }}
+              />
 
-              {/* Realistic SVG Spiral Galaxy Disc with Slow Cinematic Rotation */}
+              {/* Realistic SVG Spiral Galaxy Disc with 3D Inclination & Slow Cosmic Drift */}
               <div
                 className="relative w-full h-full flex items-center justify-center"
                 style={{
-                  transform: 'perspective(600px) rotateX(25deg) rotateZ(-20deg)',
+                  transform: 'perspective(900px) rotateX(32deg) rotateZ(-24deg)',
                 }}
               >
                 <svg
-                  viewBox="0 0 360 260"
-                  className="w-full h-full overflow-visible animate-[spin_100s_linear_infinite]"
+                  viewBox="0 0 460 340"
+                  className="w-full h-full overflow-visible animate-[spin_160s_linear_infinite]"
                   style={{ willChange: 'transform' }}
                 >
                   <defs>
-                    {/* Core Bulge Radial Glow */}
-                    <radialGradient id="galaxyNucleus" cx="50%" cy="50%" r="50%">
+                    {/* Supermassive Galactic Core (Astrophysical Radial Bulge) */}
+                    <radialGradient id="deepGalaxyCore" cx="50%" cy="50%" r="50%">
                       <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                      <stop offset="14%" stopColor="#FFF4D0" stopOpacity="0.95" />
-                      <stop offset="32%" stopColor="#F5B027" stopOpacity="0.85" />
-                      <stop offset="55%" stopColor="#8EA8F5" stopOpacity="0.55" />
-                      <stop offset="78%" stopColor="#4C6FD1" stopOpacity="0.25" />
+                      <stop offset="10%" stopColor="#FFF9E6" stopOpacity="0.98" />
+                      <stop offset="22%" stopColor="#F5B027" stopOpacity="0.9" />
+                      <stop offset="42%" stopColor="#93C5FD" stopOpacity="0.65" />
+                      <stop offset="65%" stopColor="#6366F1" stopOpacity="0.35" />
+                      <stop offset="85%" stopColor="#3B82F6" stopOpacity="0.12" />
                       <stop offset="100%" stopColor="transparent" stopOpacity="0" />
                     </radialGradient>
 
-                    {/* Spiral Arm 1 Gradient */}
-                    <linearGradient id="armGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FFF2C2" stopOpacity="0.9" />
-                      <stop offset="20%" stopColor="#F5B027" stopOpacity="0.85" />
-                      <stop offset="45%" stopColor="#8EA8F5" stopOpacity="0.75" />
-                      <stop offset="70%" stopColor="#4C6FD1" stopOpacity="0.65" />
-                      <stop offset="90%" stopColor="#A855F7" stopOpacity="0.4" />
+                    {/* Diffuse Outer Halo Gradient */}
+                    <radialGradient id="galacticHalo" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#818CF8" stopOpacity="0.25" />
+                      <stop offset="35%" stopColor="#4F46E5" stopOpacity="0.18" />
+                      <stop offset="70%" stopColor="#2563EB" stopOpacity="0.08" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </radialGradient>
+
+                    {/* Primary Spiral Arm Nebula Gradients */}
+                    <linearGradient id="armGasA" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFF8E7" stopOpacity="0.95" />
+                      <stop offset="18%" stopColor="#F5B027" stopOpacity="0.88" />
+                      <stop offset="38%" stopColor="#93C5FD" stopOpacity="0.75" />
+                      <stop offset="62%" stopColor="#60A5FA" stopOpacity="0.65" />
+                      <stop offset="82%" stopColor="#818CF8" stopOpacity="0.45" />
                       <stop offset="100%" stopColor="transparent" stopOpacity="0" />
                     </linearGradient>
 
-                    {/* Spiral Arm 2 Gradient */}
-                    <linearGradient id="armGrad2" x1="100%" y1="100%" x2="0%" y2="0%">
-                      <stop offset="0%" stopColor="#FFF2C2" stopOpacity="0.9" />
-                      <stop offset="20%" stopColor="#F5B027" stopOpacity="0.85" />
-                      <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.75" />
-                      <stop offset="75%" stopColor="#3B82F6" stopOpacity="0.55" />
-                      <stop offset="92%" stopColor="#4C6FD1" stopOpacity="0.35" />
+                    <linearGradient id="armGasB" x1="100%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stopColor="#FFF8E7" stopOpacity="0.95" />
+                      <stop offset="18%" stopColor="#F5B027" stopOpacity="0.88" />
+                      <stop offset="40%" stopColor="#A78BFA" stopOpacity="0.72" />
+                      <stop offset="65%" stopColor="#38BDF8" stopOpacity="0.60" />
+                      <stop offset="85%" stopColor="#4F46E5" stopOpacity="0.40" />
                       <stop offset="100%" stopColor="transparent" stopOpacity="0" />
                     </linearGradient>
 
-                    {/* Gaussian Blur Filters */}
-                    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="5" result="blur" />
+                    {/* High-Energy Star-Forming Ridge Gradients */}
+                    <linearGradient id="armSpineA" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                      <stop offset="25%" stopColor="#BAE6FD" stopOpacity="0.85" />
+                      <stop offset="60%" stopColor="#67E8F9" stopOpacity="0.65" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </linearGradient>
+
+                    <linearGradient id="armSpineB" x1="100%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+                      <stop offset="25%" stopColor="#E0E7FF" stopOpacity="0.85" />
+                      <stop offset="60%" stopColor="#93C5FD" stopOpacity="0.65" />
+                      <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+                    </linearGradient>
+
+                    {/* Volumetric Astrophotography Filters */}
+                    <filter id="deepNebulaBlur" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="15" result="blur" />
                       <feMerge>
                         <feMergeNode in="blur" />
                         <feMergeNode in="SourceGraphic" />
                       </feMerge>
                     </filter>
-                    <filter id="dustBlur" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="2.5" />
+
+                    <filter id="armSoftGlow" x="-25%" y="-25%" width="150%" height="150%">
+                      <feGaussianBlur stdDeviation="5.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+
+                    <filter id="dustLaneBlur" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="2.4" />
+                    </filter>
+
+                    <filter id="coreStarlightBloom" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="4.5" result="bloom" />
+                      <feMerge>
+                        <feMergeNode in="bloom" />
+                        <feMergeNode in="bloom" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
                     </filter>
                   </defs>
 
-                  {/* Outer Gaseous Halo Ring */}
+                  {/* 1. Diffuse Outer Galactic Disc & Corona Halo */}
                   <ellipse
-                    cx="180"
-                    cy="130"
-                    rx="145"
-                    ry="95"
-                    fill="none"
-                    stroke="rgba(76, 111, 209, 0.18)"
-                    strokeWidth="16"
-                    filter="url(#softGlow)"
+                    cx="230"
+                    cy="170"
+                    rx="195"
+                    ry="125"
+                    fill="url(#galacticHalo)"
+                    filter="url(#deepNebulaBlur)"
                   />
                   <ellipse
-                    cx="180"
-                    cy="130"
-                    rx="110"
-                    ry="70"
+                    cx="230"
+                    cy="170"
+                    rx="155"
+                    ry="100"
                     fill="none"
-                    stroke="rgba(168, 85, 247, 0.16)"
-                    strokeWidth="12"
-                    filter="url(#softGlow)"
+                    stroke="rgba(129, 140, 248, 0.15)"
+                    strokeWidth="24"
+                    filter="url(#deepNebulaBlur)"
                   />
 
-                  {/* Spiral Arm 1: Primary Sweeping Arm */}
+                  {/* 2. Soft Volumetric Gas Clouds along Arm A (Diffuse Nebula Base) */}
                   <path
-                    d="M 180 130 C 215 115 250 110 280 130 C 315 152 325 185 305 215 C 280 245 220 252 170 235 C 120 218 80 165 92 120 C 102 80 148 45 200 40 C 255 35 305 60 335 95"
+                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
                     fill="none"
-                    stroke="url(#armGrad1)"
-                    strokeWidth="11"
+                    stroke="url(#armGasA)"
+                    strokeWidth="26"
                     strokeLinecap="round"
-                    filter="url(#softGlow)"
+                    filter="url(#deepNebulaBlur)"
+                    opacity="0.55"
                   />
+                  {/* Dense Luminous Gas Layer Arm A */}
                   <path
-                    d="M 180 130 C 215 115 250 110 280 130 C 315 152 325 185 305 215 C 280 245 220 252 170 235 C 120 218 80 165 92 120 C 102 80 148 45 200 40 C 255 35 305 60 335 95"
+                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
                     fill="none"
-                    stroke="#FFFFFF"
-                    strokeWidth="2.5"
-                    strokeOpacity="0.45"
+                    stroke="url(#armGasA)"
+                    strokeWidth="13"
                     strokeLinecap="round"
+                    filter="url(#armSoftGlow)"
+                    opacity="0.85"
                   />
-
-                  {/* Spiral Arm 2: Counter Sweeping Arm */}
+                  {/* High-Energy Star Ridge Arm A */}
                   <path
-                    d="M 180 130 C 145 145 110 150 80 130 C 45 108 35 75 55 45 C 80 15 140 8 190 25 C 240 42 280 95 268 140 C 258 180 212 215 160 220 C 105 225 55 200 25 165"
+                    d="M 230 170 C 265 152 305 148 340 170 C 385 198 398 238 375 278 C 345 318 275 328 210 312 C 140 292 90 232 100 168 C 112 112 170 68 240 58 C 315 48 380 78 425 122 C 458 158 462 205 435 248"
                     fill="none"
-                    stroke="url(#armGrad2)"
-                    strokeWidth="11"
+                    stroke="url(#armSpineA)"
+                    strokeWidth="2.8"
                     strokeLinecap="round"
-                    filter="url(#softGlow)"
-                  />
-                  <path
-                    d="M 180 130 C 145 145 110 150 80 130 C 45 108 35 75 55 45 C 80 15 140 8 190 25 C 240 42 280 95 268 140 C 258 180 212 215 160 220 C 105 225 55 200 25 165"
-                    fill="none"
-                    stroke="#FFFFFF"
-                    strokeWidth="2.5"
-                    strokeOpacity="0.45"
-                    strokeLinecap="round"
+                    opacity="0.80"
                   />
 
-                  {/* Realistic Interstellar Dark Dust Lanes (Crucial for Hubble/JWST Realism) */}
+                  {/* 3. Soft Volumetric Gas Clouds along Arm B (Diffuse Nebula Base) */}
                   <path
-                    d="M 184 130 C 212 118 245 114 272 132 C 302 152 310 180 292 206 C 270 232 218 238 174 224"
+                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
                     fill="none"
-                    stroke="#0A1020"
-                    strokeWidth="4"
-                    strokeOpacity="0.75"
+                    stroke="url(#armGasB)"
+                    strokeWidth="26"
                     strokeLinecap="round"
-                    filter="url(#dustBlur)"
+                    filter="url(#deepNebulaBlur)"
+                    opacity="0.55"
                   />
+                  {/* Dense Luminous Gas Layer Arm B */}
                   <path
-                    d="M 176 130 C 148 142 115 146 88 128 C 58 108 50 80 68 54 C 90 28 142 22 186 36"
+                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
                     fill="none"
-                    stroke="#0A1020"
-                    strokeWidth="4"
-                    strokeOpacity="0.75"
+                    stroke="url(#armGasB)"
+                    strokeWidth="13"
                     strokeLinecap="round"
-                    filter="url(#dustBlur)"
+                    filter="url(#armSoftGlow)"
+                    opacity="0.85"
+                  />
+                  {/* High-Energy Star Ridge Arm B */}
+                  <path
+                    d="M 230 170 C 195 188 155 192 120 170 C 75 142 62 102 85 62 C 115 22 185 12 250 28 C 320 48 370 108 360 172 C 348 228 290 272 220 282 C 145 292 80 262 35 218 C 2 182 -2 135 25 92"
+                    fill="none"
+                    stroke="url(#armSpineB)"
+                    strokeWidth="2.8"
+                    strokeLinecap="round"
+                    opacity="0.80"
                   />
 
-                  {/* Sparkling Star Clusters & HII Emission Regions along Arms */}
-                  <g className="stellar-clusters">
-                    {/* Blue & Gold Young Stars on Arm 1 */}
-                    <circle cx="218" cy="116" r="1.8" fill="#FFFFFF" />
-                    <circle cx="235" cy="113" r="2.2" fill="#F5B027" opacity="0.9" />
-                    <circle cx="258" cy="118" r="1.6" fill="#60A5FA" />
-                    <circle cx="282" cy="135" r="2.0" fill="#FFFFFF" />
-                    <circle cx="304" cy="162" r="1.7" fill="#8EA8F5" />
-                    <circle cx="312" cy="186" r="2.2" fill="#EC4899" opacity="0.85" />
-                    <circle cx="295" cy="218" r="1.9" fill="#60A5FA" />
-                    <circle cx="265" cy="242" r="1.5" fill="#FFFFFF" />
-                    <circle cx="228" cy="248" r="1.8" fill="#F5B027" />
-                    <circle cx="185" cy="238" r="2.0" fill="#8EA8F5" />
-                    <circle cx="140" cy="218" r="1.5" fill="#FFFFFF" />
-                    <circle cx="98" cy="162" r="1.7" fill="#38BDF8" />
-                    <circle cx="94" cy="122" r="2.2" fill="#F472B6" opacity="0.8" />
-                    <circle cx="108" cy="85" r="1.8" fill="#FFFFFF" />
-                    <circle cx="142" cy="52" r="2.0" fill="#60A5FA" />
-                    <circle cx="188" cy="40" r="1.6" fill="#F5B027" />
-                    <circle cx="242" cy="38" r="2.1" fill="#FFFFFF" />
-                    <circle cx="288" cy="55" r="1.8" fill="#8EA8F5" />
-                    <circle cx="325" cy="88" r="1.5" fill="#F5B027" />
+                  {/* 4. Natural Branching Secondary Spiral Spurs */}
+                  <path
+                    d="M 340 170 C 375 148 415 156 440 188 C 452 208 448 234 425 256"
+                    fill="none"
+                    stroke="url(#armGasA)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    filter="url(#armSoftGlow)"
+                    opacity="0.50"
+                  />
+                  <path
+                    d="M 120 170 C 85 192 45 184 20 152 C 8 132 12 106 35 84"
+                    fill="none"
+                    stroke="url(#armGasB)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    filter="url(#armSoftGlow)"
+                    opacity="0.50"
+                  />
 
-                    {/* Blue & Pink Young Stars on Arm 2 */}
-                    <circle cx="142" cy="144" r="1.8" fill="#FFFFFF" />
-                    <circle cx="125" cy="147" r="2.2" fill="#F5B027" opacity="0.9" />
-                    <circle cx="102" cy="142" r="1.6" fill="#60A5FA" />
-                    <circle cx="78" cy="125" r="2.0" fill="#FFFFFF" />
-                    <circle cx="56" cy="98" r="1.7" fill="#8EA8F5" />
-                    <circle cx="48" cy="74" r="2.2" fill="#EC4899" opacity="0.85" />
-                    <circle cx="65" cy="42" r="1.9" fill="#60A5FA" />
-                    <circle cx="95" cy="18" r="1.5" fill="#FFFFFF" />
-                    <circle cx="132" cy="12" r="1.8" fill="#F5B027" />
-                    <circle cx="175" cy="22" r="2.0" fill="#8EA8F5" />
-                    <circle cx="220" cy="42" r="1.5" fill="#FFFFFF" />
-                    <circle cx="262" cy="98" r="1.7" fill="#38BDF8" />
-                    <circle cx="266" cy="138" r="2.2" fill="#F472B6" opacity="0.8" />
-                    <circle cx="252" cy="175" r="1.8" fill="#FFFFFF" />
-                    <circle cx="218" cy="208" r="2.0" fill="#60A5FA" />
-                    <circle cx="172" cy="220" r="1.6" fill="#F5B027" />
-                    <circle cx="118" cy="222" r="2.1" fill="#FFFFFF" />
-                    <circle cx="72" cy="205" r="1.8" fill="#8EA8F5" />
-                    <circle cx="35" cy="172" r="1.5" fill="#F5B027" />
+                  {/* 5. Photorealistic Interstellar Dark Dust Lanes (Silhouetted against Starlight) */}
+                  <path
+                    d="M 235 170 C 262 154 298 150 332 170 C 372 195 384 232 362 268 C 334 304 270 314 212 300 C 148 282 104 228 112 170 C 122 122 174 80 238 72 C 306 64 364 90 406 130"
+                    fill="none"
+                    stroke="#02040A"
+                    strokeWidth="5"
+                    strokeOpacity="0.85"
+                    strokeLinecap="round"
+                    filter="url(#dustLaneBlur)"
+                  />
+                  <path
+                    d="M 225 170 C 198 186 162 190 128 170 C 88 145 76 108 98 72 C 126 36 190 26 248 40 C 312 58 356 112 348 170 C 338 218 286 260 222 268 C 154 276 96 250 54 210"
+                    fill="none"
+                    stroke="#02040A"
+                    strokeWidth="5"
+                    strokeOpacity="0.85"
+                    strokeLinecap="round"
+                    filter="url(#dustLaneBlur)"
+                  />
+
+                  {/* 6. Realistic Star Clusters & HII Starburst Emission Regions (100+ Astrophotography Points) */}
+                  <g className="stellar-field" filter="url(#armSoftGlow)">
+                    {/* Core Surround High-Density Stars */}
+                    <circle cx="236" cy="164" r="1.1" fill="#FFFFFF" />
+                    <circle cx="224" cy="175" r="1.2" fill="#FFFFFF" />
+                    <circle cx="242" cy="178" r="0.9" fill="#FFF2C2" />
+                    <circle cx="218" cy="165" r="1.0" fill="#BAE6FD" />
+                    <circle cx="248" cy="162" r="1.3" fill="#FDE047" opacity="0.9" />
+                    <circle cx="212" cy="176" r="1.1" fill="#FFFFFF" />
+
+                    {/* Arm A: Young Blue Hypergiants & Golden Star Clusters */}
+                    <circle cx="268" cy="154" r="1.2" fill="#FFFFFF" />
+                    <circle cx="282" cy="150" r="1.5" fill="#F5B027" opacity="0.95" />
+                    <circle cx="305" cy="154" r="1.3" fill="#7DD3FC" />
+                    <circle cx="328" cy="168" r="1.4" fill="#FFFFFF" />
+                    <circle cx="348" cy="186" r="1.6" fill="#F472B6" opacity="0.85" />
+                    <circle cx="362" cy="208" r="1.3" fill="#93C5FD" />
+                    <circle cx="374" cy="232" r="1.6" fill="#FFFFFF" />
+                    <circle cx="368" cy="256" r="1.5" fill="#F5B027" opacity="0.9" />
+                    <circle cx="348" cy="282" r="1.2" fill="#67E8F9" />
+                    <circle cx="320" cy="302" r="1.4" fill="#FFFFFF" />
+                    <circle cx="288" cy="316" r="1.3" fill="#FDE047" />
+                    <circle cx="252" cy="320" r="1.5" fill="#BAE6FD" />
+                    <circle cx="214" cy="312" r="1.4" fill="#FFFFFF" />
+                    <circle cx="178" cy="298" r="1.2" fill="#7DD3FC" />
+                    <circle cx="145" cy="275" r="1.5" fill="#F472B6" opacity="0.85" />
+                    <circle cx="118" cy="244" r="1.2" fill="#FFFFFF" />
+                    <circle cx="102" cy="208" r="1.4" fill="#F5B027" />
+                    <circle cx="98" cy="172" r="1.5" fill="#93C5FD" />
+                    <circle cx="105" cy="138" r="1.3" fill="#FFFFFF" />
+                    <circle cx="125" cy="106" r="1.5" fill="#67E8F9" />
+                    <circle cx="152" cy="80" r="1.2" fill="#FDE047" />
+                    <circle cx="186" cy="64" r="1.4" fill="#FFFFFF" />
+                    <circle cx="225" cy="56" r="1.3" fill="#BAE6FD" />
+                    <circle cx="265" cy="55" r="1.6" fill="#F5B027" opacity="0.9" />
+                    <circle cx="308" cy="62" r="1.3" fill="#FFFFFF" />
+                    <circle cx="348" cy="78" r="1.4" fill="#7DD3FC" />
+                    <circle cx="385" cy="102" r="1.5" fill="#F472B6" opacity="0.85" />
+                    <circle cx="414" cy="130" r="1.3" fill="#FFFFFF" />
+                    <circle cx="432" cy="162" r="1.4" fill="#93C5FD" />
+                    <circle cx="438" cy="195" r="1.5" fill="#FDE047" />
+                    <circle cx="426" cy="228" r="1.2" fill="#FFFFFF" />
+
+                    {/* Arm B: Young Blue Hypergiants & Golden Star Clusters */}
+                    <circle cx="192" cy="186" r="1.2" fill="#FFFFFF" />
+                    <circle cx="178" cy="190" r="1.5" fill="#F5B027" opacity="0.95" />
+                    <circle cx="155" cy="186" r="1.3" fill="#7DD3FC" />
+                    <circle cx="132" cy="172" r="1.4" fill="#FFFFFF" />
+                    <circle cx="112" cy="154" r="1.6" fill="#F472B6" opacity="0.85" />
+                    <circle cx="98" cy="132" r="1.3" fill="#93C5FD" />
+                    <circle cx="86" cy="108" r="1.6" fill="#FFFFFF" />
+                    <circle cx="92" cy="84" r="1.5" fill="#F5B027" opacity="0.9" />
+                    <circle cx="112" cy="58" r="1.2" fill="#67E8F9" />
+                    <circle cx="140" cy="38" r="1.4" fill="#FFFFFF" />
+                    <circle cx="172" cy="24" r="1.3" fill="#FDE047" />
+                    <circle cx="208" cy="20" r="1.5" fill="#BAE6FD" />
+                    <circle cx="246" cy="28" r="1.4" fill="#FFFFFF" />
+                    <circle cx="282" cy="42" r="1.2" fill="#7DD3FC" />
+                    <circle cx="315" cy="65" r="1.5" fill="#F472B6" opacity="0.85" />
+                    <circle cx="342" cy="96" r="1.2" fill="#FFFFFF" />
+                    <circle cx="358" cy="132" r="1.4" fill="#F5B027" />
+                    <circle cx="362" cy="168" r="1.5" fill="#93C5FD" />
+                    <circle cx="355" cy="202" r="1.3" fill="#FFFFFF" />
+                    <circle cx="335" cy="234" r="1.5" fill="#67E8F9" />
+                    <circle cx="308" cy="260" r="1.2" fill="#FDE047" />
+                    <circle cx="274" cy="276" r="1.4" fill="#FFFFFF" />
+                    <circle cx="235" cy="284" r="1.3" fill="#BAE6FD" />
+                    <circle cx="195" cy="285" r="1.6" fill="#F5B027" opacity="0.9" />
+                    <circle cx="152" cy="278" r="1.3" fill="#FFFFFF" />
+                    <circle cx="112" cy="262" r="1.4" fill="#7DD3FC" />
+                    <circle cx="75" cy="238" r="1.5" fill="#F472B6" opacity="0.85" />
+                    <circle cx="46" cy="210" r="1.3" fill="#FFFFFF" />
+                    <circle cx="28" cy="178" r="1.4" fill="#93C5FD" />
+                    <circle cx="22" cy="145" r="1.5" fill="#FDE047" />
+                    <circle cx="34" cy="112" r="1.2" fill="#FFFFFF" />
                   </g>
 
-                  {/* Supermassive Galactic Core (Nucleus Bulge) */}
+                  {/* 7. Supermassive Galactic Core (Astrophysical Bulge & Event Horizon Radiance) */}
                   <ellipse
-                    cx="180"
-                    cy="130"
-                    rx="32"
-                    ry="22"
-                    fill="url(#galaxyNucleus)"
-                    filter="url(#softGlow)"
+                    cx="230"
+                    cy="170"
+                    rx="44"
+                    ry="30"
+                    fill="url(#deepGalaxyCore)"
+                    filter="url(#coreStarlightBloom)"
                     className="animate-pulse"
-                    style={{ animationDuration: '4s' }}
+                    style={{ animationDuration: '5s' }}
                   />
                   <ellipse
-                    cx="180"
-                    cy="130"
-                    rx="14"
-                    ry="10"
+                    cx="230"
+                    cy="170"
+                    rx="22"
+                    ry="15"
+                    fill="#FFF7E6"
+                    filter="url(#armSoftGlow)"
+                    opacity="0.95"
+                  />
+                  <ellipse
+                    cx="230"
+                    cy="170"
+                    rx="10"
+                    ry="7"
                     fill="#FFFFFF"
-                    className="shadow-[0_0_20px_#FFFFFF]"
+                    className="shadow-[0_0_24px_#FFFFFF]"
                   />
 
-                  {/* Stellar Diffraction Ray / Starlight Spike at Core */}
+                  {/* 8. Optical Telescope Astrophotography Lens Diffraction Rays (JWST / Hubble 6-Point Spike) */}
+                  {/* Anamorphic Horizontal Stellar Flare */}
+                  <ellipse
+                    cx="230"
+                    cy="170"
+                    rx="85"
+                    ry="1.4"
+                    fill="#FFFFFF"
+                    opacity="0.85"
+                    filter="url(#armSoftGlow)"
+                  />
+                  <ellipse
+                    cx="230"
+                    cy="170"
+                    rx="48"
+                    ry="2.4"
+                    fill="#BAE6FD"
+                    opacity="0.65"
+                    filter="url(#armSoftGlow)"
+                  />
+                  {/* Vertical Primary Diffraction Spike */}
+                  <ellipse
+                    cx="230"
+                    cy="170"
+                    rx="1.4"
+                    ry="55"
+                    fill="#FFFFFF"
+                    opacity="0.75"
+                    filter="url(#armSoftGlow)"
+                  />
+                  {/* Diagonal Secondary Diffraction Spikes */}
                   <line
-                    x1="180"
-                    y1="102"
-                    x2="180"
-                    y2="158"
+                    x1="195"
+                    y1="135"
+                    x2="265"
+                    y2="205"
                     stroke="#FFFFFF"
-                    strokeWidth="1.2"
-                    strokeOpacity="0.75"
+                    strokeWidth="0.9"
+                    strokeOpacity="0.45"
                     strokeLinecap="round"
                   />
                   <line
-                    x1="148"
-                    y1="130"
-                    x2="212"
-                    y2="130"
+                    x1="195"
+                    y1="205"
+                    x2="265"
+                    y2="135"
                     stroke="#FFFFFF"
-                    strokeWidth="1.2"
-                    strokeOpacity="0.75"
+                    strokeWidth="0.9"
+                    strokeOpacity="0.45"
                     strokeLinecap="round"
                   />
                 </svg>
