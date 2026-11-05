@@ -17,7 +17,6 @@ import {
   RotateCcw,
   Loader2,
   ShieldCheck,
-  Clock,
   ArrowRight,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -36,17 +35,17 @@ interface CategoryOption {
 }
 
 const CATEGORIES: CategoryOption[] = [
-  { id: 'web-app', labelId: 'Proyek Web & App', labelEn: 'Web & App Project', icon: Code2 },
-  { id: 'recruitment', labelId: 'Tawaran Kerja / Rekrutmen', labelEn: 'Hiring / Career Offer', icon: Briefcase },
-  { id: 'consulting', labelId: 'Konsultasi Arsitektur', labelEn: 'System Architecture', icon: Layers },
-  { id: 'general', labelId: 'Kolaborasi & Diskusi', labelEn: 'General Inquiry', icon: MessageSquare },
+  { id: 'web-app', labelId: 'Web & App', labelEn: 'Web & App', icon: Code2 },
+  { id: 'recruitment', labelId: 'Rekrutmen', labelEn: 'Recruitment', icon: Briefcase },
+  { id: 'consulting', labelId: 'Konsultasi', labelEn: 'Consulting', icon: Layers },
+  { id: 'general', labelId: 'Kolaborasi', labelEn: 'Collaboration', icon: MessageSquare },
 ];
 
 const BUDGET_OPTIONS = [
-  { id: 'discuss', labelId: 'Fleksibel / Diskusi', labelEn: 'Flexible / Discuss' },
-  { id: 'tier1', labelId: '< Rp 5 Juta', labelEn: '< $350 USD' },
-  { id: 'tier2', labelId: 'Rp 5 - 15 Juta', labelEn: '$350 - $1,000 USD' },
-  { id: 'tier3', labelId: '> Rp 15 Juta', labelEn: '> $1,000 USD' },
+  { id: 'discuss', labelId: 'Fleksibel', labelEn: 'Flexible' },
+  { id: 'tier1', labelId: '< Rp 5 Juta', labelEn: '< $350' },
+  { id: 'tier2', labelId: 'Rp 5 - 15 Jt', labelEn: '$350 - $1K' },
+  { id: 'tier3', labelId: '> Rp 15 Juta', labelEn: '> $1K' },
 ];
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
@@ -56,9 +55,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const [selectedBudget, setSelectedBudget] = useState<string>('discuss');
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  
-  // High-Tech Form States
-  const [viewTab, setViewTab] = useState<'form' | 'preview'>('form');
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submissionReceipt, setSubmissionReceipt] = useState<string>('');
@@ -72,14 +69,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const categoryLabel = lang === 'id' ? activeCategory.labelId : activeCategory.labelEn;
   const budgetLabel = lang === 'id' ? activeBudget.labelId : activeBudget.labelEn;
 
-  // Generate Professional Standardized Email Blueprint
   const getFormattedBlueprint = useCallback(() => {
-    const timeStr = submissionTime || 'Format Resmi Portofolio';
+    const timeStr = submissionTime || (lang === 'id' ? 'Format Resmi Portofolio' : 'Official Portfolio Dispatch');
 
     return `Kepada: Rendy Fernando Tambunan (Full Stack Developer)
 Email Tujuan: ${PERSONAL_DATA.email}
 ----------------------------------------------------------------------
-SURAT INQUIRY & PENAWARAN KERJASAMA PROYEK
+SURAT INQUIRY & PENAWARAN KERJASAMA
 ----------------------------------------------------------------------
 
 1. DATA PENGIRIM:
@@ -94,24 +90,24 @@ ${message.trim() || '[Tuliskan rincian kebutuhan atau tawaran proyek di formulir
 
 ----------------------------------------------------------------------
 Pesan ini dikirim secara resmi melalui formulir kontak portofolio Rendy Fernando Tambunan.
-Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
+https://github.com/RendyGH7
 ----------------------------------------------------------------------`;
-  }, [submissionTime, name, email, categoryLabel, budgetLabel, message]);
+  }, [submissionTime, lang, name, email, categoryLabel, budgetLabel, message]);
 
   const validate = () => {
     const errs: { [key: string]: string } = {};
     if (!name.trim()) {
-      errs.name = lang === 'id' ? 'Nama lengkap atau perusahaan belum diisi.' : 'Full name or company is required.';
+      errs.name = lang === 'id' ? 'Nama lengkap atau instansi wajib diisi.' : 'Full name or company is required.';
     }
     if (!email.trim()) {
-      errs.email = lang === 'id' ? 'Alamat email belum diisi.' : 'Email address is required.';
+      errs.email = lang === 'id' ? 'Alamat email kontak wajib diisi.' : 'Email address is required.';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errs.email = lang === 'id' ? 'Format email belum valid (contoh: nama@domain.com).' : 'Please enter a valid email address.';
+      errs.email = lang === 'id' ? 'Format email tidak valid (contoh: nama@domain.com).' : 'Please enter a valid email address.';
     }
     if (!message.trim()) {
-      errs.message = lang === 'id' ? 'Pesan dan rencana proyek belum diisi.' : 'Project message is required.';
+      errs.message = lang === 'id' ? 'Rincian pesan belum diisi.' : 'Project message is required.';
     } else if (message.trim().length < 15) {
-      errs.message = lang === 'id' ? 'Tuliskan pesan minimal 15 karakter agar lebih jelas.' : 'Please enter at least 15 characters.';
+      errs.message = lang === 'id' ? 'Tuliskan minimal 15 karakter agar pesan lebih jelas.' : 'Please enter at least 15 characters.';
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -119,10 +115,7 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) {
-      setViewTab('form');
-      return;
-    }
+    if (!validate()) return;
 
     setIsSubmitting(true);
 
@@ -140,7 +133,6 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
     const bodyContent = getFormattedBlueprint();
     const emailSubject = `[INQUIRY PORTOFOLIO] ${categoryLabel} - ${name.trim()}`;
 
-    // Silent background transmission attempt to FormSubmit AJAX
     try {
       fetch(`https://formsubmit.co/ajax/${PERSONAL_DATA.email}`, {
         method: 'POST',
@@ -162,21 +154,20 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
           'Dokumen Surat Lengkap': bodyContent,
         }),
       }).catch(() => {
-        // Safe fallback handled gracefully
+        // Safe fallback
       });
     } catch {
       // Safe fallback
     }
 
-    // High-tech cinematic transmission delay
-    await new Promise((resolve) => setTimeout(resolve, 1100));
+    await new Promise((resolve) => setTimeout(resolve, 950));
 
     setIsSubmitting(false);
     setIsSubmitted(true);
 
     try {
       confetti({
-        particleCount: 55,
+        particleCount: 50,
         spread: 60,
         origin: { y: 0.75 },
         colors: ['#F5B027', '#4C6FD1', '#10B981'],
@@ -195,7 +186,7 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
   const handleCopyFormattedText = () => {
     navigator.clipboard.writeText(getFormattedBlueprint());
     setCopiedFormat(true);
-    setTimeout(() => setCopiedFormat(false), 2200);
+    setTimeout(() => setCopiedFormat(false), 2000);
   };
 
   const handleOpenGmail = () => {
@@ -206,7 +197,7 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
   };
 
   const handleOpenWhatsApp = () => {
-    const waText = `*Halo Rendy Fernando,*\n\nSaya ingin mendiskusikan peluang proyek/kerjasama melalui portofolio Anda:\n\n*Data Pengirim:*\n• *Nama:* ${name.trim()}\n• *Email:* ${email.trim()}\n• *Kategori:* ${categoryLabel}\n• *Estimasi Skala:* ${budgetLabel}\n\n*Rincian Kebutuhan:*\n"${message.trim()}"\n\n_Terima kasih!_`;
+    const waText = `*Halo Rendy Fernando,*\n\nSaya ingin mendiskusikan peluang proyek/kerjasama melalui portofolio Anda:\n\n*Data Pengirim:*\n• *Nama:* ${name.trim()}\n• *Email:* ${email.trim()}\n• *Kategori:* ${categoryLabel}\n• *Estimasi Skala:* ${budgetLabel}\n\n*Rincian Pesan:*\n"${message.trim()}"\n\n_Terima kasih!_`;
     const waUrl = `https://wa.me/6289669557444?text=${encodeURIComponent(waText)}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
@@ -235,70 +226,74 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
-        {/* Left Info Column: Direct Channels & Social Network */}
-        <div className="md:col-span-5 glass-2 rounded-3xl p-6 sm:p-7 text-left space-y-6 shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
-          <div className="space-y-3">
-            <span className="text-xs font-mono text-champagne uppercase tracking-wider block">
-              Kontak Langsung
-            </span>
-            <h3 className="font-display text-2xl text-pearl font-normal">
-              Rendy Fernando Tambunan
-            </h3>
-            <p className="text-xs text-mist leading-relaxed">
-              Kirimkan pesan melalui formulir resmi di samping untuk menghasilkan format surat bisnis terstruktur yang langsung sampai ke inbox email saya.
-            </p>
-          </div>
-
-          <div className="space-y-3 pt-2 border-t border-white/10 text-xs text-mist">
-            {/* Email item with copy */}
-            <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-champagne/40 transition-all">
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-champagne" />
-                <span className="font-mono text-pearl">{PERSONAL_DATA.email}</span>
-              </div>
-              <button
-                onClick={handleCopyEmail}
-                className="p-1 rounded text-fog hover:text-pearl transition-colors"
-                title="Salin Email"
-                aria-label="Salin Email"
-              >
-                {copiedEmail ? (
-                  <Check className="w-3.5 h-3.5 text-[#10B981]" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5" />
-                )}
-              </button>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch relative z-10">
+        {/* Left Column: Direct Channels & Social Network */}
+        <div className="md:col-span-5 glass-2 rounded-3xl p-6 sm:p-7 text-left flex flex-col justify-between shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-champagne block">
+                {lang === 'id' ? 'Kontak Langsung' : 'Direct Contact'}
+              </span>
+              <h3 className="font-display text-2xl text-pearl font-normal">
+                {PERSONAL_DATA.name}
+              </h3>
+              <p className="text-xs text-mist leading-relaxed">
+                {lang === 'id'
+                  ? 'Siap berdiskusi untuk implementasi proyek digital, tawaran posisi kerja, atau konsultasi arsitektur sistem modern.'
+                  : 'Open for full-time roles, freelance software engineering, and technical architecture consultations.'}
+              </p>
             </div>
 
-            {/* Phone item */}
-            <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-sapphire/40 transition-all">
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-sapphire" />
-                <span className="font-mono text-pearl">{PERSONAL_DATA.phone}</span>
+            <div className="space-y-2.5 pt-2 border-t border-white/10 text-xs text-mist">
+              {/* Email item */}
+              <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-champagne/40 transition-all">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Mail className="w-4 h-4 text-champagne shrink-0" />
+                  <span className="font-mono text-pearl text-xs truncate">{PERSONAL_DATA.email}</span>
+                </div>
+                <button
+                  onClick={handleCopyEmail}
+                  className="p-1 rounded text-fog hover:text-pearl transition-colors shrink-0"
+                  title="Salin Email"
+                  aria-label="Salin Email"
+                >
+                  {copiedEmail ? (
+                    <Check className="w-3.5 h-3.5 text-champagne" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                  )}
+                </button>
               </div>
-              <a
-                href="https://wa.me/6289669557444"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] text-champagne hover:underline font-mono flex items-center gap-1"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                <span>WhatsApp</span>
-              </a>
-            </div>
 
-            {/* Location */}
-            <div className="flex items-center gap-2.5 p-3 rounded-xl glass-1 border border-white/10">
-              <MapPin className="w-4 h-4 text-petrol" />
-              <span className="text-pearl">{PERSONAL_DATA.location} (WIB)</span>
+              {/* Phone item */}
+              <div className="flex items-center justify-between p-3 rounded-xl glass-1 border border-white/10 hover:border-sapphire/40 transition-all">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Phone className="w-4 h-4 text-sapphire shrink-0" />
+                  <span className="font-mono text-pearl text-xs">{PERSONAL_DATA.phone}</span>
+                </div>
+                <a
+                  href="https://wa.me/6289669557444"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] text-champagne hover:underline font-mono flex items-center gap-1 shrink-0"
+                >
+                  <span>WhatsApp</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-center gap-2.5 p-3 rounded-xl glass-1 border border-white/10">
+                <MapPin className="w-4 h-4 text-petrol shrink-0" />
+                <span className="text-pearl text-xs">{PERSONAL_DATA.location} (WIB)</span>
+              </div>
             </div>
           </div>
 
           {/* Social Profiles Grid */}
-          <div className="pt-2 border-t border-white/10">
-            <span className="text-[10px] font-mono uppercase text-fog block mb-2.5">
-              Jejaring Profesional
+          <div className="pt-6 border-t border-white/10 mt-6">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-fog block mb-2.5">
+              {lang === 'id' ? 'Jejaring Profesional' : 'Professional Channels'}
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <a
@@ -307,11 +302,11 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                 rel="noopener noreferrer"
                 className="glass-1 hover:border-champagne/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
-                <span className="flex items-center gap-1.5">
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub</span>
+                <span className="flex items-center gap-2">
+                  <GithubIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="font-medium truncate">GitHub</span>
                 </span>
-                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ExternalLink className="w-3 h-3 text-fog group-hover:text-pearl group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </a>
 
               <a
@@ -320,11 +315,11 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                 rel="noopener noreferrer"
                 className="glass-1 hover:border-sapphire/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
-                <span className="flex items-center gap-1.5">
-                  <LinkedinIcon className="w-3.5 h-3.5" />
-                  <span>LinkedIn</span>
+                <span className="flex items-center gap-2">
+                  <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="font-medium truncate">LinkedIn</span>
                 </span>
-                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ExternalLink className="w-3 h-3 text-fog group-hover:text-pearl group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </a>
 
               <a
@@ -333,11 +328,11 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                 rel="noopener noreferrer"
                 className="glass-1 hover:border-champagne/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
-                <span className="flex items-center gap-1.5">
-                  <InstagramIcon className="w-3.5 h-3.5" />
-                  <span>Instagram</span>
+                <span className="flex items-center gap-2">
+                  <InstagramIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="font-medium truncate">Instagram</span>
                 </span>
-                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ExternalLink className="w-3 h-3 text-fog group-hover:text-pearl group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </a>
 
               <a
@@ -346,18 +341,18 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                 rel="noopener noreferrer"
                 className="glass-1 hover:border-petrol/40 p-2.5 rounded-xl flex items-center justify-between text-mist hover:text-pearl transition-all group"
               >
-                <span className="flex items-center gap-1.5">
-                  <TikTokIcon className="w-3.5 h-3.5" />
-                  <span>TikTok</span>
+                <span className="flex items-center gap-2">
+                  <TikTokIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="font-medium truncate">TikTok</span>
                 </span>
-                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ExternalLink className="w-3 h-3 text-fog group-hover:text-pearl group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Right Form Column: Advanced Professional Dispatch Module */}
-        <div className="md:col-span-7 glass-2 rounded-3xl p-6 sm:p-8 text-left shadow-glass-md border border-white/10 hover:border-white/20 transition-all relative overflow-hidden">
+        {/* Right Form Column: Clean Minimalist Dispatch Form */}
+        <div className="md:col-span-7 glass-2 rounded-3xl p-6 sm:p-7 text-left shadow-glass-md border border-white/10 hover:border-white/20 transition-all relative overflow-hidden flex flex-col justify-between">
           {/* Submitting Loading Overlay */}
           <AnimatePresence>
             {isSubmitting && (
@@ -367,20 +362,17 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                 exit={{ opacity: 0 }}
                 className="absolute inset-0 z-30 bg-midnight-0/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center space-y-4"
               >
-                <div className="relative w-16 h-16 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full border-2 border-champagne/20 border-t-champagne animate-spin" />
-                  <Loader2 className="w-6 h-6 text-champagne animate-pulse absolute" />
+                <div className="relative w-14 h-14 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full border-2 border-champagne/20 border-t-champagne animate-spin" />
+                  <Loader2 className="w-5 h-5 text-champagne animate-pulse absolute" />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-display text-lg text-pearl font-normal">
-                    Menyusun & Mengirimkan Pesan
+                  <h4 className="font-display text-base text-pearl font-normal">
+                    {lang === 'id' ? 'Menyiapkan Format Pesan' : 'Structuring Dispatch Letter'}
                   </h4>
                   <p className="text-xs text-mist font-mono">
-                    Format surat profesional sedang disiapkan untuk inbox Rendy...
+                    {lang === 'id' ? 'Menyambungkan ke transmisi inbox Rendy...' : 'Connecting to Rendy inbox gateway...'}
                   </p>
-                </div>
-                <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-r from-champagne via-sapphire to-[#10B981] animate-pulse" />
                 </div>
               </motion.div>
             )}
@@ -389,36 +381,36 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
           {isSubmitted ? (
             /* Post-Submission Verified Dispatch Console */
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              className="py-4 space-y-6"
+              className="py-1 space-y-5 flex flex-col justify-between h-full"
             >
-              {/* Receipt Status Badge */}
-              <div className="p-4 rounded-2xl bg-[#064E3B]/85 border border-[#10B981]/60 flex items-start gap-3.5 text-left shadow-sm">
-                <div className="w-9 h-9 rounded-xl bg-[#10B981]/20 flex items-center justify-center shrink-0 text-[#6EE7B7]">
-                  <CheckCircle2 className="w-5 h-5 text-[#6EE7B7]" />
-                </div>
-                <div className="space-y-1">
+              {/* Receipt Status Card */}
+              <div className="p-4 rounded-2xl glass-1 border border-champagne/30 space-y-2">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-[#6EE7B7] uppercase tracking-wider">
-                      Format Surat Siap Dikirim
-                    </span>
-                    <span className="text-[10px] font-mono text-mist bg-white/10 px-2 py-0.5 rounded-md">
-                      {submissionReceipt}
+                    <CheckCircle2 className="w-4 h-4 text-champagne shrink-0" />
+                    <span className="text-xs font-semibold text-pearl">
+                      {lang === 'id' ? 'Format Surat Siap Dikirim' : 'Message Dispatch Ready'}
                     </span>
                   </div>
-                  <p className="text-xs text-pearl leading-relaxed">
-                    Data inquiry Anda telah dikemas rapi dengan struktur surat bisnis eksekutif. Anda dapat langsung membuka draf di Gmail atau mengirimkannya via WhatsApp untuk tanggapan instan.
-                  </p>
+                  <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-md border border-champagne/20">
+                    {submissionReceipt}
+                  </span>
                 </div>
+                <p className="text-xs text-mist leading-relaxed">
+                  {lang === 'id'
+                    ? 'Inquiry Anda telah tersusun rapi. Pilih kanal pengiriman di bawah untuk membuka draf langsung di Gmail atau mengirimkannya ke WhatsApp.'
+                    : 'Your inquiry has been structured. Choose your preferred gateway below to send via Gmail or forward to WhatsApp.'}
+                </p>
               </div>
 
               {/* Formatted Letter Output Card */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs font-mono text-mist">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 text-fog">
                     <FileText className="w-3.5 h-3.5 text-champagne" />
-                    <span>Draf Dokumen Terstruktur:</span>
+                    <span>{lang === 'id' ? 'Draf Dokumen Terstruktur:' : 'Structured Document Draft:'}</span>
                   </span>
                   <button
                     onClick={handleCopyFormattedText}
@@ -426,19 +418,19 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                   >
                     {copiedFormat ? (
                       <>
-                        <Check className="w-3 h-3 text-[#10B981]" />
-                        <span className="text-[#10B981]">Tersalin</span>
+                        <Check className="w-3 h-3 text-champagne" />
+                        <span>{lang === 'id' ? 'Tersalin' : 'Copied'}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3 h-3" />
-                        <span>Salin Format Surat</span>
+                        <span>{lang === 'id' ? 'Salin Format Surat' : 'Copy Draft'}</span>
                       </>
                     )}
                   </button>
                 </div>
 
-                <div className="p-4 rounded-xl bg-midnight-0/70 border border-white/10 font-mono text-[11px] text-mist leading-relaxed max-h-48 overflow-y-auto whitespace-pre-wrap select-all">
+                <div className="p-3.5 rounded-xl bg-midnight-0/70 border border-white/10 font-mono text-[11px] text-mist leading-relaxed max-h-44 overflow-y-auto whitespace-pre-wrap select-all">
                   {getFormattedBlueprint()}
                 </div>
               </div>
@@ -446,37 +438,35 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
               {/* Primary Direct Dispatch Gateways */}
               <div className="space-y-2.5 pt-1">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
-                  Pilih Kanal Pengiriman:
+                  {lang === 'id' ? 'Pilih Kanal Transmisi:' : 'Choose Transmission Channel:'}
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {/* Gateway 1: Gmail Web Compose */}
                   <button
                     onClick={handleOpenGmail}
                     className="btn-champagne py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 group transition-all"
                   >
-                    <Mail className="w-4 h-4 text-midnight-0" />
-                    <span>Kirim via Gmail Web</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-midnight-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <Mail className="w-4 h-4 text-midnight-0 shrink-0" />
+                    <span>{lang === 'id' ? 'Kirim via Gmail Web' : 'Open in Gmail Web'}</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-midnight-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                   </button>
 
-                  {/* Gateway 2: WhatsApp Direct */}
                   <button
                     onClick={handleOpenWhatsApp}
-                    className="py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-[#064E3B]/85 hover:bg-[#064E3B] text-[#6EE7B7] border border-[#10B981]/60 transition-all group"
+                    className="py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-emerald-950/70 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-500/30 transition-all group"
                   >
-                    <Phone className="w-4 h-4 text-[#6EE7B7]" />
-                    <span>Teruskan ke WhatsApp</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#6EE7B7] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <Phone className="w-4 h-4 text-emerald-300 shrink-0" />
+                    <span>{lang === 'id' ? 'Teruskan ke WhatsApp' : 'Send to WhatsApp'}</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-emerald-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center justify-between pt-1">
                   <button
                     onClick={handleOpenMailto}
                     className="text-[11px] text-fog hover:text-pearl font-mono transition-colors flex items-center gap-1"
                   >
-                    <span>Gunakan Aplikasi Email Default (Outlook/Apple Mail)</span>
+                    <span>{lang === 'id' ? 'Aplikasi Email Default' : 'Default Mail Client'}</span>
                     <ArrowRight className="w-3 h-3" />
                   </button>
 
@@ -490,226 +480,191 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
                     className="text-[11px] text-champagne hover:underline font-mono flex items-center gap-1"
                   >
                     <RotateCcw className="w-3 h-3" />
-                    <span>Kirim Pesan Lain</span>
+                    <span>{lang === 'id' ? 'Kirim Pesan Lain' : 'Reset Form'}</span>
                   </button>
                 </div>
               </div>
             </motion.div>
           ) : (
-            /* Interactive Dispatch Form */
+            /* Clean Minimalist Input Form */
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Form Mode & Live Preview Switcher */}
+              {/* Form Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <span className="text-xs font-semibold text-pearl uppercase tracking-wider flex items-center gap-2">
-                  <span>Kirim Pesan Langsung</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-champagne" />
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-champagne block">
+                    {lang === 'id' ? 'Formulir Komunikasi' : 'Direct Dispatch'}
+                  </span>
+                  <h3 className="text-sm font-semibold text-pearl">
+                    {lang === 'id' ? 'Kirim Pesan Langsung' : 'Send Direct Message'}
+                  </h3>
+                </div>
+                <span className="text-[11px] font-mono text-fog">
+                  {lang === 'id' ? 'Respon Cepat' : 'Fast Response'}
                 </span>
+              </div>
 
-                <div className="flex items-center gap-1 p-0.5 rounded-lg bg-white/[0.04] border border-white/10 text-[11px] font-mono">
-                  <button
-                    type="button"
-                    onClick={() => setViewTab('form')}
-                    className={`px-2.5 py-1 rounded-md transition-all ${
-                      viewTab === 'form'
-                        ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40'
-                        : 'text-fog hover:text-pearl'
-                    }`}
-                  >
-                    Formulir
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewTab('preview')}
-                    className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1 ${
-                      viewTab === 'preview'
-                        ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40'
-                        : 'text-fog hover:text-pearl'
-                    }`}
-                  >
-                    <FileText className="w-3 h-3" />
-                    <span>Pratinjau Format</span>
-                  </button>
+              {/* Category Chips: Clean, symmetrical, guaranteed 1-line text */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-mist block">
+                  {lang === 'id' ? 'Kategori Kebutuhan' : 'Inquiry Category'}
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {CATEGORIES.map((cat) => {
+                    const Icon = cat.icon;
+                    const isSelected = selectedCategory === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => setSelectedCategory(cat.id)}
+                        className={`py-2.5 px-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 ${
+                          isSelected
+                            ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_12px_rgba(245,176,39,0.18)]'
+                            : 'bg-midnight-0/40 border-white/10 text-mist hover:border-white/20 hover:text-pearl'
+                        }`}
+                      >
+                        <Icon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-champagne' : 'text-fog'}`} />
+                        <span className="text-xs font-medium whitespace-nowrap truncate">
+                          {lang === 'id' ? cat.labelId : cat.labelEn}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {viewTab === 'preview' ? (
-                /* Live Format Preview Screen */
-                <div className="space-y-3 py-2 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-fog font-mono">Pratinjau Surat yang Dihasilkan:</span>
-                    <button
-                      type="button"
-                      onClick={() => setViewTab('form')}
-                      className="text-champagne font-mono hover:underline text-[11px]"
-                    >
-                      &larr; Kembali ke Isi Formulir
-                    </button>
-                  </div>
-                  <div className="p-4 rounded-xl bg-midnight-0/80 border border-white/10 font-mono text-[11px] text-mist leading-relaxed max-h-72 overflow-y-auto whitespace-pre-wrap">
-                    {getFormattedBlueprint()}
-                  </div>
+              {/* Dual Column: Name & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Field 1: Name */}
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-mist block">
+                    {lang === 'id' ? 'Nama Lengkap / Instansi' : 'Full Name / Company'}
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
+                    }}
+                    placeholder={lang === 'id' ? 'Contoh: Rendy / PT Digital' : 'e.g. John / Acme Inc'}
+                    className={`w-full h-[42px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
+                      errors.name
+                        ? 'border-status-error'
+                        : 'border-white/15 focus:border-champagne'
+                    }`}
+                  />
+                  {errors.name && (
+                    <p className="text-[11px] text-status-error mt-0.5">{errors.name}</p>
+                  )}
                 </div>
-              ) : (
-                /* Form Fields */
-                <>
-                  {/* Category Selection Chips */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-mist block">
-                      Kategori Kebutuhan
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {CATEGORIES.map((cat) => {
-                        const Icon = cat.icon;
-                        const isSelected = selectedCategory === cat.id;
-                        return (
-                          <button
-                            key={cat.id}
-                            type="button"
-                            onClick={() => setSelectedCategory(cat.id)}
-                            className={`p-2.5 rounded-xl border text-left transition-all flex flex-col gap-1.5 ${
-                              isSelected
-                                ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_12px_rgba(245,176,39,0.2)]'
-                                : 'bg-midnight-0/40 border-white/10 text-mist hover:border-white/25 hover:text-pearl'
-                            }`}
-                          >
-                            <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-champagne' : 'text-fog'}`} />
-                            <span className="text-[11px] font-medium leading-tight">
-                              {lang === 'id' ? cat.labelId : cat.labelEn}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
 
-                  {/* Dual Column: Name & Email */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {/* Field 1: Name */}
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-mist block">
-                        Nama Lengkap / Instansi
-                      </label>
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
-                        }}
-                        placeholder="Contoh: Rendy / PT Digital"
-                        className={`w-full h-[46px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
-                          errors.name
-                            ? 'border-status-error'
-                            : 'border-white/15 focus:border-champagne'
+                {/* Field 2: Email */}
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-mist block">
+                    {lang === 'id' ? 'Alamat Email Kontak' : 'Email Address'}
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
+                    }}
+                    placeholder="alamat@domain.com"
+                    className={`w-full h-[42px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
+                      errors.email
+                        ? 'border-status-error'
+                        : 'border-white/15 focus:border-champagne'
+                    }`}
+                  />
+                  {errors.email && (
+                    <p className="text-[11px] text-status-error mt-0.5">{errors.email}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Budget / Scale Selector: Clean, symmetrical, guaranteed 1-line text */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium text-mist">
+                    {lang === 'id' ? 'Estimasi Anggaran / Skala' : 'Estimated Budget / Scale'}
+                  </label>
+                  <span className="text-[10px] font-mono text-fog">
+                    {lang === 'id' ? 'Opsional' : 'Optional'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {BUDGET_OPTIONS.map((b) => {
+                    const isSelected = selectedBudget === b.id;
+                    return (
+                      <button
+                        key={b.id}
+                        type="button"
+                        onClick={() => setSelectedBudget(b.id)}
+                        className={`py-2 px-2 rounded-lg border text-center text-xs font-mono transition-all whitespace-nowrap truncate ${
+                          isSelected
+                            ? 'bg-sapphire/20 border-sapphire/60 text-pearl font-medium'
+                            : 'bg-midnight-0/40 border-white/10 text-fog hover:text-mist hover:border-white/20'
                         }`}
-                      />
-                      {errors.name && (
-                        <p className="text-[11px] text-status-error mt-0.5">{errors.name}</p>
-                      )}
-                    </div>
+                      >
+                        {lang === 'id' ? b.labelId : b.labelEn}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-                    {/* Field 2: Email */}
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-mist block">
-                        Alamat Email Kontak
-                      </label>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
-                        }}
-                        placeholder="alamat@domain.com"
-                        className={`w-full h-[46px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
-                          errors.email
-                            ? 'border-status-error'
-                            : 'border-white/15 focus:border-champagne'
-                        }`}
-                      />
-                      {errors.email && (
-                        <p className="text-[11px] text-status-error mt-0.5">{errors.email}</p>
-                      )}
-                    </div>
-                  </div>
+              {/* Field 3: Message */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-medium text-mist block">
+                    {lang === 'id' ? 'Rincian Pesan & Kebutuhan Proyek' : 'Project Message & Details'}
+                  </label>
+                  <span className="text-[10px] font-mono text-fog">
+                    {message.length} {lang === 'id' ? 'karakter' : 'chars'}
+                  </span>
+                </div>
+                <textarea
+                  rows={4}
+                  value={message}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                    if (errors.message) setErrors((prev) => ({ ...prev, message: '' }));
+                  }}
+                  placeholder={
+                    lang === 'id'
+                      ? 'Ceritakan gambaran singkat kebutuhan sistem, peran yang dicari, atau jadwal kolaborasi yang direncanakan...'
+                      : 'Briefly describe your project requirements, scope, role, or preferred timeline...'
+                  }
+                  className={`w-full rounded-xl p-3 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 resize-none leading-relaxed ${
+                    errors.message
+                      ? 'border-status-error'
+                      : 'border-white/15 focus:border-champagne'
+                  }`}
+                />
+                {errors.message && (
+                  <p className="text-[11px] text-status-error mt-0.5">{errors.message}</p>
+                )}
+              </div>
 
-                  {/* Budget / Scale Selector */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-mist block">
-                      Estimasi Skala / Anggaran Proyek <span className="text-fog text-[10px]">(Opsional)</span>
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {BUDGET_OPTIONS.map((b) => {
-                        const isSelected = selectedBudget === b.id;
-                        return (
-                          <button
-                            key={b.id}
-                            type="button"
-                            onClick={() => setSelectedBudget(b.id)}
-                            className={`py-1.5 px-2 rounded-lg border text-center text-[11px] font-mono transition-all ${
-                              isSelected
-                                ? 'bg-sapphire/20 border-sapphire/60 text-pearl font-medium'
-                                : 'bg-midnight-0/40 border-white/10 text-fog hover:text-mist hover:border-white/20'
-                            }`}
-                          >
-                            {lang === 'id' ? b.labelId : b.labelEn}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Field 3: Message */}
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-medium text-mist block">
-                        Rincian Pesan & Kebutuhan Proyek
-                      </label>
-                      <span className="text-[10px] font-mono text-fog">
-                        {message.length} karakter
-                      </span>
-                    </div>
-                    <textarea
-                      rows={3}
-                      value={message}
-                      onChange={(e) => {
-                        setMessage(e.target.value);
-                        if (errors.message) setErrors((prev) => ({ ...prev, message: '' }));
-                      }}
-                      placeholder="Ceritakan gambaran singkat kebutuhan sistem, peran yang dicari, atau jadwal kolaborasi yang direncanakan..."
-                      className={`w-full rounded-xl p-3 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 resize-none ${
-                        errors.message
-                          ? 'border-status-error'
-                          : 'border-white/15 focus:border-champagne'
-                      }`}
-                    />
-                    {errors.message && (
-                      <p className="text-[11px] text-status-error mt-0.5">{errors.message}</p>
-                    )}
-                  </div>
-                </>
-              )}
-
-              {/* Submit CTA */}
-              <div className="pt-2">
+              {/* Submit Button & Sub-footer */}
+              <div className="pt-1.5 space-y-2.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full btn-champagne h-[48px] rounded-xl text-xs font-semibold flex items-center justify-center gap-2 group transition-all shadow-[0_0_20px_rgba(245,176,39,0.25)] hover:shadow-[0_0_26px_rgba(245,176,39,0.4)] disabled:opacity-50"
+                  className="w-full btn-champagne h-[46px] rounded-xl text-xs font-semibold flex items-center justify-center gap-2 group transition-all shadow-[0_0_18px_rgba(245,176,39,0.22)] hover:shadow-[0_0_24px_rgba(245,176,39,0.35)] disabled:opacity-50"
                 >
                   <Send className="w-4 h-4 text-midnight-0 transition-transform group-hover:translate-x-1" />
-                  <span>Kirim Pesan Sekarang (Format Profesional)</span>
+                  <span>{lang === 'id' ? 'Kirim Pesan Sekarang' : 'Send Message Now'}</span>
                 </button>
 
-                <div className="flex items-center justify-center gap-4 mt-2.5 text-[10px] font-mono text-fog">
-                  <span className="flex items-center gap-1">
-                    <ShieldCheck className="w-3 h-3 text-[#10B981]" />
-                    <span>Format Surat Bisnis Terstandarisasi</span>
-                  </span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-champagne" />
-                    <span>Notifikasi Langsung ke Inbox Rendy</span>
+                <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-fog text-center">
+                  <ShieldCheck className="w-3.5 h-3.5 text-champagne shrink-0" />
+                  <span>
+                    {lang === 'id'
+                      ? 'Transmisi Langsung & Terenkripsi • rendyftbaru@gmail.com'
+                      : 'Direct & Encrypted Transmission • rendyftbaru@gmail.com'}
                   </span>
                 </div>
               </div>
