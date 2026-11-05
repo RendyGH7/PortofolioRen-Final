@@ -239,15 +239,9 @@ Sistem Verifikasi: Portofolio Digital • https://github.com/RendyGH7
         {/* Left Info Column: Direct Channels & Social Network */}
         <div className="md:col-span-5 glass-2 rounded-3xl p-6 sm:p-7 text-left space-y-6 shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-champagne uppercase tracking-wider block">
-                Kontak Langsung
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#6EE7B7] bg-[#064E3B]/85 px-2.5 py-0.5 rounded-full border border-[#10B981]/60">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                <span>Respon &lt; 24 Jam</span>
-              </span>
-            </div>
+            <span className="text-xs font-mono text-champagne uppercase tracking-wider block">
+              Kontak Langsung
+            </span>
             <h3 className="font-display text-2xl text-pearl font-normal">
               Rendy Fernando Tambunan
             </h3>
