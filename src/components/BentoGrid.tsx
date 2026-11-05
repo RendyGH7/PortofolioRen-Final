@@ -374,9 +374,6 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
                 <span className="w-2 h-2 rounded-full bg-champagne" />
                 <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
-                <span className="text-[10px] font-mono bg-white/10 px-2 py-0.5 rounded-full text-champagne">
-                  SIJA 2023 - 2027
-                </span>
               </div>
             </div>
 
