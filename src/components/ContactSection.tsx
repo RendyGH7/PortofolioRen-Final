@@ -85,17 +85,17 @@ https://github.com/RendyGH7
   const validate = () => {
     const errs: { [key: string]: string } = {};
     if (!name.trim()) {
-      errs.name = lang === 'id' ? 'Nama lengkap atau instansi wajib diisi.' : 'Full name or company is required.';
+      errs.name = lang === 'id' ? 'Nama wajib diisi.' : 'Name is required.';
     }
     if (!email.trim()) {
-      errs.email = lang === 'id' ? 'Alamat email kontak wajib diisi.' : 'Email address is required.';
+      errs.email = lang === 'id' ? 'Email wajib diisi.' : 'Email is required.';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errs.email = lang === 'id' ? 'Format email tidak valid (contoh: nama@domain.com).' : 'Please enter a valid email address.';
+      errs.email = lang === 'id' ? 'Format email tidak valid.' : 'Please enter a valid email address.';
     }
     if (!message.trim()) {
-      errs.message = lang === 'id' ? 'Rincian pesan belum diisi.' : 'Project message is required.';
-    } else if (message.trim().length < 15) {
-      errs.message = lang === 'id' ? 'Tuliskan minimal 15 karakter agar pesan lebih jelas.' : 'Please enter at least 15 characters.';
+      errs.message = lang === 'id' ? 'Pesan belum diisi.' : 'Message is required.';
+    } else if (message.trim().length < 5) {
+      errs.message = lang === 'id' ? 'Tuliskan minimal 5 karakter.' : 'Please enter at least 5 characters.';
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -477,23 +477,18 @@ https://github.com/RendyGH7
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Form Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-champagne block">
-                    {lang === 'id' ? 'Formulir Komunikasi' : 'Direct Dispatch'}
-                  </span>
-                  <h3 className="text-sm font-semibold text-pearl">
-                    {lang === 'id' ? 'Kirim Pesan Langsung' : 'Send Direct Message'}
-                  </h3>
-                </div>
+                <h3 className="text-sm font-semibold text-pearl">
+                  {lang === 'id' ? 'Kirim Pesan' : 'Send Message'}
+                </h3>
                 <span className="text-[11px] font-mono text-fog">
                   {lang === 'id' ? 'Respon Cepat' : 'Fast Response'}
                 </span>
               </div>
 
-              {/* Category Chips: Clean, symmetrical, guaranteed 1-line text */}
+              {/* Category Chips */}
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-mist block">
-                  {lang === 'id' ? 'Kategori Kebutuhan' : 'Inquiry Category'}
+                  {lang === 'id' ? 'Kategori' : 'Category'}
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {CATEGORIES.map((cat) => {
@@ -525,7 +520,7 @@ https://github.com/RendyGH7
                 {/* Field 1: Name */}
                 <div className="space-y-1">
                   <label className="text-xs font-medium text-mist block">
-                    {lang === 'id' ? 'Nama Lengkap / Instansi' : 'Full Name / Company'}
+                    {lang === 'id' ? 'Nama' : 'Name'}
                   </label>
                   <input
                     type="text"
@@ -534,7 +529,7 @@ https://github.com/RendyGH7
                       setName(e.target.value);
                       if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                     }}
-                    placeholder={lang === 'id' ? 'Contoh: Rendy / PT Digital' : 'e.g. John / Acme Inc'}
+                    placeholder={lang === 'id' ? 'Nama Anda' : 'Your name'}
                     className={`w-full h-[42px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
                       errors.name
                         ? 'border-status-error'
@@ -549,7 +544,7 @@ https://github.com/RendyGH7
                 {/* Field 2: Email */}
                 <div className="space-y-1">
                   <label className="text-xs font-medium text-mist block">
-                    {lang === 'id' ? 'Alamat Email Kontak' : 'Email Address'}
+                    Email
                   </label>
                   <input
                     type="email"
@@ -558,7 +553,7 @@ https://github.com/RendyGH7
                       setEmail(e.target.value);
                       if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                     }}
-                    placeholder="alamat@domain.com"
+                    placeholder="email@domain.com"
                     className={`w-full h-[42px] rounded-xl px-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 ${
                       errors.email
                         ? 'border-status-error'
@@ -571,18 +566,13 @@ https://github.com/RendyGH7
                 </div>
               </div>
 
-              {/* Field 3: Message */}
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-mist block">
-                    {lang === 'id' ? 'Rincian Pesan & Kebutuhan Proyek' : 'Project Message & Details'}
-                  </label>
-                  <span className="text-[10px] font-mono text-fog">
-                    {message.length} {lang === 'id' ? 'karakter' : 'chars'}
-                  </span>
-                </div>
+              {/* Field 3: Message - Kotak Pesan Lebih Luas & Bersih */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-mist block">
+                  {lang === 'id' ? 'Pesan' : 'Message'}
+                </label>
                 <textarea
-                  rows={4}
+                  rows={6}
                   value={message}
                   onChange={(e) => {
                     setMessage(e.target.value);
@@ -590,10 +580,10 @@ https://github.com/RendyGH7
                   }}
                   placeholder={
                     lang === 'id'
-                      ? 'Ceritakan gambaran singkat kebutuhan sistem, peran yang dicari, atau jadwal kolaborasi yang direncanakan...'
-                      : 'Briefly describe your project requirements, scope, role, or preferred timeline...'
+                      ? 'Tulis pesan Anda di sini...'
+                      : 'Write your message here...'
                   }
-                  className={`w-full rounded-xl p-3 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 resize-none leading-relaxed ${
+                  className={`w-full min-h-[155px] rounded-xl p-3.5 text-xs text-pearl bg-midnight-0/40 border transition-all focus:outline-none focus:bg-midnight-0/60 resize-none leading-relaxed ${
                     errors.message
                       ? 'border-status-error'
                       : 'border-white/15 focus:border-champagne'
@@ -604,15 +594,15 @@ https://github.com/RendyGH7
                 )}
               </div>
 
-              {/* Submit Button */}
-              <div className="pt-1.5">
+              {/* Submit Button - Jarak nyaman ke bawah */}
+              <div className="pt-3.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full btn-champagne h-[46px] rounded-xl text-xs font-semibold flex items-center justify-center gap-2 group transition-all shadow-[0_0_18px_rgba(245,176,39,0.22)] hover:shadow-[0_0_24px_rgba(245,176,39,0.35)] disabled:opacity-50"
                 >
                   <Send className="w-4 h-4 text-midnight-0 transition-transform group-hover:translate-x-1" />
-                  <span>{lang === 'id' ? 'Kirim Pesan Sekarang' : 'Send Message Now'}</span>
+                  <span>{lang === 'id' ? 'Kirim Pesan' : 'Send Message'}</span>
                 </button>
               </div>
             </form>
