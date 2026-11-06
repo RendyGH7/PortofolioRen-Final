@@ -5,8 +5,6 @@ import {
   ExternalLink,
   Check,
   X,
-  LayoutGrid,
-  List,
   Mic,
 } from 'lucide-react';
 import { PROJECTS, type ProjectItem } from '../data/portfolioData';
@@ -19,7 +17,6 @@ interface ProjectsSectionProps {
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalOpenChange }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
 
   useEffect(() => {
@@ -55,50 +52,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
           </p>
         </div>
 
-        {/* Controls: Category Filter Pills + View Mode */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1 rounded-full text-xs transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.35)]'
-                    : 'text-mist hover:text-pearl'
-                }`}
-              >
-                {cat === 'All' && lang === 'id' ? 'Semua' : cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="hidden sm:flex items-center gap-1 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
+        {/* Controls: Category Filter Pills */}
+        <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
+          {categories.map((cat) => (
             <button
-              onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-full transition-colors ${
-                viewMode === 'grid' ? 'bg-white/15 text-pearl' : 'text-fog hover:text-pearl'
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3.5 py-1 rounded-full text-xs transition-all ${
+                selectedCategory === cat
+                  ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.35)]'
+                  : 'text-mist hover:text-pearl'
               }`}
-              aria-label="Tampilan Grid"
             >
-              <LayoutGrid className="w-3.5 h-3.5" />
+              {cat === 'All' && lang === 'id' ? 'Semua' : cat}
             </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-full transition-colors ${
-                viewMode === 'list' ? 'bg-white/15 text-pearl' : 'text-fog hover:text-pearl'
-              }`}
-              aria-label="Tampilan List"
-            >
-              <List className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Projects Grid / List View */}
-      {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
+      {/* Projects Showcase Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
           {filteredProjects.map((project, idx) => (
             <div
               key={project.id}
@@ -208,45 +181,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
             </div>
           ))}
         </div>
-      ) : (
-        <div className="space-y-3">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              onClick={() => handleOpenModal(project)}
-              className="glass-1 hover:glass-2 rounded-lg p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:border-champagne/30 transition-all"
-            >
-              <div className="flex items-center gap-3.5">
-                {project.imageUrl && (
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-16 h-11 object-cover rounded-md border border-white/10 shrink-0 hidden xs:block"
-                    loading="lazy"
-                  />
-                )}
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-display text-xl text-pearl">{project.title}</h3>
-                    <span className="text-[11px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded">
-                      {project.category}
-                    </span>
-                  </div>
-                  <p className="text-xs text-mist">{project.summary}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 text-xs font-mono text-fog self-end sm:self-center">
-                <span>{project.year}</span>
-                <span className="text-champagne font-sans font-medium flex items-center gap-1">
-                  <span>Lihat</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Case Study Modal (Glass 3) rendered via createPortal so it is always at top-level body */}
       {typeof document !== 'undefined' &&

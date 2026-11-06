@@ -179,15 +179,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
           {/* ================= LEFT WING (4 Cols): ULTRA-CLEAN & MINIMALIST STACK CONSOLE ================= */}
           <div className="lg:col-span-4 flex flex-col space-y-4 text-left order-2 lg:order-1 glass-2 p-5 sm:p-6 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
             {/* Header Telemetry Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <Code2 className="w-4 h-4 text-champagne" />
-                <span className="text-xs font-semibold text-pearl tracking-tight">
-                  {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-fog uppercase tracking-wider">
-                {filteredSkills.length} {lang === 'id' ? 'Keahlian' : 'Skills'}
+            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+              <Code2 className="w-4 h-4 text-champagne" />
+              <span className="text-xs font-semibold text-pearl tracking-tight">
+                {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
               </span>
             </div>
 
@@ -269,28 +264,6 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               <p className="text-xs text-mist leading-relaxed">
                 {safeActiveSkill.context}
               </p>
-
-              {/* Real-time Telemetry Spec Ribbon (Clean 3-Metric Grid with zero text overlap) */}
-              <div className="pt-2.5 border-t border-white/10 grid grid-cols-3 gap-2 text-center font-mono">
-                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                  <span className="text-[9px] uppercase tracking-wider text-fog block">
-                    {lang === 'id' ? 'Arsitektur' : 'Architecture'}
-                  </span>
-                  <span className="text-[11px] font-medium text-pearl">Modular</span>
-                </div>
-                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                  <span className="text-[9px] uppercase tracking-wider text-fog block">
-                    {lang === 'id' ? 'Standar' : 'Standard'}
-                  </span>
-                  <span className="text-[11px] font-medium text-pearl">Produksi</span>
-                </div>
-                <div className="p-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                  <span className="text-[9px] uppercase tracking-wider text-fog block">
-                    {lang === 'id' ? 'Respons' : 'Latency'}
-                  </span>
-                  <span className="text-[11px] font-semibold text-champagne">&lt; 16ms</span>
-                </div>
-              </div>
             </div>
           </div>
 

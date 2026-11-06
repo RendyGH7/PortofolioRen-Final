@@ -120,10 +120,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Action Tools */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Language Switcher */}
+            {/* Language Switcher (Desktop Only) */}
             <button
               onClick={onToggleLang}
-              className="px-3 py-1.5 rounded-full glass-1 hover:border-champagne/40 transition-colors text-xs font-medium text-mist hover:text-pearl flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-sapphire"
+              className="hidden md:flex px-3 py-1.5 rounded-full glass-1 hover:border-champagne/40 transition-colors text-xs font-medium text-mist hover:text-pearl items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-sapphire"
               aria-label={lang === 'id' ? 'Ganti ke Bahasa Inggris' : 'Switch to Indonesian'}
             >
               <Globe className="w-3.5 h-3.5" />
@@ -188,6 +188,38 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {item.label}
                 </button>
               ))}
+
+              {/* Language Selector Inside Mobile Menu */}
+              <div className="mt-3 p-3 rounded-2xl glass-1 border border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs text-mist">
+                  <Globe className="w-4 h-4 text-champagne shrink-0" />
+                  <span>{lang === 'id' ? 'Bahasa / Language' : 'Language / Bahasa'}</span>
+                </div>
+                <div className="flex items-center gap-1 p-0.5 rounded-lg bg-midnight-0/60 border border-white/10 text-xs font-mono">
+                  <button
+                    type="button"
+                    onClick={() => lang !== 'id' && onToggleLang()}
+                    className={`px-3 py-1 rounded-md transition-all ${
+                      lang === 'id'
+                        ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
+                        : 'text-fog hover:text-pearl'
+                    }`}
+                  >
+                    ID
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => lang !== 'en' && onToggleLang()}
+                    className={`px-3 py-1 rounded-md transition-all ${
+                      lang === 'en'
+                        ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
+                        : 'text-fog hover:text-pearl'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="border-t border-white/10 pt-4 flex items-center justify-between">

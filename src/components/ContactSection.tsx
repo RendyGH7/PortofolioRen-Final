@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
@@ -13,10 +13,9 @@ import {
   Briefcase,
   Layers,
   MessageSquare,
-  FileText,
   RotateCcw,
   Loader2,
-  ArrowRight,
+  AlertCircle,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { PERSONAL_DATA } from '../data/portfolioData';
@@ -49,38 +48,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submissionReceipt, setSubmissionReceipt] = useState<string>('');
-  const [submissionTime, setSubmissionTime] = useState<string>('');
+  const [submitError, setSubmitError] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [copiedFormat, setCopiedFormat] = useState(false);
 
   const activeCategory = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0];
-
   const categoryLabel = lang === 'id' ? activeCategory.labelId : activeCategory.labelEn;
-
-  const getFormattedBlueprint = useCallback(() => {
-    const timeStr = submissionTime || (lang === 'id' ? 'Format Resmi Portofolio' : 'Official Portfolio Dispatch');
-
-    return `Kepada: Rendy Fernando Tambunan (Full Stack Developer)
-Email Tujuan: ${PERSONAL_DATA.email}
-----------------------------------------------------------------------
-SURAT INQUIRY & PENAWARAN KERJASAMA
-----------------------------------------------------------------------
-
-1. DATA PENGIRIM:
-   • Nama Lengkap / Perusahaan : ${name.trim() || '[Nama Pengirim / Perusahaan]'}
-   • Alamat Email Kontak       : ${email.trim() || '[email@domain.com]'}
-   • Kategori Kebutuhan        : ${categoryLabel}
-   • Waktu Pengiriman          : ${timeStr}
-
-2. RINCIAN SPESIFIKASI & KEBUTUHAN:
-${message.trim() || '[Tuliskan rincian kebutuhan atau tawaran proyek di formulir...]'}
-
-----------------------------------------------------------------------
-Pesan ini dikirim secara resmi melalui formulir kontak portofolio Rendy Fernando Tambunan.
-https://github.com/RendyGH7
-----------------------------------------------------------------------`;
-  }, [submissionTime, lang, name, email, categoryLabel, message]);
 
   const validate = () => {
     const errs: { [key: string]: string } = {};
@@ -106,23 +78,39 @@ https://github.com/RendyGH7
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSubmitError('');
 
     const now = new Date();
-    const timeFormatted = now.toLocaleString('id-ID', {
-      dateStyle: 'full',
-      timeStyle: 'short',
-      timeZone: 'Asia/Jakarta',
-    }) + ' WIB';
-    setSubmissionTime(timeFormatted);
+    const timeFormatted =
+      now.toLocaleString('id-ID', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+        timeZone: 'Asia/Jakarta',
+      }) + ' WIB';
 
-    const receipt = `RFT-${now.getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
-    setSubmissionReceipt(receipt);
+    const emailSubject = `New Project Inquiry: [${categoryLabel}] from ${name.trim()}`;
 
-    const bodyContent = getFormattedBlueprint();
-    const emailSubject = `[INQUIRY PORTOFOLIO] ${categoryLabel} - ${name.trim()}`;
+    const executiveBrief = `PROJECT INQUIRY BRIEF
+══════════════════════════════════════════════════════════════
+CLIENT PROFILE
+• Name     : ${name.trim()}
+• Email    : ${email.trim()}
+• Scope    : ${categoryLabel}
+• Received : ${timeFormatted}
+
+PROJECT BRIEF & REQUIREMENTS
+──────────────────────────────────────────────────────────────
+${message.trim()}
+
+══════════════════════════════════════════════════════════════
+Direct Reply: Hit 'Reply' in your email client to email ${name.trim()} directly (${email.trim()}).
+Portfolio Gateway • Rendy Fernando Tambunan`;
 
     try {
-      fetch(`https://formsubmit.co/ajax/${PERSONAL_DATA.email}`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+      const response = await fetch(`https://formsubmit.co/ajax/${PERSONAL_DATA.email}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,37 +118,46 @@ https://github.com/RendyGH7
         },
         body: JSON.stringify({
           _subject: emailSubject,
+          _replyto: email.trim(),
           _template: 'box',
           _captcha: 'false',
-          'Kode Receipt': receipt,
-          'Nama Pengirim': name.trim(),
-          'Email Kontak': email.trim(),
-          'Kategori Kebutuhan': categoryLabel,
-          'Waktu Kirim': timeFormatted,
-          'Rincian Pesan': message.trim(),
-          'Dokumen Surat Lengkap': bodyContent,
+          'Client Name': name.trim(),
+          'Client Email': email.trim(),
+          'Project Category': categoryLabel,
+          'Sent At': timeFormatted,
+          'Client Message': message.trim(),
+          'Executive Brief': executiveBrief,
         }),
-      }).catch(() => {
-        // Safe fallback
+        signal: controller.signal,
       });
-    } catch {
-      // Safe fallback
-    }
 
-    await new Promise((resolve) => setTimeout(resolve, 950));
+      clearTimeout(timeoutId);
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      const result = await response.json().catch(() => null);
 
-    try {
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.75 },
-        colors: ['#F5B027', '#4C6FD1', '#10B981'],
-      });
-    } catch {
-      // Safe fallback
+      if (response.ok || (result && (result.success === 'true' || result.success === true))) {
+        setIsSubmitted(true);
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.75 },
+            colors: ['#F5B027', '#4C6FD1', '#10B981'],
+          });
+        } catch {}
+      } else {
+        throw new Error(result?.message || 'Gagal mengirim pesan.');
+      }
+    } catch (err: unknown) {
+      console.error('Submission error:', err);
+      // Fallback: If network interruption or CORS issue
+      setSubmitError(
+        lang === 'id'
+          ? `Gagal terhubung ke layanan pengiriman. Silakan coba lagi atau kirim langsung ke ${PERSONAL_DATA.email}`
+          : `Could not connect to dispatch service. Please try again or email directly to ${PERSONAL_DATA.email}`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -170,29 +167,12 @@ https://github.com/RendyGH7
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const handleCopyFormattedText = () => {
-    navigator.clipboard.writeText(getFormattedBlueprint());
-    setCopiedFormat(true);
-    setTimeout(() => setCopiedFormat(false), 2000);
-  };
-
-  const handleOpenGmail = () => {
-    const subject = encodeURIComponent(`[INQUIRY PORTOFOLIO] ${categoryLabel} - ${name.trim()}`);
-    const body = encodeURIComponent(getFormattedBlueprint());
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(PERSONAL_DATA.email)}&su=${subject}&body=${body}`;
-    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleOpenWhatsApp = () => {
-    const waText = `*Halo Rendy Fernando,*\n\nSaya ingin mendiskusikan peluang proyek/kerjasama melalui portofolio Anda:\n\n*Data Pengirim:*\n• *Nama:* ${name.trim()}\n• *Email:* ${email.trim()}\n• *Kategori:* ${categoryLabel}\n\n*Rincian Pesan:*\n"${message.trim()}"\n\n_Terima kasih!_`;
-    const waUrl = `https://wa.me/6289669557444?text=${encodeURIComponent(waText)}`;
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleOpenMailto = () => {
-    const subject = encodeURIComponent(`[INQUIRY PORTOFOLIO] ${categoryLabel} - ${name.trim()}`);
-    const body = encodeURIComponent(getFormattedBlueprint());
-    window.open(`mailto:${PERSONAL_DATA.email}?subject=${subject}&body=${body}`, '_self');
+  const handleResetForm = () => {
+    setIsSubmitted(false);
+    setName('');
+    setEmail('');
+    setMessage('');
+    setSubmitError('');
   };
 
   return (
@@ -355,10 +335,10 @@ https://github.com/RendyGH7
                 </div>
                 <div className="space-y-1">
                   <h4 className="font-display text-base text-pearl font-normal">
-                    {lang === 'id' ? 'Menyiapkan Format Pesan' : 'Structuring Dispatch Letter'}
+                    {lang === 'id' ? 'Mengirim Pesan ke Email Rendy...' : "Dispatching to Rendy's Inbox..."}
                   </h4>
                   <p className="text-xs text-mist font-mono">
-                    {lang === 'id' ? 'Menyambungkan ke transmisi inbox Rendy...' : 'Connecting to Rendy inbox gateway...'}
+                    {lang === 'id' ? 'Menghubungkan langsung ke server email...' : 'Connecting to direct email gateway...'}
                   </p>
                 </div>
               </motion.div>
@@ -366,111 +346,59 @@ https://github.com/RendyGH7
           </AnimatePresence>
 
           {isSubmitted ? (
-            /* Post-Submission Verified Dispatch Console */
+            /* Direct Email Confirmation Card */
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              className="py-1 space-y-5 flex flex-col justify-between h-full"
+              className="py-6 px-3 flex flex-col items-center justify-center text-center space-y-5 h-full min-h-[380px]"
             >
-              {/* Receipt Status Card */}
-              <div className="p-4 rounded-2xl glass-1 border border-champagne/30 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-champagne shrink-0" />
-                    <span className="text-xs font-semibold text-pearl">
-                      {lang === 'id' ? 'Format Surat Siap Dikirim' : 'Message Dispatch Ready'}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-md border border-champagne/20">
-                    {submissionReceipt}
-                  </span>
-                </div>
-                <p className="text-xs text-mist leading-relaxed">
-                  {lang === 'id'
-                    ? 'Inquiry Anda telah tersusun rapi. Pilih kanal pengiriman di bawah untuk membuka draf langsung di Gmail atau mengirimkannya ke WhatsApp.'
-                    : 'Your inquiry has been structured. Choose your preferred gateway below to send via Gmail or forward to WhatsApp.'}
+              <div className="w-14 h-14 rounded-2xl bg-champagne/15 border border-champagne/30 flex items-center justify-center shadow-[0_0_24px_rgba(245,176,39,0.25)]">
+                <CheckCircle2 className="w-7 h-7 text-champagne" />
+              </div>
+
+              <div className="space-y-2 max-w-md">
+                <h3 className="font-display text-2xl text-pearl font-normal">
+                  {lang === 'id' ? 'Pesan Berhasil Terkirim' : 'Message Sent Successfully'}
+                </h3>
+                <p className="text-xs sm:text-sm text-mist leading-relaxed">
+                  {lang === 'id' ? (
+                    <>
+                      Terima kasih <strong className="text-pearl">{name}</strong>, pesan Anda telah otomatis terkirim langsung ke inbox email Rendy (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). Saya akan membalas ke <span className="text-pearl font-mono">{email}</span> secepatnya.
+                    </>
+                  ) : (
+                    <>
+                      Thank you <strong className="text-pearl">{name}</strong>, your message has been sent directly to Rendy's inbox (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). I will get back to you at <span className="text-pearl font-mono">{email}</span> soon.
+                    </>
+                  )}
                 </p>
               </div>
 
-              {/* Formatted Letter Output Card */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-mono text-mist">
-                  <span className="flex items-center gap-1.5 text-fog">
-                    <FileText className="w-3.5 h-3.5 text-champagne" />
-                    <span>{lang === 'id' ? 'Draf Dokumen Terstruktur:' : 'Structured Document Draft:'}</span>
+              <div className="p-3.5 rounded-xl bg-midnight-0/60 border border-white/10 w-full max-w-sm text-left space-y-2 text-xs font-mono">
+                <div className="flex items-center justify-between text-fog">
+                  <span>{lang === 'id' ? 'Kategori:' : 'Category:'}</span>
+                  <span className="text-champagne font-medium">{categoryLabel}</span>
+                </div>
+                <div className="flex items-center justify-between text-fog">
+                  <span>{lang === 'id' ? 'Pengirim:' : 'Sender:'}</span>
+                  <span className="text-pearl truncate max-w-[180px]">{name}</span>
+                </div>
+                <div className="flex items-center justify-between text-fog">
+                  <span>Status:</span>
+                  <span className="text-status-success flex items-center gap-1.5 font-sans font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse" />
+                    {lang === 'id' ? 'Terkirim ke Email' : 'Delivered to Inbox'}
                   </span>
-                  <button
-                    onClick={handleCopyFormattedText}
-                    className="text-[11px] text-champagne hover:underline flex items-center gap-1 font-mono"
-                  >
-                    {copiedFormat ? (
-                      <>
-                        <Check className="w-3 h-3 text-champagne" />
-                        <span>{lang === 'id' ? 'Tersalin' : 'Copied'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3 h-3" />
-                        <span>{lang === 'id' ? 'Salin Format Surat' : 'Copy Draft'}</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-midnight-0/70 border border-white/10 font-mono text-[11px] text-mist leading-relaxed max-h-44 overflow-y-auto whitespace-pre-wrap select-all">
-                  {getFormattedBlueprint()}
                 </div>
               </div>
 
-              {/* Primary Direct Dispatch Gateways */}
-              <div className="space-y-2.5 pt-1">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
-                  {lang === 'id' ? 'Pilih Kanal Transmisi:' : 'Choose Transmission Channel:'}
-                </span>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <button
-                    onClick={handleOpenGmail}
-                    className="btn-champagne py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 group transition-all"
-                  >
-                    <Mail className="w-4 h-4 text-midnight-0 shrink-0" />
-                    <span>{lang === 'id' ? 'Kirim via Gmail Web' : 'Open in Gmail Web'}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-midnight-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
-                  </button>
-
-                  <button
-                    onClick={handleOpenWhatsApp}
-                    className="py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-emerald-950/70 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-500/30 transition-all group"
-                  >
-                    <Phone className="w-4 h-4 text-emerald-300 shrink-0" />
-                    <span>{lang === 'id' ? 'Teruskan ke WhatsApp' : 'Send to WhatsApp'}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-emerald-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between pt-1">
-                  <button
-                    onClick={handleOpenMailto}
-                    className="text-[11px] text-fog hover:text-pearl font-mono transition-colors flex items-center gap-1"
-                  >
-                    <span>{lang === 'id' ? 'Aplikasi Email Default' : 'Default Mail Client'}</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setName('');
-                      setEmail('');
-                      setMessage('');
-                    }}
-                    className="text-[11px] text-champagne hover:underline font-mono flex items-center gap-1"
-                  >
-                    <RotateCcw className="w-3 h-3" />
-                    <span>{lang === 'id' ? 'Kirim Pesan Lain' : 'Reset Form'}</span>
-                  </button>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={handleResetForm}
+                className="btn-champagne py-2.5 px-6 rounded-xl text-xs font-semibold flex items-center gap-2 group transition-all"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-midnight-0 transition-transform group-hover:-rotate-90" />
+                <span>{lang === 'id' ? 'Kirim Pesan Lain' : 'Send Another Message'}</span>
+              </button>
             </motion.div>
           ) : (
             /* Clean Minimalist Input Form */
@@ -594,8 +522,16 @@ https://github.com/RendyGH7
                 )}
               </div>
 
+              {/* Submission Error Alert */}
+              {submitError && (
+                <div className="p-3 rounded-xl bg-status-error/10 border border-status-error/30 text-xs text-status-error flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{submitError}</span>
+                </div>
+              )}
+
               {/* Submit Button - Jarak nyaman ke bawah */}
-              <div className="pt-3.5">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}

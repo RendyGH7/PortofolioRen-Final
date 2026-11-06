@@ -761,7 +761,7 @@ export const Hero3D: React.FC = () => {
   }
 
   return (
-    <div className="relative w-full h-[400px] sm:h-[460px] md:h-[520px] lg:h-[560px] flex items-center justify-center select-none overflow-visible">
+    <div className="relative w-full h-[280px] xs:h-[340px] sm:h-[440px] md:h-[500px] lg:h-[560px] flex items-center justify-center select-none overflow-visible">
       {/* 
         ULTRA-SMOOTH CELESTIAL BACKLIGHT CORONA & RAYS (Zero Clipping, 100% Silky Smooth Glow)
         Positioned directly behind the 3D Planet, spreading seamlessly into the cosmos
@@ -769,7 +769,7 @@ export const Hero3D: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible" aria-hidden="true">
         {/* Layer 1: Core Radiant Stellar Beacon (Pure white-blue starlight brilliance directly behind planet silhouette) */}
         <div
-          className="w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full blur-[30px] opacity-85"
+          className="w-[200px] h-[200px] xs:w-[260px] xs:h-[260px] sm:w-[320px] sm:h-[320px] rounded-full blur-[25px] sm:blur-[30px] opacity-85"
           style={{
             background: 'radial-gradient(circle, #FFFFFF 0%, #BAE6FD 35%, #3B82F6 65%, transparent 80%)',
           }}
@@ -777,7 +777,7 @@ export const Hero3D: React.FC = () => {
 
         {/* Layer 2: Silky Volumetric Solar Corona Ray Flare (Smooth continuous expansion with zero hard edges) */}
         <div
-          className="absolute w-[440px] h-[440px] sm:w-[540px] sm:h-[540px] rounded-full blur-[65px] opacity-65 animate-pulse"
+          className="absolute w-[300px] h-[300px] xs:w-[380px] xs:h-[380px] sm:w-[540px] sm:h-[540px] rounded-full blur-[45px] sm:blur-[65px] opacity-65 animate-pulse"
           style={{
             background: 'radial-gradient(circle, rgba(96, 165, 250, 0.75) 0%, rgba(59, 130, 246, 0.45) 40%, rgba(245, 176, 39, 0.22) 65%, transparent 85%)',
             animationDuration: '7s',
@@ -786,7 +786,7 @@ export const Hero3D: React.FC = () => {
 
         {/* Layer 3: Deep Atmospheric Space Haze (Smooth infinite falloff into the midnight space background) */}
         <div
-          className="absolute w-[600px] h-[600px] sm:w-[740px] sm:h-[740px] rounded-full blur-[100px] opacity-40"
+          className="absolute w-[380px] h-[380px] xs:w-[500px] xs:h-[500px] sm:w-[740px] sm:h-[740px] rounded-full blur-[60px] sm:blur-[100px] opacity-40"
           style={{
             background: 'radial-gradient(circle, rgba(76, 111, 209, 0.45) 0%, rgba(30, 48, 92, 0.25) 45%, transparent 75%)',
           }}
