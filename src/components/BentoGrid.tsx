@@ -151,10 +151,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   const safeActiveSkill = activeSkill || filteredSkills[0] || SKILL_DETAILS[0];
 
   return (
-    <section id="bento" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto">
+    <section id="bento" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="mb-10 text-left space-y-2">
-        <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
+      <div className="mb-8 sm:mb-10 text-left space-y-2">
+        <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Profil, Keahlian & Rekam Jejak' : 'Profile, Stack & Track Record'}
         </h2>
         <p className="text-mist text-xs sm:text-sm max-w-2xl leading-relaxed">
@@ -173,97 +173,115 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
         <div className="absolute bottom-10 -right-20 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
         <div className="absolute top-1/2 left-1/3 w-80 h-80 rounded-full bg-[#10B981]/10 blur-[110px] pointer-events-none" />
 
-        {/* 3-Column Decoupled Spatial Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
+        {/* 3-Column Decoupled Spatial Layout: Responsive 1-Col Mobile -> 2-Col Tablet -> 3-Col Desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-stretch relative z-10">
           
-          {/* ================= LEFT WING (4 Cols): ULTRA-CLEAN & MINIMALIST STACK CONSOLE ================= */}
-          <div className="lg:col-span-4 flex flex-col space-y-4 text-left order-2 lg:order-1 glass-2 p-5 sm:p-6 rounded-3xl border border-white/10 shadow-glass-md hover:border-white/20 transition-all">
-            {/* Header Telemetry Bar */}
-            <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-              <Code2 className="w-4 h-4 text-champagne" />
-              <span className="text-xs font-semibold text-pearl tracking-tight">
-                {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
-              </span>
-            </div>
-
-            {/* Minimalist Segmented Category Filter (Single-Line, Zero Awkward Wrapping) */}
-            <div className="p-1 rounded-xl bg-midnight-0/60 border border-white/10 flex items-center gap-1">
-              {(
-                [
-                  { id: 'all', label: lang === 'id' ? 'Semua' : 'All' },
-                  { id: 'frontend', label: 'Frontend' },
-                  { id: 'backend', label: 'Backend' },
-                  { id: 'data', label: 'Data & Cloud' },
-                ] as const
-              ).map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => handleCategoryChange(cat.id)}
-                  className={`flex-1 text-[10.5px] sm:text-[11px] font-mono py-1.5 px-1 rounded-lg transition-all text-center whitespace-nowrap ${
-                    selectedCategory === cat.id
-                      ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
-                      : 'text-fog hover:text-pearl border border-transparent'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Clean & Tactile Skills Matrix with Razor-Thin Starlight Tracks (No Truncation) */}
-            <div className="grid grid-cols-2 gap-2">
-              {filteredSkills.map((skill) => {
-                const isSelected = safeActiveSkill.name === skill.name;
-                return (
-                  <button
-                    key={skill.name}
-                    type="button"
-                    onClick={() => setActiveSkill(skill)}
-                    className={`p-2.5 rounded-xl text-left transition-all flex flex-col justify-between border group ${
-                      isSelected
-                        ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_14px_rgba(245,176,39,0.2)]'
-                        : 'bg-midnight-0/40 hover:bg-white/[0.05] border-white/10 hover:border-white/20 text-mist'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full mb-1.5 gap-1">
-                      <span className="text-[11.5px] sm:text-xs font-medium text-pearl group-hover:text-champagne transition-colors truncate">
-                        {skill.name}
-                      </span>
-                      <span className="font-mono text-[10.5px] sm:text-xs font-semibold text-champagne shrink-0">
-                        {skill.level}%
-                      </span>
-                    </div>
-
-                    {/* Minimalist Micro Progress Track */}
-                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-champagne to-amber-500 rounded-full transition-all duration-300"
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Architecture Telemetry HUD (Live Context Inspector with Non-Overlapping Grid) */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-midnight-0/60 border border-champagne/30 space-y-2.5 shadow-glass-sm transition-all">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-champagne shrink-0 mt-0.5" />
-                  <span className="font-mono font-bold text-pearl text-xs sm:text-sm truncate">
-                    {safeActiveSkill.name}
+          {/* ================= LEFT WING (4 Cols): MODULAR STACK & ARCHITECTURE CARDS ================= */}
+          <div className="md:col-span-1 lg:col-span-4 flex flex-col justify-between space-y-4 text-left order-2 lg:order-1 h-full">
+            {/* Card 1: Interactive System Stack Console */}
+            <div className="glass-2 p-4 sm:p-5 rounded-3xl border border-white/10 hover:border-white/20 shadow-glass-md flex-1 flex flex-col justify-between space-y-3 transition-all">
+              {/* Header Telemetry Bar */}
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <Code2 className="w-4 h-4 text-champagne" />
+                  <span className="text-xs font-semibold text-pearl tracking-tight">
+                    {lang === 'id' ? 'Arsitektur & Stack Teknologi' : 'System Stack & Diagnostics'}
                   </span>
                 </div>
-                <span className="text-[10px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-md border border-champagne/25 shrink-0 text-right">
+                <span className="text-[10px] font-mono text-fog px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
+                  8 Keahlian
+                </span>
+              </div>
+
+              {/* Minimalist Segmented Category Filter (Single-Line, Safe Overflow Containment) */}
+              <div className="p-1 rounded-xl bg-midnight-0/60 border border-white/10 flex items-center gap-1 w-full overflow-x-auto scrollbar-none flex-nowrap">
+                {(
+                  [
+                    { id: 'all', label: lang === 'id' ? 'Semua' : 'All' },
+                    { id: 'frontend', label: 'Frontend' },
+                    { id: 'backend', label: 'Backend' },
+                    { id: 'data', label: 'Data & Cloud' },
+                  ] as const
+                ).map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => handleCategoryChange(cat.id)}
+                    className={`flex-1 shrink-0 text-[10.5px] sm:text-[11px] font-mono py-1.5 px-2 sm:px-1 rounded-lg transition-all text-center whitespace-nowrap ${
+                      selectedCategory === cat.id
+                        ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
+                        : 'text-fog hover:text-pearl border border-transparent'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Clean & Tactile Skills Matrix with Razor-Thin Starlight Tracks (No Truncation) */}
+              <div className="grid grid-cols-2 gap-2">
+                {filteredSkills.map((skill) => {
+                  const isSelected = safeActiveSkill.name === skill.name;
+                  return (
+                    <button
+                      key={skill.name}
+                      type="button"
+                      onClick={() => setActiveSkill(skill)}
+                      className={`p-2 sm:p-2.5 rounded-xl text-left transition-all flex flex-col justify-between border group cursor-pointer ${
+                        isSelected
+                          ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_14px_rgba(245,176,39,0.2)]'
+                          : 'bg-midnight-0/40 hover:bg-white/[0.05] border-white/10 hover:border-white/20 text-mist'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5 gap-1">
+                        <span className="text-[11px] sm:text-xs font-medium text-pearl group-hover:text-champagne transition-colors truncate">
+                          {skill.name}
+                        </span>
+                        <span className="font-mono text-[10px] sm:text-xs font-semibold text-champagne shrink-0">
+                          {skill.level}%
+                        </span>
+                      </div>
+
+                      {/* Minimalist Micro Progress Track */}
+                      <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-champagne to-amber-500 rounded-full transition-all duration-300"
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Card 2: Architecture Telemetry HUD - MATCHING RIGHT WING CARDS ANATOMY */}
+            <div className="glass-2 p-4 sm:p-5 rounded-3xl border border-champagne/30 hover:border-champagne/50 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between space-y-3 group shadow-glass-md">
+              <div className="flex items-center justify-between">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-[#F5B027]/25 to-[#D98218]/25 border border-[#F5B027]/50 text-[#F5B027] shadow-[0_0_14px_rgba(245,176,39,0.3)]">
+                  <Code2 className="w-4 h-4 text-[#F5B027]" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-champagne px-2.5 py-0.5 rounded-full bg-champagne/10 border border-champagne/25">
                   {safeActiveSkill.role}
                 </span>
               </div>
 
-              <p className="text-xs text-mist leading-relaxed">
-                {safeActiveSkill.context}
-              </p>
+              <div>
+                <span className="font-mono text-2xl sm:text-3xl font-bold text-pearl block tracking-tight">
+                  {safeActiveSkill.level}%
+                </span>
+                <p className="text-xs font-semibold text-pearl mt-1">
+                  {safeActiveSkill.name} • {safeActiveSkill.role}
+                </p>
+                <p className="text-[11px] text-mist mt-1 leading-relaxed">
+                  {safeActiveSkill.context}
+                </p>
+              </div>
+
+              <div className="text-[11px] text-fog font-mono flex items-center justify-between pt-2 border-t border-white/5">
+                <span>Standar Produksi</span>
+                <span className="text-champagne font-mono text-[10px]">Teruji & Terintegrasi</span>
+              </div>
             </div>
           </div>
 
@@ -273,19 +291,19 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handlePhotoClick}
-            className="lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[520px] sm:min-h-[580px] lg:min-h-[620px] select-none cursor-pointer group py-2"
+            className="md:col-span-2 lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[360px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[520px] lg:min-h-[600px] select-none cursor-pointer group py-2 h-full"
             title="Klik untuk sapaan interaktif Rendy"
             aria-label="Foto Profil Interaktif Rendy Fernando"
           >
             {/* Ambient Multi-Layer Glow behind Cutout */}
             <div
-              className="absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-sapphire/35 blur-[110px] pointer-events-none transition-transform duration-300"
+              className="absolute w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-sapphire/35 blur-[100px] pointer-events-none transition-transform duration-300"
               style={{
                 transform: `translate(${tilt.shadowX * 1.6}px, ${tilt.shadowY * 1.6}px)`,
               }}
             />
             <div
-              className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-champagne/30 blur-[90px] pointer-events-none transition-transform duration-300 translate-y-12"
+              className="absolute w-52 h-52 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-full bg-champagne/30 blur-[80px] pointer-events-none transition-transform duration-300 translate-y-10"
               style={{
                 transform: `translate(${-tilt.shadowX}px, ${-tilt.shadowY}px)`,
               }}
@@ -293,60 +311,60 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
 
             {/* Floating Holographic Pill 1: Full Stack Developer (Top Left) */}
             <div
-              className="absolute top-2 left-0 sm:left-2 z-20 pointer-events-none"
+              className="absolute top-2 left-2 sm:left-4 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
             >
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="glass-3 px-3.5 py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
-                  <Code2 className="w-3.5 h-3.5 text-sapphire" />
-                  <span className="text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
+                <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
+                  <Code2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sapphire" />
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
                 </div>
               </motion.div>
             </div>
 
             {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right) */}
             <div
-              className="absolute top-12 right-0 sm:right-2 z-20 pointer-events-none"
+              className="absolute top-8 sm:top-12 right-2 sm:right-4 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
             >
               <motion.div
-                animate={{ y: [0, 8, 0] }}
+                animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
               >
-                <div className="glass-3 px-3.5 py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-2 backdrop-blur-md">
-                  <GraduationCap className="w-3.5 h-3.5 text-champagne" />
-                  <span className="text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
+                <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
+                  <GraduationCap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-champagne" />
+                  <span className="text-[10px] sm:text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
                 </div>
               </motion.div>
             </div>
 
-            {/* Cutout Photo of Rendy - HERO-SCALE, ENLARGED & CINEMATIC */}
+            {/* Cutout Photo of Rendy - SCALED FLUIDLY TO PREVENT MOBILE CLIPPING */}
             <div
-              className="relative z-10 w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[450px] flex items-end justify-center transition-transform duration-200 ease-out"
+              className="relative z-10 w-full max-w-[300px] xs:max-w-[340px] sm:max-w-[380px] lg:max-w-[440px] flex items-end justify-center transition-transform duration-200 ease-out"
               style={{
-                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.06, 1.06, 1.06)`,
+                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.04, 1.04, 1.04)`,
               }}
             >
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[500px] sm:max-h-[560px] lg:max-h-[600px] filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_40px_rgba(245,176,39,0.4)] transition-all duration-300"
+                className="w-full h-auto object-contain max-h-[340px] xs:max-h-[390px] sm:max-h-[460px] md:max-h-[500px] lg:max-h-[580px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300"
                 loading="lazy"
               />
             </div>
 
             {/* Bottom Floating Identity Capsule */}
             <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
-              <div className="glass-3 px-4 py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2.5 backdrop-blur-xl">
-                <span className="w-2 h-2 rounded-full bg-champagne" />
-                <span className="text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
+              <div className="glass-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2 backdrop-blur-xl">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne" />
+                <span className="text-[11px] sm:text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
               </div>
             </div>
 
@@ -368,9 +386,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
           </div>
 
           {/* ================= RIGHT WING (4 Cols): DECOUPLED FLOATING IMPACT CARDS ================= */}
-          <div className="lg:col-span-4 flex flex-col space-y-4 text-left order-3">
+          <div className="md:col-span-1 lg:col-span-4 flex flex-col justify-between space-y-4 text-left order-3 h-full">
             {/* National Achievement: Top 7 TSDN */}
-            <div className="glass-2 p-5 rounded-3xl border border-white/10 hover:border-sapphire/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-3 group shadow-glass-md">
+            <div className="glass-2 p-4 sm:p-5 rounded-3xl border border-white/10 hover:border-sapphire/40 hover:-translate-y-1 transition-all duration-300 flex-1 flex flex-col justify-between space-y-3 group shadow-glass-md">
               <div className="flex items-center justify-between">
                 <div className="p-2 rounded-xl bg-sapphire/20 border border-sapphire/40 text-sapphire shadow-[0_0_12px_rgba(76,111,209,0.25)]">
                   <Award className="w-4 h-4" />
@@ -395,7 +413,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             </div>
 
             {/* Real Business Scale: RenStore 1.000+ Reviews */}
-            <div className="glass-2 p-5 rounded-3xl border border-champagne/30 hover:border-champagne/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-3 group shadow-glass-md">
+            <div className="glass-2 p-4 sm:p-5 rounded-3xl border border-champagne/30 hover:border-champagne/50 hover:-translate-y-1 transition-all duration-300 flex-1 flex flex-col justify-between space-y-3 group shadow-glass-md">
               <div className="flex items-center justify-between">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-[#F5B027]/25 to-[#D98218]/25 border border-[#F5B027]/50 text-[#F5B027] shadow-[0_0_16px_rgba(245,176,39,0.35)]">
                   <ShoppingBag className="w-4 h-4 text-[#F5B027]" />
@@ -430,7 +448,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             </div>
 
             {/* Social Network & Developer Identity */}
-            <div className="glass-2 p-5 rounded-3xl border border-white/10 shadow-glass-md space-y-3">
+            <div className="glass-2 p-4 sm:p-5 rounded-3xl border border-white/10 shadow-glass-md space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs font-semibold text-pearl">
                   <Layers className="w-3.5 h-3.5 text-sapphire" />

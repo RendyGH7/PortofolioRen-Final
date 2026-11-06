@@ -80,81 +80,62 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
     setIsSubmitting(true);
     setSubmitError('');
 
-    const now = new Date();
-    const timeFormatted =
-      now.toLocaleString('id-ID', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-        timeZone: 'Asia/Jakarta',
-      }) + ' WIB';
-
-    const emailSubject = `New Project Inquiry: [${categoryLabel}] from ${name.trim()}`;
-
-    const executiveBrief = `PROJECT INQUIRY BRIEF
-══════════════════════════════════════════════════════════════
-CLIENT PROFILE
-• Name     : ${name.trim()}
-• Email    : ${email.trim()}
-• Scope    : ${categoryLabel}
-• Received : ${timeFormatted}
-
-PROJECT BRIEF & REQUIREMENTS
-──────────────────────────────────────────────────────────────
-${message.trim()}
-
-══════════════════════════════════════════════════════════════
-Direct Reply: Hit 'Reply' in your email client to email ${name.trim()} directly (${email.trim()}).
-Portfolio Gateway • Rendy Fernando Tambunan`;
+    const emailSubject = `[Inquiry Portofolio] ${categoryLabel} - ${name.trim()}`;
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const accessKey = (PERSONAL_DATA as { web3FormsAccessKey?: string }).web3FormsAccessKey;
 
-      const response = await fetch(`https://formsubmit.co/ajax/${PERSONAL_DATA.email}`, {
+      if (!accessKey) {
+        setSubmitError(
+          lang === 'id'
+            ? 'Access Key Web3Forms belum dimasukkan di src/data/portfolioData.ts. Dapatkan key gratis di web3forms.com atau gunakan alternatif kontak di bawah.'
+            : 'Web3Forms Access Key is not configured yet in portfolioData.ts. Get a free key at web3forms.com or use the alternative channels below.'
+        );
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          _subject: emailSubject,
-          _replyto: email.trim(),
-          _template: 'box',
-          _captcha: 'false',
-          'Client Name': name.trim(),
-          'Client Email': email.trim(),
-          'Project Category': categoryLabel,
-          'Sent At': timeFormatted,
-          'Client Message': message.trim(),
-          'Executive Brief': executiveBrief,
+          access_key: accessKey,
+          subject: emailSubject,
+          from_name: name.trim(),
+          email: email.trim(),
+          category: categoryLabel,
+          message: message.trim(),
         }),
-        signal: controller.signal,
       });
 
-      clearTimeout(timeoutId);
+      const data = await response.json().catch(() => null);
 
-      const result = await response.json().catch(() => null);
-
-      if (response.ok || (result && (result.success === 'true' || result.success === true))) {
+      if (data && data.success) {
         setIsSubmitted(true);
         try {
           confetti({
             particleCount: 50,
-            spread: 60,
+            spread: 65,
             origin: { y: 0.75 },
             colors: ['#F5B027', '#4C6FD1', '#10B981'],
           });
         } catch {}
       } else {
-        throw new Error(result?.message || 'Gagal mengirim pesan.');
+        setSubmitError(
+          (data && data.message) ||
+            (lang === 'id'
+              ? 'Gagal mengirim pesan melalui gateway email. Silakan periksa koneksi atau hubungi langsung via WhatsApp di bawah.'
+              : 'Failed to send message via gateway. Please check your connection or contact directly via WhatsApp below.')
+        );
       }
-    } catch (err: unknown) {
-      console.error('Submission error:', err);
-      // Fallback: If network interruption or CORS issue
+    } catch {
       setSubmitError(
         lang === 'id'
-          ? `Gagal terhubung ke layanan pengiriman. Silakan coba lagi atau kirim langsung ke ${PERSONAL_DATA.email}`
-          : `Could not connect to dispatch service. Please try again or email directly to ${PERSONAL_DATA.email}`
+          ? 'Koneksi ke gateway email terputus. Silakan hubungi langsung via WhatsApp atau Email di bawah.'
+          : 'Connection to email gateway failed. Please contact via WhatsApp or Email below.'
       );
     } finally {
       setIsSubmitting(false);
@@ -176,7 +157,7 @@ Portfolio Gateway • Rendy Fernando Tambunan`;
   };
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
+    <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
       {/* Ambient Cosmic Contact Haze */}
       <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
       <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
@@ -346,59 +327,44 @@ Portfolio Gateway • Rendy Fernando Tambunan`;
           </AnimatePresence>
 
           {isSubmitted ? (
-            /* Direct Email Confirmation Card */
+            /* Clean Minimalist Success Confirmation */
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="py-6 px-3 flex flex-col items-center justify-center text-center space-y-5 h-full min-h-[380px]"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="py-12 px-4 flex flex-col items-center justify-center text-center space-y-4 h-full min-h-[380px]"
             >
-              <div className="w-14 h-14 rounded-2xl bg-champagne/15 border border-champagne/30 flex items-center justify-center shadow-[0_0_24px_rgba(245,176,39,0.25)]">
-                <CheckCircle2 className="w-7 h-7 text-champagne" />
+              <div className="w-14 h-14 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.25)]">
+                <CheckCircle2 className="w-7 h-7 text-[#10B981]" />
               </div>
 
-              <div className="space-y-2 max-w-md">
+              <div className="space-y-1.5 max-w-sm">
                 <h3 className="font-display text-2xl text-pearl font-normal">
-                  {lang === 'id' ? 'Pesan Berhasil Terkirim' : 'Message Sent Successfully'}
+                  {lang === 'id' ? 'Pesan Terkirim' : 'Message Sent'}
                 </h3>
                 <p className="text-xs sm:text-sm text-mist leading-relaxed">
                   {lang === 'id' ? (
                     <>
-                      Terima kasih <strong className="text-pearl">{name}</strong>, pesan Anda telah otomatis terkirim langsung ke inbox email Rendy (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). Saya akan membalas ke <span className="text-pearl font-mono">{email}</span> secepatnya.
+                      Terima kasih <span className="text-pearl font-medium">{name}</span>. Pesan Anda telah terkirim langsung ke email Rendy (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). Saya akan segera membalasnya.
                     </>
                   ) : (
                     <>
-                      Thank you <strong className="text-pearl">{name}</strong>, your message has been sent directly to Rendy's inbox (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). I will get back to you at <span className="text-pearl font-mono">{email}</span> soon.
+                      Thank you <span className="text-pearl font-medium">{name}</span>. Your message has been delivered to Rendy's inbox (<span className="text-champagne font-mono">{PERSONAL_DATA.email}</span>). I will get back to you shortly.
                     </>
                   )}
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-midnight-0/60 border border-white/10 w-full max-w-sm text-left space-y-2 text-xs font-mono">
-                <div className="flex items-center justify-between text-fog">
-                  <span>{lang === 'id' ? 'Kategori:' : 'Category:'}</span>
-                  <span className="text-champagne font-medium">{categoryLabel}</span>
-                </div>
-                <div className="flex items-center justify-between text-fog">
-                  <span>{lang === 'id' ? 'Pengirim:' : 'Sender:'}</span>
-                  <span className="text-pearl truncate max-w-[180px]">{name}</span>
-                </div>
-                <div className="flex items-center justify-between text-fog">
-                  <span>Status:</span>
-                  <span className="text-status-success flex items-center gap-1.5 font-sans font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse" />
-                    {lang === 'id' ? 'Terkirim ke Email' : 'Delivered to Inbox'}
-                  </span>
-                </div>
+              <div className="pt-3">
+                <button
+                  type="button"
+                  onClick={handleResetForm}
+                  className="btn-champagne py-2.5 px-6 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-[0_0_16px_rgba(245,176,39,0.2)] hover:shadow-[0_0_22px_rgba(245,176,39,0.3)] transition-all cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-midnight-0" />
+                  <span>{lang === 'id' ? 'Kirim Pesan Lain' : 'Send Another Message'}</span>
+                </button>
               </div>
-
-              <button
-                type="button"
-                onClick={handleResetForm}
-                className="btn-champagne py-2.5 px-6 rounded-xl text-xs font-semibold flex items-center gap-2 group transition-all"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-midnight-0 transition-transform group-hover:-rotate-90" />
-                <span>{lang === 'id' ? 'Kirim Pesan Lain' : 'Send Another Message'}</span>
-              </button>
             </motion.div>
           ) : (
             /* Clean Minimalist Input Form */
@@ -522,11 +488,40 @@ Portfolio Gateway • Rendy Fernando Tambunan`;
                 )}
               </div>
 
-              {/* Submission Error Alert */}
+              {/* Submission Error Alert with Quick Fallback Options */}
               {submitError && (
-                <div className="p-3 rounded-xl bg-status-error/10 border border-status-error/30 text-xs text-status-error flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span className="leading-relaxed">{submitError}</span>
+                <div className="p-3.5 rounded-xl bg-status-error/10 border border-status-error/30 text-xs text-status-error space-y-2.5">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-status-error" />
+                    <span className="leading-relaxed">{submitError}</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-status-error/20">
+                    <span className="text-[11px] text-fog font-mono">
+                      {lang === 'id' ? 'Opsi langsung:' : 'Direct options:'}
+                    </span>
+                    <a
+                      href={`https://wa.me/6289669557444?text=${encodeURIComponent(
+                        `Halo Rendy, saya ${name.trim() || 'Klien'}.\n\nKategori: ${categoryLabel}\nEmail: ${email.trim() || '-'}\n\nPesan:\n${message.trim()}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] flex items-center gap-1 transition-all"
+                    >
+                      <span>WhatsApp</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={`mailto:${PERSONAL_DATA.email}?subject=${encodeURIComponent(
+                        `[Inquiry Portofolio] ${categoryLabel} - ${name.trim() || 'Klien'}`
+                      )}&body=${encodeURIComponent(
+                        `Nama: ${name.trim()}\nEmail: ${email.trim()}\nKategori: ${categoryLabel}\n\nPesan:\n${message.trim()}`
+                      )}`}
+                      className="px-2.5 py-1 rounded-lg bg-champagne/15 hover:bg-champagne/25 border border-champagne/30 text-champagne font-mono text-[11px] flex items-center gap-1 transition-all"
+                    >
+                      <span>Buka Email</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
                 </div>
               )}
 

@@ -54,6 +54,7 @@ export const PERSONAL_DATA = {
   timeZone: "Asia/Jakarta (WIB • GMT+7)",
   email: "rendyftbaru@gmail.com",
   phone: "+62 896-6955-7444",
+  web3FormsAccessKey: "", // Opsional: Dapatkan Access Key gratis di https://web3forms.com untuk pengiriman otomatis tanpa membuka email
   socials: {
     github: "https://github.com/RendyGH7",
     linkedin: "https://www.linkedin.com/in/rendy-fernando-a68a362b1/",

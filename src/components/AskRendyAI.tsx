@@ -142,7 +142,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
     <>
       {/* Floating Trigger Button */}
       <div
-        className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ease-out ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 transition-all duration-300 ease-out ${
           isModalOpen
             ? 'opacity-0 translate-y-12 pointer-events-none'
             : 'opacity-100 translate-y-0'
@@ -150,7 +150,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group relative p-3 sm:px-4 sm:py-3 rounded-full glass-2 hover:border-champagne/60 shadow-glass-md flex items-center gap-2 text-pearl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne"
+          className="group relative p-2.5 sm:px-4 sm:py-3 rounded-full glass-2 hover:border-champagne/60 shadow-glass-md flex items-center gap-2 text-pearl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-champagne"
           aria-label={isOpen ? 'Tutup Asisten Tanya Rendy' : 'Buka Asisten Tanya Rendy'}
         >
           <div className="w-8 h-8 rounded-full bg-sapphire/20 border border-sapphire/40 flex items-center justify-center text-champagne">
@@ -172,7 +172,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 18 }}
             transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-20 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[520px] h-[500px] glass-3 rounded-2xl shadow-glass-lg flex flex-col justify-between p-4 border border-white/15"
+            className="fixed bottom-16 sm:bottom-20 right-3 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-96 max-h-[75vh] sm:max-h-[520px] h-[460px] sm:h-[500px] glass-3 rounded-2xl shadow-glass-lg flex flex-col justify-between p-3.5 sm:p-4 border border-white/15"
           >
           {/* Header dengan Logo Kustom Baru */}
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -188,9 +188,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
                 <span className="text-xs font-semibold text-pearl block leading-none">
                   Tanya Rendy AI
                 </span>
-                <span className="text-[10px] text-fog leading-none mt-0.5 block">
-                  Kurasi Data CV & Portofolio
-                </span>
+
               </div>
             </div>
             <button

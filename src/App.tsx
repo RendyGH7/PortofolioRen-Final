@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AmbientBackground } from './components/AmbientBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -11,8 +12,13 @@ import { Footer } from './components/Footer';
 import { AskRendyAI } from './components/AskRendyAI';
 import { CommandPalette } from './components/CommandPalette';
 import { TerminalEasterEgg } from './components/TerminalEasterEgg';
+import { CosmicPreloader } from './components/CosmicPreloader';
+import { ScrollFadeSection } from './components/ScrollFadeSection';
 
 export function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [contentVisible, setContentVisible] = useState(false);
+  const [hasReachedFooter, setHasReachedFooter] = useState(false);
   const [lang, setLang] = useState<'id' | 'en'>('id');
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -20,9 +26,34 @@ export function App() {
 
   const isAnyModalOpen = commandPaletteOpen || terminalOpen || isProjectModalOpen;
 
-  // Prevent background scroll when any modal or pop-up is active
+  // Always start at the top of the page on every load/refresh
   useEffect(() => {
-    if (isAnyModalOpen) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  // Monitor scroll to detect reaching bottom / footer
+  useEffect(() => {
+    if (hasReachedFooter) return;
+
+    const handleScroll = () => {
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      // Trigger when user scrolls within 120px of page bottom
+      if (scrollBottom >= docHeight - 120) {
+        setHasReachedFooter(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasReachedFooter]);
+
+  // Prevent background scroll when preloader or any modal/pop-up is active
+  useEffect(() => {
+    if (isLoading || isAnyModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -30,7 +61,7 @@ export function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isAnyModalOpen]);
+  }, [isLoading, isAnyModalOpen]);
 
   // Global keyboard shortcuts: Ctrl+K or Cmd+K for Command Palette, `~` for Terminal
   useEffect(() => {
@@ -55,58 +86,93 @@ export function App() {
     setLang((prev) => (prev === 'id' ? 'en' : 'id'));
   };
 
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    // Slight delay so the preloader exit animation finishes before content fades in
+    setTimeout(() => setContentVisible(true), 80);
+  };
+
   return (
     <div className="relative min-h-screen bg-midnight-0 text-pearl font-sans selection:bg-champagne/25 selection:text-pearl overflow-x-hidden">
-      {/* Subtle Ambient Background Mesh & Luxury Grain */}
-      <AmbientBackground />
+      {/* Cosmic Entrance Preloader */}
+      <AnimatePresence>
+        {isLoading && (
+          <CosmicPreloader
+            onComplete={handleLoadingComplete}
+            lang={lang}
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Floating Glass Navigation (Hidden smoothly during active popups/modals) */}
-      <Navbar
-        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-        lang={lang}
-        onToggleLang={toggleLanguage}
-        isModalOpen={isAnyModalOpen}
-      />
+      {/* Main site content — fades + rises in after preloader */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={contentVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Subtle Ambient Background Mesh & Luxury Grain */}
+        <AmbientBackground />
 
-      {/* Main Content Sections */}
-      <main className="relative z-10 space-y-4">
-        {/* Hero Section with Interactive 3D WebGL Crystal */}
-        <Hero lang={lang} />
+        {/* Floating Glass Navigation */}
+        <Navbar
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          lang={lang}
+          onToggleLang={toggleLanguage}
+          isModalOpen={isAnyModalOpen}
+        />
 
-        {/* Bento Grid: Verified Metrics, Photo, Live Jakarta Clock, Tech Stack */}
-        <BentoGrid lang={lang} />
+        {/* Main Content Sections with Scroll Fade-In & Fade-Out */}
+        <main className="relative z-10 space-y-6 sm:space-y-10">
+          <ScrollFadeSection isHero disabled={hasReachedFooter}>
+            <Hero lang={lang} />
+          </ScrollFadeSection>
 
-        {/* Selected Work: Filterable, Case Study Modal, Architecture & Code Tabs */}
-        <ProjectsSection lang={lang} onModalOpenChange={setIsProjectModalOpen} />
+          <ScrollFadeSection disabled={hasReachedFooter}>
+            <BentoGrid lang={lang} />
+          </ScrollFadeSection>
 
-        {/* Dev Studio & Sandbox: Live REST API Client, SQL Query Runner, Glass UI Physics Lab */}
-        <DevStudioSection lang={lang} />
+          <ScrollFadeSection disabled={hasReachedFooter}>
+            <ProjectsSection lang={lang} onModalOpenChange={setIsProjectModalOpen} />
+          </ScrollFadeSection>
 
-        {/* Experience & Awards: SMKN 26, PT Sollu, RenStore, TSDN Top 7 */}
-        <ExperienceTimeline lang={lang} />
+          <ScrollFadeSection disabled={hasReachedFooter}>
+            <DevStudioSection lang={lang} />
+          </ScrollFadeSection>
 
-        {/* Contact Section: 3-Field Clean Form & Direct Channels */}
-        <ContactSection lang={lang} />
-      </main>
+          <ScrollFadeSection disabled={hasReachedFooter}>
+            <ExperienceTimeline lang={lang} />
+          </ScrollFadeSection>
 
-      {/* Deep Navy Glass Footer */}
-      <Footer onOpenTerminal={() => setTerminalOpen(true)} />
+          <ScrollFadeSection disabled={hasReachedFooter}>
+            <ContactSection lang={lang} />
+          </ScrollFadeSection>
+        </main>
 
-      {/* Floating Ask Rendy AI Chat Assistant (Hides during active modals) */}
-      <AskRendyAI isModalOpen={isAnyModalOpen} />
+        {/* Deep Navy Glass Footer: reaching footer permanently locks animations until refresh */}
+        <ScrollFadeSection
+          isFooter
+          disabled={hasReachedFooter}
+          onReachInView={() => setHasReachedFooter(true)}
+        >
+          <Footer onOpenTerminal={() => setTerminalOpen(true)} />
+        </ScrollFadeSection>
 
-      {/* Command Palette (Ctrl+K) */}
-      <CommandPalette
-        isOpen={commandPaletteOpen}
-        onClose={() => setCommandPaletteOpen(false)}
-        onOpenTerminal={() => setTerminalOpen(true)}
-      />
+        {/* Floating Ask Rendy AI Chat Assistant */}
+        <AskRendyAI isModalOpen={isAnyModalOpen} />
 
-      {/* Interactive Terminal Easter Egg (~) */}
-      <TerminalEasterEgg
-        isOpen={terminalOpen}
-        onClose={() => setTerminalOpen(false)}
-      />
+        {/* Command Palette (Ctrl+K) */}
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={() => setCommandPaletteOpen(false)}
+          onOpenTerminal={() => setTerminalOpen(true)}
+        />
+
+        {/* Interactive Terminal Easter Egg (~) */}
+        <TerminalEasterEgg
+          isOpen={terminalOpen}
+          onClose={() => setTerminalOpen(false)}
+        />
+      </motion.div>
     </div>
   );
 }

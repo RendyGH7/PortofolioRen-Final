@@ -42,7 +42,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
   const [activeTab, setActiveTab] = useState<'experience' | 'awards' | 'education'>('experience');
 
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <section id="experience" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 text-left">
         <div className="space-y-2">
@@ -61,10 +61,10 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
         </div>
 
         {/* Tab Switcher Pills */}
-        <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full self-start sm:self-auto border border-white/10 shadow-glass-sm">
+        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full self-start sm:self-auto border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap">
           <button
             onClick={() => setActiveTab('experience')}
-            className={`px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'experience'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -81,7 +81,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
           <button
             onClick={() => setActiveTab('awards')}
-            className={`px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'awards'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -98,7 +98,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
           <button
             onClick={() => setActiveTab('education')}
-            className={`px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'education'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -127,11 +127,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 const isNationalAward = exp.id === 'exp-tsdn';
 
                 return (
-                  <div key={exp.id} className="relative flex gap-4 sm:gap-6 group">
+                  <div key={exp.id} className="relative flex gap-3 sm:gap-6 group">
                     {/* Left Column: Timeline Spine & Luminous Milestone Node */}
                     <div className="flex flex-col items-center shrink-0">
                       <div
-                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 relative z-10 ${
+                        className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 relative z-10 ${
                           isNationalAward
                             ? 'bg-midnight-0 border-2 border-champagne text-champagne shadow-[0_0_18px_rgba(245,176,39,0.45)] group-hover:scale-110'
                             : isCurrent
@@ -140,11 +140,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                         }`}
                       >
                         {isNationalAward ? (
-                          <Trophy className="w-4 h-4 text-champagne" />
+                          <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-champagne" />
                         ) : isCurrent ? (
-                          <Briefcase className="w-4 h-4 text-champagne" />
+                          <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-champagne" />
                         ) : (
-                          <Briefcase className="w-4 h-4 text-sapphire" />
+                          <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sapphire" />
                         )}
                       </div>
 
@@ -156,7 +156,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
                     {/* Right Column: Unboxed Milestone Content */}
                     <div className="flex-1 pb-8 sm:pb-10 transition-all">
-                      <div className="rounded-2xl p-4 sm:p-6 -mt-1 transition-all duration-300 group-hover:bg-white/[0.025] border border-transparent group-hover:border-white/[0.08]">
+                      <div className="rounded-2xl p-3.5 sm:p-6 -mt-1 transition-all duration-300 group-hover:bg-white/[0.025] border border-transparent group-hover:border-white/[0.08]">
                         {/* Meta Header: Role Category Pill + Period & Location */}
                         <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
                           <div className="flex items-center gap-2">

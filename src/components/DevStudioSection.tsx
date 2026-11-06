@@ -230,7 +230,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="studio" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+    <section id="studio" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
       {/* Ambient Cosmic Studio Haze */}
       <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
       <div className="absolute -top-10 -right-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
@@ -255,10 +255,10 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         </div>
 
         {/* Studio Mode Selector Pills */}
-        <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full self-start md:self-auto border border-white/10 shadow-glass-sm">
+        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full self-start md:self-auto border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap">
           <button
             onClick={() => setActiveTab('api')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'api'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -269,7 +269,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </button>
           <button
             onClick={() => setActiveTab('sql')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'sql'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -280,7 +280,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </button>
           <button
             onClick={() => setActiveTab('glass')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-2 ${
+            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'glass'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -424,13 +424,13 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               className="p-5 sm:p-7 space-y-6"
             >
               {/* Presets Strip */}
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
                 <span className="text-xs font-mono text-fog mr-1">Query Preset:</span>
                 {sqlPresets.map((preset, idx) => (
                   <button
                     key={preset.id}
                     onClick={() => handleRunSql(idx)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors border ${
+                    className={`shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono transition-colors border ${
                       selectedSqlIndex === idx
                         ? 'bg-sapphire/20 border-sapphire/50 text-pearl font-semibold'
                         : 'glass-1 border-white/5 text-mist hover:text-pearl'
@@ -483,7 +483,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                     <thead className="bg-white/5 text-champagne font-mono text-[11px] uppercase border-b border-white/10">
                       <tr>
                         {activeSqlResult.headers.map((h) => (
-                          <th key={h} className="p-3 font-semibold">
+                          <th key={h} className="p-2.5 sm:p-3 font-semibold whitespace-nowrap">
                             {h}
                           </th>
                         ))}
@@ -493,7 +493,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                       {activeSqlResult.rows.map((row, i) => (
                         <tr key={i} className="hover:bg-white/[0.03] transition-colors">
                           {row.map((val, cellIdx) => (
-                            <td key={cellIdx} className="p-3 text-pearl/90">
+                            <td key={cellIdx} className="p-2.5 sm:p-3 text-pearl/90 whitespace-nowrap">
                               {val}
                             </td>
                           ))}

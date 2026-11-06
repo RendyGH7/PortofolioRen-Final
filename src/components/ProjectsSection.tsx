@@ -34,7 +34,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
     : PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="work" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+    <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
       {/* Ambient Celestial Atmospheric Haze */}
       <div className="absolute top-1/3 -left-24 w-96 h-96 rounded-full bg-sapphire/20 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-24 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
@@ -53,12 +53,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
         </div>
 
         {/* Controls: Category Filter Pills */}
-        <div className="flex items-center gap-1.5 glass-1 p-1.5 rounded-full border border-white/10 shadow-glass-sm">
+        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full border border-white/10 shadow-glass-sm overflow-x-auto scrollbar-none flex-nowrap">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1 rounded-full text-xs transition-all ${
+              className={`shrink-0 px-3 sm:px-3.5 py-1 rounded-full text-[11px] sm:text-xs transition-all ${
                 selectedCategory === cat
                   ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_14px_rgba(245,176,39,0.35)]'
                   : 'text-mist hover:text-pearl'
@@ -76,7 +76,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
             <div
               key={project.id}
               onClick={() => handleOpenModal(project)}
-              className={`glass-2 rounded-3xl p-6 sm:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 ${
+              className={`glass-2 rounded-3xl p-4 sm:p-6 lg:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 ${
                 idx === 1 ? 'md:translate-y-6' : ''
               }`}
             >
@@ -149,13 +149,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                 </p>
 
                 {/* Metrics Badges */}
-                <div className="grid grid-cols-3 gap-2 my-5 pt-3.5 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 my-4 pt-3 border-t border-white/10">
                   {project.metrics.map((metric) => (
                     <div key={metric.label} className="flex flex-col">
-                      <span className="font-mono text-base font-bold text-pearl group-hover:text-champagne transition-colors">
+                      <span className="font-mono text-sm xs:text-base font-bold text-pearl group-hover:text-champagne transition-colors">
                         {metric.value}
                       </span>
-                      <span className="text-[10px] text-fog truncate">{metric.label}</span>
+                      <span className="text-[9.5px] sm:text-[10px] text-fog truncate">{metric.label}</span>
                     </div>
                   ))}
                 </div>
@@ -204,7 +204,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl max-h-[88vh] overflow-y-auto glass-3 rounded-2xl p-5 sm:p-6 space-y-4 text-left relative shadow-glass-lg border border-white/10"
+              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-3 rounded-2xl p-4 sm:p-6 space-y-3.5 sm:space-y-4 text-left relative shadow-glass-lg border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
             {/* Modal Header */}
