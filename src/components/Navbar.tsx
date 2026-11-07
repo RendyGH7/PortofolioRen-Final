@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Command } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
 
 interface NavbarProps {
-  onOpenCommandPalette: () => void;
+  onOpenCommandPalette?: () => void;
   lang: 'id' | 'en';
   onToggleLang: () => void;
   isModalOpen?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  onOpenCommandPalette,
   lang,
   onToggleLang,
   isModalOpen = false,
@@ -220,23 +219,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 </div>
               </div>
-            </div>
-
-            <div className="border-t border-white/10 pt-4 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-mist">
-                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-                <span>{PERSONAL_DATA.status.text}</span>
-              </div>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenCommandPalette();
-                }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-2 text-xs text-pearl"
-              >
-                <Command className="w-3.5 h-3.5 text-champagne" />
-                <span>Command Palette</span>
-              </button>
             </div>
           </motion.div>
         )}
