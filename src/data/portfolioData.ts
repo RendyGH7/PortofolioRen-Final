@@ -191,6 +191,100 @@ export const EXPERIENCES: ExperienceItem[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
+    id: "warisara",
+    title: "WariSara",
+    subtitle: "Gerbang Warisan Budaya Nusantara & Studio Kriya Interaktif",
+    category: "Web App",
+    year: "2026",
+    role: "Lead Frontend & Creative Technologist",
+    summary: "Ekosistem web kultural interaktif untuk pelestarian warisan 38 provinsi Nusantara dengan peta vektor dinamis, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal.",
+    metrics: [
+      { label: "Cakupan Budaya", value: "38 Provinsi" },
+      { label: "Konteks", value: "TECHTOPIA Vol. 2" },
+      { label: "Arsitektur", value: "Zero-Dependency" },
+    ],
+    tags: [
+      "Vanilla JavaScript (ES6+)",
+      "HTML5 Canvas 2D",
+      "Tailwind CSS",
+      "SVG Interactive Map",
+      "Web Audio API",
+      "Parametric Design",
+      "Creative Lab 2.0",
+      "Cultural Tech",
+    ],
+    features: [
+      {
+        title: "Peta Vektor 38 Provinsi & Paspor Digital",
+        desc: "Eksplorasi geografis interaktif dengan transisi smooth pan-zoom, discovery sheet budaya lokal, dan pencatatan kunjungan otomatis ke paspor penjelajah.",
+      },
+      {
+        title: "Creative Lab Studio 2.0 (Wastra Parametrik)",
+        desc: "Generator motif geometris Nusantara (Kawung, Megamendung, Parang) dengan kontrol densitas real-time, simulasi lilin malam canting digital, dan proyeksi busana 3D.",
+      },
+      {
+        title: "Buku Cerita Pusaka Lisan 3D",
+        desc: "Dokumentasi wejangan tutur lisan maestro kriya yang dipadukan dengan efek 3D page-flip dan Web Audio sintesis narasi interaktif.",
+      },
+      {
+        title: "Ekonomi Kreatif & Kuis WBTb",
+        desc: "Konektivitas etalase kriya langsung ke perajin daerah serta ruang micro-learning dan kuis wawasan berbasis data UNESCO & Kemendikbudristek.",
+      },
+    ],
+    problem: "Generasi muda kerap memandang kebudayaan nusantara sebagai artefak pasif yang kaku di museum atau lembaran buku pelajaran, memicu penurunan minat generasi penerus terhadap nilai adiluhung lokal.",
+    solution: "Merancang ruang hidup digital (living cultural archive) berbasis web tanpa dependensi server rumit (zero-dependency), memadukan kartografi interaktif 38 provinsi, studio canting parametrik interaktif, dan storytelling audio 3D.",
+    architectureNodes: [
+      { name: "Interactive Map Engine", role: "Dynamic SVG Vector & ViewBox Pan-Zoom", latency: "< 8ms" },
+      { name: "Creative Lab Studio", role: "HTML5 Canvas 2D & Parametric Math", latency: "< 16ms" },
+      { name: "Oral Narrative Audio", role: "Web Audio & Speech Synthesis API", latency: "12ms" },
+      { name: "Cultural Dataset", role: "Modular UNESCO & WBTb Local Engine", latency: "Instant" },
+    ],
+    codeSnippet: `// WariSara Creative Lab 2.0 - Parametric Batik Motif & Digital Wax Engine
+class BatikParametricEngine {
+  constructor(canvas, context) {
+    this.canvas = canvas;
+    this.ctx = context;
+    this.state = {
+      motif: 'kawung',       // Classical geometry: Kawung, Megamendung, Parang
+      density: 4,            // Matrix repetition factor
+      strokeWidth: 2.5,
+      scale: 1.0,
+      curviness: 1.0,
+      showCrackle: true,     // Authentic batik wax crackle effect
+      primaryColor: '#16213A',
+      secondaryColor: '#C9A567',
+      waxBleed: true,
+    };
+  }
+
+  renderParametricKawung(centerX, centerY, radius, rotation) {
+    const { ctx, state } = this;
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate((rotation * Math.PI) / 180);
+
+    // 4-Elliptical petal cross-pattern representing the four directions of life
+    for (let i = 0; i < 4; i++) {
+      ctx.rotate(Math.PI / 2);
+      ctx.beginPath();
+      ctx.ellipse(0, radius * 0.55, radius * 0.35, radius * 0.65, 0, 0, Math.PI * 2);
+      ctx.fillStyle = state.secondaryColor;
+      ctx.fill();
+      ctx.lineWidth = state.strokeWidth;
+      ctx.strokeStyle = state.primaryColor;
+      ctx.stroke();
+
+      // Isen-isen (inner traditional micro-dots / cecek)
+      this.renderCecekDots(0, radius * 0.55, radius * 0.15);
+    }
+    ctx.restore();
+  }
+}`,
+    accentColor: "#C9A567",
+    githubUrl: "https://github.com/RendyGH7/warisara-apps",
+    imageUrl: "/assets/projects/warisara-showcase.jpg",
+  },
+  {
     id: "renstore",
     title: "RenStore",
     subtitle: "Modern Full-Stack E-Commerce & Tech Lifestyle Platform",

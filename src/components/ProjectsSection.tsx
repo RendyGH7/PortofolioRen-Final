@@ -27,7 +27,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
     setActiveModalProject(project);
   };
 
-  const categories = ['All', 'E-Commerce', 'Web App'];
+  const categories = ['All', 'Web App', 'E-Commerce'];
 
   const filteredProjects = selectedCategory === 'All'
     ? PROJECTS
@@ -71,14 +71,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
       </div>
 
       {/* Projects Showcase Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
-          {filteredProjects.map((project, idx) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch relative z-10">
+          {filteredProjects.map((project) => (
             <div
               key={project.id}
               onClick={() => handleOpenModal(project)}
-              className={`glass-2 rounded-3xl p-4 sm:p-6 lg:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 ${
-                idx === 1 ? 'md:translate-y-6' : ''
-              }`}
+              className="glass-2 rounded-3xl p-4 sm:p-6 lg:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2"
             >
               {/* Subtle accent glow */}
               <div

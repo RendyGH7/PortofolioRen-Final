@@ -118,6 +118,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       shortcut: '~',
     },
     {
+      id: 'link-warisara',
+      title: 'Buka Repositori WariSara (GitHub RendyGH7/warisara-apps)',
+      category: 'Proyek Unggulan',
+      icon: <ExternalLink className="w-4 h-4 text-champagne" />,
+      action: () => window.open('https://github.com/RendyGH7/warisara-apps', '_blank'),
+    },
+    {
       id: 'link-monetra',
       title: 'Buka Web Monetra (monetra-apps.vercel.app)',
       category: 'Proyek Live',

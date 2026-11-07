@@ -97,6 +97,26 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       },
     },
     {
+      id: 'warisara',
+      method: 'GET',
+      path: '/api/v1/warisara/cultural-engine',
+      summary: lang === 'id' ? 'Arsitektur WariSara & Creative Lab Studio 2.0' : 'WariSara & Creative Lab Studio 2.0 Architecture',
+      latencyMs: 12,
+      response: {
+        status: 200,
+        application: 'WariSara - Living Cultural Archive & Interactive Studio',
+        repository: 'https://github.com/RendyGH7/warisara-apps',
+        coverage: '38 Provinsi Nusantara (UNESCO & WBTb Kemendikbudristek)',
+        engine: {
+          mapType: 'Dynamic SVG Vector with Pan-Zoom ViewBox',
+          canvasStudio: 'Parametric HTML5 Canvas 2D (Generative Batik Patterns)',
+          audioSystem: 'Web Audio API & Speech Synthesis for Oral Narratives',
+          architecture: 'Zero-Dependency Native Architecture (< 16ms render)',
+        },
+        competitionContext: 'TECHTOPIA Vol. 2 (INTEGER#8) - Tema PUSAKA',
+      },
+    },
+    {
       id: 'tsdn',
       method: 'GET',
       path: '/api/v1/tsdn/predictive-model',

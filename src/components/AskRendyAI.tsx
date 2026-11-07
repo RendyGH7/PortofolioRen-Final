@@ -43,6 +43,13 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
   const generateAnswer = (query: string): { text: string; link?: { text: string; sectionId: string } } => {
     const q = query.toLowerCase();
 
+    if (q.includes('warisara') || q.includes('budaya') || q.includes('nusantara') || q.includes('batik')) {
+      return {
+        text: 'WariSara (Gerbang Warisan Budaya Nusantara) adalah ekosistem arsip kebudayaan hidup yang mencakup 38 provinsi di Indonesia dengan peta vektor interaktif, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku cerita pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal (Zero-Dependency Architecture). Proyek ini dirancang untuk kompetisi TECHTOPIA Vol. 2 (INTEGER#8) tema PUSAKA.',
+        link: { text: 'Lihat Detail WariSara di Portofolio', sectionId: 'work' },
+      };
+    }
+
     if (q.includes('monetra')) {
       return {
         text: 'Monetra adalah asisten keuangan pribadi cerdas bertenaga Google Gemini 2.5 Flash dan Web Audio DSP 4-tahap (Voice-to-Transaction), dilengkapi evaluasi Aturan 50/30/20, Dynamic Daily Safe Spend, serta keamanan penuh PostgreSQL Row Level Security (RLS) di Supabase. Web app ini sudah live di https://monetra-apps.vercel.app/.',
@@ -50,9 +57,9 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
       };
     }
 
-    if (q.includes('proyek') || q.includes('project')) {
+    if (q.includes('proyek') || q.includes('project') || q.includes('karya')) {
       return {
-        text: 'Rendy berfokus pada 2 platform web unggulan: RenStore (Modern Full-Stack E-Commerce Platform live di renstore-project.vercel.app) dan Monetra (AI Personal Finance Assistant & Expense Tracker live di monetra-apps.vercel.app). Rendy juga merupakan Grand Finalis Top 7 Turnamen Sains Data Nasional (TSDN).',
+        text: 'Rendy memiliki 3 proyek unggulan dengan domain keahlian yang beragam: 1) WariSara (Living Cultural Archive 38 Provinsi & Creative Lab Studio 2.0), 2) RenStore (Modern Full-Stack E-Commerce Laravel 11 + React 19 dengan 1.000+ ulasan internasional), dan 3) Monetra (AI Personal Finance Assistant & Voice DSP Gemini 2.5). Rendy juga merupakan Grand Finalis Top 7 Turnamen Sains Data Nasional (TSDN).',
         link: { text: 'Buka Bagian Karya', sectionId: 'work' },
       };
     }
