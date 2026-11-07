@@ -45,7 +45,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
 
     if (q.includes('warisara') || q.includes('budaya') || q.includes('nusantara') || q.includes('batik')) {
       return {
-        text: 'WariSara (Gerbang Warisan Budaya Nusantara) adalah ekosistem arsip kebudayaan hidup yang mencakup 38 provinsi di Indonesia dengan peta vektor interaktif, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku cerita pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal (Zero-Dependency Architecture). Proyek ini dirancang untuk kompetisi TECHTOPIA Vol. 2 (INTEGER#8) tema PUSAKA.',
+        text: 'WariSara (Gerbang Warisan Budaya Nusantara) adalah ekosistem arsip kebudayaan hidup yang mencakup 38 provinsi di Indonesia dengan peta vektor interaktif, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku cerita pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal (Zero-Dependency Architecture). Proyek ini dirancang untuk kompetisi TECHTOPIA Vol. 2 (INTEGER#8) tema PUSAKA. Web app ini telah live dan dapat diakses di https://warisara-official.vercel.app/.',
         link: { text: 'Lihat Detail WariSara di Portofolio', sectionId: 'work' },
       };
     }

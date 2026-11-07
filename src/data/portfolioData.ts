@@ -282,6 +282,7 @@ class BatikParametricEngine {
 }`,
     accentColor: "#C9A567",
     githubUrl: "https://github.com/RendyGH7/warisara-apps",
+    liveUrl: "https://warisara-official.vercel.app/",
     imageUrl: "/assets/projects/warisara-showcase.jpg",
   },
   {

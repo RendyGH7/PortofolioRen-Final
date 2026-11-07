@@ -105,6 +105,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       response: {
         status: 200,
         application: 'WariSara - Living Cultural Archive & Interactive Studio',
+        liveUrl: 'https://warisara-official.vercel.app/',
         repository: 'https://github.com/RendyGH7/warisara-apps',
         coverage: '38 Provinsi Nusantara (UNESCO & WBTb Kemendikbudristek)',
         engine: {

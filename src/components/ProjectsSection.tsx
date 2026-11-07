@@ -107,6 +107,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                         ✦ {lang === 'id' ? 'Karya Unggulan' : 'Featured Work'}
                       </span>
                     </div>
+                    {project.liveUrl && (
+                      <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="font-mono text-[11px] px-3 py-1 rounded-full bg-midnight-0/85 hover:bg-midnight-0 text-champagne border border-champagne/40 backdrop-blur-md font-semibold flex items-center gap-1.5 transition-all hover:scale-105 shadow-md"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>{lang === 'id' ? 'Buka Web' : 'Live Web'}</span>
+                          <ExternalLink className="w-3 h-3 text-champagne" />
+                        </a>
+                      </div>
+                    )}
                   </div>
 
                   {/* Right: Rich Details with luxurious spacing */}
@@ -160,10 +175,25 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                           </span>
                         ))}
                       </div>
-                      <span className="text-xs text-champagne font-medium flex items-center gap-1 group-hover:underline shrink-0">
-                        <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </span>
+                      <div className="flex items-center gap-2.5 shrink-0">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-xs px-3 py-1.5 rounded-xl bg-champagne text-midnight-0 font-semibold hover:bg-champagne-light transition-all shadow-glass-sm flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
+                            title={lang === 'id' ? 'Buka Website Resmi' : 'Open Live App'}
+                          >
+                            <span>{lang === 'id' ? 'Buka Web' : 'Live App'}</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        <span className="text-xs text-mist group-hover:text-champagne font-medium flex items-center gap-1 transition-colors">
+                          <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -249,19 +279,34 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                     {/* Bottom Footer Tags & CTA */}
                     <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
                       <div className="flex flex-wrap gap-1.5 min-w-0">
-                        {project.tags.slice(0, 3).map((tag) => (
+                        {project.tags.slice(0, 2).map((tag) => (
                           <span
                             key={tag}
-                            className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
+                            className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
-                      <span className="text-xs text-champagne font-medium flex items-center gap-1 group-hover:underline shrink-0">
-                        <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-[11px] px-2.5 py-1 rounded-lg bg-champagne/15 hover:bg-champagne/25 border border-champagne/30 text-champagne font-semibold flex items-center gap-1 transition-all"
+                            title={lang === 'id' ? 'Buka Web Live' : 'Open Live App'}
+                          >
+                            <span>Live</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                        <span className="text-xs text-mist group-hover:text-champagne font-medium flex items-center gap-1 transition-colors">
+                          <span>{lang === 'id' ? 'Detail' : 'Case'}</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
