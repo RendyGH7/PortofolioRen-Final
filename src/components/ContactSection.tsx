@@ -173,15 +173,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
       <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="text-left space-y-2 mb-10 relative z-10">
+      <div className="text-left mb-10 relative z-10">
         <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Mari Berdiskusi' : 'Get In Touch'}
         </h2>
-        <p className="text-mist text-xs sm:text-sm max-w-xl">
-          {lang === 'id'
-            ? 'Terbuka untuk peluang kerja, kemitraan proyek digital, konsultasi arsitektur web, dan integrasi sistem dengan transmisi langsung berformat profesional.'
-            : 'Available for engineering opportunities, digital partnerships, web architecture consulting, and production systems with instant executive dispatch.'}
-        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch relative z-10">

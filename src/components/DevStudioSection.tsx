@@ -258,21 +258,10 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 text-left relative z-10">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-champagne animate-pulse" />
-            <span className="text-xs font-mono text-champagne uppercase tracking-wider">
-              {lang === 'id' ? 'Laboratorium Interaktif' : 'Interactive Laboratory'}
-            </span>
-          </div>
+        <div>
           <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
             Dev Studio & Live Sandbox
           </h2>
-          <p className="text-mist text-xs sm:text-sm max-w-xl">
-            {lang === 'id'
-              ? 'Uji langsung endpoint REST API, eksekusi engine query database SQL, dan eksplorasi token fisika Midnight Glass.'
-              : 'Test live REST API endpoints, execute SQL database queries, and tweak Midnight Glass physics tokens in real time.'}
-          </p>
         </div>
 
         {/* Studio Mode Selector Pills */}

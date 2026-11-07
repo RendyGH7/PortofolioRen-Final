@@ -45,19 +45,10 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
     <section id="experience" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 text-left">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-champagne/10 border border-champagne/25 text-champagne text-xs font-mono">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>{lang === 'id' ? 'Rekam Jejak & Karir' : 'Career & Milestones'}</span>
-          </div>
+        <div>
           <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
             {lang === 'id' ? 'Pengalaman & Rekam Jejak' : 'Experience & Track Record'}
           </h2>
-          <p className="text-mist text-xs sm:text-sm max-w-2xl leading-relaxed">
-            {lang === 'id'
-              ? 'Perjalanan profesional, rekam jejak teknis, peran kepemimpinan, dan pencapaian nasional.'
-              : 'Professional journey, engineering track record, technical mentorship, and verified achievements.'}
-          </p>
         </div>
 
         {/* Tab Switcher Pills */}
