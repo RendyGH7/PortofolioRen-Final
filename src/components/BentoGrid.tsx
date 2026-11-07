@@ -291,33 +291,55 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handlePhotoClick}
-            className="md:col-span-2 lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[360px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[520px] lg:min-h-[600px] select-none cursor-pointer group py-2 h-full"
+            className="md:col-span-2 lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[380px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[520px] lg:min-h-[580px] select-none cursor-pointer group pt-2 pb-0 h-full overflow-visible"
             title="Klik untuk sapaan interaktif Rendy"
             aria-label="Foto Profil Interaktif Rendy Fernando"
           >
-            {/* Ambient Multi-Layer Glow behind Cutout */}
+            {/* ================= LUXURY CELESTIAL BACKDROP AURA ================= */}
+            {/* 1. Outer Celestial Orbit Whisper Halo */}
             <div
-              className="absolute w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-sapphire/35 blur-[100px] pointer-events-none transition-transform duration-300"
+              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 pointer-events-none transition-transform duration-500 ease-out"
               style={{
-                transform: `translate(${tilt.shadowX * 1.6}px, ${tilt.shadowY * 1.6}px)`,
-              }}
-            />
-            <div
-              className="absolute w-52 h-52 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-full bg-champagne/30 blur-[80px] pointer-events-none transition-transform duration-300 translate-y-10"
-              style={{
-                transform: `translate(${-tilt.shadowX}px, ${-tilt.shadowY}px)`,
+                transform: `translate(calc(-50% + ${tilt.shadowX * 0.6}px), calc(-50% + ${tilt.shadowY * 0.6}px))`,
               }}
             />
 
-            {/* Floating Holographic Pill 1: Full Stack Developer (Top Left) */}
+            {/* 2. Concentric Golden Horizon Prestige Ring */}
             <div
-              className="absolute top-2 left-2 sm:left-4 z-20 pointer-events-none"
+              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/30 bg-gradient-to-b from-champagne/10 via-sapphire/5 to-transparent backdrop-blur-[1px] shadow-[0_0_45px_rgba(245,176,39,0.18)] pointer-events-none transition-transform duration-500 ease-out"
+              style={{
+                transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
+              }}
+            />
+
+            {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders) */}
+            <div
+              className="absolute top-12 sm:top-16 left-1/2 -translate-x-1/2 w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-tr from-champagne/35 via-amber-500/20 to-transparent blur-[55px] pointer-events-none transition-transform duration-300"
+              style={{
+                transform: `translate(calc(-50% + ${tilt.shadowX * 1.4}px), ${tilt.shadowY * 1.4}px)`,
+              }}
+            />
+
+            {/* 4. Deep Royal Sapphire Nebula Core (Torso & Atmosphere) */}
+            <div
+              className="absolute top-1/3 left-1/2 -translate-x-1/2 w-60 h-60 sm:w-72 sm:h-72 lg:w-88 lg:h-88 rounded-full bg-sapphire/40 blur-[80px] pointer-events-none transition-transform duration-300"
+              style={{
+                transform: `translate(calc(-50% + ${-tilt.shadowX * 1.2}px), ${-tilt.shadowY * 1.2}px)`,
+              }}
+            />
+
+            {/* 5. Pedestal Uplight Glow (Grounding Base) */}
+            <div className="absolute bottom-4 w-44 sm:w-56 h-8 rounded-full bg-champagne/20 blur-lg pointer-events-none" />
+
+            {/* Floating Holographic Pill 1: Full Stack Developer (Top Left - Raised Slightly) */}
+            <div
+              className="absolute top-1.5 sm:top-2.5 left-2 sm:left-4 lg:left-6 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
             >
               <motion.div
-                animate={{ y: [0, -6, 0] }}
+                animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
@@ -327,15 +349,15 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               </motion.div>
             </div>
 
-            {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right) */}
+            {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right - Raised Slightly to Clear Head) */}
             <div
-              className="absolute top-8 sm:top-12 right-2 sm:right-4 z-20 pointer-events-none"
+              className="absolute top-2.5 sm:top-4 right-2 sm:right-4 lg:right-6 z-20 pointer-events-none"
               style={{
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
             >
               <motion.div
-                animate={{ y: [0, 6, 0] }}
+                animate={{ y: [0, 4, 0] }}
                 transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
               >
                 <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
@@ -345,26 +367,28 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               </motion.div>
             </div>
 
-            {/* Cutout Photo of Rendy - SCALED FLUIDLY TO PREVENT MOBILE CLIPPING */}
+            {/* Cutout Photo of Rendy - SCALED SLIGHTLY DOWN & ELEVATED TO SIT UNDER PILLS AND COVERED AT BOTTOM BY NAME CAPSULE */}
             <div
-              className="relative z-10 w-full max-w-[300px] xs:max-w-[340px] sm:max-w-[380px] lg:max-w-[440px] flex items-end justify-center transition-transform duration-200 ease-out"
+              className="relative z-10 w-full max-w-[230px] xs:max-w-[260px] sm:max-w-[290px] md:max-w-[315px] lg:max-w-[335px] flex items-end justify-center transition-transform duration-200 ease-out pb-3.5 sm:pb-4 origin-bottom"
               style={{
-                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.04, 1.04, 1.04)`,
+                transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
               }}
             >
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[340px] xs:max-h-[390px] sm:max-h-[460px] md:max-h-[500px] lg:max-h-[580px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300"
+                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300 [mask-image:linear-gradient(to_bottom,black_calc(100%-14px),transparent_100%)]"
                 loading="lazy"
               />
             </div>
 
-            {/* Bottom Floating Identity Capsule */}
-            <div className="absolute bottom-1 z-20 pointer-events-none flex flex-col items-center text-center">
-              <div className="glass-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/25 shadow-glass-lg flex items-center gap-2 backdrop-blur-xl">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne" />
-                <span className="text-[11px] sm:text-xs font-semibold text-pearl tracking-tight">Rendy Fernando Tambunan</span>
+            {/* Bottom Floating Identity Capsule - COVERS THE CROPPED BOTTOM OF THE PHOTO */}
+            <div className="absolute bottom-0 z-20 pointer-events-none flex flex-col items-center text-center">
+              <div className="glass-3 bg-midnight-0/95 sm:bg-midnight-0/90 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border border-champagne/45 shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_24px_rgba(245,176,39,0.22)] flex items-center justify-center gap-2 sm:gap-2.5 backdrop-blur-2xl">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne animate-pulse shadow-[0_0_8px_#F5B027]" />
+                <span className="text-xs sm:text-sm font-semibold text-pearl tracking-tight whitespace-nowrap">
+                  Rendy Fernando Tambunan
+                </span>
               </div>
             </div>
 
