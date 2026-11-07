@@ -200,8 +200,8 @@ export const PROJECTS: ProjectItem[] = [
     summary: "Ekosistem web kultural interaktif untuk pelestarian warisan 38 provinsi Nusantara dengan peta vektor dinamis, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal.",
     metrics: [
       { label: "Cakupan Budaya", value: "38 Provinsi" },
-      { label: "Konteks", value: "TECHTOPIA Vol. 2" },
-      { label: "Arsitektur", value: "Zero-Dependency" },
+      { label: "Konteks Lomba", value: "TECHTOPIA 2" },
+      { label: "Arsitektur", value: "Native JS" },
     ],
     tags: [
       "Vanilla JavaScript (ES6+)",
@@ -295,7 +295,7 @@ class BatikParametricEngine {
     metrics: [
       { label: "Ulasan Positif", value: "1.000+" },
       { label: "Arsitektur API", value: "Laravel 11" },
-      { label: "Pembayaran QRIS", value: "Instan" },
+      { label: "Transaksi QRIS", value: "Instan" },
     ],
     tags: ["Laravel 11", "React 19", "PostgreSQL", "TypeScript", "Tailwind CSS", "QRIS Payment"],
     features: [

@@ -71,12 +71,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
       </div>
 
       {/* Projects Showcase Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch relative z-10">
-          {filteredProjects.map((project) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-7 lg:gap-8 items-stretch relative z-10">
+        {filteredProjects.map((project, idx) => {
+          // When 3 projects are present (e.g. in 'All'), the flagship project (WariSara) spans full 2 columns with a wide presentation
+          const isFeatured = filteredProjects.length === 3 && idx === 0;
+
+          return (
             <div
               key={project.id}
               onClick={() => handleOpenModal(project)}
-              className="glass-2 rounded-3xl p-4 sm:p-6 lg:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2"
+              className={`glass-2 rounded-3xl p-5 sm:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 ${
+                isFeatured ? 'md:col-span-2' : 'col-span-1'
+              }`}
             >
               {/* Subtle accent glow */}
               <div
@@ -84,101 +90,186 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                 style={{ backgroundColor: project.accentColor }}
               />
 
-              {/* Project Showcase Illustration Thumbnail */}
-              {project.imageUrl ? (
-                <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
-                </div>
-              ) : (
-                <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-sapphire/45 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 group shadow-inner">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.3),transparent_70%)]" />
-                  
-                  {/* High-Tech Animated Waveform Visualizer for Monetra Voice DSP */}
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-3">
-                    <div className="flex items-center gap-1.5 h-10 px-4 py-2 rounded-full glass-3 border border-sapphire/40 shadow-[0_0_20px_rgba(76,111,209,0.3)]">
-                      <Mic className="w-4 h-4 text-sapphire mr-1 shrink-0 animate-pulse" />
-                      <div className="w-1 bg-[#4C6FD1] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-4" />
-                      <div className="w-1 bg-[#60A5FA] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-6" />
-                      <div className="w-1 bg-[#93C5FD] rounded-full animate-[pulse_1.4s_ease-in-out_infinite] h-8" />
-                      <div className="w-1 bg-[#F5B027] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-5" />
-                      <div className="w-1 bg-[#10B981] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-3" />
+              {isFeatured ? (
+                /* Wide Featured Flagship Card (WariSara) */
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center h-full">
+                  {/* Left: Showcase Visual */}
+                  <div className="md:col-span-6 lg:col-span-7 relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-3 left-3 flex items-center gap-2">
+                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-champagne/20 border border-champagne/40 text-champagne backdrop-blur-md font-semibold">
+                        ✦ {lang === 'id' ? 'Karya Unggulan' : 'Featured Work'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right: Rich Details with luxurious spacing */}
+                  <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between h-full space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between text-xs text-fog mb-2.5">
+                        <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
+                          {project.category}
+                        </span>
+                        <span className="font-mono text-fog text-[11px]">{project.year}</span>
+                      </div>
+
+                      <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                        {project.title}
+                      </h3>
+                      <p
+                        className="text-xs sm:text-sm font-medium mt-1 mb-2.5"
+                        style={{ color: project.accentColor }}
+                      >
+                        {project.subtitle}
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-mist leading-relaxed line-clamp-3">
+                        {project.summary}
+                      </p>
+
+                      {/* Metrics Badges - Spacious Row */}
+                      <div className="grid grid-cols-3 gap-3 my-4 py-3 border-y border-white/10">
+                        {project.metrics.map((metric) => (
+                          <div key={metric.label} className="flex flex-col min-w-0">
+                            <span className="font-mono text-sm sm:text-base font-bold text-pearl group-hover:text-champagne transition-colors whitespace-nowrap">
+                              {metric.value}
+                            </span>
+                            <span className="text-[10px] sm:text-[11px] text-fog whitespace-nowrap overflow-hidden text-ellipsis">
+                              {metric.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    <div>
-                      <span className="font-display font-semibold text-pearl text-sm tracking-wide block">
-                        Monetra AI & Voice DSP Engine
+                    {/* Bottom Footer Tags & CTA */}
+                    <div className="pt-2 flex items-center justify-between gap-3">
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-champagne font-medium flex items-center gap-1 group-hover:underline shrink-0">
+                        <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </span>
-                      <span className="font-mono text-[10px] text-fog mt-0.5 block">
-                        Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20 Rule
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Standard Spacious 2-Column Card (RenStore, Monetra) */
+                <div className="flex flex-col justify-between h-full">
+                  {/* Thumbnail */}
+                  {project.imageUrl ? (
+                    <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
+                    </div>
+                  ) : (
+                    <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-sapphire/45 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 group shadow-inner">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.3),transparent_70%)]" />
+                      
+                      {/* High-Tech Animated Waveform Visualizer for Monetra Voice DSP */}
+                      <div className="relative z-10 flex flex-col items-center text-center space-y-3">
+                        <div className="flex items-center gap-1.5 h-10 px-4 py-2 rounded-full glass-3 border border-sapphire/40 shadow-[0_0_20px_rgba(76,111,209,0.3)]">
+                          <Mic className="w-4 h-4 text-sapphire mr-1 shrink-0 animate-pulse" />
+                          <div className="w-1 bg-[#4C6FD1] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-4" />
+                          <div className="w-1 bg-[#60A5FA] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-6" />
+                          <div className="w-1 bg-[#93C5FD] rounded-full animate-[pulse_1.4s_ease-in-out_infinite] h-8" />
+                          <div className="w-1 bg-[#F5B027] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-5" />
+                          <div className="w-1 bg-[#10B981] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-3" />
+                        </div>
+
+                        <div>
+                          <span className="font-display font-semibold text-pearl text-sm tracking-wide block">
+                            Monetra AI & Voice DSP Engine
+                          </span>
+                          <span className="font-mono text-[10px] text-fog mt-0.5 block">
+                            Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20 Rule
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between text-xs text-fog mb-2.5">
+                        <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
+                          {project.category}
+                        </span>
+                        <span className="font-mono text-fog text-[11px]">{project.year}</span>
+                      </div>
+
+                      <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                        {project.title}
+                      </h3>
+                      <p
+                        className="text-xs font-medium mt-1 mb-2.5"
+                        style={{ color: project.accentColor }}
+                      >
+                        {project.subtitle}
+                      </p>
+
+                      <p className="text-xs text-mist leading-relaxed line-clamp-2">
+                        {project.summary}
+                      </p>
+
+                      {/* Metrics Badges - Spacious Row */}
+                      <div className="grid grid-cols-3 gap-2.5 sm:gap-3 my-4 py-3 border-y border-white/10">
+                        {project.metrics.map((metric) => (
+                          <div key={metric.label} className="flex flex-col min-w-0">
+                            <span className="font-mono text-sm sm:text-base font-bold text-pearl group-hover:text-champagne transition-colors whitespace-nowrap">
+                              {metric.value}
+                            </span>
+                            <span className="text-[10px] sm:text-[11px] text-fog whitespace-nowrap overflow-hidden text-ellipsis">
+                              {metric.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Footer Tags & CTA */}
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                      <div className="flex flex-wrap gap-1.5 min-w-0">
+                        {project.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-champagne font-medium flex items-center gap-1 group-hover:underline shrink-0">
+                        <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 </div>
               )}
-
-              <div>
-                <div className="flex items-center justify-between text-xs text-fog mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
-                      {project.category}
-                    </span>
-                  </div>
-                  <span className="font-mono text-fog text-[11px]">{project.year}</span>
-                </div>
-
-                <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
-                  {project.title}
-                </h3>
-                <p
-                  className="text-xs font-medium mt-1 mb-2.5"
-                  style={{ color: project.accentColor }}
-                >
-                  {project.subtitle}
-                </p>
-
-                <p className="text-xs text-mist leading-relaxed line-clamp-2">
-                  {project.summary}
-                </p>
-
-                {/* Metrics Badges */}
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 my-4 pt-3 border-t border-white/10">
-                  {project.metrics.map((metric) => (
-                    <div key={metric.label} className="flex flex-col">
-                      <span className="font-mono text-sm xs:text-base font-bold text-pearl group-hover:text-champagne transition-colors">
-                        {metric.value}
-                      </span>
-                      <span className="text-[9.5px] sm:text-[10px] text-fog truncate">{metric.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom Footer Tags & CTA */}
-              <div className="pt-3.5 border-t border-white/10 flex items-center justify-between">
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <span className="text-xs text-champagne font-medium flex items-center gap-1 group-hover:underline">
-                  <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </span>
-              </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
+      </div>
 
       {/* Case Study Modal (Glass 3) rendered via createPortal so it is always at top-level body */}
       {typeof document !== 'undefined' &&
