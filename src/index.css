@@ -228,14 +228,28 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-html,
 body {
   overflow-x: hidden;
-  max-width: 100vw;
-  overscroll-behavior-x: none;
+  min-height: 100vh;
+  max-width: 100%;
   -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+/* Hardened Modal / Drawer Scroll Lock */
+html.overflow-locked,
+body.overflow-locked {
+  overflow: hidden !important;
+  overscroll-behavior: contain !important;
+  touch-action: none !important;
 }
 
 /* Reduced Transparency & Reduced Motion */

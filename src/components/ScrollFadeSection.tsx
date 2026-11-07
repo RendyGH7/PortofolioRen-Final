@@ -7,8 +7,6 @@ interface ScrollFadeSectionProps {
   className?: string;
   isHero?: boolean;
   isFooter?: boolean;
-  disabled?: boolean;
-  onReachInView?: () => void;
 }
 
 export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
@@ -16,13 +14,10 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
   id,
   className = '',
   isHero = false,
-  isFooter = false,
-  disabled = false,
-  onReachInView,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // For Hero section: smooth hardware-accelerated opacity fade when user scrolls down away from top
+  // For Hero section: smooth hardware-accelerated opacity fade when user scrolls down
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
@@ -33,39 +28,26 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
   if (isHero) {
     return (
       <div ref={containerRef} id={id} className={`w-full ${className}`}>
-        <motion.div
-          style={{
-            opacity: disabled ? 1 : heroOpacity,
-          }}
-        >
+        <motion.div style={{ opacity: heroOpacity }}>
           {children}
         </motion.div>
       </div>
     );
   }
 
-  // For non-Hero sections (Bento, Projects, DevStudio, Timeline, Contact, Footer):
-  // Clean, buttery-smooth GPU fade & subtle 16px rise that reveals ONCE upon entering viewport.
-  // Once in view, it remains fully visible forever (no disappearance, no layout shift, no flicker).
-  // When user reaches footer and scrolls back up, sections are already 100% visible with zero re-animation.
+  // Non-Hero sections reveal ONCE with subtle GPU-accelerated fade, then stay fully visible
   return (
     <div ref={containerRef} id={id} className={`w-full ${className}`}>
       <motion.div
-        initial={disabled ? false : { opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{
           once: true,
-          amount: 0.05,
-          margin: '0px 0px -20px 0px',
+          amount: 0.04,
         }}
         transition={{
-          duration: 0.55,
+          duration: 0.5,
           ease: [0.16, 1, 0.3, 1],
-        }}
-        onViewportEnter={() => {
-          if (isFooter && onReachInView) {
-            onReachInView();
-          }
         }}
       >
         {children}

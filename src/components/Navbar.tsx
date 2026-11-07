@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
+import { lockScroll, unlockScroll, forceUnlockScroll } from '../utils/scrollLock';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -21,19 +22,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 30);
 
-      const sections = ['hero', 'bento', 'work', 'studio', 'experience', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 180 && rect.bottom >= 180) {
-            setActiveSection(section);
-            break;
+          const sections = ['hero', 'bento', 'work', 'studio', 'experience', 'contact'];
+          for (const section of sections) {
+            const el = document.getElementById(section);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= 180 && rect.bottom >= 180) {
+                setActiveSection(section);
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -41,14 +49,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll cleanly when mobile menu is open
+  // Safe reference-counted scroll lock when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-
+      lockScroll();
       return () => {
-        document.body.style.overflow = originalOverflow;
+        unlockScroll();
       };
     }
   }, [mobileMenuOpen]);
@@ -63,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    document.body.style.overflow = '';
+    forceUnlockScroll();
 
     setTimeout(() => {
       if (id === 'hero') {

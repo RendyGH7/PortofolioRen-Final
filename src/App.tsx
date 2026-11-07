@@ -14,11 +14,11 @@ import { CommandPalette } from './components/CommandPalette';
 import { TerminalEasterEgg } from './components/TerminalEasterEgg';
 import { CosmicPreloader } from './components/CosmicPreloader';
 import { ScrollFadeSection } from './components/ScrollFadeSection';
+import { lockScroll, unlockScroll, forceUnlockScroll } from './utils/scrollLock';
 
 export function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
-  const [hasReachedFooter, setHasReachedFooter] = useState(false);
   const [lang, setLang] = useState<'id' | 'en'>('id');
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -34,33 +34,14 @@ export function App() {
     }
   }, []);
 
-  // Monitor scroll to detect reaching bottom / footer
-  useEffect(() => {
-    if (hasReachedFooter) return;
-
-    const handleScroll = () => {
-      const scrollBottom = window.innerHeight + window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      // Trigger when user scrolls within 120px of page bottom
-      if (scrollBottom >= docHeight - 120) {
-        setHasReachedFooter(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasReachedFooter]);
-
-  // Prevent background scroll when preloader or any modal/pop-up is active
+  // Safe reference-counted scroll lock for preloader and all modals
   useEffect(() => {
     if (isLoading || isAnyModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      lockScroll();
+      return () => {
+        unlockScroll();
+      };
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isLoading, isAnyModalOpen]);
 
   // Global keyboard shortcuts: Ctrl+K or Cmd+K for Command Palette, `~` for Terminal
@@ -88,6 +69,7 @@ export function App() {
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+    forceUnlockScroll();
     // Slight delay so the preloader exit animation finishes before content fades in
     setTimeout(() => setContentVisible(true), 80);
   };
@@ -121,39 +103,35 @@ export function App() {
           isModalOpen={isAnyModalOpen}
         />
 
-        {/* Main Content Sections with Scroll Fade-In & Fade-Out */}
+        {/* Main Content Sections with Butter-Smooth Hardware-Accelerated Reveal */}
         <main className="relative z-10 space-y-6 sm:space-y-10">
-          <ScrollFadeSection isHero disabled={hasReachedFooter}>
+          <ScrollFadeSection isHero>
             <Hero lang={lang} />
           </ScrollFadeSection>
 
-          <ScrollFadeSection disabled={hasReachedFooter}>
+          <ScrollFadeSection>
             <BentoGrid lang={lang} />
           </ScrollFadeSection>
 
-          <ScrollFadeSection disabled={hasReachedFooter}>
+          <ScrollFadeSection>
             <ProjectsSection lang={lang} onModalOpenChange={setIsProjectModalOpen} />
           </ScrollFadeSection>
 
-          <ScrollFadeSection disabled={hasReachedFooter}>
+          <ScrollFadeSection>
             <DevStudioSection lang={lang} />
           </ScrollFadeSection>
 
-          <ScrollFadeSection disabled={hasReachedFooter}>
+          <ScrollFadeSection>
             <ExperienceTimeline lang={lang} />
           </ScrollFadeSection>
 
-          <ScrollFadeSection disabled={hasReachedFooter}>
+          <ScrollFadeSection>
             <ContactSection lang={lang} />
           </ScrollFadeSection>
         </main>
 
-        {/* Deep Navy Glass Footer: reaching footer permanently locks animations until refresh */}
-        <ScrollFadeSection
-          isFooter
-          disabled={hasReachedFooter}
-          onReachInView={() => setHasReachedFooter(true)}
-        >
+        {/* Deep Navy Glass Footer */}
+        <ScrollFadeSection isFooter>
           <Footer onOpenTerminal={() => setTerminalOpen(true)} />
         </ScrollFadeSection>
 
