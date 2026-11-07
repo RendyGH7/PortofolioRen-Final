@@ -47,15 +47,19 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
   const scrollTo = (sectionId: string) => {
     onClose();
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const navOffset = 90;
-      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition - navOffset,
-        behavior: 'smooth',
-      });
-    }
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const navOffset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elRect = el.getBoundingClientRect().top;
+        const targetPosition = elRect - bodyRect - navOffset;
+        window.scrollTo({
+          top: Math.max(0, targetPosition),
+          behavior: 'smooth',
+        });
+      }
+    }, 120);
   };
 
   const copyToClipboard = (text: string, label: string) => {

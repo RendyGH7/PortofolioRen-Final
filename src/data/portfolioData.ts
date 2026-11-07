@@ -193,25 +193,23 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "warisara",
     title: "WariSara",
-    subtitle: "Gerbang Warisan Budaya Nusantara & Studio Kriya Interaktif",
+    subtitle: "Living Cultural Archive & Studio Kriya Interaktif",
     category: "Web App",
     year: "2026",
     role: "Lead Frontend & Creative Technologist",
-    summary: "Ekosistem web kultural interaktif untuk pelestarian warisan 38 provinsi Nusantara dengan peta vektor dinamis, Creative Lab Studio 2.0 (generator motif batik parametrik & kanvas canting digital), buku pusaka lisan 3D, dan direktori ekonomi kreatif perajin lokal.",
+    summary: "Platform pelestarian budaya 38 provinsi Nusantara yang memadukan kartografi digital interaktif, studio kriya parametrik, dan penuturan audio pusaka lisan.",
     metrics: [
       { label: "Cakupan Budaya", value: "38 Provinsi" },
       { label: "Konteks Lomba", value: "TECHTOPIA 2" },
       { label: "Arsitektur", value: "Native JS" },
     ],
     tags: [
-      "Vanilla JavaScript (ES6+)",
+      "Vanilla JS",
       "HTML5 Canvas 2D",
       "Tailwind CSS",
-      "SVG Interactive Map",
       "Web Audio API",
-      "Parametric Design",
-      "Creative Lab 2.0",
-      "Cultural Tech",
+      "Parametric Math",
+      "SVG Vector Map",
     ],
     features: [
       {
@@ -288,17 +286,17 @@ class BatikParametricEngine {
   {
     id: "renstore",
     title: "RenStore",
-    subtitle: "Modern Full-Stack E-Commerce & Tech Lifestyle Platform",
+    subtitle: "Modern Full-Stack E-Commerce Platform",
     category: "E-Commerce",
     year: "2026",
     role: "Founder & Full Stack Developer",
-    summary: "Platform e-commerce modern dengan arsitektur decoupled (Laravel 11 REST API + React 19), checkout QRIS dinamis, flash sale engine, dan dashboard analitik admin.",
+    summary: "Platform e-commerce modern berarsitektur decoupled dengan integrasi REST API Laravel 11, pembayaran QRIS dinamis, dan pengalaman transaksi instan.",
     metrics: [
       { label: "Ulasan Positif", value: "1.000+" },
       { label: "Arsitektur API", value: "Laravel 11" },
       { label: "Transaksi QRIS", value: "Instan" },
     ],
-    tags: ["Laravel 11", "React 19", "PostgreSQL", "TypeScript", "Tailwind CSS", "QRIS Payment"],
+    tags: ["Laravel 11", "React 19", "PostgreSQL", "Tailwind CSS", "QRIS API"],
     features: [
       {
         title: "Decoupled Architecture",
@@ -362,11 +360,11 @@ class CheckoutController extends Controller
   {
     id: "monetra",
     title: "Monetra",
-    subtitle: "Asisten Keuangan Pribadi Berbasis AI & Pelacak Pengeluaran Pintar",
+    subtitle: "AI Personal Finance & Voice DSP Engine",
     category: "Web App",
     year: "2026",
     role: "Full Stack Lead & AI Engineer",
-    summary: "Asisten keuangan pribadi cerdas bertenaga Gemini AI dan Web Audio DSP untuk pencatatan transaksi instan lewat suara, alokasi Aturan 50/30/20, dan isolasi keamanan PostgreSQL RLS.",
+    summary: "Asisten finansial cerdas bertenaga Google Gemini AI dan Web Audio DSP untuk pencatatan transaksi otomatis berbasis perintah suara.",
     metrics: [
       { label: "Voice AI Latency", value: "< 2.5s" },
       { label: "Filter Vokal DSP", value: "4-Stage" },
@@ -375,14 +373,9 @@ class CheckoutController extends Controller
     tags: [
       "React 19",
       "TypeScript",
-      "Tailwind CSS v4",
-      "Google Gemini 2.5 Flash",
-      "Supabase",
+      "Gemini 2.5 Flash",
+      "Web Audio DSP",
       "PostgreSQL RLS",
-      "Web Audio API",
-      "Zustand",
-      "Recharts",
-      "PWA"
     ],
     features: [
       {

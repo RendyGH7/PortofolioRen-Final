@@ -197,7 +197,10 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
                 <span className="text-xs font-semibold text-pearl block leading-none">
                   Tanya Rendy AI
                 </span>
-
+                <span className="text-[10px] text-fog font-mono flex items-center gap-1 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Online Assistant</span>
+                </span>
               </div>
             </div>
             <button

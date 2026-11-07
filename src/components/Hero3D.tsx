@@ -598,7 +598,9 @@ export const Hero3D: React.FC = () => {
       interactionState.velX = 0;
       interactionState.velY = 0;
       setIsInteracting(true);
-      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+      if (e.pointerType === 'mouse') {
+        (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+      }
     };
 
     const onPointerMove = (e: PointerEvent) => {
@@ -796,7 +798,7 @@ export const Hero3D: React.FC = () => {
       {/* 3D WebGL Canvas Container with tactile grab cursor and ZERO clipping */}
       <div
         ref={mountRef}
-        className={`w-full h-full flex items-center justify-center touch-none transition-cursor relative z-10 ${
+        className={`w-full h-full flex items-center justify-center touch-pan-y transition-cursor relative z-10 ${
           isInteracting ? 'cursor-grabbing' : 'cursor-grab'
         }`}
         title="Geser untuk rotasi 360°"

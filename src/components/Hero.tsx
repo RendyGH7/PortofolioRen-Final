@@ -141,40 +141,40 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           <div className="pt-5 sm:pt-6 border-t border-white/[0.08] max-w-lg">
             <div className="grid grid-cols-3 divide-x divide-white/[0.08]">
               {/* Pillar 1: Market Proof */}
-              <div className="pr-2 sm:pr-5 group cursor-default">
+              <div className="pr-2 sm:pr-4 group cursor-default">
                 <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
                   1.000<span className="text-champagne font-light">+</span>
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1">
+                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
                   {lang === 'id' ? 'Ulasan Positif' : 'Client Reviews'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog truncate mt-0.5">
+                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
                   Founder RenStore
                 </div>
               </div>
 
               {/* Pillar 2: Engineering Output */}
-              <div className="px-2 sm:px-5 group cursor-default">
+              <div className="px-2 sm:px-4 group cursor-default">
                 <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
                   5<span className="text-champagne font-light">+</span>
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1">
+                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
                   {lang === 'id' ? 'Proyek Rilis' : 'Projects Shipped'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog truncate mt-0.5">
+                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
                   {lang === 'id' ? 'Web & Cloud System' : 'Web & Cloud'}
                 </div>
               </div>
 
               {/* Pillar 3: Technical Validation */}
-              <div className="pl-2 sm:pl-5 group cursor-default">
+              <div className="pl-2 sm:pl-4 group cursor-default">
                 <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
                   Top 7
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1">
+                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
                   {lang === 'id' ? 'Finalis Nasional' : 'National Finalist'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog truncate mt-0.5">
+                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
                   {lang === 'id' ? 'Sains Data (TSDN)' : 'Data Science (TSDN)'}
                 </div>
               </div>

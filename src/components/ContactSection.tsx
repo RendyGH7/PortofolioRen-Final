@@ -86,12 +86,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
       const accessKey = (PERSONAL_DATA as { web3FormsAccessKey?: string }).web3FormsAccessKey;
 
       if (!accessKey) {
-        setSubmitError(
-          lang === 'id'
-            ? 'Access Key Web3Forms belum dimasukkan di src/data/portfolioData.ts. Dapatkan key gratis di web3forms.com atau gunakan alternatif kontak di bawah.'
-            : 'Web3Forms Access Key is not configured yet in portfolioData.ts. Get a free key at web3forms.com or use the alternative channels below.'
-        );
-        setIsSubmitting(false);
+        // Direct seamless fallback: Open native email client with prefilled details
+        const mailtoUrl = `mailto:${PERSONAL_DATA.email}?subject=${encodeURIComponent(
+          emailSubject
+        )}&body=${encodeURIComponent(
+          `Halo Rendy,\n\nNama: ${name.trim()}\nEmail: ${email.trim()}\nKategori: ${categoryLabel}\n\nPesan:\n${message.trim()}`
+        )}`;
+        window.location.href = mailtoUrl;
+        setIsSubmitted(true);
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 65,
+            origin: { y: 0.75 },
+            colors: ['#F5B027', '#4C6FD1', '#10B981'],
+          });
+        } catch {}
         return;
       }
 

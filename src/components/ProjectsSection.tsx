@@ -34,7 +34,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
     : PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+    <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto relative">
       {/* Ambient Celestial Atmospheric Haze */}
       <div className="absolute top-1/3 -left-24 w-96 h-96 rounded-full bg-sapphire/20 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-24 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
@@ -47,8 +47,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
           </h2>
           <p className="text-mist text-xs sm:text-sm max-w-xl">
             {lang === 'id'
-              ? 'Aplikasi web dan platform nyata dengan arsitektur teruji, performa instan, dan skala transaksi produksi.'
-              : 'Production web apps and platforms backed by verified architecture, instant performance, and production scale.'}
+              ? 'Platform digital terkurasi dengan arsitektur modern, performa tinggi, dan pengalaman interaktif berstandar produksi.'
+              : 'Curated digital platforms combining modern architecture, high performance, and production-grade interactivity.'}
           </p>
         </div>
 
@@ -70,247 +70,133 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
         </div>
       </div>
 
-      {/* Projects Showcase Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-7 lg:gap-8 items-stretch relative z-10">
-        {filteredProjects.map((project, idx) => {
-          // When 3 projects are present (e.g. in 'All'), the flagship project (WariSara) spans full 2 columns with a wide presentation
-          const isFeatured = filteredProjects.length === 3 && idx === 0;
+      {/* Projects Showcase Grid: Balanced 3-Column Luxury Architecture */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch relative z-10">
+        {filteredProjects.map((project) => {
+          const isFeatured = project.id === 'warisara';
 
           return (
             <div
               key={project.id}
               onClick={() => handleOpenModal(project)}
-              className={`glass-2 rounded-3xl p-5 sm:p-7 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 ${
-                isFeatured ? 'md:col-span-2' : 'col-span-1'
-              }`}
+              className="glass-2 rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 h-full"
             >
-              {/* Subtle accent glow */}
+              {/* Ambient Accent Radial Glow */}
               <div
                 className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-[80px] pointer-events-none opacity-20 transition-opacity group-hover:opacity-40"
                 style={{ backgroundColor: project.accentColor }}
               />
 
-              {isFeatured ? (
-                /* Wide Featured Flagship Card (WariSara) */
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center h-full">
-                  {/* Left: Showcase Visual */}
-                  <div className="md:col-span-6 lg:col-span-7 relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
+              <div className="flex flex-col flex-1">
+                {/* Visual Showcase Thumbnail (16:10 Cinematic Aspect) */}
+                <div className="relative w-full aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner mb-4">
+                  {project.imageUrl ? (
                     <img
                       src={project.imageUrl}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute top-3 left-3 flex items-center gap-2">
-                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-champagne/20 border border-champagne/40 text-champagne backdrop-blur-md font-semibold">
-                        ✦ {lang === 'id' ? 'Karya Unggulan' : 'Featured Work'}
-                      </span>
-                    </div>
-                    {project.liveUrl && (
-                      <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="font-mono text-[11px] px-3 py-1 rounded-full bg-midnight-0/85 hover:bg-midnight-0 text-champagne border border-champagne/40 backdrop-blur-md font-semibold flex items-center gap-1.5 transition-all hover:scale-105 shadow-md"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          <span>{lang === 'id' ? 'Buka Web' : 'Live Web'}</span>
-                          <ExternalLink className="w-3 h-3 text-champagne" />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right: Rich Details with luxurious spacing */}
-                  <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between h-full space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between text-xs text-fog mb-2.5">
-                        <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
-                          {project.category}
-                        </span>
-                        <span className="font-mono text-fog text-[11px]">{project.year}</span>
-                      </div>
-
-                      <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
-                        {project.title}
-                      </h3>
-                      <p
-                        className="text-xs sm:text-sm font-medium mt-1 mb-2.5"
-                        style={{ color: project.accentColor }}
-                      >
-                        {project.subtitle}
-                      </p>
-
-                      <p className="text-xs sm:text-sm text-mist leading-relaxed line-clamp-3">
-                        {project.summary}
-                      </p>
-
-                      {/* Metrics Badges - Spacious Row */}
-                      <div className="grid grid-cols-3 gap-3 my-4 py-3 border-y border-white/10">
-                        {project.metrics.map((metric) => (
-                          <div key={metric.label} className="flex flex-col min-w-0">
-                            <span className="font-mono text-sm sm:text-base font-bold text-pearl group-hover:text-champagne transition-colors whitespace-nowrap">
-                              {metric.value}
-                            </span>
-                            <span className="text-[10px] sm:text-[11px] text-fog whitespace-nowrap overflow-hidden text-ellipsis">
-                              {metric.label}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom Footer Tags & CTA */}
-                    <div className="pt-2 flex items-center justify-between gap-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center gap-2.5 shrink-0">
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-xs px-3 py-1.5 rounded-xl bg-champagne text-midnight-0 font-semibold hover:bg-champagne-light transition-all shadow-glass-sm flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
-                            title={lang === 'id' ? 'Buka Website Resmi' : 'Open Live App'}
-                          >
-                            <span>{lang === 'id' ? 'Buka Web' : 'Live App'}</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
-                          </a>
-                        )}
-                        <span className="text-xs text-mist group-hover:text-champagne font-medium flex items-center gap-1 transition-colors">
-                          <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* Standard Spacious 2-Column Card (RenStore, Monetra) */
-                <div className="flex flex-col justify-between h-full">
-                  {/* Thumbnail */}
-                  {project.imageUrl ? (
-                    <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-champagne/40 transition-all bg-midnight-1 shadow-inner">
-                      <img
-                        src={project.imageUrl}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/70 via-transparent to-transparent pointer-events-none" />
-                    </div>
                   ) : (
-                    <div className="relative w-full aspect-[16/9] mb-5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-sapphire/45 transition-all bg-gradient-to-br from-sapphire/20 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 group shadow-inner">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(76,111,209,0.3),transparent_70%)]" />
-                      
-                      {/* High-Tech Animated Waveform Visualizer for Monetra Voice DSP */}
-                      <div className="relative z-10 flex flex-col items-center text-center space-y-3">
-                        <div className="flex items-center gap-1.5 h-10 px-4 py-2 rounded-full glass-3 border border-sapphire/40 shadow-[0_0_20px_rgba(76,111,209,0.3)]">
-                          <Mic className="w-4 h-4 text-sapphire mr-1 shrink-0 animate-pulse" />
-                          <div className="w-1 bg-[#4C6FD1] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-4" />
-                          <div className="w-1 bg-[#60A5FA] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-6" />
-                          <div className="w-1 bg-[#93C5FD] rounded-full animate-[pulse_1.4s_ease-in-out_infinite] h-8" />
-                          <div className="w-1 bg-[#F5B027] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-5" />
-                          <div className="w-1 bg-[#10B981] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-3" />
-                        </div>
+                    <div className="w-full h-full bg-midnight-2 flex items-center justify-center">
+                      <Mic className="w-8 h-8 text-sapphire" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/80 via-transparent to-transparent pointer-events-none" />
 
-                        <div>
-                          <span className="font-display font-semibold text-pearl text-sm tracking-wide block">
-                            Monetra AI & Voice DSP Engine
-                          </span>
-                          <span className="font-mono text-[10px] text-fog mt-0.5 block">
-                            Voice-to-Transaction • Gemini 2.5 Flash • 50/30/20 Rule
-                          </span>
-                        </div>
-                      </div>
+                  {/* Top-Left Featured Badge */}
+                  {isFeatured && (
+                    <div className="absolute top-2.5 left-2.5 flex items-center">
+                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-champagne/20 border border-champagne/40 text-champagne backdrop-blur-md font-semibold">
+                        ✦ {lang === 'id' ? 'Unggulan' : 'Featured'}
+                      </span>
                     </div>
                   )}
 
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between text-xs text-fog mb-2.5">
-                        <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
-                          {project.category}
-                        </span>
-                        <span className="font-mono text-fog text-[11px]">{project.year}</span>
-                      </div>
-
-                      <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal group-hover:text-champagne transition-colors">
-                        {project.title}
-                      </h3>
-                      <p
-                        className="text-xs font-medium mt-1 mb-2.5"
-                        style={{ color: project.accentColor }}
+                  {/* Top-Right Live Demo Indicator */}
+                  {project.liveUrl && (
+                    <div className="absolute top-2.5 right-2.5 flex items-center">
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-midnight-0/85 hover:bg-midnight-0 text-champagne border border-champagne/40 backdrop-blur-md font-semibold flex items-center gap-1 transition-all hover:scale-105 shadow-md"
+                        title={lang === 'id' ? 'Buka Web Live' : 'Open Live App'}
                       >
-                        {project.subtitle}
-                      </p>
-
-                      <p className="text-xs text-mist leading-relaxed line-clamp-2">
-                        {project.summary}
-                      </p>
-
-                      {/* Metrics Badges - Spacious Row */}
-                      <div className="grid grid-cols-3 gap-2.5 sm:gap-3 my-4 py-3 border-y border-white/10">
-                        {project.metrics.map((metric) => (
-                          <div key={metric.label} className="flex flex-col min-w-0">
-                            <span className="font-mono text-sm sm:text-base font-bold text-pearl group-hover:text-champagne transition-colors whitespace-nowrap">
-                              {metric.value}
-                            </span>
-                            <span className="text-[10px] sm:text-[11px] text-fog whitespace-nowrap overflow-hidden text-ellipsis">
-                              {metric.label}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>Live Web</span>
+                        <ExternalLink className="w-2.5 h-2.5 text-champagne" />
+                      </a>
                     </div>
-
-                    {/* Bottom Footer Tags & CTA */}
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                      <div className="flex flex-wrap gap-1.5 min-w-0">
-                        {project.tags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-mist border border-white/5 whitespace-nowrap"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-[11px] px-2.5 py-1 rounded-lg bg-champagne/15 hover:bg-champagne/25 border border-champagne/30 text-champagne font-semibold flex items-center gap-1 transition-all"
-                            title={lang === 'id' ? 'Buka Web Live' : 'Open Live App'}
-                          >
-                            <span>Live</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
-                        <span className="text-xs text-mist group-hover:text-champagne font-medium flex items-center gap-1 transition-colors">
-                          <span>{lang === 'id' ? 'Detail' : 'Case'}</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
-              )}
+
+                {/* Meta Row: Category & Year */}
+                <div className="flex items-center justify-between text-xs text-fog mb-2">
+                  <span className="font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/5 text-mist text-[11px]">
+                    {project.category}
+                  </span>
+                  <span className="font-mono text-fog text-[11px]">{project.year}</span>
+                </div>
+
+                {/* Project Title */}
+                <h3 className="font-display text-xl sm:text-2xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                  {project.title}
+                </h3>
+
+                {/* Subtitle */}
+                <p
+                  className="text-xs font-medium mt-1 mb-2.5 tracking-wide line-clamp-1"
+                  style={{ color: project.accentColor }}
+                >
+                  {project.subtitle}
+                </p>
+
+                {/* Concise, Elegant, Professional Description */}
+                <p className="text-xs text-mist leading-relaxed line-clamp-2 min-h-[36px]">
+                  {project.summary}
+                </p>
+
+                {/* Tech Stack Pills */}
+                <div className="flex flex-wrap gap-1.5 mt-3.5 mb-1">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-mist/90 border border-white/5 whitespace-nowrap"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Footer */}
+              <div className="pt-3.5 mt-4 border-t border-white/[0.08] flex items-center justify-between gap-2">
+                {project.liveUrl ? (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-champagne text-midnight-0 hover:bg-champagne-light transition-all shadow-glass-sm flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <span>{lang === 'id' ? 'Buka Web' : 'Live App'}</span>
+                    <ExternalLink className="w-3 h-3 text-midnight-0" />
+                  </a>
+                ) : (
+                  <span />
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenModal(project)}
+                  className="text-xs text-mist hover:text-champagne font-medium flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-white/5 ml-auto"
+                >
+                  <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              </div>
             </div>
           );
         })}
