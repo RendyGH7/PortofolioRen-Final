@@ -41,15 +41,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 relative z-10">
-        <div className="text-left space-y-2">
+        <div className="text-left">
           <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
             {lang === 'id' ? 'Karya Pilihan' : 'Selected Work'}
           </h2>
-          <p className="text-mist text-xs sm:text-sm max-w-xl">
-            {lang === 'id'
-              ? 'Platform digital terkurasi dengan arsitektur modern, performa tinggi, dan pengalaman interaktif berstandar produksi.'
-              : 'Curated digital platforms combining modern architecture, high performance, and production-grade interactivity.'}
-          </p>
         </div>
 
         {/* Controls: Category Filter Pills */}

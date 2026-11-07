@@ -153,15 +153,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   return (
     <section id="bento" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="mb-8 sm:mb-10 text-left space-y-2">
+      <div className="mb-8 sm:mb-10 text-left">
         <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Profil, Keahlian & Rekam Jejak' : 'Profile, Stack & Track Record'}
         </h2>
-        <p className="text-mist text-xs sm:text-sm max-w-2xl leading-relaxed">
-          {lang === 'id'
-            ? 'Arsitektur terpadu yang merangkum identitas rekayasa, penguasaan teknologi riil, dan skala dampak produksi.'
-            : 'Unified architecture synthesizing engineering identity, verified stack mastery, and production scale.'}
-        </p>
       </div>
 
       {/* 
