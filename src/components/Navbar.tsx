@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
@@ -40,6 +41,25 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body & html scroll completely when mobile hamburger menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalTouchAction = document.body.style.touchAction;
+
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.documentElement.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.style.touchAction = originalTouchAction;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
+
   const navItems = [
     { id: 'bento', label: lang === 'id' ? 'Profil' : 'Profile' },
     { id: 'work', label: lang === 'id' ? 'Karya' : 'Work' },
@@ -50,15 +70,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const navOffset = 90;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition - navOffset,
-        behavior: 'smooth',
-      });
-    }
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+    document.documentElement.style.overflow = '';
+
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const navOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - navOffset,
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -142,87 +168,91 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
       </header>
 
-      {/* Mobile Drawer Panel (Glass 3) */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            key="mobile-drawer"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 md:hidden flex flex-col justify-between p-6 glass-3"
-          >
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-white/10 bg-midnight-2/90">
-                  <img
-                    src="/assets/brand/logo.png"
-                    alt="Logo Rendy Fernando"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <span className="font-semibold text-pearl text-sm">{PERSONAL_DATA.name}</span>
-              </div>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-full glass-1 text-mist hover:text-pearl"
-                aria-label="Tutup Menu"
+      {/* Mobile Drawer Panel (Glass 3) rendered via Portal to isolate scrolling */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                key="mobile-drawer"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                className="fixed inset-0 z-[100] md:hidden flex flex-col justify-between p-6 glass-3 overflow-hidden overscroll-none"
               >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-3 py-6 overflow-y-auto">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-left text-lg font-medium px-4 py-2.5 rounded-xl transition-all ${
-                    activeSection === item.id
-                      ? 'text-champagne bg-champagne/10 border border-champagne/20 font-semibold'
-                      : 'text-pearl/90 hover:bg-white/5'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-
-              {/* Language Selector Inside Mobile Menu */}
-              <div className="mt-3 p-3 rounded-2xl glass-1 border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs text-mist">
-                  <Globe className="w-4 h-4 text-champagne shrink-0" />
-                  <span>{lang === 'id' ? 'Bahasa / Language' : 'Language / Bahasa'}</span>
-                </div>
-                <div className="flex items-center gap-1 p-0.5 rounded-lg bg-midnight-0/60 border border-white/10 text-xs font-mono">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-white/10 bg-midnight-2/90">
+                      <img
+                        src="/assets/brand/logo.png"
+                        alt="Logo Rendy Fernando"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="font-semibold text-pearl text-sm">{PERSONAL_DATA.name}</span>
+                  </div>
                   <button
-                    type="button"
-                    onClick={() => lang !== 'id' && onToggleLang()}
-                    className={`px-3 py-1 rounded-md transition-all ${
-                      lang === 'id'
-                        ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
-                        : 'text-fog hover:text-pearl'
-                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-full glass-1 text-mist hover:text-pearl"
+                    aria-label="Tutup Menu"
                   >
-                    ID
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => lang !== 'en' && onToggleLang()}
-                    className={`px-3 py-1 rounded-md transition-all ${
-                      lang === 'en'
-                        ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
-                        : 'text-fog hover:text-pearl'
-                    }`}
-                  >
-                    EN
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+
+                <div className="flex flex-col gap-3 py-6 overflow-y-auto overscroll-contain">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`text-left text-lg font-medium px-4 py-2.5 rounded-xl transition-all ${
+                        activeSection === item.id
+                          ? 'text-champagne bg-champagne/10 border border-champagne/20 font-semibold'
+                          : 'text-pearl/90 hover:bg-white/5'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+
+                  {/* Language Selector Inside Mobile Menu */}
+                  <div className="mt-3 p-3 rounded-2xl glass-1 border border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs text-mist">
+                      <Globe className="w-4 h-4 text-champagne shrink-0" />
+                      <span>{lang === 'id' ? 'Bahasa / Language' : 'Language / Bahasa'}</span>
+                    </div>
+                    <div className="flex items-center gap-1 p-0.5 rounded-lg bg-midnight-0/60 border border-white/10 text-xs font-mono">
+                      <button
+                        type="button"
+                        onClick={() => lang !== 'id' && onToggleLang()}
+                        className={`px-3 py-1 rounded-md transition-all ${
+                          lang === 'id'
+                            ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
+                            : 'text-fog hover:text-pearl'
+                        }`}
+                      >
+                        ID
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => lang !== 'en' && onToggleLang()}
+                        className={`px-3 py-1 rounded-md transition-all ${
+                          lang === 'en'
+                            ? 'bg-champagne/20 text-champagne font-bold border border-champagne/30 shadow-sm'
+                            : 'text-fog hover:text-pearl'
+                        }`}
+                      >
+                        EN
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </>
   );
 };
