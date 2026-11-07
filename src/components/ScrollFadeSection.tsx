@@ -22,42 +22,21 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // For Hero section: smooth scroll-driven exit as user scrolls down
+  // For Hero section: smooth hardware-accelerated opacity fade when user scrolls down away from top
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.45, 0.85], [1, 0.75, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.85], [0, -45]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.85], [1, 0.96]);
-  const heroFilter = useTransform(
-    scrollYProgress,
-    [0, 0.45, 0.85],
-    ['blur(0px)', 'blur(0px)', 'blur(8px)']
-  );
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
 
   if (isHero) {
     return (
       <div ref={containerRef} id={id} className={`w-full ${className}`}>
         <motion.div
-          animate={
-            disabled
-              ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
-              : undefined
-          }
-          style={
-            !disabled
-              ? {
-                  opacity: heroOpacity,
-                  y: heroY,
-                  scale: heroScale,
-                  filter: heroFilter,
-                  willChange: 'opacity, transform, filter',
-                }
-              : { willChange: 'auto' }
-          }
-          transition={{ duration: 0.4 }}
+          style={{
+            opacity: disabled ? 1 : heroOpacity,
+          }}
         >
           {children}
         </motion.div>
@@ -65,29 +44,22 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
     );
   }
 
-  // For all other sections (Bento, Projects, DevStudio, Timeline, Contact, Footer):
-  // Smooth scroll-triggered fade in when entering viewport, and fade out when leaving
+  // For non-Hero sections (Bento, Projects, DevStudio, Timeline, Contact, Footer):
+  // Clean, buttery-smooth GPU fade & subtle 16px rise that reveals ONCE upon entering viewport.
+  // Once in view, it remains fully visible forever (no disappearance, no layout shift, no flicker).
+  // When user reaches footer and scrolls back up, sections are already 100% visible with zero re-animation.
   return (
     <div ref={containerRef} id={id} className={`w-full ${className}`}>
       <motion.div
-        initial={!disabled ? { opacity: 0, y: 42, filter: 'blur(8px)' } : false}
-        whileInView={!disabled ? { opacity: 1, y: 0, filter: 'blur(0px)' } : undefined}
-        animate={
-          disabled
-            ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-            : undefined
-        }
-        viewport={
-          !disabled
-            ? {
-                once: false,
-                amount: 0.08,
-                margin: '-40px 0px -40px 0px',
-              }
-            : undefined
-        }
+        initial={disabled ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{
+          once: true,
+          amount: 0.05,
+          margin: '0px 0px -20px 0px',
+        }}
         transition={{
-          duration: 0.8,
+          duration: 0.55,
           ease: [0.16, 1, 0.3, 1],
         }}
         onViewportEnter={() => {
@@ -95,13 +67,9 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
             onReachInView();
           }
         }}
-        style={{
-          willChange: !disabled ? 'opacity, transform, filter' : 'auto',
-        }}
       >
         {children}
       </motion.div>
     </div>
   );
 };
-

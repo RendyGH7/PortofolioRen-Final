@@ -35,10 +35,12 @@ export const Footer: React.FC<FooterProps> = () => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const navOffset = 90;
-      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const navOffset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elRect = el.getBoundingClientRect().top;
+      const targetPosition = elRect - bodyRect - navOffset;
       window.scrollTo({
-        top: elementPosition - navOffset,
+        top: Math.max(0, targetPosition),
         behavior: 'smooth',
       });
     }

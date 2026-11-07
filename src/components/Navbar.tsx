@@ -41,21 +41,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body & html scroll completely when mobile hamburger menu is open
+  // Lock body scroll cleanly when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
-      const originalBodyOverflow = document.body.style.overflow;
-      const originalHtmlOverflow = document.documentElement.style.overflow;
-      const originalTouchAction = document.body.style.touchAction;
-
+      const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
-      document.documentElement.style.overflow = 'hidden';
 
       return () => {
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.style.touchAction = originalTouchAction;
-        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.overflow = originalOverflow;
       };
     }
   }, [mobileMenuOpen]);
@@ -71,20 +64,29 @@ export const Navbar: React.FC<NavbarProps> = ({
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
     document.body.style.overflow = '';
-    document.body.style.touchAction = '';
-    document.documentElement.style.overflow = '';
 
     setTimeout(() => {
+      if (id === 'hero') {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        return;
+      }
+
       const element = document.getElementById(id);
       if (element) {
-        const navOffset = 90;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const navOffset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const targetPosition = elementRect - bodyRect - navOffset;
+
         window.scrollTo({
-          top: elementPosition - navOffset,
+          top: Math.max(0, targetPosition),
           behavior: 'smooth',
         });
       }
-    }, 100);
+    }, 120);
   };
 
   return (

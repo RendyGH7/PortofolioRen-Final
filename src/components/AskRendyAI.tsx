@@ -136,10 +136,12 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
     setIsOpen(false);
     const el = document.getElementById(sectionId);
     if (el) {
-      const navOffset = 90;
-      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const navOffset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elRect = el.getBoundingClientRect().top;
+      const targetPosition = elRect - bodyRect - navOffset;
       window.scrollTo({
-        top: elementPosition - navOffset,
+        top: Math.max(0, targetPosition),
         behavior: 'smooth',
       });
     }
