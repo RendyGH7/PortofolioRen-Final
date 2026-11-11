@@ -83,7 +83,7 @@ export const AmbientBackground: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     // Cosmic starlight color spectrum (Authentic astronomical stellar classifications)
-    const starColors = [
+    const desktopStarColors = [
       '#FFFFFF', // O/A-Class Pure Starlight
       '#F8FAFC', // Diamond Starlight
       '#BAE6FD', // B-Class Blue Giant
@@ -93,32 +93,55 @@ export const AmbientBackground: React.FC = () => {
       '#F5B027', // K-Class Radiant Amber
     ];
 
-    // Multi-depth star field (Dense & brilliant on both mobile & desktop)
+    // Elegant, non-distracting soft stellar palette for mobile
+    const mobileStarColors = [
+      '#FFFFFF',
+      '#F1F5F9',
+      '#E2E8F0',
+      '#BAE6FD',
+      '#FFFDF5',
+    ];
+
+    // Multi-depth star field (Calibrated for peaceful, elegant cosmic depth)
     const stars: Star[] = [];
     const isMobile = window.innerWidth < 768;
-    const starCount = isMobile ? 220 : 340;
+    const starCount = isMobile ? 68 : 320;
+    const colors = isMobile ? mobileStarColors : desktopStarColors;
 
     const initStars = () => {
       stars.length = 0;
       for (let i = 0; i < starCount; i++) {
-        const layer = Math.random() < 0.52 ? 1 : Math.random() < 0.84 ? 2 : 3;
-        const color = starColors[Math.floor(Math.random() * starColors.length)];
+        const layer = isMobile
+          ? Math.random() < 0.65 ? 1 : Math.random() < 0.90 ? 2 : 3
+          : Math.random() < 0.52 ? 1 : Math.random() < 0.84 ? 2 : 3;
+
+        const color = colors[Math.floor(Math.random() * colors.length)];
         stars.push({
           x: Math.random() * dims.w,
           y: Math.random() * dims.h,
-          size:
-            layer === 1
+          size: isMobile
+            ? layer === 1
+              ? Math.random() * 0.35 + 0.3
+              : layer === 2
+                ? Math.random() * 0.45 + 0.5
+                : Math.random() * 0.55 + 0.75
+            : layer === 1
               ? Math.random() * 0.8 + 0.6
               : layer === 2
                 ? Math.random() * 1.4 + 1.1
                 : Math.random() * 2.2 + 1.8,
-          baseAlpha:
-            layer === 1
+          baseAlpha: isMobile
+            ? layer === 1
+              ? Math.random() * 0.15 + 0.15
+              : layer === 2
+                ? Math.random() * 0.18 + 0.22
+                : Math.random() * 0.20 + 0.35
+            : layer === 1
               ? Math.random() * 0.35 + 0.35
               : layer === 2
                 ? Math.random() * 0.40 + 0.50
                 : Math.random() * 0.35 + 0.65,
-          twinkleSpeed: Math.random() * 0.035 + 0.015,
+          twinkleSpeed: Math.random() * 0.03 + 0.012,
           twinkleOffset: Math.random() * Math.PI * 2,
           layer,
           color,
@@ -183,9 +206,22 @@ export const AmbientBackground: React.FC = () => {
         drawX = ((drawX % dims.w) + dims.w) % dims.w;
 
         // Twinkle Alpha calculation
-        const alpha = prefersReducedMotion
+        let alpha = prefersReducedMotion
           ? s.baseAlpha
-          : Math.min(1, Math.max(0.18, s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * 0.28));
+          : Math.min(
+              isMobile ? 0.6 : 1,
+              Math.max(
+                0.1,
+                s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * (isMobile ? 0.12 : 0.28)
+              )
+            );
+
+        // Content protection on mobile: gently attenuate stars in the central reading zone so typography is 100% sharp
+        if (isMobile) {
+          if (drawX > dims.w * 0.04 && drawX < dims.w * 0.96 && drawY > dims.h * 0.08 && drawY < dims.h * 0.88) {
+            alpha = alpha * 0.45;
+          }
+        }
 
         ctx.save();
         ctx.globalAlpha = alpha;
@@ -293,9 +329,9 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant */}
+          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Desktop only to keep mobile header clean) */}
           <div
-            className="absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="hidden sm:flex absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Golden Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Belts and 3D Rings)"
           >
             <div className="relative w-28 h-20 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -494,7 +530,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 1: Photorealistic Ringed Gas Giant (Cassini / Kepler-186f Orbit) */}
           <div
-            className="absolute top-[48px] sm:top-[26px] md:top-[34px] right-[2%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[8px] sm:top-[26px] md:top-[34px] -right-4 sm:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-30 sm:opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-70 sm:scale-100 origin-top-right"
             title="Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Bands & 3D Rings)"
           >
             <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
