@@ -35,9 +35,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
 
   return (
     <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto relative">
-      {/* Ambient Celestial Atmospheric Haze */}
-      <div className="absolute top-1/3 -left-24 w-96 h-96 rounded-full bg-sapphire/20 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-24 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
+      {/* Ambient Celestial Atmospheric Haze (Hardware-friendly blur on mobile) */}
+      <div className="absolute top-1/3 -left-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[130px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 relative z-10">

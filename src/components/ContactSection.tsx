@@ -169,8 +169,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   return (
     <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
       {/* Ambient Cosmic Contact Haze */}
-      <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="text-left mb-10 relative z-10">

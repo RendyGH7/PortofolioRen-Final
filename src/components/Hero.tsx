@@ -1,13 +1,11 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FolderGit2,
   Mail,
   ArrowUpRight,
 } from 'lucide-react';
 import { smoothScrollTo } from '../utils/scrollLock';
-
-// Dynamically stream Three.js asynchronously so mobile initial load is instant (<200ms)
-const Hero3D = lazy(() => import('./Hero3D').then((m) => ({ default: m.Hero3D })));
+import { HeroOrbitalCockpit } from './HeroOrbitalCockpit';
 
 interface HeroProps {
   lang: 'id' | 'en';
@@ -78,17 +76,6 @@ const TypewriterText: React.FC<{ lang: 'id' | 'en' }> = ({ lang }) => {
 };
 
 export const Hero: React.FC<HeroProps> = ({ lang }) => {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  // Detect desktop viewports: Only desktop loads and renders the 3D Three.js planet.
-  // Mobile iOS & Android remain 100% lightweight with zero 3D WebGL overhead.
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
-
   const scrollTo = (id: string) => {
     smoothScrollTo(id, 80);
   };
@@ -192,20 +179,10 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Right Column: Interactive 3D WebGL Exoplanet (Desktop Only: completely hidden & unmounted on Mobile iOS & Android for ultra-lightweight speed) */}
-        {isDesktop && (
-          <div className="hidden lg:flex lg:col-span-6 items-center justify-center relative overflow-visible min-h-[500px] lg:min-h-[560px]">
-            <Suspense
-              fallback={
-                <div className="w-full h-full flex items-center justify-center relative pointer-events-none min-h-[500px]">
-                  <div className="w-64 h-64 rounded-full bg-sapphire/20 blur-2xl animate-pulse" />
-                </div>
-              }
-            >
-              <Hero3D />
-            </Suspense>
-          </div>
-        )}
+        {/* Right Column: Interactive Aerospace Architectural Cockpit (Pure SVG & CSS - Zero 3D WebGL Lag!) */}
+        <div className="lg:col-span-6 flex items-center justify-center relative w-full pt-4 lg:pt-0">
+          <HeroOrbitalCockpit lang={lang} />
+        </div>
       </div>
     </section>
   );

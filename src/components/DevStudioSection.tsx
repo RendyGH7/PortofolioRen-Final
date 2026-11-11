@@ -252,9 +252,9 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
   return (
     <section id="studio" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
-      {/* Ambient Cosmic Studio Haze */}
-      <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-champagne/15 blur-[140px] pointer-events-none" />
-      <div className="absolute -top-10 -right-28 w-96 h-96 rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
+      {/* Ambient Cosmic Studio Haze (Hardware-friendly blur on mobile) */}
+      <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
+      <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 text-left relative z-10">

@@ -289,12 +289,11 @@ export const AmbientBackground: React.FC = () => {
         {/* ZONE 1: ORBITAL DAWN & EXOPLANET ALPHA (Hero Section: 0% - 14%) */}
         {/* ========================================================================= */}
         <div className="absolute top-0 left-0 right-0 h-[1000px]">
-          {/* Sapphire Orbital Dawn Glow */}
+          {/* Sapphire Orbital Dawn Glow (Static Hardware-Accelerated Gradient) */}
           <div
-            className="absolute w-[75vw] h-[75vw] -top-[20vw] -right-[15vw] rounded-full opacity-35 blur-[160px] animate-pulse"
+            className="absolute w-[65vw] h-[65vw] -top-[15vw] -right-[10vw] rounded-full opacity-30 blur-3xl md:blur-[120px] pointer-events-none"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #16213F 60%, transparent 80%)',
-              animationDuration: '12s',
             }}
           />
 
