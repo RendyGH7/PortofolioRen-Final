@@ -5,7 +5,7 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 import { smoothScrollTo } from '../utils/scrollLock';
-import { ProjectEstimator } from './ProjectEstimator';
+import { HeroInteractiveAsset } from './HeroInteractiveAsset';
 
 interface HeroProps {
   lang: 'id' | 'en';
@@ -184,9 +184,9 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Right Column: Interactive Project Scope & Architecture Estimator */}
+        {/* Right Column: Interactive 2D Aerospace Vector Asset */}
         <div className="lg:col-span-6 flex items-center justify-center relative w-full pt-4 lg:pt-0">
-          <ProjectEstimator lang={lang} />
+          <HeroInteractiveAsset lang={lang} />
         </div>
       </div>
     </section>
