@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Gamepad2,
   Trophy,
   Volume2,
   VolumeX,
@@ -782,10 +781,6 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       {/* ── Section Header (Minimal & Clean, No Text Wall) ── */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-3 relative z-10">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-champagne/10 border border-champagne/30 text-[10.5px] font-mono text-champagne uppercase tracking-wider mb-2">
-            <Gamepad2 className="w-3.5 h-3.5 text-champagne" />
-            <span>{lang === 'id' ? 'Mini Game Kosmik // Arkade 2D' : 'Cosmic Mini Game // 2D Arcade'}</span>
-          </div>
           <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
             Cosmic Orbit Defender
           </h2>
