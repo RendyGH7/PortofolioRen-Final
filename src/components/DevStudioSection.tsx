@@ -1,710 +1,689 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Database,
-  Sliders,
-  Send,
-  Copy,
-  Check,
-  RotateCcw,
+  Server,
+  Cpu,
+  Workflow,
+  Zap,
+  CheckCircle2,
+  ArrowRight,
   Layers,
+  Activity,
+  Sparkles,
+  Clock,
+  Lock,
+  Play,
+  ShoppingBag,
   Code2,
-  Terminal,
+  Globe,
+  Database,
 } from 'lucide-react';
-import { PERSONAL_DATA, HARD_SKILLS, PROJECTS } from '../data/portfolioData';
 
 interface DevStudioSectionProps {
   lang: 'id' | 'en';
 }
 
-type StudioTab = 'api' | 'sql' | 'glass';
-
-interface ApiEndpoint {
+interface ArchitectureNode {
   id: string;
-  method: 'GET' | 'POST';
-  path: string;
-  summary: string;
-  response: Record<string, unknown>;
+  stepNumber: string;
+  name: string;
+  tech: string;
+  role: string;
   latencyMs: number;
+  statusText: string;
+  icon: React.ComponentType<{ className?: string }>;
+  decisionTitleId: string;
+  decisionTitleEn: string;
+  decisionDescId: string;
+  decisionDescEn: string;
+  metrics: { label: string; value: string }[];
 }
 
+interface Scenario {
+  id: 'renstore' | 'warisara' | 'tsdn';
+  titleId: string;
+  titleEn: string;
+  badge: string;
+  descriptionId: string;
+  descriptionEn: string;
+  totalRoundtrip: string;
+  protocol: string;
+  icon: React.ComponentType<{ className?: string }>;
+  nodes: ArchitectureNode[];
+}
+
+const SCENARIOS: Scenario[] = [
+  {
+    id: 'renstore',
+    titleId: 'RenStore E-Commerce',
+    titleEn: 'RenStore E-Commerce',
+    badge: 'Transaksi & Webhook',
+    descriptionId:
+      'Arsitektur terpisah (decoupled): Mengamankan transaksi pembayaran QRIS internasional dan otomasi penyerahan lisensi digital dalam waktu nyata.',
+    descriptionEn:
+      'Decoupled architecture: Securing international QRIS payments and real-time automated digital license fulfillment.',
+    totalRoundtrip: '24.8ms Roundtrip',
+    protocol: 'HTTPS TLS 1.3 • HMAC SHA-512',
+    icon: ShoppingBag,
+    nodes: [
+      {
+        id: 'client',
+        stepNumber: '01',
+        name: 'Client Viewport',
+        tech: 'React 19 + TypeScript',
+        role: 'Checkout & UI Trigger',
+        latencyMs: 2.1,
+        statusText: 'Payload Dispatched',
+        icon: Globe,
+        decisionTitleId: 'Arsitektur Frontend Terpisah (Decoupled UI)',
+        decisionTitleEn: 'Decoupled Frontend Architecture',
+        decisionDescId:
+          'Frontend React 19 dibangun terpisah penuh dari backend server agar antarmuka interaktif responsif instan tanpa render ulang halaman (Zero Page Refresh).',
+        decisionDescEn:
+          'React 19 frontend is decoupled from the backend server so the checkout UI responds instantaneously with zero page reloads.',
+        metrics: [
+          { label: 'Bundle Size', value: '< 45KB Gzip' },
+          { label: 'State Flow', value: 'Zero-Redux Lean' },
+        ],
+      },
+      {
+        id: 'gateway',
+        stepNumber: '02',
+        name: 'API Gateway',
+        tech: 'Laravel 11 REST API',
+        role: 'Rate Limiter & Validation',
+        latencyMs: 4.5,
+        statusText: 'Zod / FormRequest OK',
+        icon: Server,
+        decisionTitleId: 'Isolasi Logika Bisnis & Validasi Skema',
+        decisionTitleEn: 'Business Logic & Schema Validation',
+        decisionDescId:
+          'Backend Laravel 11 mengelola rute RESTful dengan rate limiter 100 req/min untuk mencegah serangan brute force dan validasi ketat setiap request order.',
+        decisionDescEn:
+          'Laravel 11 backend manages RESTful endpoints with a 100 req/min rate limiter to prevent spam and strictly validate every incoming order payload.',
+        metrics: [
+          { label: 'Rate Limiter', value: '100 req / min' },
+          { label: 'Validation', value: 'FormRequest RFC' },
+        ],
+      },
+      {
+        id: 'payment',
+        stepNumber: '03',
+        name: 'Payment Engine',
+        tech: 'Midtrans QRIS Snap',
+        role: 'Payment Intent & Token',
+        latencyMs: 8.2,
+        statusText: 'QRIS Generated',
+        icon: Zap,
+        decisionTitleId: 'Integrasi Gerbang Pembayaran Terverifikasi',
+        decisionTitleEn: 'Certified Payment Gateway Integration',
+        decisionDescId:
+          'Menghubungkan API payment gateway bersertifikasi PCI-DSS untuk memfasilitasi transaksi QRIS instan dan multi-bank transfer secara aman.',
+        decisionDescEn:
+          'Connecting PCI-DSS certified payment gateway API to facilitate instant QRIS payments and multi-bank transfers securely.',
+        metrics: [
+          { label: 'Payment Method', value: 'QRIS / Multi-Bank' },
+          { label: 'Uptime SLA', value: '99.98% Target' },
+        ],
+      },
+      {
+        id: 'webhook',
+        stepNumber: '04',
+        name: 'Webhook Verifier',
+        tech: 'Cryptographic Hash',
+        role: 'HMAC SHA-512 Security',
+        latencyMs: 1.8,
+        statusText: 'Signature Verified',
+        icon: Lock,
+        decisionTitleId: 'Verifikasi Kriptografi Notifikasi Webhook',
+        decisionTitleEn: 'Cryptographic Webhook Signature Check',
+        decisionDescId:
+          'Mencegah manipulasi pembayaran dengan memverifikasi signature hash HMAC SHA-512 pada setiap notifikasi webhook sebelum pesanan diproses.',
+        decisionDescEn:
+          'Prevents payment tampering by verifying HMAC SHA-512 cryptographic hash signatures on every incoming webhook notification.',
+        metrics: [
+          { label: 'Signature', value: 'HMAC SHA-512' },
+          { label: 'Anti-Tamper', value: '100% Protected' },
+        ],
+      },
+      {
+        id: 'database',
+        stepNumber: '05',
+        name: 'PostgreSQL DB',
+        tech: 'PostgreSQL + RLS',
+        role: 'ACID Transaction & Log',
+        latencyMs: 5.2,
+        statusText: 'Committed & Verified',
+        icon: Database,
+        decisionTitleId: 'Integritas Finansial dengan Transaksi ACID',
+        decisionTitleEn: 'Financial Integrity with ACID Transactions',
+        decisionDescId:
+          'Mengunci perubahan status order dengan transaksi ACID PostgreSQL dan Row Level Security (RLS) sehingga status transaksi tidak pernah korup.',
+        decisionDescEn:
+          'Locks order state changes with PostgreSQL ACID transactions and Row Level Security (RLS) ensuring financial data is never corrupted.',
+        metrics: [
+          { label: 'Consistency', value: 'ACID Enforced' },
+          { label: 'Security', value: 'Row Level Security' },
+        ],
+      },
+      {
+        id: 'dispatch',
+        stepNumber: '06',
+        name: 'Auto Dispatcher',
+        tech: 'Background Job Queue',
+        role: 'Instant Delivery Engine',
+        latencyMs: 3.0,
+        statusText: 'License Delivered',
+        icon: CheckCircle2,
+        decisionTitleId: 'Otomasi Pengiriman Lisensi Non-Blocking',
+        decisionTitleEn: 'Non-Blocking Automated Delivery Engine',
+        decisionDescId:
+          'Lisensi digital dan konfirmasi transaksi langsung dikirimkan ke pembeli melalui background queue tanpa menghambat alur respon HTTP.',
+        decisionDescEn:
+          'Digital licenses and receipts are dispatched instantly to buyers via background worker queues without blocking the main HTTP thread.',
+        metrics: [
+          { label: 'Delivery Time', value: '< 1.5 Detik' },
+          { label: 'Social Proof', value: '1.000+ Reviews' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'warisara',
+    titleId: 'WariSara Vector Core',
+    titleEn: 'WariSara Vector Core',
+    badge: 'Lab Vektor 60 FPS',
+    descriptionId:
+      'Mesin vektor 2D dan audio interaktif bebas dependensi eksternal: Memetakan 38 provinsi Nusantara dengan performa 60 FPS stabil.',
+    descriptionEn:
+      'Zero-dependency 2D vector and interactive audio engine: Rendering 38 Indonesian provinces at a consistent 60 FPS.',
+    totalRoundtrip: '15.4ms Frame Budget',
+    protocol: 'HTML5 Canvas 2D • Web Audio API DSP',
+    icon: Code2,
+    nodes: [
+      {
+        id: 'canvas_view',
+        stepNumber: '01',
+        name: 'Canvas Viewport',
+        tech: 'HTML5 Canvas 2D',
+        role: 'Pan-Zoom ViewBox',
+        latencyMs: 1.4,
+        statusText: 'Matrix Transformed',
+        icon: Globe,
+        decisionTitleId: 'Transformasi Matriks Vektor Ringan',
+        decisionTitleEn: 'Lightweight Matrix Transformation',
+        decisionDescId:
+          'Implementasi navigasi peta pan-zoom langsung pada Canvas 2D native tanpa library pihak ketiga yang membengkakkan ukuran aplikasi.',
+        decisionDescEn:
+          'Direct native 2D canvas pan-zoom matrix transformations without third-party libraries, keeping bundle size ultra-lightweight.',
+        metrics: [
+          { label: 'Frame Rate', value: '60 FPS Native' },
+          { label: 'RAM Footprint', value: '< 18MB' },
+        ],
+      },
+      {
+        id: 'bezier_math',
+        stepNumber: '02',
+        name: 'Vector Math Core',
+        tech: 'Bézier Splines Engine',
+        role: 'Parametric Geometry',
+        latencyMs: 3.8,
+        statusText: 'Curves Interpolated',
+        icon: Cpu,
+        decisionTitleId: 'Interpolasi Kurva Bézier Bebas Dependensi',
+        decisionTitleEn: 'Zero-Dependency Bézier Math Engine',
+        decisionDescId:
+          'Kalkulasi kurva parametrik batik dan kontur pulau nusantara dihitung langsung via rumus aljabar linear untuk grafis tajam di resolusi apa pun.',
+        decisionDescEn:
+          'Parametric curves for batik motifs and provincial geography calculated via direct linear algebra for sharp graphics on any resolution.',
+        metrics: [
+          { label: 'Algorithm', value: 'Cubic Bézier O(n)' },
+          { label: 'Resolution', value: 'Infinite Vector Scale' },
+        ],
+      },
+      {
+        id: 'audio_synth',
+        stepNumber: '03',
+        name: 'Web Audio DSP',
+        tech: 'Web Audio API',
+        role: 'Synthesizer & Oral Speech',
+        latencyMs: 2.2,
+        statusText: 'Acoustics Synced',
+        icon: Activity,
+        decisionTitleId: 'Sintesis Audio & Narasi Tanpa File MP3',
+        decisionTitleEn: 'Realtime Audio Synthesis & Narration',
+        decisionDescId:
+          'Menghasilkan efek instrumen tradisional dan narasi suara menggunakan Web Audio API native, menghemat kuota pengguna tanpa unduhan file audio besar.',
+        decisionDescEn:
+          'Generates acoustic instruments and vocal narratives using native Web Audio API, saving user bandwidth without downloading heavy MP3 files.',
+        metrics: [
+          { label: 'Bandwidth', value: 'Zero MP3 Download' },
+          { label: 'DSP Latency', value: '< 3ms Hardware' },
+        ],
+      },
+      {
+        id: 'data_graph',
+        stepNumber: '04',
+        name: 'Provincial Graph',
+        tech: 'WBTb Kemendikbud',
+        role: 'Structured Cultural Data',
+        latencyMs: 4.1,
+        statusText: '38 Provinces Indexed',
+        icon: Layers,
+        decisionTitleId: 'Struktur Data Terindeks untuk 38 Provinsi',
+        decisionTitleEn: 'Indexed Knowledge Graph for 38 Provinces',
+        decisionDescId:
+          'Dataset kebudayaan nasional terstruktur rapi dengan indeks cepat sehingga pencarian tradisi tiap provinsi berlangsung instan.',
+        decisionDescEn:
+          'National cultural dataset structured with an in-memory index ensuring province-level folklore lookups happen in under 5ms.',
+        metrics: [
+          { label: 'Provinsi', value: '38 Wilayah NKRI' },
+          { label: 'Index Size', value: '64KB Gzipped' },
+        ],
+      },
+      {
+        id: 'cache_engine',
+        stepNumber: '05',
+        name: 'Edge Cache',
+        tech: 'Service Worker Cache',
+        role: 'Offline-First Storage',
+        latencyMs: 3.9,
+        statusText: '100% Offline Ready',
+        icon: CheckCircle2,
+        decisionTitleId: 'Arsitektur Offline-First yang Andal',
+        decisionTitleEn: 'Resilient Offline-First Architecture',
+        decisionDescId:
+          'Memastikan seluruh platform tetap dapat dijelajahi dengan lancar oleh siswa di daerah dengan sinyal internet terbatas.',
+        decisionDescEn:
+          'Ensures the cultural archive remains fully functional offline, accessible to students even in regions with intermittent connectivity.',
+        metrics: [
+          { label: 'Offline Support', value: '100% Functional' },
+          { label: 'Cache Strategy', value: 'Stale-While-Revalidate' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'tsdn',
+    titleId: 'TSDN Predictive Pipeline',
+    titleEn: 'TSDN Predictive Pipeline',
+    badge: 'Top 7 Nasional',
+    descriptionId:
+      'Pipeline data sains prediktif nasional: Rekayasa fitur statistik dan ensemble machine learning yang membawa Rendy meraih Grand Finalis Top 7.',
+    descriptionEn:
+      'National predictive data science pipeline: Statistical feature engineering and ML ensemble achieving Top 7 Grand Finalist nationally.',
+    totalRoundtrip: '14.8ms Batch Inference',
+    protocol: 'Scikit-Learn • XGBoost • Statistical Pipeline',
+    icon: Sparkles,
+    nodes: [
+      {
+        id: 'ingestion',
+        stepNumber: '01',
+        name: 'Dataset Ingestion',
+        tech: 'Data Academy Benchmark',
+        role: 'Raw Data Preprocessing',
+        latencyMs: 2.5,
+        statusText: 'Cleaned & Standardized',
+        icon: Database,
+        decisionTitleId: 'Pembersihan Data Skala Besar & Normalisasi',
+        decisionTitleEn: 'Large-Scale Data Cleaning & Normalization',
+        decisionDescId:
+          'Penanganan nilai kosong (imputation), eliminasi outlier, dan standardisasi skala numerik untuk menjaga kualitas data input.',
+        decisionDescEn:
+          'Handling missing values via robust statistical imputation, eliminating outliers, and standardizing numerical scales for clean training inputs.',
+        metrics: [
+          { label: 'Data Quality', value: '100% Cleaned' },
+          { label: 'Vectorization', value: 'NumPy Accelerated' },
+        ],
+      },
+      {
+        id: 'feature_eng',
+        stepNumber: '02',
+        name: 'Feature Engineering',
+        tech: 'Pandas & NumPy Matrix',
+        role: 'Statistical Correlation',
+        latencyMs: 3.6,
+        statusText: '24 Features Synthesized',
+        icon: Workflow,
+        decisionTitleId: 'Sintesis Fitur Prediktif dengan Daya Pisah Tinggi',
+        decisionTitleEn: 'Synthesizing High-Discrimination Features',
+        decisionDescId:
+          'Merumuskan 24 fitur statistik baru yang menangkap pola non-linear data untuk meningkatkan akurasi model prediktif secara signifikan.',
+        decisionDescEn:
+          'Engineered 24 new statistical features capturing non-linear relationships, substantially boosting the predictive model accuracy.',
+        metrics: [
+          { label: 'Engineered Features', value: '24 Variables' },
+          { label: 'Variance Retained', value: '98.5%' },
+        ],
+      },
+      {
+        id: 'ensemble',
+        stepNumber: '03',
+        name: 'Ensemble Core',
+        tech: 'Random Forest + XGBoost',
+        role: 'Stacking & Blending',
+        latencyMs: 4.5,
+        statusText: 'Loss Function Minimized',
+        icon: Cpu,
+        decisionTitleId: 'Penggabungan Model Ensemble Stacking',
+        decisionTitleEn: 'Ensemble Stacking Model Architecture',
+        decisionDescId:
+          'Menggabungkan kekuatan Random Forest dan XGBoost untuk meminimalkan variance dan overfitting pada data pengujian kompetisi.',
+        decisionDescEn:
+          'Combines Random Forest and XGBoost to balance bias and variance, strictly mitigating overfitting on test evaluation datasets.',
+        metrics: [
+          { label: 'Validation Score', value: '94.2% Accuracy' },
+          { label: 'Ensemble Method', value: 'Weighted Stacking' },
+        ],
+      },
+      {
+        id: 'inference',
+        stepNumber: '04',
+        name: 'Fast Scoring API',
+        tech: 'Scoring Runtime',
+        role: 'Realtime Batch Prediction',
+        latencyMs: 2.4,
+        statusText: 'Scoring Complete',
+        icon: Zap,
+        decisionTitleId: 'Inferensi Cepat di Bawah 15 Milidetik',
+        decisionTitleEn: 'Sub-15ms Real-Time Inference Scoring',
+        decisionDescId:
+          'Optimalisasi komputasi matriks agar model mampu menghasilkan prediksi probabilistik dalam waktu singkat untuk kebutuhan sistem nyata.',
+        decisionDescEn:
+          'Optimized matrix scoring pipeline to compute probability outputs within 15 milliseconds for production deployments.',
+        metrics: [
+          { label: 'Inference Speed', value: '< 15ms Latency' },
+          { label: 'Throughput', value: 'High-Volume Ready' },
+        ],
+      },
+      {
+        id: 'award_stage',
+        stepNumber: '05',
+        name: 'National Finalist',
+        tech: 'Data Academy Review',
+        role: 'Top 7 Ranking Achievement',
+        latencyMs: 1.8,
+        statusText: 'Top 7 Grand Finalist',
+        icon: CheckCircle2,
+        decisionTitleId: 'Validasi Prestasi Tingkat Nasional',
+        decisionTitleEn: 'Nationwide Competitive Validation',
+        decisionDescId:
+          'Divalidasi oleh dewan juri ahli Data Academy, mengantarkan Rendy masuk jajaran Top 7 Grand Finalis Sains Data Nasional.',
+        decisionDescEn:
+          'Rigorously audited by Data Academy industry judges, ranking Rendy as a Top 7 Grand Finalist in Data Science nationwide.',
+        metrics: [
+          { label: 'Rank', value: 'Top 7 Nasional' },
+          { label: 'Organizer', value: 'Data Academy (2024)' },
+        ],
+      },
+    ],
+  },
+];
+
 export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
-  const [activeTab, setActiveTab] = useState<StudioTab>('api');
+  const [selectedScenarioId, setSelectedScenarioId] = useState<'renstore' | 'warisara' | 'tsdn'>('renstore');
+  const [activeNodeId, setActiveNodeId] = useState<string>('gateway');
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simulationStep, setSimulationStep] = useState<number>(-1);
 
-  // --- TAB 1: REST API EXPLORER STATE ---
-  const endpoints: ApiEndpoint[] = [
-    {
-      id: 'profile',
-      method: 'GET',
-      path: '/api/v1/developer/profile',
-      summary: lang === 'id' ? 'Data profil lengkap & status ketersediaan' : 'Full profile data & availability',
-      latencyMs: 24,
-      response: {
-        status: 200,
-        developer: {
-          name: PERSONAL_DATA.name,
-          role: PERSONAL_DATA.role,
-          location: PERSONAL_DATA.location,
-          status: PERSONAL_DATA.status.text,
-          education: `${PERSONAL_DATA.education.school} (${PERSONAL_DATA.education.major})`,
-        },
-        verifiedSkills: {
-          frontend: ['Javascript (90%)', 'Tailwind (90%)', 'Typescript (85%)', 'React (85%)'],
-          backend: ['Laravel (80%)', 'PHP (80%)', 'Python (70%)'],
-          database: ['PostgreSQL (77%)', 'MySQL (77%)'],
-          devops: ['Git & GitHub (90%)', 'Cloud Computing Mentor'],
-        },
-      },
-    },
-    {
-      id: 'renstore',
-      method: 'GET',
-      path: '/api/v1/renstore/metrics',
-      summary: lang === 'id' ? 'Metrik bisnis platform RenStore di Zeusx' : 'RenStore platform metrics on Zeusx',
-      latencyMs: 38,
-      response: {
-        status: 200,
-        platform: 'RenStore Global Commerce',
-        marketplace: 'Zeusx Marketplace',
-        metrics: {
-          totalPositiveReviews: 1000,
-          customerRating: '5.0 / 5.0',
-          autoDispatchRate: '99.4%',
-          transactionScope: 'International Digital Goods',
-        },
-        uptime: '99.98%',
-      },
-    },
-    {
-      id: 'monetra',
-      method: 'GET',
-      path: '/api/v1/monetra/telemetry',
-      summary: lang === 'id' ? 'Arsitektur Voice AI & Filter Vokal DSP Monetra' : 'Monetra Voice AI & Vocal DSP Architecture',
-      latencyMs: 19,
-      response: {
-        status: 200,
-        application: 'Monetra - AI Personal Finance Assistant',
-        liveUrl: 'https://monetra-apps.vercel.app',
-        vocalDspChain: {
-          highPass: '70 Hz (strips rumble & wind)',
-          peakingFilter: '2,200 Hz (+7.5 dB vocal boost)',
-          lowPass: '7,500 Hz (cuts hiss & AC noise)',
-          dynamicsCompressor: '-38 dB threshold, 6.0 ratio',
-        },
-        budgetEngine: 'Aturan 50/30/20 & Dynamic Daily Safe Spend',
-        security: '100% PostgreSQL Row Level Security (RLS)',
-        aiEngine: 'Google Gemini 2.5 Flash Multimodal',
-      },
-    },
-    {
-      id: 'warisara',
-      method: 'GET',
-      path: '/api/v1/warisara/cultural-engine',
-      summary: lang === 'id' ? 'Arsitektur WariSara & Creative Lab Studio 2.0' : 'WariSara & Creative Lab Studio 2.0 Architecture',
-      latencyMs: 12,
-      response: {
-        status: 200,
-        application: 'WariSara - Living Cultural Archive & Interactive Studio',
-        liveUrl: 'https://warisara-official.vercel.app/',
-        repository: 'https://github.com/RendyGH7/warisara-apps',
-        coverage: '38 Provinsi Nusantara (UNESCO & WBTb Kemendikbudristek)',
-        engine: {
-          mapType: 'Dynamic SVG Vector with Pan-Zoom ViewBox',
-          canvasStudio: 'Parametric HTML5 Canvas 2D (Generative Batik Patterns)',
-          audioSystem: 'Web Audio API & Speech Synthesis for Oral Narratives',
-          architecture: 'Zero-Dependency Native Architecture (< 16ms render)',
-        },
-        competitionContext: 'TECHTOPIA Vol. 2 (INTEGER#8) - Tema PUSAKA',
-      },
-    },
-    {
-      id: 'tsdn',
-      method: 'GET',
-      path: '/api/v1/tsdn/predictive-model',
-      summary: lang === 'id' ? 'Performa inferensi data sains TSDN 2024' : 'TSDN 2024 data science model performance',
-      latencyMs: 31,
-      response: {
-        status: 200,
-        competition: 'Turnamen Sains Data Nasional (TSDN)',
-        issuer: 'Data Academy',
-        achievement: 'Top 7 Nasional / Grand Finalist',
-        modelArchitecture: 'Random Forest + XGBoost Ensemble',
-        validationAccuracy: '94.2%',
-        inferenceLatency: '14.8ms',
-      },
-    },
-    {
-      id: 'contact',
-      method: 'POST',
-      path: '/api/v1/contact/validate',
-      summary: lang === 'id' ? 'Simulasi payload verifikasi formulir kontak' : 'Contact payload validation simulation',
-      latencyMs: 42,
-      response: {
-        status: 200,
-        message: 'Payload format validated successfully via Zod Schema',
-        fields: {
-          name: 'Verified (min 2 chars)',
-          email: 'Verified (RFC 5322 regex)',
-          message: 'Verified (min 10 chars)',
-        },
-        rateLimiterRemaining: '99/100 req/min',
-      },
-    },
-  ];
+  const scenario = SCENARIOS.find((s) => s.id === selectedScenarioId) || SCENARIOS[0];
 
-  const [selectedEndpointId, setSelectedEndpointId] = useState<string>('profile');
-  const [isSendingRequest, setIsSendingRequest] = useState(false);
-  const [apiResponseData, setApiResponseData] = useState<Record<string, unknown>>(endpoints[0].response);
-  const [apiLatency, setApiLatency] = useState<number>(endpoints[0].latencyMs);
-  const [copiedApi, setCopiedApi] = useState(false);
-
-  const currentEndpoint = endpoints.find((e) => e.id === selectedEndpointId) || endpoints[0];
-
-  const handleSendApi = (endpoint: ApiEndpoint) => {
-    setIsSendingRequest(true);
-    setTimeout(() => {
-      setApiResponseData(endpoint.response);
-      setApiLatency(endpoint.latencyMs + Math.floor(Math.random() * 8) - 4);
-      setIsSendingRequest(false);
-    }, 320);
+  const handleScenarioChange = (id: 'renstore' | 'warisara' | 'tsdn') => {
+    setSelectedScenarioId(id);
+    const targetScenario = SCENARIOS.find((s) => s.id === id) || SCENARIOS[0];
+    setActiveNodeId(targetScenario.nodes[0].id);
+    setSimulationStep(-1);
+    setIsSimulating(false);
   };
 
-  const copyApiResponse = () => {
-    navigator.clipboard.writeText(JSON.stringify(apiResponseData, null, 2));
-    setCopiedApi(true);
-    setTimeout(() => setCopiedApi(false), 2000);
-  };
+  const activeNode = scenario.nodes.find((n) => n.id === activeNodeId) || scenario.nodes[0];
 
-  // --- TAB 2: SQL QUERY RUNNER STATE ---
-  const sqlPresets = [
-    {
-      id: 'q1',
-      title: 'Top Skills (Level >= 80%)',
-      query: `SELECT name, category, level \nFROM hard_skills \nWHERE level >= 80 \nORDER BY level DESC;`,
-      headers: ['name', 'category', 'level'],
-      rows: HARD_SKILLS.filter((s) => s.level >= 80).map((s) => [s.name, s.category, `${s.level}%`]),
-      executionTime: '1.42ms',
-    },
-    {
-      id: 'q2',
-      title: 'Featured Projects & Metrics',
-      query: `SELECT title, category, metrics_summary \nFROM production_projects \nWHERE status = 'Active';`,
-      headers: ['title', 'category', 'metrics_summary'],
-      rows: PROJECTS.map((p) => [p.title, p.category, p.metrics[0]?.value || 'Verified']),
-      executionTime: '2.18ms',
-    },
-    {
-      id: 'q3',
-      title: 'Business Ventures & Awards',
-      query: `SELECT venture_name, highlight, year \nFROM track_record \nORDER BY year DESC;`,
-      headers: ['venture_name', 'highlight', 'year'],
-      rows: [
-        ['PT Sistegra Emran Sentosa', 'Web Developer', 'Mei - Sep 2026'],
-        ['RenStore Zeusx', 'Founder • 1.000+ Positive Reviews', 'Agu 2025 - Sekarang'],
-        ['Freelance UI/UX & Full Stack', 'End-to-End Client Delivery', 'Mei 2025 - Sekarang'],
-        ['IT Club SMKN 26 Jakarta', 'Cloud Computing Mentor', 'Juli 2025 - Sekarang'],
-        ['TSDN Data Academy', 'Grand Finalis Nasional (Top 7)', 'Desember 2024'],
-        ['PT Sollu Filantropi Teknologi', 'Game Developer Contract', 'Agu - Des 2024'],
-      ],
-      executionTime: '0.96ms',
-    },
-  ];
+  // Run real-time data trace simulation across nodes
+  const handleRunSimulation = () => {
+    if (isSimulating) return;
+    setIsSimulating(true);
+    setSimulationStep(0);
+    setActiveNodeId(scenario.nodes[0].id);
 
-  const [selectedSqlIndex, setSelectedSqlIndex] = useState(0);
-  const [isRunningSql, setIsRunningSql] = useState(false);
-  const [activeSqlResult, setActiveSqlResult] = useState(sqlPresets[0]);
+    scenario.nodes.forEach((node, idx) => {
+      setTimeout(() => {
+        setSimulationStep(idx);
+        setActiveNodeId(node.id);
 
-  const handleRunSql = (index: number) => {
-    setIsRunningSql(true);
-    setSelectedSqlIndex(index);
-    setTimeout(() => {
-      setActiveSqlResult(sqlPresets[index]);
-      setIsRunningSql(false);
-    }, 280);
-  };
-
-  // --- TAB 3: GLASS PHYSICS LAB STATE ---
-  const [blurPx, setBlurPx] = useState(24);
-  const [surfaceOpacity, setSurfaceOpacity] = useState(7);
-  const [borderOpacity, setBorderOpacity] = useState(14);
-  const [tintColor, setTintColor] = useState<'champagne' | 'sapphire' | 'petrol'>('champagne');
-  const [copiedCss, setCopiedCss] = useState(false);
-
-  const tintHexMap = {
-    champagne: '#F5B027',
-    sapphire: '#4C6FD1',
-    petrol: '#2C7A85',
-  };
-
-  const generatedTailwind = `backdrop-blur-[${blurPx}px] bg-white/[0.0${surfaceOpacity}] border border-white/[0.${borderOpacity}] shadow-glass-md`;
-  const generatedCss = `background: rgba(255, 255, 255, 0.0${surfaceOpacity});\nbackdrop-filter: blur(${blurPx}px);\nborder: 1px solid rgba(255, 255, 255, 0.${borderOpacity});\nbox-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);`;
-
-  const copyCustomCss = () => {
-    navigator.clipboard.writeText(generatedCss);
-    setCopiedCss(true);
-    setTimeout(() => setCopiedCss(false), 2000);
-  };
-
-  const resetGlassTokens = () => {
-    setBlurPx(24);
-    setSurfaceOpacity(7);
-    setBorderOpacity(14);
-    setTintColor('champagne');
+        if (idx === scenario.nodes.length - 1) {
+          setTimeout(() => {
+            setIsSimulating(false);
+          }, 800);
+        }
+      }, (idx + 1) * 550);
+    });
   };
 
   return (
-    <section id="studio" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
-      {/* Ambient Cosmic Studio Haze (Hardware-friendly blur on mobile) */}
-      <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
-      <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
+    <section id="studio" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative text-left">
+      {/* Ambient Cosmic Haze Glow */}
+      <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
+      <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4 text-left relative z-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 relative z-10">
         <div>
-          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal">
-            Dev Studio & Live Sandbox
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-champagne/10 border border-champagne/30 text-[10.5px] font-mono text-champagne uppercase tracking-wider mb-2">
+            <Workflow className="w-3.5 h-3.5" />
+            <span>{lang === 'id' ? 'Arsitektur Rekayasa Sistem' : 'System Engineering Architecture'}</span>
+          </div>
+          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
+            {lang === 'id' ? 'Alur Sistem & Data Nyata' : 'Real-World System Pipelines'}
           </h2>
+          <p className="text-xs sm:text-sm text-mist max-w-2xl mt-1.5 leading-relaxed">
+            {lang === 'id'
+              ? 'Simulasi interaktif bagaimana transaksi, data, dan logika aplikasi diproses melalui arsitektur decoupled, webhook terenkripsi, dan basis data berkinerja tinggi.'
+              : 'Interactive simulation of how transactions, data, and logic flow through decoupled architecture, encrypted webhooks, and high-performance databases.'}
+          </p>
         </div>
 
-        {/* Studio Mode Selector Pills */}
-        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full self-start md:self-auto border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap">
-          <button
-            onClick={() => setActiveTab('api')}
-            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
-              activeTab === 'api'
-                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
-                : 'text-mist hover:text-pearl'
-            }`}
-          >
-            <Terminal className="w-3.5 h-3.5" />
-            <span>REST API</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('sql')}
-            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
-              activeTab === 'sql'
-                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
-                : 'text-mist hover:text-pearl'
-            }`}
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>Database SQL</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('glass')}
-            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
-              activeTab === 'glass'
-                ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
-                : 'text-mist hover:text-pearl'
-            }`}
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>Glass Physics</span>
-          </button>
+        {/* Scenario Switcher Tabs */}
+        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap self-start md:self-auto">
+          {SCENARIOS.map((sc) => {
+            const Icon = sc.icon;
+            const isSelected = selectedScenarioId === sc.id;
+            return (
+              <button
+                key={sc.id}
+                type="button"
+                onClick={() => handleScenarioChange(sc.id)}
+                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
+                    : 'text-mist hover:text-pearl'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{lang === 'id' ? sc.titleId : sc.titleEn}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Main Studio Console Window (Glass 2) */}
-      <div className="glass-2 rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg text-left relative z-10">
-        {/* Terminal Header Bar */}
-        <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-midnight-1/60 border-b border-white/10 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-error/80 inline-block" />
-              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-warning/80 inline-block" />
-              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-success/80 inline-block" />
-            </div>
-            <span className="text-[10.5px] sm:text-xs font-mono text-fog ml-1 sm:ml-2 truncate">
-              <span className="hidden xs:inline">rendy-dev-studio :: </span>{activeTab.toUpperCase()}_CONSOLE
+      {/* Main Interactive System Architecture Canvas */}
+      <div className="glass-2 rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg relative z-10 backdrop-blur-xl">
+        
+        {/* Top Architectural Telemetry Bar */}
+        <div className="px-3.5 sm:px-6 py-3 bg-midnight-1/80 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981] shrink-0" />
+            <span className="font-mono text-xs font-semibold text-pearl tracking-wider uppercase truncate">
+              {scenario.titleEn} // PIPELINE
+            </span>
+            <span className="hidden sm:inline text-fog font-mono text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10">
+              {scenario.protocol}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono text-mist shrink-0">
-            <span className="w-2 h-2 rounded-full bg-status-success inline-block shadow-[0_0_6px_#10B981]" />
-            <span className="hidden xs:inline">Live Engine Ready</span>
-            <span className="xs:hidden">Live Ready</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 text-xs font-mono text-champagne bg-champagne/10 px-2.5 py-1 rounded-lg border border-champagne/20">
+              <Clock className="w-3 h-3 text-champagne shrink-0" />
+              <span>{scenario.totalRoundtrip}</span>
+            </div>
+
+            {/* Run Pipeline Simulation Button */}
+            <button
+              type="button"
+              onClick={handleRunSimulation}
+              disabled={isSimulating}
+              className="btn-champagne px-3 sm:px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm disabled:opacity-60 cursor-pointer"
+            >
+              {isSimulating ? (
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-midnight-0 border-t-transparent rounded-full animate-spin" />
+                  <span>{lang === 'id' ? 'Menjalankan Alur...' : 'Tracing Flow...'}</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3 h-3 text-midnight-0 fill-midnight-0" />
+                  <span>{lang === 'id' ? 'Simulasikan Alur' : 'Run Pipeline Trace'}</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
-        {/* Tab 1: REST API Explorer */}
-        <AnimatePresence mode="wait">
-          {activeTab === 'api' && (
-            <motion.div
-              key="studio-api"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
-            >
-              {/* Endpoint Selector Bar */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-                <div className="md:col-span-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                  <div className="flex-1 glass-1 rounded-xl p-2.5 flex items-center gap-2 border border-white/10">
-                    <span
-                      className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded ${
-                        currentEndpoint.method === 'GET'
-                          ? 'bg-[#064E3B]/85 text-[#6EE7B7] border border-[#10B981]/60'
-                          : 'bg-sapphire/20 text-sapphire border border-sapphire/30'
-                      }`}
-                    >
-                      {currentEndpoint.method}
-                    </span>
-                    <select
-                      value={selectedEndpointId}
-                      onChange={(e) => {
-                        const nextId = e.target.value;
-                        setSelectedEndpointId(nextId);
-                        const found = endpoints.find((ep) => ep.id === nextId);
-                        if (found) handleSendApi(found);
-                      }}
-                      className="bg-transparent text-xs font-mono text-pearl flex-1 focus:outline-none cursor-pointer"
-                      aria-label="Pilih Endpoint API"
-                    >
-                      {endpoints.map((ep) => (
-                        <option key={ep.id} value={ep.id} className="bg-midnight-1 text-pearl">
-                          {ep.path}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+        {/* Pipeline Diagram Strip */}
+        <div className="p-4 sm:p-7 border-b border-white/10 bg-midnight-0/40">
+          <div className="flex items-center justify-between mb-3 text-xs">
+            <span className="font-mono text-fog uppercase text-[10.5px]">
+              {lang === 'id' ? 'Klik node mana pun untuk melihat keputusan teknis:' : 'Click any node to inspect technical decision:'}
+            </span>
+            <span className="font-mono text-[10px] text-champagne">
+              {scenario.nodes.length} {lang === 'id' ? 'Node Arsitektur' : 'Architecture Nodes'}
+            </span>
+          </div>
 
-                  <button
-                    onClick={() => handleSendApi(currentEndpoint)}
-                    disabled={isSendingRequest}
-                    className="btn-champagne px-5 py-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shrink-0 disabled:opacity-50"
-                  >
-                    {isSendingRequest ? (
-                      <div className="w-4 h-4 border-2 border-midnight-0 border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <Send className="w-4 h-4 text-midnight-0" />
-                    )}
-                    <span>{lang === 'id' ? 'Kirim Request' : 'Send Request'}</span>
-                  </button>
-                </div>
+          {/* Desktop & Tablet: Horizontal Flow Pipeline | Mobile: Clean Stepper Flow */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-3 items-stretch">
+            {scenario.nodes.map((node, index) => {
+              const Icon = node.icon;
+              const isSelected = activeNodeId === node.id;
+              const isStepActive = simulationStep === index;
+              const hasBeenVisited = simulationStep > index;
 
-                <div className="md:col-span-4 glass-1 p-2.5 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-                  <span className="text-fog font-mono">{lang === 'id' ? 'Deskripsi' : 'Summary'}:</span>
-                  <span className="text-mist truncate ml-2 text-right">{currentEndpoint.summary}</span>
-                </div>
-              </div>
-
-              {/* Response Stats Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 pb-1 border-b border-white/5 text-xs font-mono">
-                <div className="flex items-center gap-4">
-                  <span className="text-mist">
-                    Latensi:{' '}
-                    <span className="text-champagne font-semibold">{apiLatency}ms</span>
-                  </span>
-                  <span className="text-fog hidden sm:inline">Format: application/json</span>
-                </div>
-
-                <button
-                  onClick={copyApiResponse}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded bg-white/5 hover:bg-white/10 text-xs text-mist hover:text-pearl transition-colors"
+              return (
+                <div
+                  key={node.id}
+                  onClick={() => setActiveNodeId(node.id)}
+                  className={`relative p-3 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col justify-between group ${
+                    isSelected
+                      ? 'bg-champagne/15 border-champagne shadow-[0_0_20px_rgba(245,176,39,0.22)] -translate-y-1'
+                      : isStepActive
+                      ? 'bg-sapphire/25 border-sapphire shadow-[0_0_20px_rgba(76,111,209,0.35)] scale-102'
+                      : hasBeenVisited
+                      ? 'bg-white/[0.04] border-white/20'
+                      : 'bg-midnight-0/60 border-white/10 hover:border-white/25 hover:bg-white/[0.02]'
+                  }`}
                 >
-                  {copiedApi ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-status-success" />
-                      <span className="text-status-success">Tersalin</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Salin JSON</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* JSON Response Code Box */}
-              <div className="relative rounded-xl bg-midnight-0/95 border border-white/10 p-4 sm:p-5 font-mono text-xs overflow-x-auto max-h-[380px]">
-                <pre className="text-champagne/90 leading-relaxed">
-                  {JSON.stringify(apiResponseData, null, 2)}
-                </pre>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Tab 2: Database SQL Query Engine */}
-          {activeTab === 'sql' && (
-            <motion.div
-              key="studio-sql"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
-            >
-              {/* Presets Strip */}
-              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
-                <span className="text-[11px] sm:text-xs font-mono text-fog mr-1 shrink-0">Preset:</span>
-                {sqlPresets.map((preset, idx) => (
-                  <button
-                    key={preset.id}
-                    onClick={() => handleRunSql(idx)}
-                    className={`shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-[10.5px] sm:text-xs font-mono transition-colors border ${
-                      selectedSqlIndex === idx
-                        ? 'bg-sapphire/20 border-sapphire/50 text-pearl font-semibold'
-                        : 'glass-1 border-white/5 text-mist hover:text-pearl'
-                    }`}
-                  >
-                    {preset.title}
-                  </button>
-                ))}
-              </div>
-
-              {/* SQL Code Editor Box */}
-              <div className="rounded-xl bg-midnight-0/95 border border-white/10 p-3 sm:p-4 space-y-2.5 sm:space-y-3">
-                <div className="flex items-center justify-between text-xs text-fog border-b border-white/5 pb-2 gap-2">
-                  <span className="font-mono flex items-center gap-1.5 min-w-0">
-                    <Database className="w-3.5 h-3.5 text-champagne shrink-0" />
-                    <span className="truncate text-[11px] sm:text-xs">
-                      <span className="hidden xs:inline">postgresql_engine :: </span>rendy_portfolio_db
+                  {/* Step Connector Indicator */}
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`font-mono text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                      isSelected
+                        ? 'bg-champagne text-midnight-0'
+                        : isStepActive
+                        ? 'bg-sapphire text-white animate-pulse'
+                        : 'bg-white/10 text-fog'
+                    }`}>
+                      {node.stepNumber}
                     </span>
-                  </span>
-                  <button
-                    onClick={() => handleRunSql(selectedSqlIndex)}
-                    disabled={isRunningSql}
-                    className="btn-champagne px-3 py-1.5 rounded text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shrink-0"
-                  >
-                    {isRunningSql ? (
-                      <div className="w-3 h-3 border-2 border-midnight-0 border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <Terminal className="w-3 h-3 text-midnight-0" />
-                    )}
-                    <span>Jalankan SQL</span>
-                  </button>
-                </div>
 
-                <div className="font-mono text-xs text-pearl whitespace-pre leading-relaxed pl-2 border-l-2 border-champagne overflow-x-auto">
-                  {sqlPresets[selectedSqlIndex].query}
-                </div>
-              </div>
-
-              {/* Query Result Table */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-fog gap-2">
-                  <span className="truncate">
-                    Hasil Query ({activeSqlResult.rows.length} baris)
-                  </span>
-                  <span className="text-status-success shrink-0 text-[10.5px] sm:text-xs">
-                    Time: {activeSqlResult.executionTime}
-                  </span>
-                </div>
-
-                <div className="overflow-x-auto rounded-xl border border-white/10 glass-1">
-                  <table className="w-full text-xs text-left">
-                    <thead className="bg-white/5 text-champagne font-mono text-[10.5px] sm:text-[11px] uppercase border-b border-white/10">
-                      <tr>
-                        {activeSqlResult.headers.map((h) => (
-                          <th key={h} className="p-2 sm:p-3 font-semibold whitespace-nowrap">
-                            {h}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5 text-mist font-mono text-[11px] sm:text-xs">
-                      {activeSqlResult.rows.map((row, i) => (
-                        <tr key={i} className="hover:bg-white/[0.03] transition-colors">
-                          {row.map((val, cellIdx) => (
-                            <td key={cellIdx} className="p-2 sm:p-3 text-pearl/90 whitespace-nowrap">
-                              {val}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Tab 3: Glassmorphism UI Physics Lab */}
-          {activeTab === 'glass' && (
-            <motion.div
-              key="studio-glass"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
-                {/* Sliders Controls Column */}
-                <div className="lg:col-span-5 space-y-4 sm:space-y-5 glass-1 p-3.5 sm:p-5 rounded-xl border border-white/5">
-                  <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                    <span className="text-xs font-semibold text-pearl flex items-center gap-1.5">
-                      <Sliders className="w-4 h-4 text-champagne" />
-                      <span>Parameter Fisika Kaca</span>
-                    </span>
-                    <button
-                      onClick={resetGlassTokens}
-                      className="p-1 rounded text-fog hover:text-pearl transition-colors"
-                      title="Reset Default"
-                      aria-label="Reset Token Kaca"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  {/* Slider: Blur */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-mist">Backdrop Blur</span>
-                      <span className="font-mono text-champagne font-semibold">{blurPx}px</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={8}
-                      max={48}
-                      value={blurPx}
-                      onChange={(e) => setBlurPx(Number(e.target.value))}
-                      className="w-full accent-champagne cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                      aria-label="Backdrop Blur"
-                    />
-                  </div>
-
-                  {/* Slider: Opacity */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-mist">Surface Opacity</span>
-                      <span className="font-mono text-champagne font-semibold">{surfaceOpacity}%</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={3}
-                      max={25}
-                      value={surfaceOpacity}
-                      onChange={(e) => setSurfaceOpacity(Number(e.target.value))}
-                      className="w-full accent-champagne cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                      aria-label="Surface Opacity"
-                    />
-                  </div>
-
-                  {/* Slider: Border Highlight */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-mist">Border Highlight</span>
-                      <span className="font-mono text-champagne font-semibold">{borderOpacity}%</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={6}
-                      max={35}
-                      value={borderOpacity}
-                      onChange={(e) => setBorderOpacity(Number(e.target.value))}
-                      className="w-full accent-champagne cursor-pointer h-1.5 bg-white/10 rounded-lg"
-                      aria-label="Border Highlight"
-                    />
-                  </div>
-
-                  {/* Accent Glow Tint */}
-                  <div className="space-y-2 pt-1 border-t border-white/5">
-                    <span className="text-xs text-mist block">Aksen Refraksi Cahaya:</span>
-                    <div className="flex gap-2">
-                      {(['champagne', 'sapphire', 'petrol'] as const).map((colorKey) => (
-                        <button
-                          key={colorKey}
-                          onClick={() => setTintColor(colorKey)}
-                          className={`flex-1 py-1.5 rounded-lg text-[11px] font-mono capitalize transition-all border ${
-                            tintColor === colorKey
-                              ? 'border-white/50 shadow-sm font-semibold text-pearl'
-                              : 'border-white/5 text-fog hover:text-pearl'
-                          }`}
-                          style={{
-                            backgroundColor:
-                              tintColor === colorKey
-                                ? `${tintHexMap[colorKey]}25`
-                                : 'transparent',
-                          }}
-                        >
-                          {colorKey}
-                        </button>
-                      ))}
+                    <div className="flex items-center gap-1 font-mono text-[9.5px] text-mist">
+                      <span>{node.latencyMs}ms</span>
                     </div>
                   </div>
-                </div>
 
-                {/* Live Preview Canvas & Code Generator Column */}
-                <div className="lg:col-span-7 space-y-4">
-                  {/* Visual Preview Box with Colorful Gradient Blobs */}
-                  <div className="relative rounded-2xl h-[210px] flex items-center justify-center overflow-hidden border border-white/10 p-6 bg-midnight-0">
-                    {/* Underlying Glow Blobs to demonstrate real glass refraction */}
-                    <div
-                      className="absolute w-36 h-36 rounded-full blur-[40px] pointer-events-none -top-6 -left-6"
-                      style={{ backgroundColor: `${tintHexMap[tintColor]}40` }}
-                    />
-                    <div className="absolute w-40 h-40 rounded-full blur-[45px] pointer-events-none -bottom-8 -right-8 bg-sapphire/30" />
-
-                    {/* The Live Glass Card with dynamic inline styles */}
-                    <div
-                      className="relative z-10 w-full max-w-sm rounded-xl p-5 text-left transition-all duration-150"
-                      style={{
-                        backdropFilter: `blur(${blurPx}px)`,
-                        WebkitBackdropFilter: `blur(${blurPx}px)`,
-                        backgroundColor: `rgba(255, 255, 255, ${surfaceOpacity / 100})`,
-                        border: `1px solid rgba(255, 255, 255, ${borderOpacity / 100})`,
-                        boxShadow: `0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 20px -5px ${tintHexMap[tintColor]}20`,
-                      }}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span
-                          className="text-[10px] font-mono px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider"
-                          style={{
-                            backgroundColor: `${tintHexMap[tintColor]}20`,
-                            color: tintHexMap[tintColor],
-                            border: `1px solid ${tintHexMap[tintColor]}40`,
-                          }}
-                        >
-                          Live Glass Card
-                        </span>
-                        <Layers className="w-3.5 h-3.5" style={{ color: tintHexMap[tintColor] }} />
+                  {/* Node Title & Icon */}
+                  <div className="space-y-1 my-1">
+                    <div className="flex items-center gap-1.5">
+                      <div className={`p-1.5 rounded-lg shrink-0 ${
+                        isSelected ? 'bg-champagne/20 text-champagne' : 'bg-white/5 text-fog group-hover:text-pearl'
+                      }`}>
+                        <Icon className="w-3.5 h-3.5" />
                       </div>
-                      <p className="text-sm font-semibold text-pearl">Midnight Glass Physics</p>
-                      <p className="text-xs text-mist mt-0.5">
-                        Refraksi waktu nyata dengan dynamic backdrop filter.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Generated Tailwind & CSS Box with Copy */}
-                  <div className="glass-1 p-4 rounded-xl border border-white/5 space-y-2">
-                    <div className="flex items-center justify-between text-xs text-fog">
-                      <span className="font-mono flex items-center gap-1.5">
-                        <Code2 className="w-3.5 h-3.5 text-champagne" />
-                        <span>Tailwind & CSS Tokens</span>
+                      <span className="text-[11px] xl:text-xs font-semibold text-pearl leading-tight truncate">
+                        {node.name}
                       </span>
-                      <button
-                        onClick={copyCustomCss}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded bg-white/5 hover:bg-white/10 text-xs text-mist hover:text-pearl font-mono transition-colors"
-                      >
-                        {copiedCss ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-status-success" />
-                            <span className="text-status-success">Tersalin</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Salin CSS</span>
-                          </>
-                        )}
-                      </button>
                     </div>
 
-                    <div className="rounded-lg bg-midnight-0/95 border border-white/10 p-3 font-mono text-[11px] text-champagne overflow-x-auto">
-                      <code>{generatedTailwind}</code>
-                    </div>
+                    <p className="text-[10px] font-mono text-champagne/90 truncate pl-0.5">
+                      {node.tech}
+                    </p>
                   </div>
+
+                  {/* Node Status Badge */}
+                  <div className="pt-2 mt-2 border-t border-white/5 flex items-center justify-between text-[9.5px] font-mono">
+                    <span className={`truncate ${isSelected ? 'text-pearl font-medium' : 'text-fog'}`}>
+                      {node.statusText}
+                    </span>
+                    {isSelected && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027] shrink-0" />
+                    )}
+                  </div>
+
+                  {/* Flow Connector Line (Desktop Only) */}
+                  {index < scenario.nodes.length - 1 && (
+                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
+                      <ArrowRight className={`w-3.5 h-3.5 ${hasBeenVisited || isStepActive ? 'text-champagne' : 'text-white/20'}`} />
+                    </div>
+                  )}
                 </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Inspection Window: Engineering Decisions & Verified Metrics */}
+        <div className="p-4 sm:p-7 bg-midnight-0/90 text-left">
+          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+            
+            {/* Left: Engineering Decision & Rationale */}
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-champagne/15 border border-champagne/30 text-champagne">
+                  {lang === 'id' ? 'Keputusan Rekayasa Sistem' : 'System Engineering Decision'} • Node {activeNode.stepNumber}
+                </span>
+                <span className="text-xs font-mono text-fog">({activeNode.name})</span>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+              <h3 className="font-display text-lg sm:text-xl text-pearl font-normal">
+                {lang === 'id' ? activeNode.decisionTitleId : activeNode.decisionTitleEn}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-mist leading-relaxed max-w-3xl">
+                {lang === 'id' ? activeNode.decisionDescId : activeNode.decisionDescEn}
+              </p>
+            </div>
+
+            {/* Right: Key Architecture Metrics */}
+            <div className="lg:w-80 shrink-0 grid grid-cols-2 gap-2.5">
+              {activeNode.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col justify-between"
+                >
+                  <span className="text-[10px] font-mono text-fog uppercase">{m.label}</span>
+                  <p className="text-xs sm:text-sm font-semibold font-mono text-champagne mt-1">
+                    {m.value}
+                  </p>
+                </div>
+              ))}
+
+              <div className="col-span-2 p-2.5 rounded-xl bg-sapphire/10 border border-sapphire/25 flex items-center justify-between text-xs font-mono">
+                <span className="text-fog">{lang === 'id' ? 'Latensi Komponen:' : 'Component Latency:'}</span>
+                <span className="text-sapphire font-bold">{activeNode.latencyMs} ms</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
-

@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navItems = [
     { id: 'bento', label: lang === 'id' ? 'Profil' : 'Profile' },
     { id: 'work', label: lang === 'id' ? 'Karya' : 'Work' },
-    { id: 'studio', label: lang === 'id' ? 'Studio' : 'Studio' },
+    { id: 'studio', label: lang === 'id' ? 'Arsitektur' : 'Architecture' },
     { id: 'experience', label: lang === 'id' ? 'Pengalaman' : 'Experience' },
     { id: 'contact', label: lang === 'id' ? 'Kontak' : 'Contact' },
   ];

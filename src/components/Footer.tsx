@@ -135,7 +135,7 @@ export const Footer: React.FC<FooterProps> = () => {
               onClick={() => scrollTo('studio')}
               className="text-mist hover:text-champagne transition-colors"
             >
-              Studio
+              Arsitektur
             </button>
             <button
               onClick={() => scrollTo('experience')}
