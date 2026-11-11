@@ -308,7 +308,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
               }}
             >
-              <div className="w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out group-hover:scale-115 group-hover:border-champagne/65 group-hover:shadow-[0_0_90px_rgba(245,176,39,0.50)] shrink-0" />
+              <div className="w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out group-hover:scale-115 group-hover:border-champagne/55 group-hover:shadow-[0_0_70px_rgba(245,176,39,0.38)] shrink-0" />
             </div>
 
             {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Expands softly on hover) */}
@@ -319,9 +319,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out opacity-80 group-hover:opacity-100 group-hover:scale-135 shrink-0"
+                className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out opacity-75 group-hover:opacity-90 group-hover:scale-130 shrink-0"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.65) 0%, rgba(245, 176, 39, 0.42) 28%, rgba(217, 130, 24, 0.18) 50%, rgba(245, 176, 39, 0.04) 70%, transparent 85%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.50) 0%, rgba(245, 176, 39, 0.32) 28%, rgba(217, 130, 24, 0.14) 50%, rgba(245, 176, 39, 0.03) 70%, transparent 85%)',
                 }}
               />
             </div>
@@ -334,9 +334,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className="w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-125 blur-3xl shrink-0"
+                className="w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out opacity-0 scale-75 group-hover:opacity-75 group-hover:scale-120 blur-3xl shrink-0"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.60) 0%, rgba(245, 176, 39, 0.38) 35%, rgba(217, 130, 24, 0.15) 60%, transparent 80%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.42) 0%, rgba(245, 176, 39, 0.26) 35%, rgba(217, 130, 24, 0.10) 60%, transparent 80%)',
                 }}
               />
             </div>
