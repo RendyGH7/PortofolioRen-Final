@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
@@ -50,6 +50,20 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
+
+  useEffect(() => {
+    const handlePrefill = (e: Event) => {
+      const customEvent = e as CustomEvent<{ category?: string; message?: string }>;
+      if (customEvent.detail?.category) {
+        setSelectedCategory(customEvent.detail.category);
+      }
+      if (customEvent.detail?.message) {
+        setMessage(customEvent.detail.message);
+      }
+    };
+    window.addEventListener('rendy:prefill-contact', handlePrefill);
+    return () => window.removeEventListener('rendy:prefill-contact', handlePrefill);
+  }, []);
 
   const activeCategory = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0];
   const categoryLabel = lang === 'id' ? activeCategory.labelId : activeCategory.labelEn;
