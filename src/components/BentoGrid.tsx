@@ -109,6 +109,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, shadowX: 0, shadowY: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
     if (!centerStageRef.current) return;
     const rect = centerStageRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
@@ -380,15 +381,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
             >
-              <motion.div
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
-                  <Code2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sapphire" />
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
-                </div>
-              </motion.div>
+              <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
+                <Code2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sapphire" />
+                <span className="text-[10px] sm:text-[11px] font-semibold text-pearl tracking-tight">Full Stack Developer</span>
+              </div>
             </div>
 
             {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right - Raised Slightly to Clear Head) */}
@@ -398,15 +394,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
             >
-              <motion.div
-                animate={{ y: [0, 4, 0] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-              >
-                <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
-                  <GraduationCap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-champagne" />
-                  <span className="text-[10px] sm:text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
-                </div>
-              </motion.div>
+              <div className="glass-3 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1.5 sm:gap-2 backdrop-blur-md">
+                <GraduationCap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-champagne" />
+                <span className="text-[10px] sm:text-[11px] font-mono text-champagne font-medium">SMKN 26 Jakarta</span>
+              </div>
             </div>
 
             {/* Cutout Photo of Rendy - SCALED SLIGHTLY DOWN & ELEVATED TO SIT UNDER PILLS AND COVERED AT BOTTOM BY NAME CAPSULE */}
@@ -427,7 +418,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             {/* Bottom Floating Identity Capsule - COVERS THE CROPPED BOTTOM OF THE PHOTO */}
             <div className="absolute bottom-0 z-20 pointer-events-none flex flex-col items-center text-center">
               <div className="glass-3 bg-midnight-0/95 sm:bg-midnight-0/90 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border border-champagne/45 shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_24px_rgba(245,176,39,0.22)] flex items-center justify-center gap-2 sm:gap-2.5 backdrop-blur-2xl">
-                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne animate-pulse shadow-[0_0_8px_#F5B027]" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne shadow-[0_0_8px_#F5B027]" />
                 <span className="text-xs sm:text-sm font-semibold text-pearl tracking-tight whitespace-nowrap">
                   Rendy Fernando Tambunan
                 </span>

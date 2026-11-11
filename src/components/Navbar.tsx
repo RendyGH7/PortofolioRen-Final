@@ -27,18 +27,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setScrolled(window.scrollY > 30);
-
-          const sections = ['hero', 'bento', 'work', 'studio', 'experience', 'contact'];
-          for (const section of sections) {
-            const el = document.getElementById(section);
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              if (rect.top <= 180 && rect.bottom >= 180) {
-                setActiveSection(section);
-                break;
-              }
-            }
-          }
           ticking = false;
         });
         ticking = true;
@@ -46,7 +34,32 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Use hardware-native IntersectionObserver for 0% reflow active section tracking
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-30% 0px -60% 0px',
+        threshold: 0,
+      }
+    );
+
+    const sections = ['hero', 'bento', 'work', 'studio', 'experience', 'contact'];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   // Safe reference-counted scroll lock when mobile menu is open

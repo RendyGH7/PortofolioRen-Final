@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = () => {
 
           {/* Center: Live WIB Clock Badge */}
           <div className="flex items-center gap-2 text-xs font-mono text-mist bg-white/[0.02] border border-white/[0.08] px-3.5 py-1.5 rounded-full w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
             <span>Jakarta (WIB)</span>
             <span className="text-white/20">•</span>
             <span className="tabular-nums text-pearl font-medium">{time || 'Live WIB'}</span>

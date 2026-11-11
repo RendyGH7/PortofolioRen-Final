@@ -119,7 +119,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                         className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-midnight-0/85 hover:bg-midnight-0 text-champagne border border-champagne/40 backdrop-blur-md font-semibold flex items-center gap-1 transition-all hover:scale-105 shadow-md"
                         title={lang === 'id' ? 'Buka Web Live' : 'Open Live App'}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
                         <span>Live Web</span>
                         <ExternalLink className="w-2.5 h-2.5 text-champagne" />
                       </a>

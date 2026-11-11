@@ -320,7 +320,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </div>
 
           <div className="flex items-center gap-2 text-[11px] font-mono text-mist">
-            <span className="w-2 h-2 rounded-full bg-status-success animate-pulse inline-block" />
+            <span className="w-2 h-2 rounded-full bg-status-success inline-block shadow-[0_0_6px_#10B981]" />
             <span>Live Engine Ready</span>
           </div>
         </div>

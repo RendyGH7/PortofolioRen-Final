@@ -54,7 +54,7 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
         {/* Top Cockpit Header: Status Telemetry & Live Ping */}
         <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#10B981]" />
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
             <span className="font-mono text-xs font-semibold text-pearl tracking-wider uppercase">
               ARCHITECT CORE // V2.5
             </span>
@@ -72,14 +72,14 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
 
         {/* Central Visual: Aerospace Orbital Radar HUD (Pure SVG & CSS - Zero WebGL!) */}
         <div className="relative w-full h-44 sm:h-52 flex items-center justify-center my-1 overflow-hidden rounded-2xl bg-midnight-0/50 border border-white/5">
-          {/* Concentric Orbital Radar Rings */}
-          <div className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-sapphire/20 border-dashed animate-[spin_40s_linear_infinite]" />
-          <div className="absolute w-32 h-32 sm:w-36 sm:h-36 rounded-full border border-champagne/25 animate-[spin_24s_linear_infinite_reverse]" />
+          {/* Concentric Orbital Radar Rings (Static on mobile for maximum GPU efficiency, smooth spin on desktop) */}
+          <div className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-sapphire/20 border-dashed sm:animate-[spin_40s_linear_infinite]" />
+          <div className="absolute w-32 h-32 sm:w-36 sm:h-36 rounded-full border border-champagne/25 sm:animate-[spin_24s_linear_infinite_reverse]" />
           <div className="absolute w-20 h-20 rounded-full border border-emerald-400/30" />
 
-          {/* Radar Sweep Ray */}
+          {/* Radar Sweep Ray (Desktop only to prevent mobile compositor churn) */}
           <div
-            className="absolute w-24 sm:w-28 h-24 sm:h-28 rounded-full pointer-events-none opacity-40 animate-[spin_8s_linear_infinite]"
+            className="absolute hidden sm:block w-24 sm:w-28 h-24 sm:h-28 rounded-full pointer-events-none opacity-40 sm:animate-[spin_8s_linear_infinite]"
             style={{
               background: 'conic-gradient(from 0deg, rgba(245, 176, 39, 0.4) 0deg, rgba(76, 111, 209, 0.1) 60deg, transparent 90deg)',
             }}
@@ -96,7 +96,7 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
 
           {/* Orbiting Satellite Node 1: Fast Response */}
           <div className="absolute top-3 left-4 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-sapphire/20 border border-sapphire/40 text-[10px] font-mono text-pearl shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-sapphire animate-ping" />
+            <span className="w-1.5 h-1.5 rounded-full bg-sapphire" />
             <span>&lt;12ms Latency</span>
           </div>
 

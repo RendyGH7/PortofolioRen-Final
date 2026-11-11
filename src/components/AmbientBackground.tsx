@@ -709,7 +709,7 @@ export const AmbientBackground: React.FC = () => {
               />
 
               {/* Dashed Orbital Starlight Ring */}
-              <div className="absolute w-36 sm:w-40 md:w-44 h-36 sm:h-40 md:h-44 rounded-full border border-dashed border-sapphire/30 pointer-events-none animate-[spin_60s_linear_infinite]" />
+              <div className="absolute w-36 sm:w-40 md:w-44 h-36 sm:h-40 md:h-44 rounded-full border border-dashed border-sapphire/30 pointer-events-none sm:animate-[spin_60s_linear_infinite]" />
 
               {/* Planet Sphere Body */}
               <div
@@ -780,7 +780,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[1050px] left-0 right-0 h-[1100px]">
           {/* Cyan Aurora Cosmic Dust Sheet */}
           <div
-            className="absolute w-[60vw] h-[45vw] top-[100px] -left-[15vw] rounded-full opacity-30 blur-[170px]"
+            className="absolute w-[60vw] h-[45vw] top-[100px] -left-[15vw] rounded-full opacity-30 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #174E56 50%, transparent 80%)',
             }}
@@ -927,7 +927,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[2150px] left-0 right-0 h-[1300px]">
           {/* Majestic Spiral Galaxy Core */}
           <div
-            className="absolute w-[70vw] h-[70vw] top-[50px] right-[-10vw] rounded-full opacity-35 blur-[165px]"
+            className="absolute w-[70vw] h-[70vw] top-[50px] right-[-10vw] rounded-full opacity-35 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #1E336B 45%, #0F1830 75%, transparent 90%)',
             }}
@@ -1064,15 +1064,15 @@ export const AmbientBackground: React.FC = () => {
           {/* Pulsar Beacon Starlight Wave */}
           <div className="absolute top-[280px] right-[6%] md:right-[10%] z-10 hidden sm:flex items-center justify-center pointer-events-none">
             <div className="relative w-16 h-16 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_18px_#FFFFFF] animate-ping" />
-              <div className="absolute w-8 h-8 rounded-full border border-sapphire/40 animate-pulse" />
-              <div className="absolute w-14 h-14 rounded-full border border-sapphire/20 animate-ping" style={{ animationDuration: '3s' }} />
+              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_18px_#FFFFFF]" />
+              <div className="absolute w-8 h-8 rounded-full border border-sapphire/40" />
+              <div className="absolute w-14 h-14 rounded-full border border-sapphire/20" />
             </div>
           </div>
 
           {/* Deep Indigo Stardust Stream across Projects */}
           <div
-            className="absolute w-[45vw] h-[35vw] top-[600px] left-[-8vw] rounded-full opacity-25 blur-[150px]"
+            className="absolute w-[45vw] h-[35vw] top-[600px] left-[-8vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #4C6FD1 0%, #16213F 65%, transparent 85%)',
             }}
@@ -1085,7 +1085,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[3450px] left-0 right-0 h-[1200px]">
           {/* Radiant Solar Gold Supernova Remnant Nebula */}
           <div
-            className="absolute w-[65vw] h-[55vw] top-[80px] right-[-12vw] rounded-full opacity-25 blur-[165px]"
+            className="absolute w-[65vw] h-[55vw] top-[80px] right-[-12vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #F5B027 0%, #D98218 45%, #6B3D06 70%, transparent 85%)',
             }}
@@ -1117,7 +1117,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Emerald Cosmic Filament behind Dev Studio Labs */}
           <div
-            className="absolute w-[50vw] h-[40vw] top-[550px] -left-[12vw] rounded-full opacity-25 blur-[160px]"
+            className="absolute w-[50vw] h-[40vw] top-[550px] -left-[12vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #1A545D 55%, transparent 80%)',
             }}
@@ -1130,7 +1130,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[4650px] left-0 right-0 h-[1050px]">
           {/* Deep Indigo Cosmic Void */}
           <div
-            className="absolute w-[60vw] h-[50vw] top-[50px] left-[5vw] rounded-full opacity-28 blur-[160px]"
+            className="absolute w-[60vw] h-[50vw] top-[50px] left-[5vw] rounded-full opacity-28 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #1E2D54 0%, #0F1830 65%, transparent 85%)',
             }}
@@ -1269,13 +1269,13 @@ export const AmbientBackground: React.FC = () => {
             className="absolute top-[280px] left-[4%] md:left-[8%] z-10 hidden md:flex items-center gap-3 opacity-65 hover:opacity-95 transition-opacity duration-700 pointer-events-none"
             title="Distant Binary Star System (Epsilon Aurigae)"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sapphire to-white shadow-[0_0_20px_#8EA8F5] animate-pulse" />
-            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-champagne to-white shadow-[0_0_16px_#F5B027] animate-pulse" style={{ animationDelay: '1.2s' }} />
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sapphire to-white shadow-[0_0_20px_#8EA8F5]" />
+            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-champagne to-white shadow-[0_0_16px_#F5B027]" />
           </div>
 
           {/* Outer Stardust Haze */}
           <div
-            className="absolute w-[45vw] h-[45vw] top-[400px] right-[-8vw] rounded-full opacity-22 blur-[150px]"
+            className="absolute w-[45vw] h-[45vw] top-[400px] right-[-8vw] rounded-full opacity-22 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #16213F 60%, transparent 80%)',
             }}
@@ -1288,7 +1288,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[5700px] left-0 right-0 bottom-0 min-h-[1400px]">
           {/* Stardust River flowing behind Contact & Footer */}
           <div
-            className="absolute w-[70vw] h-[60vw] top-[50px] left-1/2 -translate-x-1/2 rounded-full opacity-25 blur-[180px]"
+            className="absolute w-[70vw] h-[60vw] top-[50px] left-1/2 -translate-x-1/2 rounded-full opacity-25 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #1E336B 45%, #0A1020 80%, transparent 95%)',
             }}
@@ -1310,7 +1310,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Solar Warmth Glow on Footer Edge */}
           <div
-            className="absolute w-[50vw] h-[40vw] bottom-[40px] right-[5vw] rounded-full opacity-20 blur-[160px]"
+            className="absolute w-[50vw] h-[40vw] bottom-[40px] right-[5vw] rounded-full opacity-20 blur-2xl md:blur-[140px]"
             style={{
               background: 'radial-gradient(circle, #F5B027 0%, #D98218 45%, transparent 75%)',
             }}

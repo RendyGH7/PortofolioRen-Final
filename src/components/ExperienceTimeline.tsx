@@ -164,7 +164,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
                             {isCurrent && (
                               <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-champagne bg-champagne/10 px-2.5 py-0.5 rounded-full border border-champagne/25 shadow-sm">
-                                <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
                                 <span>{lang === 'id' ? 'Aktif' : 'Active'}</span>
                               </span>
                             )}
@@ -327,7 +327,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                     {PERSONAL_DATA.education.period}
                   </span>
                   <span className="text-[11px] font-mono font-medium text-champagne bg-champagne/10 border border-champagne/25 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 mt-1 shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
                     <span>Siswa Aktif</span>
                   </span>
                 </div>

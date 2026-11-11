@@ -189,7 +189,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
                   Tanya Rendy AI
                 </span>
                 <span className="text-[10px] text-fog font-mono flex items-center gap-1 mt-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
                   <span>Online Assistant</span>
                 </span>
               </div>
