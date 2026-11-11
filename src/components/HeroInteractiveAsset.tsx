@@ -83,38 +83,19 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
     glow: 'rgba(251, 113, 133, 0.45)',
   },
   {
-    id: 'cloud',
-    name: 'SIJA Cloud',
-    fullName: 'Cloud Infrastructure & DevOps',
-    field: 'Bidang 04 // Infrastruktur',
-    tech: 'SMKN 26 SIJA • Linux',
-    level: '90% Pengalaman',
-    descId: 'Siswa SIJA 4 Tahun SMKN 26 Jakarta, Linux server administration, Docker container & jaringan.',
-    descEn: 'SMKN 26 SIJA 4-Year Student, Linux server admin, Docker containers & networking.',
-    skills: ['Linux Server', 'Docker', 'Nginx', 'Network Systems', 'Git & GitHub'],
-    rx: 44,
-    ry: 25.5,
-    speed: 9.2,
-    startAngle: 290,
-    width: 32,
-    height: 32,
-    color: '#2DD4BF',
-    glow: 'rgba(45, 212, 191, 0.45)',
-  },
-  {
     id: 'business',
     name: 'Bisnis Digital',
     fullName: 'Bisnis Digital & Strategi Produk',
-    field: 'Bidang 05 // Bisnis & Solusi',
+    field: 'Bidang 04 // Bisnis & Solusi',
     tech: 'E-Commerce • Monetisasi',
     level: 'Mindset & Eksekusi',
     descId: 'Pola pikir wirausaha, perancangan model bisnis digital, integrasi e-commerce & payment gateway, serta solusi bisnis berorientasi profit.',
     descEn: 'Entrepreneurial mindset, digital business models, e-commerce & payment gateway integration, and profit-oriented tech solutions.',
     skills: ['E-Commerce', 'Model Bisnis', 'Payment QRIS', 'Strategi Produk', 'Analisis Pasar'],
-    rx: 52,
-    ry: 30.5,
-    speed: 6.8,
-    startAngle: 220,
+    rx: 44,
+    ry: 25,
+    speed: 8.5,
+    startAngle: 250,
     width: 32,
     height: 32,
     color: '#C084FC',
@@ -573,40 +554,7 @@ export const HeroInteractiveAsset: React.FC<HeroInteractiveAssetProps> = ({ lang
                 </div>
               )}
 
-              {/* ── PLANET 4: CLOUD & SIJA INFRASTRUCTURE (Frosted Ice Giant with Auroral Ring) ── */}
-              {planet.id === 'cloud' && (
-                <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
-                  <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-                    <defs>
-                      <radialGradient id="cloudSurface" cx="30%" cy="28%" r="70%">
-                        <stop offset="0%" stopColor="#E0F2FE" />
-                        <stop offset="25%" stopColor="#67E8F9" />
-                        <stop offset="55%" stopColor="#06B6D4" />
-                        <stop offset="85%" stopColor="#0E7490" />
-                        <stop offset="100%" stopColor="#042F2E" />
-                      </radialGradient>
-                      <radialGradient id="cloudLimb" cx="28%" cy="26%" r="72%">
-                        <stop offset="70%" stopColor="transparent" />
-                        <stop offset="90%" stopColor="#67E8F9" stopOpacity="0.5" />
-                        <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                      </radialGradient>
-                      <clipPath id="cloudClip">
-                        <circle cx="50" cy="50" r="42" />
-                      </clipPath>
-                    </defs>
-                    <circle cx="50" cy="50" r="42" fill="url(#cloudSurface)" />
-                    {/* Cloud Storm Band */}
-                    <g clipPath="url(#cloudClip)">
-                      <path d="M 12 46 Q 50 56 88 46 L 88 52 Q 50 62 12 52 Z" fill="#A5F3FC" opacity="0.45" />
-                    </g>
-                    <circle cx="50" cy="50" r="42" fill="url(#cloudLimb)" />
-                    {/* Tilted Polar Magnetic Field Line */}
-                    <ellipse cx="50" cy="50" rx="54" ry="16" fill="none" stroke="#22D3EE" strokeWidth="1.2" opacity="0.65" transform="rotate(72 50 50)" />
-                  </svg>
-                </div>
-              )}
-
-              {/* ── PLANET 5: BISNIS DIGITAL (Royal Amethyst & Gold Commerce World) ── */}
+              {/* ── PLANET 4: BISNIS DIGITAL (Royal Amethyst & Gold Commerce World) ── */}
               {planet.id === 'business' && (
                 <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
                   <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
