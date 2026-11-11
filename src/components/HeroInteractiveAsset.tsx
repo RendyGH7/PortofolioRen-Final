@@ -351,33 +351,30 @@ export const HeroInteractiveAsset: React.FC<HeroInteractiveAssetProps> = ({ lang
         {/* Expanding Solar Flare Shockwave on Click */}
         <div
           key={sunPulse}
-          className="absolute w-28 h-28 sm:w-36 sm:h-36 rounded-full pointer-events-none animate-ping opacity-50"
+          className="absolute w-28 h-28 sm:w-36 sm:h-36 aspect-square rounded-full pointer-events-none animate-ping opacity-40 shrink-0"
           style={{ background: 'radial-gradient(circle, #F5B027 0%, rgba(245, 176, 39, 0) 70%)' }}
         />
 
-        {/* Solar Corona Ambient Halo */}
+        {/* Solar Corona Ambient Halo (Soft circular golden glow) */}
         <div
-          className="absolute w-22 h-22 sm:w-28 sm:h-28 rounded-full pointer-events-none opacity-85 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"
+          className="absolute w-32 h-32 sm:w-40 sm:h-40 aspect-square rounded-full pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500 shrink-0"
           style={{
-            background: 'radial-gradient(circle, rgba(254, 240, 138, 0.55) 0%, rgba(245, 176, 39, 0.38) 45%, rgba(217, 130, 24, 0.18) 70%, transparent 85%)',
+            background: 'radial-gradient(circle, rgba(254, 240, 138, 0.45) 0%, rgba(245, 176, 39, 0.28) 45%, rgba(217, 130, 24, 0.1) 70%, transparent 85%)',
           }}
         />
 
-        {/* Rotating Solar Flares Ring */}
-        <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-dashed border-champagne/35 pointer-events-none animate-[spin_40s_linear_infinite]" />
-
-        {/* Photorealistic Sun Photosphere */}
+        {/* Photorealistic Sun Photosphere (Perfect circle, no elongation) */}
         <div
-          className="relative w-15 h-15 sm:w-18 sm:h-18 rounded-full p-[2px] transition-transform duration-500 group-hover:scale-110 flex items-center justify-center"
+          className="relative w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-full shrink-0 p-[2.5px] transition-transform duration-500 group-hover:scale-110 flex items-center justify-center shadow-2xl"
           style={{
-            background: 'radial-gradient(circle at 32% 28%, #FFFFFF 0%, #FEF08A 25%, #F5B027 60%, #D97706 85%, #92400E 100%)',
-            boxShadow: '0 0 36px rgba(245, 176, 39, 0.7), inset 0 2px 6px rgba(255, 255, 255, 0.85)',
+            background: 'radial-gradient(circle at 35% 30%, #FFFFFF 0%, #FEF08A 25%, #F5B027 60%, #D97706 85%, #92400E 100%)',
+            boxShadow: '0 0 35px rgba(245, 176, 39, 0.75), inset 0 2px 4px rgba(255, 255, 255, 0.9)',
           }}
         >
           {/* Inner Monogram Core */}
-          <div className="w-full h-full rounded-full bg-midnight-0/80 flex flex-col items-center justify-center border border-white/30 backdrop-blur-xs">
-            <span className="font-mono text-xs sm:text-sm font-black text-pearl tracking-wider">RF</span>
-            <span className="text-[7px] sm:text-[8px] font-mono text-champagne tracking-widest leading-none mt-0.5">DEV</span>
+          <div className="w-full h-full aspect-square rounded-full bg-midnight-0/90 flex flex-col items-center justify-center border border-white/30 backdrop-blur-sm">
+            <span className="font-mono text-sm sm:text-base font-black text-pearl tracking-wider leading-none">RF</span>
+            <span className="text-[8px] sm:text-[9px] font-mono text-champagne font-bold tracking-widest leading-none mt-1">CORE</span>
           </div>
         </div>
       </div>
