@@ -21,13 +21,12 @@ export const Footer: React.FC<FooterProps> = () => {
           timeZone: 'Asia/Jakarta',
           hour: '2-digit',
           minute: '2-digit',
-          second: '2-digit',
         }) + ' WIB'
       );
     };
 
     updateTime();
-    const interval = setInterval(updateTime, 1000);
+    const interval = setInterval(updateTime, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -40,13 +39,13 @@ export const Footer: React.FC<FooterProps> = () => {
   };
 
   return (
-    <footer className="w-full bg-midnight-1/90 border-t border-white/[0.08] pt-12 pb-24 sm:pb-16 px-4 sm:px-6 lg:px-8 mt-20 relative z-20 backdrop-blur-md">
+    <footer className="w-full bg-midnight-0/60 border-t border-white/[0.06] pt-12 pb-28 sm:pb-14 px-4 sm:px-6 lg:px-8 mt-24 relative z-20 backdrop-blur-xl">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Main Architectural Strip */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 text-left">
           {/* Brand & Identity */}
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-white/10 bg-midnight-2/90 shadow-glass-sm shrink-0">
+            <div className="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-white/10 bg-white/[0.03] shrink-0">
               <img
                 src="/assets/brand/logo.png"
                 alt="Logo Rendy Fernando"
@@ -57,27 +56,27 @@ export const Footer: React.FC<FooterProps> = () => {
               <span className="font-display text-base font-semibold text-pearl block leading-tight">
                 {PERSONAL_DATA.name}
               </span>
-              <span className="text-xs text-fog block mt-0.5">
+              <span className="text-xs text-fog block mt-0.5 font-sans">
                 Full Stack Developer • Jakarta, Indonesia
               </span>
             </div>
           </div>
 
-          {/* Center: Live WIB Clock Badge */}
-          <div className="flex items-center gap-2 text-xs font-mono text-mist bg-white/[0.02] border border-white/[0.08] px-3.5 py-1.5 rounded-full w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
-            <span>Jakarta (WIB)</span>
-            <span className="text-white/20">•</span>
-            <span className="tabular-nums text-pearl font-medium">{time || 'Live WIB'}</span>
+          {/* Center: Quiet Regional Presence (Clean, no tacky capsule/pulse slop) */}
+          <div className="flex items-center gap-2 text-xs font-sans text-fog">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/90" />
+            <span className="text-mist font-medium">Jakarta, ID</span>
+            <span className="text-white/20">·</span>
+            <span className="tabular-nums text-fog font-mono text-[11px]">{time || 'WIB'}</span>
           </div>
 
-          {/* Social Channels */}
+          {/* Social Channels: Uniform, Minimalist Frosted Glass Circles */}
           <div className="flex items-center gap-2">
             <a
               href={PERSONAL_DATA.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl glass-1 hover:border-champagne/40 text-mist hover:text-pearl transition-all"
+              className="w-9 h-9 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-champagne/40 text-mist hover:text-pearl flex items-center justify-center transition-all duration-200"
               title="GitHub"
               aria-label="GitHub"
             >
@@ -87,7 +86,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href={PERSONAL_DATA.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl glass-1 hover:border-sapphire/40 text-mist hover:text-pearl transition-all"
+              className="w-9 h-9 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-champagne/40 text-mist hover:text-pearl flex items-center justify-center transition-all duration-200"
               title="LinkedIn"
               aria-label="LinkedIn"
             >
@@ -97,7 +96,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href={PERSONAL_DATA.socials.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl glass-1 hover:border-champagne/40 text-mist hover:text-pearl transition-all"
+              className="w-9 h-9 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-champagne/40 text-mist hover:text-pearl flex items-center justify-center transition-all duration-200"
               title="Instagram"
               aria-label="Instagram"
             >
@@ -107,7 +106,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href={PERSONAL_DATA.socials.tiktok}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl glass-1 hover:border-petrol/40 text-mist hover:text-pearl transition-all"
+              className="w-9 h-9 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-champagne/40 text-mist hover:text-pearl flex items-center justify-center transition-all duration-200"
               title="TikTok"
               aria-label="TikTok"
             >
@@ -117,49 +116,50 @@ export const Footer: React.FC<FooterProps> = () => {
         </div>
 
         {/* Minimalist Sub-Bar: Quick Nav & Copyright & Back to Top */}
-        <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-fog">
-          {/* Quick Nav Links */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-fog">
+          {/* Quick Nav Links (Clean Sans-Serif, Proper Spacing) */}
+          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2" aria-label="Footer Navigation">
             <button
               onClick={() => scrollTo('bento')}
-              className="hover:text-champagne transition-colors"
+              className="text-mist hover:text-champagne transition-colors"
             >
               Profil
             </button>
             <button
               onClick={() => scrollTo('work')}
-              className="hover:text-champagne transition-colors"
+              className="text-mist hover:text-champagne transition-colors"
             >
               Karya
             </button>
             <button
               onClick={() => scrollTo('studio')}
-              className="hover:text-champagne transition-colors"
+              className="text-mist hover:text-champagne transition-colors"
             >
               Studio
             </button>
             <button
               onClick={() => scrollTo('experience')}
-              className="hover:text-champagne transition-colors"
+              className="text-mist hover:text-champagne transition-colors"
             >
               Pengalaman
             </button>
             <button
               onClick={() => scrollTo('contact')}
-              className="hover:text-champagne transition-colors"
+              className="text-mist hover:text-champagne transition-colors"
             >
               Kontak
             </button>
-          </div>
+          </nav>
 
-          <div className="flex items-center gap-4">
-            <span className="text-[11px] text-fog/80">
+          {/* Copyright & Back to Top (with right padding so it avoids the floating chat widget) */}
+          <div className="flex items-center gap-5 sm:pr-28">
+            <span className="text-[11px] text-fog/75 font-sans">
               © {CURRENT_YEAR} Rendy Fernando Tambunan
             </span>
 
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1.5 text-mist hover:text-pearl transition-colors group ml-2"
+              className="inline-flex items-center gap-1.5 text-xs text-mist hover:text-champagne transition-colors group font-sans"
               aria-label="Kembali ke atas"
             >
               <span>Atas</span>
