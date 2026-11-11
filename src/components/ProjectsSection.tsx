@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ExternalLink,
   Check,
   X,
   Mic,
+  ArrowUpRight,
 } from 'lucide-react';
 import { PROJECTS, type ProjectItem } from '../data/portfolioData';
 import { GithubIcon } from './SocialIcons';
@@ -102,13 +102,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                   {/* Top-Left Featured Badge */}
                   {isFeatured && (
                     <div className="absolute top-2.5 left-2.5 flex items-center">
-                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-champagne/20 border border-champagne/40 text-champagne backdrop-blur-md font-semibold">
+                      <span className="text-[11px] font-sans font-medium px-2.5 py-0.5 rounded-full bg-champagne/15 border border-champagne/30 text-champagne backdrop-blur-md">
                         ✦ {lang === 'id' ? 'Unggulan' : 'Featured'}
                       </span>
                     </div>
                   )}
 
-                  {/* Top-Right Live Demo Indicator */}
+                  {/* Top-Right Direct Live Link Action */}
                   {project.liveUrl && (
                     <div className="absolute top-2.5 right-2.5 flex items-center">
                       <a
@@ -116,12 +116,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-midnight-0/85 hover:bg-midnight-0 text-champagne border border-champagne/40 backdrop-blur-md font-semibold flex items-center gap-1 transition-all hover:scale-105 shadow-md"
-                        title={lang === 'id' ? 'Buka Web Live' : 'Open Live App'}
+                        className="group/btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-midnight-0/70 hover:bg-champagne text-pearl/85 hover:text-midnight-0 border border-white/15 hover:border-champagne backdrop-blur-md text-[11px] font-sans font-medium transition-all duration-300 shadow-sm"
+                        title={lang === 'id' ? `Kunjungi Website ${project.title}` : `Visit ${project.title} live website`}
+                        aria-label={lang === 'id' ? `Kunjungi Website ${project.title}` : `Visit ${project.title} live website`}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
-                        <span>Live Web</span>
-                        <ExternalLink className="w-2.5 h-2.5 text-champagne" />
+                        <span className="transition-colors">{lang === 'id' ? 'Kunjungi Situs' : 'Visit Site'}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-mist group-hover/btn:text-midnight-0 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-200" />
                       </a>
                     </div>
                   )}
@@ -176,8 +176,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                     onClick={(e) => e.stopPropagation()}
                     className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-champagne text-midnight-0 hover:bg-champagne-light transition-all shadow-glass-sm flex items-center gap-1.5 hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <span>{lang === 'id' ? 'Buka Web' : 'Live App'}</span>
-                    <ExternalLink className="w-3 h-3 text-midnight-0" />
+                    <span>{lang === 'id' ? 'Buka Website' : 'Live App'}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-midnight-0" />
                   </a>
                 ) : (
                   <span />
@@ -186,10 +186,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                 <button
                   type="button"
                   onClick={() => handleOpenModal(project)}
-                  className="text-xs text-mist hover:text-champagne font-medium flex items-center gap-1 transition-colors px-2.5 py-1 rounded-lg hover:bg-white/5 ml-auto"
+                  className="text-xs text-mist hover:text-champagne font-medium flex items-center gap-1 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/5 ml-auto"
                 >
                   <span>{lang === 'id' ? 'Detail Studi' : 'Case Study'}</span>
-                  <ExternalLink className="w-3 h-3" />
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -265,10 +265,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                       href={activeModalProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-champagne text-midnight-0 font-semibold px-2.5 py-1 rounded flex items-center gap-1 hover:brightness-110 transition-all shadow-sm"
+                      className="bg-champagne text-midnight-0 font-medium px-3 py-1 rounded-lg flex items-center gap-1.5 hover:brightness-110 transition-all shadow-sm"
                     >
-                      <span>Kunjungi Web</span>
-                      <ExternalLink className="w-3 h-3 text-midnight-0" />
+                      <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Site'}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-midnight-0" />
                     </a>
                   )}
                 </div>
@@ -291,10 +291,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                       href={activeModalProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-sapphire text-pearl font-semibold px-2.5 py-1 rounded flex items-center gap-1 hover:brightness-110 transition-all shadow-sm"
+                      className="bg-sapphire text-pearl font-medium px-3 py-1 rounded-lg flex items-center gap-1.5 hover:brightness-110 transition-all shadow-sm"
                     >
-                      <span>Kunjungi Web</span>
-                      <ExternalLink className="w-3 h-3 text-pearl" />
+                      <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Site'}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-pearl" />
                     </a>
                   )}
                 </div>
@@ -369,8 +369,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                     rel="noopener noreferrer"
                     className="btn-champagne px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm"
                   >
-                    <ExternalLink className="w-3.5 h-3.5 text-midnight-0" />
-                    <span>Kunjungi Website</span>
+                    <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Website'}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-midnight-0" />
                   </a>
                 )}
                 <a
