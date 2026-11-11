@@ -34,6 +34,16 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detect desktop viewports: Only desktop loads and renders the heavy 3D Three.js planet.
+  // Mobile iOS & Android remain 100% lightweight with zero 3D WebGL overhead.
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   // Smooth Typewriter Animation Engine
   useEffect(() => {
@@ -175,18 +185,20 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           </div>
         </div>
 
-        {/* Right Column: Interactive 3D WebGL Crystal Canvas (Unconstrained, Zero Layout Clipping) */}
-        <div className="lg:col-span-6 flex items-center justify-center relative overflow-visible min-h-[300px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[560px]">
-          <Suspense
-            fallback={
-              <div className="w-full h-full flex items-center justify-center relative pointer-events-none min-h-[300px]">
-                <div className="w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-sapphire/20 blur-2xl animate-pulse" />
-              </div>
-            }
-          >
-            <Hero3D />
-          </Suspense>
-        </div>
+        {/* Right Column: Interactive 3D WebGL Exoplanet (Desktop Only: completely hidden & unmounted on Mobile iOS & Android for ultra-lightweight speed) */}
+        {isDesktop && (
+          <div className="hidden lg:flex lg:col-span-6 items-center justify-center relative overflow-visible min-h-[500px] lg:min-h-[560px]">
+            <Suspense
+              fallback={
+                <div className="w-full h-full flex items-center justify-center relative pointer-events-none min-h-[500px]">
+                  <div className="w-64 h-64 rounded-full bg-sapphire/20 blur-2xl animate-pulse" />
+                </div>
+              }
+            >
+              <Hero3D />
+            </Suspense>
+          </div>
+        )}
       </div>
     </section>
   );
