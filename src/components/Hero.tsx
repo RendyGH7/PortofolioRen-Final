@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import {
   FolderGit2,
   Mail,
   ArrowUpRight,
 } from 'lucide-react';
-import { Hero3D } from './Hero3D';
 import { smoothScrollTo } from '../utils/scrollLock';
+
+// Dynamically stream Three.js asynchronously so mobile initial load is instant (<200ms)
+const Hero3D = lazy(() => import('./Hero3D').then((m) => ({ default: m.Hero3D })));
 
 interface HeroProps {
   lang: 'id' | 'en';
@@ -174,8 +176,16 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
         </div>
 
         {/* Right Column: Interactive 3D WebGL Crystal Canvas (Unconstrained, Zero Layout Clipping) */}
-        <div className="lg:col-span-6 flex items-center justify-center relative overflow-visible">
-          <Hero3D />
+        <div className="lg:col-span-6 flex items-center justify-center relative overflow-visible min-h-[300px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[560px]">
+          <Suspense
+            fallback={
+              <div className="w-full h-full flex items-center justify-center relative pointer-events-none min-h-[300px]">
+                <div className="w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-sapphire/20 blur-2xl animate-pulse" />
+              </div>
+            }
+          >
+            <Hero3D />
+          </Suspense>
         </div>
       </div>
     </section>

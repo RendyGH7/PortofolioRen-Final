@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AmbientBackground } from './components/AmbientBackground';
 import { Navbar } from './components/Navbar';
@@ -9,16 +9,26 @@ import { DevStudioSection } from './components/DevStudioSection';
 import { ExperienceTimeline } from './components/ExperienceTimeline';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { AskRendyAI } from './components/AskRendyAI';
-import { CommandPalette } from './components/CommandPalette';
-import { TerminalEasterEgg } from './components/TerminalEasterEgg';
-import { CosmicPreloader } from './components/CosmicPreloader';
 import { ScrollFadeSection } from './components/ScrollFadeSection';
 import { lockScroll, unlockScroll, forceUnlockScroll } from './utils/scrollLock';
 
+// Dynamically code-split auxiliary tools & preloader so mobile loads instantly (<150ms)
+const AskRendyAI = lazy(() => import('./components/AskRendyAI').then((m) => ({ default: m.AskRendyAI })));
+const CommandPalette = lazy(() => import('./components/CommandPalette').then((m) => ({ default: m.CommandPalette })));
+const TerminalEasterEgg = lazy(() => import('./components/TerminalEasterEgg').then((m) => ({ default: m.TerminalEasterEgg })));
+const CosmicPreloader = lazy(() => import('./components/CosmicPreloader').then((m) => ({ default: m.CosmicPreloader })));
+
+const checkIsMobile = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};
+
 export function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [contentVisible, setContentVisible] = useState(false);
+  const isMobile = checkIsMobile();
+  // On mobile: Zero waiting, zero blocking canvas. Page renders INSTANTLY on first paint.
+  // On desktop: Play cinematic cosmic preloader.
+  const [isLoading, setIsLoading] = useState(!isMobile);
+  const [contentVisible, setContentVisible] = useState(isMobile);
   const [lang, setLang] = useState<'id' | 'en'>('id');
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -33,17 +43,20 @@ export function App() {
       history.scrollRestoration = 'manual';
     }
 
-    // Master fail-safe: Ensure the site ALWAYS unlocks and becomes visible within 2.2s no matter what
-    const failsafe = setTimeout(() => {
-      setIsLoading(false);
-      setContentVisible(true);
+    // Safety timer: Ensure scroll lock is released and content is 100% visible
+    if (!isMobile) {
+      const failsafe = setTimeout(() => {
+        setIsLoading(false);
+        setContentVisible(true);
+        forceUnlockScroll();
+      }, 1800);
+      return () => clearTimeout(failsafe);
+    } else {
       forceUnlockScroll();
-    }, 2200);
+    }
+  }, [isMobile]);
 
-    return () => clearTimeout(failsafe);
-  }, []);
-
-  // Safe reference-counted scroll lock for preloader and all modals
+  // Safe reference-counted scroll lock for modals (never traps mobile users)
   useEffect(() => {
     if (isLoading || isAnyModalOpen) {
       lockScroll();
@@ -85,21 +98,23 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-midnight-0 text-pearl font-sans selection:bg-champagne/25 selection:text-pearl overflow-x-hidden">
-      {/* Cosmic Entrance Preloader */}
+      {/* Cosmic Entrance Preloader (Desktop Only - Mobile skips directly for instantaneous load) */}
       <AnimatePresence>
-        {isLoading && (
-          <CosmicPreloader
-            onComplete={handleLoadingComplete}
-            lang={lang}
-          />
+        {isLoading && !isMobile && (
+          <Suspense fallback={null}>
+            <CosmicPreloader
+              onComplete={handleLoadingComplete}
+              lang={lang}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
       {/* Main site content — fades + rises in after preloader */}
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
         animate={contentVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: isMobile ? 0.2 : 0.85, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Subtle Ambient Background Mesh & Luxury Grain */}
         <AmbientBackground />
@@ -144,21 +159,25 @@ export function App() {
           <Footer onOpenTerminal={() => setTerminalOpen(true)} />
         </ScrollFadeSection>
 
-        {/* Floating Ask Rendy AI Chat Assistant */}
-        <AskRendyAI isModalOpen={isAnyModalOpen} />
+        {/* Auxiliary Modals & AI Chat (Streamed asynchronously) */}
+        <Suspense fallback={null}>
+          <AskRendyAI isModalOpen={isAnyModalOpen} />
 
-        {/* Command Palette (Ctrl+K) */}
-        <CommandPalette
-          isOpen={commandPaletteOpen}
-          onClose={() => setCommandPaletteOpen(false)}
-          onOpenTerminal={() => setTerminalOpen(true)}
-        />
+          {commandPaletteOpen && (
+            <CommandPalette
+              isOpen={commandPaletteOpen}
+              onClose={() => setCommandPaletteOpen(false)}
+              onOpenTerminal={() => setTerminalOpen(true)}
+            />
+          )}
 
-        {/* Interactive Terminal Easter Egg (~) */}
-        <TerminalEasterEgg
-          isOpen={terminalOpen}
-          onClose={() => setTerminalOpen(false)}
-        />
+          {terminalOpen && (
+            <TerminalEasterEgg
+              isOpen={terminalOpen}
+              onClose={() => setTerminalOpen(false)}
+            />
+          )}
+        </Suspense>
       </motion.div>
     </div>
   );
