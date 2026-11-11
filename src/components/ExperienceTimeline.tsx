@@ -20,23 +20,20 @@ interface ExperienceTimelineProps {
   lang: 'id' | 'en';
 }
 
-function renderHighlightIcon(highlight: string, isNationalAward: boolean) {
+function renderHighlightIcon(highlight: string) {
   if (highlight.includes('1.000+')) {
     return <ShoppingBag className="w-3.5 h-3.5 text-champagne shrink-0" />;
   }
-  if (isNationalAward || highlight.includes('Top 7') || highlight.includes('Nasional')) {
-    return <Trophy className="w-3.5 h-3.5 text-champagne shrink-0" />;
-  }
   if (highlight.includes('Enterprise') || highlight.includes('PT') || highlight.includes('Tim') || highlight.includes('Pengembangan')) {
-    return <Code2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+    return <Code2 className="w-3.5 h-3.5 text-champagne shrink-0" />;
   }
   if (highlight.includes('Klien') || highlight.includes('UMKM') || highlight.includes('Startup') || highlight.includes('Delivery') || highlight.includes('Contract')) {
-    return <Briefcase className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+    return <Briefcase className="w-3.5 h-3.5 text-champagne shrink-0" />;
   }
   if (highlight.includes('Siswa') || highlight.includes('Membina') || highlight.includes('Mentor')) {
-    return <Users className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+    return <Users className="w-3.5 h-3.5 text-champagne shrink-0" />;
   }
-  return <CheckCircle2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+  return <CheckCircle2 className="w-3.5 h-3.5 text-champagne shrink-0" />;
 }
 
 export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) => {
@@ -116,7 +113,6 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
             <div className="space-y-1">
               {EXPERIENCES.map((exp, index) => {
                 const isCurrent = exp.period.toLowerCase().includes('sekarang');
-                const isNationalAward = exp.id === 'exp-tsdn';
 
                 return (
                   <div key={exp.id} className="relative flex gap-3 sm:gap-6 group">
@@ -124,16 +120,12 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                     <div className="flex flex-col items-center shrink-0">
                       <div
                         className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 relative z-10 ${
-                          isNationalAward
-                            ? 'bg-midnight-0 border-2 border-champagne text-champagne shadow-[0_0_18px_rgba(245,176,39,0.45)] group-hover:scale-110'
-                            : isCurrent
+                          isCurrent
                             ? 'bg-midnight-0 border-2 border-champagne/80 text-champagne shadow-[0_0_14px_rgba(245,176,39,0.25)] group-hover:scale-110'
                             : 'bg-midnight-0 border-2 border-sapphire/70 text-sapphire shadow-[0_0_12px_rgba(76,111,209,0.25)] group-hover:border-sapphire group-hover:scale-110'
                         }`}
                       >
-                        {isNationalAward ? (
-                          <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-champagne" />
-                        ) : isCurrent ? (
+                        {isCurrent ? (
                           <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-champagne" />
                         ) : (
                           <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sapphire" />
@@ -154,7 +146,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                           <div className="flex items-center gap-2">
                             <span
                               className={`text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
-                                isNationalAward
+                                isCurrent
                                   ? 'text-champagne bg-champagne/10 border-champagne/30'
                                   : 'text-sapphire bg-sapphire/10 border-sapphire/30'
                               }`}
@@ -213,7 +205,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
                           {exp.highlight && (
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all text-champagne bg-champagne/15 border-champagne/40 shadow-sm">
-                              {renderHighlightIcon(exp.highlight, isNationalAward)}
+                              {renderHighlightIcon(exp.highlight)}
                               <span>{exp.highlight}</span>
                             </div>
                           )}

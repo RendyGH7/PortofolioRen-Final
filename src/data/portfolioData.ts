@@ -199,17 +199,6 @@ export const EXPERIENCES: ExperienceItem[] = [
     technologies: ["Game Logic", "UI Scripting", "Asset Optimization"],
     highlight: "Contract Game Dev",
   },
-  {
-    id: "exp-tsdn",
-    role: "Grand Finalis Data Science & Predictive Modeling",
-    organization: "Turnamen Sains Data Nasional (TSDN) • Data Academy",
-    period: "Oktober - Desember 2024",
-    type: "Kompetisi Nasional",
-    location: "Nasional",
-    description: "Menganalisis dataset skala besar, rekayasa fitur data statistik, dan merancang model prediktif machine learning hingga meraih posisi Grand Finalis tingkat nasional.",
-    technologies: ["Python", "SQL", "Pandas", "Scikit-Learn", "Machine Learning"],
-    highlight: "Top 7 Finalis Nasional",
-  },
 ];
 
 export const PROJECTS: ProjectItem[] = [
