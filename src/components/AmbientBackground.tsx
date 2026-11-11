@@ -31,10 +31,16 @@ export const AmbientBackground: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const dims = {
-      w: (canvas.width = window.innerWidth),
-      h: (canvas.height = window.innerHeight),
+      w: window.innerWidth,
+      h: window.innerHeight,
     };
+    canvas.width = dims.w * dpr;
+    canvas.height = dims.h * dpr;
+    canvas.style.width = `${dims.w}px`;
+    canvas.style.height = `${dims.h}px`;
+    ctx.scale(dpr, dpr);
 
     // Mouse tracking for subtle 3D parallax
     const mousePos = {
@@ -63,8 +69,14 @@ export const AmbientBackground: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     const handleResize = () => {
-      dims.w = canvas.width = window.innerWidth;
-      dims.h = canvas.height = window.innerHeight;
+      dims.w = window.innerWidth;
+      dims.h = window.innerHeight;
+      const resizeDpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = dims.w * resizeDpr;
+      canvas.height = dims.h * resizeDpr;
+      canvas.style.width = `${dims.w}px`;
+      canvas.style.height = `${dims.h}px`;
+      ctx.scale(resizeDpr, resizeDpr);
       initStars();
     };
 
@@ -81,32 +93,32 @@ export const AmbientBackground: React.FC = () => {
       '#F5B027', // K-Class Radiant Amber
     ];
 
-    // Multi-depth star field (Optimized: 60 on mobile, 160 on desktop for 60-120fps buttery scrolling)
+    // Multi-depth star field (Dense & brilliant on both mobile & desktop)
     const stars: Star[] = [];
-    const isMobile = dims.w < 768;
-    const starCount = Math.min(Math.floor((dims.w * dims.h) / 5000), isMobile ? 65 : 160);
+    const isMobile = window.innerWidth < 768;
+    const starCount = isMobile ? 220 : 340;
 
     const initStars = () => {
       stars.length = 0;
       for (let i = 0; i < starCount; i++) {
-        const layer = Math.random() < 0.58 ? 1 : Math.random() < 0.86 ? 2 : 3;
+        const layer = Math.random() < 0.52 ? 1 : Math.random() < 0.84 ? 2 : 3;
         const color = starColors[Math.floor(Math.random() * starColors.length)];
         stars.push({
           x: Math.random() * dims.w,
           y: Math.random() * dims.h,
           size:
             layer === 1
-              ? Math.random() * 0.9 + 0.4
+              ? Math.random() * 0.8 + 0.6
               : layer === 2
-                ? Math.random() * 1.5 + 0.9
-                : Math.random() * 2.4 + 1.5,
+                ? Math.random() * 1.4 + 1.1
+                : Math.random() * 2.2 + 1.8,
           baseAlpha:
             layer === 1
-              ? Math.random() * 0.35 + 0.15
+              ? Math.random() * 0.35 + 0.35
               : layer === 2
-                ? Math.random() * 0.55 + 0.3
-                : Math.random() * 0.65 + 0.45,
-          twinkleSpeed: Math.random() * 0.03 + 0.01,
+                ? Math.random() * 0.40 + 0.50
+                : Math.random() * 0.35 + 0.65,
+          twinkleSpeed: Math.random() * 0.035 + 0.015,
           twinkleOffset: Math.random() * Math.PI * 2,
           layer,
           color,
@@ -135,23 +147,7 @@ export const AmbientBackground: React.FC = () => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Mobile Optimization: Paint static starfield once into GPU buffer (0% CPU/GPU overhead)
-    if (isMobile) {
-      ctx.clearRect(0, 0, dims.w, dims.h);
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
-        ctx.save();
-        ctx.globalAlpha = s.baseAlpha;
-        ctx.fillStyle = s.color;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-      return;
-    }
-
-    // Animation Loop (Desktop Only for buttery smooth 60-120fps)
+    // Animation Loop
     let time = 0;
     const render = () => {
       animationFrameId = requestAnimationFrame(render);
@@ -189,7 +185,7 @@ export const AmbientBackground: React.FC = () => {
         // Twinkle Alpha calculation
         const alpha = prefersReducedMotion
           ? s.baseAlpha
-          : Math.max(0.12, s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * 0.32);
+          : Math.min(1, Math.max(0.18, s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * 0.28));
 
         ctx.save();
         ctx.globalAlpha = alpha;
@@ -200,12 +196,12 @@ export const AmbientBackground: React.FC = () => {
         ctx.arc(drawX, drawY, s.size, 0, Math.PI * 2);
         ctx.fill();
 
-        // Bright foreground stars receive subtle 4-point cross diffraction spikes
-        if (s.layer === 3 && s.size > 2.0 && !prefersReducedMotion) {
+        // Bright foreground stars receive subtle 4-point cross diffraction spikes on desktop
+        if (s.layer === 3 && s.size > 2.2 && !isMobile && !prefersReducedMotion) {
           ctx.strokeStyle = s.color;
           ctx.lineWidth = 0.55;
-          ctx.globalAlpha = alpha * 0.48;
-          const flareLen = s.size * 3.6;
+          ctx.globalAlpha = alpha * 0.45;
+          const flareLen = s.size * 3.2;
 
           ctx.beginPath();
           ctx.moveTo(drawX - flareLen, drawY);
@@ -221,7 +217,7 @@ export const AmbientBackground: React.FC = () => {
       // Meteors occasionally streaking through the cosmos
       if (!prefersReducedMotion) {
         const now = Date.now();
-        const meteorInterval = isMobile ? 6500 : 4500;
+        const meteorInterval = isMobile ? 5500 : 4000;
         if (now - lastMeteorTime > meteorInterval + Math.random() * 3200) {
           spawnMeteor();
           lastMeteorTime = now;
@@ -297,12 +293,12 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Desktop Only - Avoids clutter on mobile header) */}
+          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant */}
           <div
-            className="absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 hidden md:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Golden Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Belts and 3D Rings)"
           >
-            <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+            <div className="relative w-28 h-20 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
                 className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
@@ -786,12 +782,12 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY 4: Photorealistic Cyan Ice Gas Giant (Desktop Only) */}
+          {/* SPREAD CELESTIAL BODY 4: Photorealistic Cyan Ice Gas Giant */}
           <div
-            className="absolute top-[260px] left-[2%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 hidden md:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[220px] sm:top-[260px] left-[1%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Cyan Ice Gas Giant (Kepler-452b Frosted Rings)"
           >
-            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+            <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
                 className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
@@ -933,12 +929,12 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY 5: Photorealistic Amethyst Gas Giant (Desktop Only) */}
+          {/* SPREAD CELESTIAL BODY 5: Photorealistic Amethyst Gas Giant */}
           <div
-            className="absolute top-[320px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 hidden md:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[280px] sm:top-[320px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Amethyst Gas Giant Exoplanet (Kepler-16b Orbital Rings)"
           >
-            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+            <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
                 className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
@@ -1062,7 +1058,7 @@ export const AmbientBackground: React.FC = () => {
           </div>
 
           {/* Pulsar Beacon Starlight Wave */}
-          <div className="absolute top-[280px] right-[6%] md:right-[10%] z-10 hidden sm:flex items-center justify-center pointer-events-none">
+          <div className="absolute top-[280px] right-[6%] md:right-[10%] z-10 flex items-center justify-center pointer-events-none">
             <div className="relative w-16 h-16 flex items-center justify-center">
               <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_18px_#FFFFFF]" />
               <div className="absolute w-8 h-8 rounded-full border border-sapphire/40" />
@@ -1136,12 +1132,12 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY 6: Photorealistic Copper Ember Gas Giant (Desktop Only) */}
+          {/* SPREAD CELESTIAL BODY 6: Photorealistic Copper Ember Gas Giant */}
           <div
-            className="absolute top-[220px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 hidden md:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[180px] sm:top-[220px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Copper Ember Gas Giant Exoplanet (Proxima Centauri Rings)"
           >
-            <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+            <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
                 className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
@@ -1264,9 +1260,9 @@ export const AmbientBackground: React.FC = () => {
             </div>
           </div>
 
-          {/* Binary Stars System (Desktop Only) */}
+          {/* Binary Stars System */}
           <div
-            className="absolute top-[280px] left-[4%] md:left-[8%] z-10 hidden md:flex items-center gap-3 opacity-65 hover:opacity-95 transition-opacity duration-700 pointer-events-none"
+            className="absolute top-[240px] sm:top-[280px] left-[3%] md:left-[8%] z-10 flex items-center gap-3 opacity-65 hover:opacity-95 transition-opacity duration-700 pointer-events-none"
             title="Distant Binary Star System (Epsilon Aurigae)"
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sapphire to-white shadow-[0_0_20px_#8EA8F5]" />
