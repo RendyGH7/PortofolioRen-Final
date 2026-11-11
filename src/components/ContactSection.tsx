@@ -167,21 +167,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
+    <section id="contact" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
       {/* Ambient Cosmic Contact Haze */}
       <div className="absolute top-1/2 -left-28 w-96 h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
       <div className="absolute top-1/4 -right-28 w-96 h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="text-left mb-10 relative z-10">
-        <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
+      <div className="text-left mb-8 sm:mb-10 relative z-10">
+        <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal">
           {lang === 'id' ? 'Mari Berdiskusi' : 'Get In Touch'}
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-stretch relative z-10">
         {/* Left Column: Direct Channels & Social Network */}
-        <div className="md:col-span-5 glass-2 rounded-3xl p-6 sm:p-7 text-left flex flex-col justify-between shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
+        <div className="md:col-span-5 glass-2 rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 text-left flex flex-col justify-between shadow-glass-md border border-white/10 hover:border-white/20 transition-all">
           <div className="space-y-6">
             <div className="space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-wider text-champagne block">
@@ -307,7 +307,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
         </div>
 
         {/* Right Form Column: Clean Minimalist Dispatch Form */}
-        <div className="md:col-span-7 glass-2 rounded-3xl p-6 sm:p-7 text-left shadow-glass-md border border-white/10 hover:border-white/20 transition-all relative overflow-hidden flex flex-col justify-between">
+        <div className="md:col-span-7 glass-2 rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 text-left shadow-glass-md border border-white/10 hover:border-white/20 transition-all relative overflow-hidden flex flex-col justify-between">
           {/* Submitting Loading Overlay */}
           <AnimatePresence>
             {isSubmitting && (
@@ -315,7 +315,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 z-30 bg-midnight-0/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center space-y-4"
+                className="absolute inset-0 z-30 bg-midnight-0/90 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-4"
               >
                 <div className="relative w-14 h-14 flex items-center justify-center">
                   <div className="w-14 h-14 rounded-full border-2 border-champagne/20 border-t-champagne animate-spin" />
@@ -339,14 +339,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="py-12 px-4 flex flex-col items-center justify-center text-center space-y-4 h-full min-h-[380px]"
+              className="py-10 sm:py-12 px-3 sm:px-4 flex flex-col items-center justify-center text-center space-y-4 h-full min-h-[340px] sm:min-h-[380px]"
             >
-              <div className="w-14 h-14 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.25)]">
-                <CheckCircle2 className="w-7 h-7 text-[#10B981]" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.25)]">
+                <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-[#10B981]" />
               </div>
 
               <div className="space-y-1.5 max-w-sm">
-                <h3 className="font-display text-2xl text-pearl font-normal">
+                <h3 className="font-display text-xl sm:text-2xl text-pearl font-normal">
                   {lang === 'id' ? 'Pesan Terkirim' : 'Message Sent'}
                 </h3>
                 <p className="text-xs sm:text-sm text-mist leading-relaxed">
@@ -362,7 +362,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                 </p>
               </div>
 
-              <div className="pt-3">
+              <div className="pt-2 sm:pt-3">
                 <button
                   type="button"
                   onClick={handleResetForm}
@@ -375,23 +375,23 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
             </motion.div>
           ) : (
             /* Clean Minimalist Input Form */
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
               {/* Form Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 className="text-sm font-semibold text-pearl">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2.5 sm:pb-3">
+                <h3 className="text-xs sm:text-sm font-semibold text-pearl">
                   {lang === 'id' ? 'Kirim Pesan' : 'Send Message'}
                 </h3>
-                <span className="text-[11px] font-mono text-fog">
+                <span className="text-[10.5px] sm:text-[11px] font-mono text-fog">
                   {lang === 'id' ? 'Respon Cepat' : 'Fast Response'}
                 </span>
               </div>
 
               {/* Category Chips */}
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-mist block">
+                <label className="text-[11px] sm:text-xs font-medium text-mist block">
                   {lang === 'id' ? 'Kategori' : 'Category'}
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                   {CATEGORIES.map((cat) => {
                     const Icon = cat.icon;
                     const isSelected = selectedCategory === cat.id;
@@ -400,14 +400,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
                         key={cat.id}
                         type="button"
                         onClick={() => setSelectedCategory(cat.id)}
-                        className={`py-2.5 px-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 ${
+                        className={`py-2 sm:py-2.5 px-1.5 sm:px-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 sm:gap-1.5 ${
                           isSelected
                             ? 'bg-champagne/15 border-champagne/60 text-pearl shadow-[0_0_12px_rgba(245,176,39,0.18)]'
                             : 'bg-midnight-0/40 border-white/10 text-mist hover:border-white/20 hover:text-pearl'
                         }`}
                       >
                         <Icon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-champagne' : 'text-fog'}`} />
-                        <span className="text-xs font-medium whitespace-nowrap truncate">
+                        <span className="text-[11px] sm:text-xs font-medium whitespace-nowrap truncate w-full">
                           {lang === 'id' ? cat.labelId : cat.labelEn}
                         </span>
                       </button>

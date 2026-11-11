@@ -49,29 +49,29 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
       </div>
 
       {/* ── Interactive Cockpit Master Glass Console ── */}
-      <div className="relative z-10 w-full glass-2 rounded-3xl p-5 sm:p-6 border border-white/10 hover:border-champagne/35 transition-all duration-500 shadow-glass-lg backdrop-blur-md">
+      <div className="relative z-10 w-full glass-2 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-white/10 hover:border-champagne/35 transition-all duration-500 shadow-glass-lg backdrop-blur-md">
         
         {/* Top Cockpit Header: Status Telemetry & Live Ping */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
-          <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
-            <span className="font-mono text-xs font-semibold text-pearl tracking-wider uppercase">
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-white/10 mb-3.5 sm:mb-5">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
+            <span className="font-mono text-[11px] sm:text-xs font-semibold text-pearl tracking-wider uppercase">
               ARCHITECT CORE // V2.5
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] text-fog px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="font-mono text-[9px] sm:text-[10px] text-fog px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
               {lang === 'id' ? 'Aktif • 60 FPS' : 'Live • 60 FPS'}
             </span>
-            <div className="w-6 h-6 rounded-lg bg-champagne/10 border border-champagne/30 flex items-center justify-center text-champagne">
-              <Cpu className="w-3.5 h-3.5" />
+            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-champagne/10 border border-champagne/30 flex items-center justify-center text-champagne">
+              <Cpu className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             </div>
           </div>
         </div>
 
         {/* Central Visual: Aerospace Orbital Radar HUD (Pure SVG & CSS - Zero WebGL!) */}
-        <div className="relative w-full h-44 sm:h-52 flex items-center justify-center my-1 overflow-hidden rounded-2xl bg-midnight-0/50 border border-white/5">
+        <div className="relative w-full h-40 sm:h-52 flex items-center justify-center my-1 overflow-hidden rounded-xl sm:rounded-2xl bg-midnight-0/50 border border-white/5">
           {/* Concentric Orbital Radar Rings (Static on mobile for maximum GPU efficiency, smooth spin on desktop) */}
           <div className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-sapphire/20 border-dashed sm:animate-[spin_40s_linear_infinite]" />
           <div className="absolute w-32 h-32 sm:w-36 sm:h-36 rounded-full border border-champagne/25 sm:animate-[spin_24s_linear_infinite_reverse]" />
@@ -108,71 +108,71 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
         </div>
 
         {/* Interactive Telemetry Selector Tabs */}
-        <div className="grid grid-cols-3 gap-2 mt-4 p-1 rounded-xl bg-midnight-0/60 border border-white/5">
+        <div className="grid grid-cols-3 gap-1 sm:gap-2 mt-3.5 sm:mt-4 p-1 rounded-xl bg-midnight-0/60 border border-white/5">
           <button
             type="button"
             onClick={() => setActiveTab('stack')}
-            className={`py-1.5 px-2 rounded-lg text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            className={`py-1.5 px-1 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 ${
               activeTab === 'stack'
                 ? 'bg-champagne/20 text-champagne font-semibold border border-champagne/40 shadow-sm'
                 : 'text-fog hover:text-pearl'
             }`}
           >
-            <Terminal className="w-3 h-3" />
-            <span>Stack</span>
+            <Terminal className="w-3 h-3 shrink-0" />
+            <span className="truncate">Stack</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('metrics')}
-            className={`py-1.5 px-2 rounded-lg text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            className={`py-1.5 px-1 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 ${
               activeTab === 'metrics'
                 ? 'bg-sapphire/25 text-sapphire font-semibold border border-sapphire/50 shadow-sm'
                 : 'text-fog hover:text-pearl'
             }`}
           >
-            <Activity className="w-3 h-3" />
-            <span>{lang === 'id' ? 'Performa' : 'Metrics'}</span>
+            <Activity className="w-3 h-3 shrink-0" />
+            <span className="truncate">{lang === 'id' ? 'Performa' : 'Metrics'}</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('achievements')}
-            className={`py-1.5 px-2 rounded-lg text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            className={`py-1.5 px-1 sm:px-2 rounded-lg text-[10px] sm:text-[11px] font-medium transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 ${
               activeTab === 'achievements'
                 ? 'bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/40 shadow-sm'
                 : 'text-fog hover:text-pearl'
             }`}
           >
-            <Trophy className="w-3 h-3" />
-            <span>{lang === 'id' ? 'Prestasi' : 'Awards'}</span>
+            <Trophy className="w-3 h-3 shrink-0" />
+            <span className="truncate">{lang === 'id' ? 'Prestasi' : 'Awards'}</span>
           </button>
         </div>
 
         {/* Dynamic Telemetry Metric Cards */}
-        <div className="mt-3.5 space-y-2">
+        <div className="mt-3 space-y-2">
           {activeTab === 'stack' && (
-            <div className="grid grid-cols-2 gap-2 text-left">
-              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-champagne/30 transition-all">
-                <div className="flex items-center justify-between text-[10px] font-mono text-fog">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-left">
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-champagne/30 transition-all min-w-0">
+                <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-fog">
                   <span>FRONTEND</span>
                   <span className="text-champagne font-semibold">90%</span>
                 </div>
-                <p className="text-xs font-semibold text-pearl mt-1">JS, TS & React</p>
-                <p className="text-[10px] text-mist">Tailwind CSS • UI/UX Design</p>
+                <p className="text-[11px] sm:text-xs font-semibold text-pearl mt-1 truncate">JS, TS & React</p>
+                <p className="text-[9.5px] sm:text-[10px] text-mist truncate">Tailwind CSS • UI/UX</p>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-sapphire/30 transition-all">
-                <div className="flex items-center justify-between text-[10px] font-mono text-fog">
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-sapphire/30 transition-all min-w-0">
+                <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-fog">
                   <span>BACKEND</span>
                   <span className="text-sapphire font-semibold">80%</span>
                 </div>
-                <p className="text-xs font-semibold text-pearl mt-1">Laravel & PHP</p>
-                <p className="text-[10px] text-mist">SQL Database • Git & GitHub</p>
+                <p className="text-[11px] sm:text-xs font-semibold text-pearl mt-1 truncate">Laravel & PHP</p>
+                <p className="text-[9.5px] sm:text-[10px] text-mist truncate">SQL • Git & GitHub</p>
               </div>
             </div>
           )}
 
           {activeTab === 'metrics' && (
-            <div className="grid grid-cols-2 gap-2 text-left">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-left">
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
                 <span className="text-[10px] font-mono text-fog uppercase">Sistem Bisnis</span>
                 <p className="text-lg font-bold text-champagne font-mono">1.000+</p>

@@ -40,11 +40,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
   const [activeTab, setActiveTab] = useState<'experience' | 'awards' | 'education'>('experience');
 
   return (
-    <section id="experience" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <section id="experience" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 text-left">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-4 text-left">
         <div>
-          <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
+          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
             {lang === 'id' ? 'Pengalaman & Rekam Jejak' : 'Experience & Track Record'}
           </h2>
         </div>
@@ -53,7 +53,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
         <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full self-start sm:self-auto border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap">
           <button
             onClick={() => setActiveTab('experience')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'experience'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -70,7 +70,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
           <button
             onClick={() => setActiveTab('awards')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'awards'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -87,7 +87,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
           <button
             onClick={() => setActiveTab('education')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs transition-all flex items-center gap-1.5 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs transition-all flex items-center gap-1.5 ${
               activeTab === 'education'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -115,7 +115,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 const isCurrent = exp.period.toLowerCase().includes('sekarang');
 
                 return (
-                  <div key={exp.id} className="relative flex gap-3 sm:gap-6 group">
+                  <div key={exp.id} className="relative flex gap-2.5 sm:gap-6 group">
                     {/* Left Column: Timeline Spine & Luminous Milestone Node */}
                     <div className="flex flex-col items-center shrink-0">
                       <div
@@ -139,13 +139,13 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                     </div>
 
                     {/* Right Column: Unboxed Milestone Content */}
-                    <div className="flex-1 pb-8 sm:pb-10 transition-all">
-                      <div className="rounded-2xl p-3.5 sm:p-6 -mt-1 transition-all duration-300 group-hover:bg-white/[0.025] border border-transparent group-hover:border-white/[0.08]">
+                    <div className="flex-1 pb-6 sm:pb-10 transition-all min-w-0">
+                      <div className="rounded-xl sm:rounded-2xl p-3 xs:p-3.5 sm:p-6 -mt-1 transition-all duration-300 group-hover:bg-white/[0.025] border border-transparent group-hover:border-white/[0.08]">
                         {/* Meta Header: Role Category Pill + Period & Location */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                          <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-2">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
                             <span
-                              className={`text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                              className={`text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider px-2 sm:px-2.5 py-0.5 rounded-full border ${
                                 isCurrent
                                   ? 'text-champagne bg-champagne/10 border-champagne/30'
                                   : 'text-sapphire bg-sapphire/10 border-sapphire/30'
@@ -155,20 +155,20 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                             </span>
 
                             {isCurrent && (
-                              <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-champagne bg-champagne/10 px-2.5 py-0.5 rounded-full border border-champagne/25 shadow-sm">
+                              <span className="inline-flex items-center gap-1 sm:gap-1.5 text-[9.5px] sm:text-[10px] font-mono text-champagne bg-champagne/10 px-2 sm:px-2.5 py-0.5 rounded-full border border-champagne/25 shadow-sm">
                                 <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
                                 <span>{lang === 'id' ? 'Aktif' : 'Active'}</span>
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center gap-3 text-xs font-mono text-fog">
-                            <span className="flex items-center gap-1.5">
-                              <Calendar className="w-3.5 h-3.5 text-mist" />
+                          <div className="flex items-center gap-2 sm:gap-3 text-[10.5px] sm:text-xs font-mono text-fog">
+                            <span className="flex items-center gap-1 sm:gap-1.5">
+                              <Calendar className="w-3.5 h-3.5 text-mist shrink-0" />
                               <span>{exp.period}</span>
                             </span>
                             <span className="hidden xs:flex items-center gap-1.5">
-                              <MapPin className="w-3.5 h-3.5 text-mist" />
+                              <MapPin className="w-3.5 h-3.5 text-mist shrink-0" />
                               <span>{exp.location}</span>
                             </span>
                           </div>
@@ -176,27 +176,27 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
 
                         {/* Title & Organization */}
                         <div>
-                          <h3 className="font-display text-xl sm:text-2xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                          <h3 className="font-display text-lg xs:text-xl sm:text-2xl text-pearl font-normal group-hover:text-champagne transition-colors">
                             {exp.role}
                           </h3>
                           <p className="text-xs sm:text-sm font-medium text-sapphire mt-0.5 flex items-center gap-1.5">
                             <span>{exp.organization}</span>
-                            <CheckCircle2 className="w-3.5 h-3.5 text-sapphire/80" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-sapphire/80 shrink-0" />
                           </p>
                         </div>
 
                         {/* Description */}
-                        <p className="text-xs sm:text-[13px] text-mist leading-relaxed my-3 max-w-3xl">
+                        <p className="text-xs sm:text-[13px] text-mist leading-relaxed my-2.5 sm:my-3 max-w-3xl">
                           {exp.description}
                         </p>
 
                         {/* Bottom Row: Technologies + Standout Highlight Metric */}
-                        <div className="pt-3 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-3">
-                          <div className="flex flex-wrap items-center gap-1.5">
+                        <div className="pt-2.5 sm:pt-3 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                          <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
                             {exp.technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-white/[0.03] text-mist border border-white/[0.06] group-hover:border-white/10 transition-colors"
+                                className="text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-0.5 rounded-md bg-white/[0.03] text-mist border border-white/[0.06] group-hover:border-white/10 transition-colors"
                               >
                                 {tech}
                               </span>
@@ -204,7 +204,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                           </div>
 
                           {exp.highlight && (
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all text-champagne bg-champagne/15 border-champagne/40 shadow-sm">
+                            <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold border transition-all text-champagne bg-champagne/15 border-champagne/40 shadow-sm">
                               {renderHighlightIcon(exp.highlight)}
                               <span>{exp.highlight}</span>
                             </div>
@@ -226,7 +226,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5 text-left"
           >
             {AWARDS.map((award) => {
               const isGrandFinalist = award.id === 'award-1';
@@ -234,7 +234,7 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
               return (
                 <div
                   key={award.id}
-                  className={`rounded-2xl p-6 transition-all duration-300 relative overflow-hidden group border ${
+                  className={`rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 relative overflow-hidden group border ${
                     isGrandFinalist
                       ? 'bg-gradient-to-br from-champagne/10 via-white/[0.02] to-transparent border-champagne/30 shadow-[0_0_24px_rgba(245,176,39,0.12)]'
                       : 'bg-white/[0.02] hover:bg-white/[0.04] border-white/[0.08] hover:border-sapphire/35'
@@ -246,38 +246,38 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                   )}
 
                   {/* Header: Level Pill & Date */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3">
                     <span
-                      className={`text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${
+                      className={`text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider px-2 sm:px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${
                         isGrandFinalist
                           ? 'text-champagne bg-champagne/15 border-champagne/35'
                           : 'text-sapphire bg-sapphire/15 border-sapphire/30'
                       }`}
                     >
                       {isGrandFinalist ? (
-                        <Trophy className="w-3 h-3 text-champagne" />
+                        <Trophy className="w-3 h-3 text-champagne shrink-0" />
                       ) : (
-                        <Award className="w-3 h-3 text-sapphire" />
+                        <Award className="w-3 h-3 text-sapphire shrink-0" />
                       )}
                       <span>{award.level}</span>
                     </span>
 
-                    <span className="text-xs font-mono text-fog">{award.date}</span>
+                    <span className="text-[11px] sm:text-xs font-mono text-fog">{award.date}</span>
                   </div>
 
                   {/* Title & Issuer */}
                   <div>
-                    <h3 className="font-display text-lg sm:text-xl text-pearl font-normal group-hover:text-champagne transition-colors">
+                    <h3 className="font-display text-base xs:text-lg sm:text-xl text-pearl font-normal group-hover:text-champagne transition-colors">
                       {award.title}
                     </h3>
                     <p className="text-xs text-sapphire font-medium mt-1 flex items-center gap-1">
                       <span>{award.issuer}</span>
-                      <CheckCircle2 className="w-3 h-3 text-sapphire/80" />
+                      <CheckCircle2 className="w-3 h-3 text-sapphire/80 shrink-0" />
                     </p>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs text-mist leading-relaxed mt-3 pt-3 border-t border-white/[0.06]">
+                  <p className="text-xs text-mist leading-relaxed mt-2.5 pt-2.5 sm:mt-3 sm:pt-3 border-t border-white/[0.06]">
                     {award.description}
                   </p>
                 </div>
@@ -293,50 +293,50 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="text-left space-y-6"
+            className="text-left space-y-4 sm:space-y-6"
           >
             {/* Top Academic Banner */}
-            <div className="rounded-2xl p-6 sm:p-8 border border-white/10 bg-gradient-to-br from-sapphire/15 via-white/[0.02] to-transparent relative overflow-hidden group">
+            <div className="rounded-xl sm:rounded-2xl p-4 xs:p-5 sm:p-8 border border-white/10 bg-gradient-to-br from-sapphire/15 via-white/[0.02] to-transparent relative overflow-hidden group">
               <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-sapphire/20 blur-[80px] pointer-events-none" />
 
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-champagne/10 border border-champagne/30 text-[10px] font-mono text-champagne uppercase tracking-wider mb-2">
-                    <GraduationCap className="w-3.5 h-3.5" />
-                    <span>Pendidikan Formal Kejuruan • Program Unggulan 4 Tahun</span>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-champagne/10 border border-champagne/30 text-[9.5px] sm:text-[10px] font-mono text-champagne uppercase tracking-wider mb-1.5">
+                    <GraduationCap className="w-3.5 h-3.5 shrink-0" />
+                    <span>Pendidikan Formal Kejuruan • Program 4 Tahun</span>
                   </div>
-                  <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal">
+                  <h3 className="font-display text-xl xs:text-2xl sm:text-3xl text-pearl font-normal">
                     {PERSONAL_DATA.education.school}
                   </h3>
-                  <p className="text-sm font-medium text-sapphire flex items-center gap-1.5">
+                  <p className="text-xs sm:text-sm font-medium text-sapphire flex items-center gap-1.5">
                     <span>{PERSONAL_DATA.education.major}</span>
-                    <CheckCircle2 className="w-4 h-4 text-sapphire" />
+                    <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sapphire shrink-0" />
                   </p>
                 </div>
 
-                <div className="flex flex-col items-start sm:items-end gap-1">
-                  <span className="font-mono text-xs text-pearl bg-white/10 px-3 py-1 rounded-full border border-white/15">
+                <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:gap-1">
+                  <span className="font-mono text-[11px] sm:text-xs text-pearl bg-white/10 px-2.5 sm:px-3 py-1 rounded-full border border-white/15">
                     {PERSONAL_DATA.education.period}
                   </span>
-                  <span className="text-[11px] font-mono font-medium text-champagne bg-champagne/10 border border-champagne/25 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 mt-1 shadow-sm">
+                  <span className="text-[10px] sm:text-[11px] font-mono font-medium text-champagne bg-champagne/10 border border-champagne/25 px-2 sm:px-2.5 py-0.5 rounded-full flex items-center gap-1.5 shadow-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-champagne shadow-[0_0_6px_#F5B027]" />
                     <span>Siswa Aktif</span>
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-mist leading-relaxed mt-4 pt-4 border-t border-white/[0.08] max-w-3xl">
+              <p className="text-xs sm:text-sm text-mist leading-relaxed mt-3 pt-3 sm:mt-4 sm:pt-4 border-t border-white/[0.08] max-w-3xl">
                 {PERSONAL_DATA.education.note}
               </p>
             </div>
 
             {/* 3 Core Competency Pillars */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-xl p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-sapphire/40 transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-sapphire/20 border border-sapphire/35 flex items-center justify-center text-sapphire mb-3 group-hover:scale-105 transition-transform">
-                  <Code2 className="w-5 h-5 text-sapphire" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="rounded-xl p-4 sm:p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-sapphire/40 transition-all group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sapphire/20 border border-sapphire/35 flex items-center justify-center text-sapphire mb-2.5 sm:mb-3 group-hover:scale-105 transition-transform">
+                  <Code2 className="w-4 h-4 sm:w-5 sm:h-5 text-sapphire" />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
+                <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-fog block">
                   Pilar Utama 01
                 </span>
                 <h4 className="font-display text-base text-pearl font-normal mt-0.5">
@@ -347,11 +347,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 </p>
               </div>
 
-              <div className="rounded-xl p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-champagne/40 transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-champagne/20 border border-champagne/35 flex items-center justify-center text-champagne mb-3 group-hover:scale-105 transition-transform">
-                  <Server className="w-5 h-5 text-champagne" />
+              <div className="rounded-xl p-4 sm:p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-champagne/40 transition-all group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-champagne/20 border border-champagne/35 flex items-center justify-center text-champagne mb-2.5 sm:mb-3 group-hover:scale-105 transition-transform">
+                  <Server className="w-4 h-4 sm:w-5 sm:h-5 text-champagne" />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
+                <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-fog block">
                   Pilar Utama 02
                 </span>
                 <h4 className="font-display text-base text-pearl font-normal mt-0.5">
@@ -362,11 +362,11 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 </p>
               </div>
 
-              <div className="rounded-xl p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-sapphire/40 transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-sapphire/20 border border-sapphire/35 flex items-center justify-center text-sapphire mb-3 group-hover:scale-105 transition-transform">
-                  <Users className="w-5 h-5 text-sapphire" />
+              <div className="rounded-xl p-4 sm:p-5 border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] hover:border-sapphire/40 transition-all group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sapphire/20 border border-sapphire/35 flex items-center justify-center text-sapphire mb-2.5 sm:mb-3 group-hover:scale-105 transition-transform">
+                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-sapphire" />
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-fog block">
+                <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-wider text-fog block">
                   Pilar Utama 03
                 </span>
                 <h4 className="font-display text-base text-pearl font-normal mt-0.5">
@@ -379,65 +379,65 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
             </div>
 
             {/* Soft Skills & Core Attributes from Updated CV */}
-            <div className="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/[0.02] mt-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div className="rounded-xl sm:rounded-2xl p-3.5 xs:p-4 sm:p-6 border border-white/10 bg-white/[0.02] mt-4 sm:mt-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3.5 sm:mb-4">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-champagne" />
+                  <Sparkles className="w-4 h-4 text-champagne shrink-0" />
                   <h4 className="font-display text-base text-pearl font-normal">
                     {lang === 'id' ? 'Karakter & Soft Skill Profesional' : 'Professional Soft Skills & Mindset'}
                   </h4>
                 </div>
-                <span className="text-[10px] font-mono text-fog px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 self-start sm:self-auto">
+                <span className="text-[9.5px] sm:text-[10px] font-mono text-fog px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 self-start sm:self-auto">
                   {lang === 'id' ? 'Kompetensi Sikap & Kolaborasi' : 'Collaboration & Work Ethic'}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-2.5">
                 {SOFT_SKILLS.map((skill) => (
-                  <div key={skill.name} className="p-3 rounded-xl bg-midnight-0/50 border border-white/10 flex flex-col justify-between">
-                    <span className="text-xs font-medium text-pearl">{skill.name}</span>
-                    <div className="mt-2.5 flex items-center justify-between gap-2">
+                  <div key={skill.name} className="p-2.5 sm:p-3 rounded-xl bg-midnight-0/50 border border-white/10 flex flex-col justify-between">
+                    <span className="text-[11px] sm:text-xs font-medium text-pearl">{skill.name}</span>
+                    <div className="mt-2 flex items-center justify-between gap-1.5">
                       <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-champagne to-amber-500 rounded-full"
                           style={{ width: `${skill.level}%` }}
                         />
                       </div>
-                      <span className="font-mono text-[11px] font-semibold text-champagne shrink-0">{skill.level}%</span>
+                      <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-champagne shrink-0">{skill.level}%</span>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Aspirasi, Hobi & Penguasaan Bahasa */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-white/10 text-xs text-mist">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Aspirasi:</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 mt-3.5 pt-3.5 sm:mt-4 sm:pt-4 border-t border-white/10 text-xs text-mist">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="font-mono text-fog uppercase text-[9.5px] sm:text-[10px] shrink-0">Aspirasi:</span>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {PERSONAL_DATA.aspirations.map((asp) => (
-                      <span key={asp} className="px-2 py-0.5 rounded-md bg-champagne/10 border border-champagne/25 text-champagne text-[11px] font-medium">
+                      <span key={asp} className="px-2 py-0.5 rounded-md bg-champagne/10 border border-champagne/25 text-champagne text-[10.5px] sm:text-[11px] font-medium">
                         {asp}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Hobi:</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="font-mono text-fog uppercase text-[9.5px] sm:text-[10px] shrink-0">Hobi:</span>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {PERSONAL_DATA.hobbies.map((h) => (
-                      <span key={h} className="px-2 py-0.5 rounded-md bg-sapphire/15 border border-sapphire/30 text-pearl text-[11px]">
+                      <span key={h} className="px-2 py-0.5 rounded-md bg-sapphire/15 border border-sapphire/30 text-pearl text-[10.5px] sm:text-[11px]">
                         {h}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Bahasa:</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="font-mono text-fog uppercase text-[9.5px] sm:text-[10px] shrink-0">Bahasa:</span>
                   <div className="flex items-center gap-2 flex-wrap">
                     {PERSONAL_DATA.languages.map((l) => (
-                      <span key={l.name} className="text-pearl text-[11px]">
+                      <span key={l.name} className="text-pearl text-[10.5px] sm:text-[11px]">
                         {l.name} <span className="font-mono text-champagne font-semibold">({l.pct}%)</span>
                       </span>
                     ))}

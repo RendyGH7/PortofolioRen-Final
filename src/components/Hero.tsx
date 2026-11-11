@@ -137,43 +137,43 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
           </div>
 
           {/* Proof-of-Scale Credentials Strip (Clean, Minimal, Architectural) */}
-          <div className="pt-5 sm:pt-6 border-t border-white/[0.08] max-w-lg">
+          <div className="pt-4 sm:pt-6 border-t border-white/[0.08] max-w-lg">
             <div className="grid grid-cols-3 divide-x divide-white/[0.08]">
               {/* Pillar 1: Market Proof */}
-              <div className="pr-2 sm:pr-4 group cursor-default">
-                <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
+              <div className="pr-1.5 sm:pr-4 group cursor-default min-w-0">
+                <div className="font-display text-base xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums truncate">
                   1.000<span className="text-champagne font-light">+</span>
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-0.5 sm:mt-1 leading-tight truncate">
                   {lang === 'id' ? 'Ulasan Positif' : 'Client Reviews'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
+                <div className="text-[9px] xs:text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight truncate">
                   Founder RenStore
                 </div>
               </div>
 
               {/* Pillar 2: Engineering Output */}
-              <div className="px-2 sm:px-4 group cursor-default">
-                <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
+              <div className="px-1.5 sm:px-4 group cursor-default min-w-0">
+                <div className="font-display text-base xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums truncate">
                   5<span className="text-champagne font-light">+</span>
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-0.5 sm:mt-1 leading-tight truncate">
                   {lang === 'id' ? 'Proyek Rilis' : 'Projects Shipped'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
+                <div className="text-[9px] xs:text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight truncate">
                   {lang === 'id' ? 'Web & Cloud System' : 'Web & Cloud'}
                 </div>
               </div>
 
               {/* Pillar 3: Technical Validation */}
-              <div className="pl-2 sm:pl-4 group cursor-default">
-                <div className="font-display text-lg xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums">
+              <div className="pl-1.5 sm:pl-4 group cursor-default min-w-0">
+                <div className="font-display text-base xs:text-xl sm:text-2xl font-bold text-pearl tracking-tight tabular-nums truncate">
                   Top 7
                 </div>
-                <div className="text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-1 leading-tight">
+                <div className="text-[10px] xs:text-[11px] sm:text-xs text-mist group-hover:text-pearl transition-colors font-medium mt-0.5 sm:mt-1 leading-tight truncate">
                   {lang === 'id' ? 'Finalis Nasional' : 'National Finalist'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight">
+                <div className="text-[9px] xs:text-[10px] sm:text-[11px] text-fog mt-0.5 leading-tight truncate">
                   {lang === 'id' ? 'Sains Data (TSDN)' : 'Data Science (TSDN)'}
                 </div>
               </div>

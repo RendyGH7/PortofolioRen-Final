@@ -253,15 +253,15 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   };
 
   return (
-    <section id="studio" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
+    <section id="studio" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative">
       {/* Ambient Cosmic Studio Haze (Hardware-friendly blur on mobile) */}
       <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
       <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 text-left relative z-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4 text-left relative z-10">
         <div>
-          <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
+          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal">
             Dev Studio & Live Sandbox
           </h2>
         </div>
@@ -270,7 +270,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full self-start md:self-auto border border-white/10 shadow-glass-sm max-w-full overflow-x-auto scrollbar-none flex-nowrap">
           <button
             onClick={() => setActiveTab('api')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'api'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -281,7 +281,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </button>
           <button
             onClick={() => setActiveTab('sql')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'sql'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -292,7 +292,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </button>
           <button
             onClick={() => setActiveTab('glass')}
-            className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
+            className={`shrink-0 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-xs font-medium transition-all flex items-center gap-1.5 sm:gap-2 ${
               activeTab === 'glass'
                 ? 'bg-gradient-to-r from-[#F5B027] to-[#D98218] text-midnight-0 font-semibold shadow-[0_0_16px_rgba(245,176,39,0.35)]'
                 : 'text-mist hover:text-pearl'
@@ -305,23 +305,24 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       </div>
 
       {/* Main Studio Console Window (Glass 2) */}
-      <div className="glass-2 rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg text-left relative z-10">
+      <div className="glass-2 rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg text-left relative z-10">
         {/* Terminal Header Bar */}
-        <div className="px-4 py-3 bg-midnight-1/60 border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-status-error/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-status-warning/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-status-success/80 inline-block" />
+        <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-midnight-1/60 border-b border-white/10 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-error/80 inline-block" />
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-warning/80 inline-block" />
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-status-success/80 inline-block" />
             </div>
-            <span className="text-xs font-mono text-fog ml-2">
-              rendy-dev-studio :: {activeTab.toUpperCase()}_CONSOLE
+            <span className="text-[10.5px] sm:text-xs font-mono text-fog ml-1 sm:ml-2 truncate">
+              <span className="hidden xs:inline">rendy-dev-studio :: </span>{activeTab.toUpperCase()}_CONSOLE
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-mono text-mist">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] font-mono text-mist shrink-0">
             <span className="w-2 h-2 rounded-full bg-status-success inline-block shadow-[0_0_6px_#10B981]" />
-            <span>Live Engine Ready</span>
+            <span className="hidden xs:inline">Live Engine Ready</span>
+            <span className="xs:hidden">Live Ready</span>
           </div>
         </div>
 
@@ -334,7 +335,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-5 sm:p-7 space-y-6"
+              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
             >
               {/* Endpoint Selector Bar */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
@@ -433,16 +434,16 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-5 sm:p-7 space-y-6"
+              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
             >
               {/* Presets Strip */}
               <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
-                <span className="text-xs font-mono text-fog mr-1">Query Preset:</span>
+                <span className="text-[11px] sm:text-xs font-mono text-fog mr-1 shrink-0">Preset:</span>
                 {sqlPresets.map((preset, idx) => (
                   <button
                     key={preset.id}
                     onClick={() => handleRunSql(idx)}
-                    className={`shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono transition-colors border ${
+                    className={`shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-[10.5px] sm:text-xs font-mono transition-colors border ${
                       selectedSqlIndex === idx
                         ? 'bg-sapphire/20 border-sapphire/50 text-pearl font-semibold'
                         : 'glass-1 border-white/5 text-mist hover:text-pearl'
@@ -454,16 +455,18 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               </div>
 
               {/* SQL Code Editor Box */}
-              <div className="rounded-xl bg-midnight-0/95 border border-white/10 p-4 space-y-3">
-                <div className="flex items-center justify-between text-xs text-fog border-b border-white/5 pb-2">
-                  <span className="font-mono flex items-center gap-1.5">
-                    <Database className="w-3.5 h-3.5 text-champagne" />
-                    <span>postgresql_engine :: rendy_portfolio_db</span>
+              <div className="rounded-xl bg-midnight-0/95 border border-white/10 p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                <div className="flex items-center justify-between text-xs text-fog border-b border-white/5 pb-2 gap-2">
+                  <span className="font-mono flex items-center gap-1.5 min-w-0">
+                    <Database className="w-3.5 h-3.5 text-champagne shrink-0" />
+                    <span className="truncate text-[11px] sm:text-xs">
+                      <span className="hidden xs:inline">postgresql_engine :: </span>rendy_portfolio_db
+                    </span>
                   </span>
                   <button
                     onClick={() => handleRunSql(selectedSqlIndex)}
                     disabled={isRunningSql}
-                    className="btn-champagne px-3.5 py-1.5 rounded text-xs font-semibold flex items-center gap-1.5"
+                    className="btn-champagne px-3 py-1.5 rounded text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shrink-0"
                   >
                     {isRunningSql ? (
                       <div className="w-3 h-3 border-2 border-midnight-0 border-t-transparent rounded-full animate-spin" />
@@ -474,38 +477,38 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                   </button>
                 </div>
 
-                <div className="font-mono text-xs text-pearl whitespace-pre leading-relaxed pl-2 border-l-2 border-champagne">
+                <div className="font-mono text-xs text-pearl whitespace-pre leading-relaxed pl-2 border-l-2 border-champagne overflow-x-auto">
                   {sqlPresets[selectedSqlIndex].query}
                 </div>
               </div>
 
               {/* Query Result Table */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-mono text-fog">
-                  <span>
-                    Hasil Query ({activeSqlResult.rows.length} baris data)
+                <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-fog gap-2">
+                  <span className="truncate">
+                    Hasil Query ({activeSqlResult.rows.length} baris)
                   </span>
-                  <span className="text-status-success">
-                    Execution Time: {activeSqlResult.executionTime}
+                  <span className="text-status-success shrink-0 text-[10.5px] sm:text-xs">
+                    Time: {activeSqlResult.executionTime}
                   </span>
                 </div>
 
                 <div className="overflow-x-auto rounded-xl border border-white/10 glass-1">
                   <table className="w-full text-xs text-left">
-                    <thead className="bg-white/5 text-champagne font-mono text-[11px] uppercase border-b border-white/10">
+                    <thead className="bg-white/5 text-champagne font-mono text-[10.5px] sm:text-[11px] uppercase border-b border-white/10">
                       <tr>
                         {activeSqlResult.headers.map((h) => (
-                          <th key={h} className="p-2.5 sm:p-3 font-semibold whitespace-nowrap">
+                          <th key={h} className="p-2 sm:p-3 font-semibold whitespace-nowrap">
                             {h}
                           </th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5 text-mist font-mono">
+                    <tbody className="divide-y divide-white/5 text-mist font-mono text-[11px] sm:text-xs">
                       {activeSqlResult.rows.map((row, i) => (
                         <tr key={i} className="hover:bg-white/[0.03] transition-colors">
                           {row.map((val, cellIdx) => (
-                            <td key={cellIdx} className="p-2.5 sm:p-3 text-pearl/90 whitespace-nowrap">
+                            <td key={cellIdx} className="p-2 sm:p-3 text-pearl/90 whitespace-nowrap">
                               {val}
                             </td>
                           ))}
@@ -526,11 +529,11 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="p-5 sm:p-7 space-y-6"
+              className="p-3.5 xs:p-5 sm:p-7 space-y-4 sm:space-y-6"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
                 {/* Sliders Controls Column */}
-                <div className="lg:col-span-5 space-y-5 glass-1 p-5 rounded-xl border border-white/5">
+                <div className="lg:col-span-5 space-y-4 sm:space-y-5 glass-1 p-3.5 sm:p-5 rounded-xl border border-white/5">
                   <div className="flex items-center justify-between border-b border-white/5 pb-2">
                     <span className="text-xs font-semibold text-pearl flex items-center gap-1.5">
                       <Sliders className="w-4 h-4 text-champagne" />

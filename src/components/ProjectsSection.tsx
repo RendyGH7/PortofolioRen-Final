@@ -34,21 +34,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
     : PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="work" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto relative">
+    <section id="work" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl mx-auto relative">
       {/* Ambient Celestial Atmospheric Haze (Hardware-friendly blur on mobile) */}
       <div className="absolute top-1/3 -left-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[130px] pointer-events-none" />
 
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 relative z-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 relative z-10">
         <div className="text-left">
-          <h2 className="font-display text-3xl sm:text-4xl text-pearl font-normal">
+          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal">
             {lang === 'id' ? 'Karya Pilihan' : 'Selected Work'}
           </h2>
         </div>
 
         {/* Controls: Category Filter Pills */}
-        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full border border-white/10 shadow-glass-sm overflow-x-auto scrollbar-none flex-nowrap">
+        <div className="flex items-center gap-1 sm:gap-1.5 glass-1 p-1 sm:p-1.5 rounded-full border border-white/10 shadow-glass-sm overflow-x-auto scrollbar-none flex-nowrap self-start md:self-auto">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -66,7 +66,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
       </div>
 
       {/* Projects Showcase Grid: Balanced 3-Column Luxury Architecture */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7 items-stretch relative z-10">
         {filteredProjects.map((project) => {
           const isFeatured = project.id === 'warisara';
 
@@ -74,7 +74,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
             <div
               key={project.id}
               onClick={() => handleOpenModal(project)}
-              className="glass-2 rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 h-full"
+              className="glass-2 rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-6 flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-champagne/40 transition-all duration-500 relative overflow-hidden shadow-glass-md hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:-translate-y-2 h-full"
             >
               {/* Ambient Accent Radial Glow */}
               <div
@@ -208,7 +208,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-midnight-0/85 backdrop-blur-md"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-midnight-0/85 backdrop-blur-md"
                 onClick={() => setActiveModalProject(null)}
                 onKeyDown={(e) => e.key === 'Escape' && setActiveModalProject(null)}
                 tabIndex={0}
@@ -219,28 +219,34 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto overscroll-contain glass-3 rounded-2xl p-4 sm:p-6 space-y-3.5 sm:space-y-4 text-left relative shadow-glass-lg border border-white/10"
+              className="w-full max-w-2xl max-h-[92vh] overflow-y-auto overscroll-contain glass-3 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 space-y-3 sm:space-y-4 text-left relative shadow-glass-lg border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-white/10 pb-3">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-champagne/10 text-champagne border border-champagne/25">
+            <div className="flex items-start justify-between border-b border-white/10 pb-2.5 sm:pb-3 gap-2">
+              <div className="space-y-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full bg-champagne/10 text-champagne border border-champagne/25">
                     {activeModalProject.category}
                   </span>
-                  <span className="text-xs text-fog font-mono">• {activeModalProject.year}</span>
+                  <span className="text-[11px] sm:text-xs text-fog font-mono">• {activeModalProject.year}</span>
                 </div>
-                <h3 className="font-display text-2xl sm:text-3xl text-pearl font-normal">
+                <h3 className="font-display text-xl sm:text-3xl text-pearl font-normal truncate">
                   {activeModalProject.title}
                 </h3>
-                <p className="text-xs text-mist leading-relaxed">
-                  {activeModalProject.subtitle} • <span className="text-pearl/80 font-medium">Peran: {activeModalProject.role}</span>
+                <p className="text-[11px] sm:text-xs text-mist leading-relaxed">
+                  {activeModalProject.subtitle}
                 </p>
+                <div className="flex items-center gap-1.5 pt-0.5">
+                  <span className="text-[10px] text-fog font-medium">Peran:</span>
+                  <span className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-pearl/90">
+                    {activeModalProject.role}
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setActiveModalProject(null)}
-                className="p-1.5 rounded-full glass-1 text-mist hover:text-pearl transition-colors shrink-0 ml-2"
+                className="p-1.5 rounded-full glass-1 text-mist hover:text-pearl transition-colors shrink-0 ml-1"
                 aria-label="Tutup Modal"
               >
                 <X className="w-4 h-4" />
@@ -256,8 +262,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight-0/80 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-mono text-pearl">
-                  <span className="bg-midnight-1/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/15">
+                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono text-pearl">
+                  <span className="bg-midnight-1/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/15 text-[10px] sm:text-[11px] truncate">
                     Showcase Multi-Device
                   </span>
                   {activeModalProject.liveUrl && (
@@ -265,25 +271,25 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                       href={activeModalProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-champagne text-midnight-0 font-medium px-3 py-1 rounded-lg flex items-center gap-1.5 hover:brightness-110 transition-all shadow-sm"
+                      className="bg-champagne text-midnight-0 font-medium px-2.5 py-1 rounded-lg flex items-center gap-1 hover:brightness-110 transition-all shadow-sm shrink-0 text-[10.5px] sm:text-[11px]"
                     >
                       <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Site'}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-midnight-0" />
+                      <ArrowUpRight className="w-3 h-3 text-midnight-0" />
                     </a>
                   )}
                 </div>
               </div>
             ) : (
-              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-glass-md bg-gradient-to-br from-sapphire/25 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-sapphire/30 border border-sapphire/50 flex items-center justify-center text-pearl shadow-[0_0_24px_rgba(76,111,209,0.4)] mb-2.5">
-                  <Mic className="w-6 h-6 text-sapphire" />
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-glass-md bg-gradient-to-br from-sapphire/25 via-midnight-1 to-midnight-2 flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-sapphire/30 border border-sapphire/50 flex items-center justify-center text-pearl shadow-[0_0_24px_rgba(76,111,209,0.4)] mb-2">
+                  <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-sapphire" />
                 </div>
-                <h4 className="font-display text-base font-semibold text-pearl">Monetra AI & Voice DSP Engine</h4>
-                <p className="text-xs text-mist max-w-md mt-1">
+                <h4 className="font-display text-sm sm:text-base font-semibold text-pearl">Monetra AI & Voice DSP Engine</h4>
+                <p className="text-[11px] sm:text-xs text-mist max-w-md mt-1">
                   Pencatatan keuangan cerdas lewat suara dengan Gemini AI, Web Audio DSP, dan Aturan 50/30/20.
                 </p>
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-mono text-pearl">
-                  <span className="bg-midnight-1/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/15">
+                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono text-pearl">
+                  <span className="bg-midnight-1/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/15 text-[10px] sm:text-[11px] truncate">
                     Live Production Web App
                   </span>
                   {activeModalProject.liveUrl && (
@@ -291,65 +297,65 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                       href={activeModalProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-sapphire text-pearl font-medium px-3 py-1 rounded-lg flex items-center gap-1.5 hover:brightness-110 transition-all shadow-sm"
+                      className="bg-sapphire text-pearl font-medium px-2.5 py-1 rounded-lg flex items-center gap-1 hover:brightness-110 transition-all shadow-sm shrink-0 text-[10.5px] sm:text-[11px]"
                     >
                       <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Site'}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-pearl" />
+                      <ArrowUpRight className="w-3 h-3 text-pearl" />
                     </a>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Key Metrics Row */}
-            <div className="grid grid-cols-3 gap-2.5 p-3 rounded-xl glass-1 border border-white/5">
+            {/* Key Metrics Row (Fluid sizing: avoids wrapping like 'Laravel \n 11' on narrow screens) */}
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-xl glass-1 border border-white/5">
               {activeModalProject.metrics.map((m) => (
-                <div key={m.label} className="text-center sm:text-left px-2 py-0.5">
-                  <span className="font-mono text-lg sm:text-xl font-bold text-champagne block">
+                <div key={m.label} className="text-center sm:text-left px-1 sm:px-2 py-0.5 min-w-0">
+                  <span className="font-mono text-xs xs:text-sm sm:text-lg md:text-xl font-bold text-champagne block truncate tracking-tight">
                     {m.value}
                   </span>
-                  <span className="text-[11px] text-mist">{m.label}</span>
+                  <span className="text-[9.5px] sm:text-[11px] text-mist block truncate leading-tight mt-0.5">{m.label}</span>
                 </div>
               ))}
             </div>
 
             {/* Ringkasan & Fitur Proyek */}
-            <div className="space-y-3.5">
+            <div className="space-y-2.5 sm:space-y-3.5">
               {/* Tantangan & Solusi Teknis */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
-                  <span className="text-[11px] font-semibold text-champagne uppercase tracking-wider block">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                <div className="glass-1 p-3 sm:p-3.5 rounded-xl border border-white/5 space-y-1">
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-champagne uppercase tracking-wider block">
                     Tantangan
                   </span>
-                  <p className="text-xs text-mist leading-relaxed">{activeModalProject.problem}</p>
+                  <p className="text-[11px] sm:text-xs text-mist leading-relaxed">{activeModalProject.problem}</p>
                 </div>
-                <div className="glass-1 p-3.5 rounded-xl border border-white/5 space-y-1">
-                  <span className="text-[11px] font-semibold text-sapphire uppercase tracking-wider block">
+                <div className="glass-1 p-3 sm:p-3.5 rounded-xl border border-white/5 space-y-1">
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-sapphire uppercase tracking-wider block">
                     Solusi Teknis
                   </span>
-                  <p className="text-xs text-mist leading-relaxed">{activeModalProject.solution}</p>
+                  <p className="text-[11px] sm:text-xs text-mist leading-relaxed">{activeModalProject.solution}</p>
                 </div>
               </div>
 
               {/* Fitur Utama Sistem (Clean 2x2 Grid) */}
               <div className="space-y-2">
-                <h4 className="text-[11px] font-semibold text-fog uppercase tracking-wider">
+                <h4 className="text-[10px] sm:text-[11px] font-semibold text-fog uppercase tracking-wider">
                   Fitur Utama Sistem
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                   {activeModalProject.features.map((feat) => (
                     <div
                       key={feat.title}
-                      className="glass-1 p-3 rounded-xl border border-white/5 flex items-start gap-2.5"
+                      className="glass-1 p-2.5 sm:p-3 rounded-xl border border-white/5 flex items-start gap-2"
                     >
-                      <div className="w-5 h-5 rounded-md bg-champagne/10 text-champagne flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 text-champagne" />
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-champagne/10 text-champagne flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-champagne" />
                       </div>
                       <div className="min-w-0">
-                        <span className="text-xs font-medium text-pearl block truncate">
+                        <span className="text-[11px] sm:text-xs font-medium text-pearl block truncate">
                           {feat.title}
                         </span>
-                        <p className="text-[11px] text-mist leading-relaxed mt-0.5">
+                        <p className="text-[10px] sm:text-[11px] text-mist leading-relaxed mt-0.5">
                           {feat.desc}
                         </p>
                       </div>
@@ -360,14 +366,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
             </div>
 
             {/* Modal Footer */}
-            <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-2">
+            <div className="pt-2.5 sm:pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {activeModalProject.liveUrl && (
                   <a
                     href={activeModalProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-champagne px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm"
+                    className="btn-champagne px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shadow-sm"
                   >
                     <span>{lang === 'id' ? 'Kunjungi Situs' : 'Visit Website'}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-midnight-0" />
@@ -377,7 +383,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
                   href={activeModalProject.githubUrl || 'https://github.com/RendyGH7'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3.5 py-1.5 rounded-lg glass-2 hover:border-champagne/40 text-xs font-semibold text-pearl flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg glass-2 hover:border-champagne/40 text-[11px] sm:text-xs font-semibold text-pearl flex items-center gap-1.5 transition-colors"
                 >
                   <GithubIcon className="w-3.5 h-3.5 text-pearl" />
                   <span>Lihat di GitHub</span>
@@ -385,7 +391,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
               </div>
               <button
                 onClick={() => setActiveModalProject(null)}
-                className="px-3.5 py-1.5 rounded-lg glass-1 text-xs text-mist hover:text-pearl transition-colors"
+                className="px-3 py-1.5 rounded-lg glass-1 text-[11px] sm:text-xs text-mist hover:text-pearl transition-colors ml-auto sm:ml-0"
               >
                 Tutup
               </button>
