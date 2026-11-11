@@ -293,37 +293,68 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
             {/* ================= LUXURY CELESTIAL BACKDROP AURA ================= */}
             {/* 1. Outer Celestial Orbit Whisper Halo */}
             <div
-              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 pointer-events-none transition-transform duration-500 ease-out"
+              className="absolute top-[48%] left-1/2 pointer-events-none transition-transform duration-500 ease-out flex items-center justify-center"
               style={{
                 transform: `translate(calc(-50% + ${tilt.shadowX * 0.6}px), calc(-50% + ${tilt.shadowY * 0.6}px))`,
               }}
-            />
+            >
+              <div className="w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 transition-all duration-700 ease-out group-hover:scale-120 group-hover:border-sapphire/50 group-hover:shadow-[0_0_70px_rgba(76,111,209,0.35)] shrink-0" />
+            </div>
 
-            {/* 2. Concentric Golden Horizon Prestige Ring (Clean spherical contour without backdrop-filter clipping bug) */}
+            {/* 2. Concentric Golden Horizon Prestige Ring (Expands dynamically on hover) */}
             <div
-              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] pointer-events-none transition-transform duration-500 ease-out"
+              className="absolute top-[48%] left-1/2 pointer-events-none transition-transform duration-500 ease-out flex items-center justify-center"
               style={{
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
               }}
-            />
+            >
+              <div className="w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out group-hover:scale-115 group-hover:border-champagne/65 group-hover:shadow-[0_0_90px_rgba(245,176,39,0.50)] shrink-0" />
+            </div>
 
-            {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Seamless Radial Gradient, Zero Box Clamping) */}
+            {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Expands softly on hover) */}
             <div
-              className="absolute top-6 sm:top-8 lg:top-10 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full pointer-events-none transition-transform duration-300"
+              className="absolute top-6 sm:top-8 lg:top-10 left-1/2 pointer-events-none transition-transform duration-300 flex items-center justify-center"
               style={{
-                background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.52) 0%, rgba(245, 176, 39, 0.32) 26%, rgba(217, 130, 24, 0.12) 48%, rgba(245, 176, 39, 0.02) 65%, transparent 75%)',
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.4}px), ${tilt.shadowY * 1.4}px)`,
               }}
-            />
+            >
+              <div
+                className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out opacity-80 group-hover:opacity-100 group-hover:scale-135 shrink-0"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.65) 0%, rgba(245, 176, 39, 0.42) 28%, rgba(217, 130, 24, 0.18) 50%, rgba(245, 176, 39, 0.04) 70%, transparent 85%)',
+                }}
+              />
+            </div>
+
+            {/* 3b. Expansive Supernova Radiance Bloom (Bursts forth outward freely on hover, zero bounding box) */}
+            <div
+              className="absolute top-6 sm:top-8 lg:top-10 left-1/2 pointer-events-none transition-transform duration-300 flex items-center justify-center"
+              style={{
+                transform: `translate(calc(-50% + ${tilt.shadowX * 1.8}px), ${tilt.shadowY * 1.8}px)`,
+              }}
+            >
+              <div
+                className="w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-125 blur-3xl shrink-0"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.60) 0%, rgba(245, 176, 39, 0.38) 35%, rgba(217, 130, 24, 0.15) 60%, transparent 80%)',
+                }}
+              />
+            </div>
 
             {/* 4. Deep Royal Sapphire Nebula Core (Torso & Atmospheric Depth) */}
             <div
-              className="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 sm:w-96 sm:h-96 lg:w-[440px] lg:h-[440px] rounded-full pointer-events-none transition-transform duration-300"
+              className="absolute top-1/4 left-1/2 pointer-events-none transition-transform duration-300 flex items-center justify-center"
               style={{
-                background: 'radial-gradient(circle at center, rgba(76, 111, 209, 0.30) 0%, rgba(76, 111, 209, 0.10) 45%, transparent 72%)',
                 transform: `translate(calc(-50% + ${-tilt.shadowX * 1.2}px), ${-tilt.shadowY * 1.2}px)`,
               }}
-            />
+            >
+              <div
+                className="w-80 h-80 sm:w-96 sm:h-96 lg:w-[440px] lg:h-[440px] rounded-full transition-all duration-700 ease-out opacity-75 group-hover:opacity-100 group-hover:scale-120 shrink-0"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(76, 111, 209, 0.35) 0%, rgba(76, 111, 209, 0.12) 50%, transparent 75%)',
+                }}
+              />
+            </div>
 
             {/* 5. Pedestal Uplight Glow (Grounding Base) */}
             <div className="absolute bottom-4 w-44 sm:w-56 h-8 rounded-full bg-champagne/20 blur-lg pointer-events-none" />
@@ -366,7 +397,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
 
             {/* Cutout Photo of Rendy - SCALED SLIGHTLY DOWN & ELEVATED TO SIT UNDER PILLS AND COVERED AT BOTTOM BY NAME CAPSULE */}
             <div
-              className="relative z-10 w-full max-w-[230px] xs:max-w-[260px] sm:max-w-[290px] md:max-w-[315px] lg:max-w-[335px] flex items-end justify-center transition-transform duration-200 ease-out pb-3.5 sm:pb-4 origin-bottom"
+              className="relative z-10 w-full max-w-[230px] xs:max-w-[260px] sm:max-w-[290px] md:max-w-[315px] lg:max-w-[335px] flex items-end justify-center transition-transform duration-200 ease-out pb-3.5 sm:pb-4 origin-bottom overflow-visible"
               style={{
                 transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
               }}
@@ -374,7 +405,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] filter drop-shadow-[0_16px_32px_rgba(0,0,0,0.60)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300 [mask-image:linear-gradient(to_bottom,black_calc(100%-16px),transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%-16px),transparent_100%)]"
+                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] profile-photo-aura"
                 loading="lazy"
               />
             </div>

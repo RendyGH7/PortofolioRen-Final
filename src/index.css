@@ -272,6 +272,18 @@ body.overflow-locked {
   }
 }
 
+/* Rendy Profile Silhouette Light Burst (No Box Clipping, Expansive Cosmic Radiance) */
+.profile-photo-aura {
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.60));
+  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease-out;
+}
+
+.group:hover .profile-photo-aura {
+  filter: drop-shadow(0 0 18px rgba(245, 176, 39, 0.70))
+          drop-shadow(0 0 45px rgba(245, 176, 39, 0.45))
+          drop-shadow(0 0 85px rgba(245, 176, 39, 0.25));
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
