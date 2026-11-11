@@ -2,6 +2,10 @@
 <html lang="id" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules' https: blob: data: chrome-extension:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: chrome-extension:; media-src 'self' blob: data: https:; connect-src 'self' https: wss:; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+    />
     <link rel="icon" type="image/png" href="/assets/brand/logo.png" />
     <link rel="apple-touch-icon" href="/assets/brand/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
@@ -31,6 +35,25 @@
   </head>
   <body class="bg-midnight-0 text-pearl font-sans selection:bg-champagne/30 selection:text-pearl min-h-screen antialiased overflow-x-hidden">
     <div id="root"></div>
+    <!-- Safe Guard: Intercept third-party / browser extension visualizer exceptions so main app execution is never blocked -->
+    <script>
+      (function() {
+        window.addEventListener('error', function(event) {
+          if (event.filename && (event.filename.includes('visualizer.js') || event.filename.includes('chrome-extension://'))) {
+            console.warn('[SafeGuard] Intercepted external script error to preserve application rendering:', event.message);
+            event.preventDefault();
+            return true;
+          }
+        });
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = String(event.reason || '');
+          if (reason.includes('visualizer') || reason.includes('unsafe-eval')) {
+            console.warn('[SafeGuard] Intercepted external promise rejection:', reason);
+            event.preventDefault();
+          }
+        });
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
