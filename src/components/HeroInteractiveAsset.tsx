@@ -27,7 +27,7 @@ interface PlanetHardSkill {
 const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
   {
     id: 'frontend',
-    name: 'Frontend Web',
+    name: 'React 19',
     fullName: 'Frontend Architecture & UI',
     field: 'Bidang 01 // UI Engineering',
     tech: 'React 19 • TypeScript',
@@ -46,7 +46,7 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
   },
   {
     id: 'backend',
-    name: 'Backend API',
+    name: 'Laravel 11',
     fullName: 'Backend & System Architecture',
     field: 'Bidang 02 // Core Server',
     tech: 'Laravel 11 • PHP 8.3',
@@ -65,7 +65,7 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
   },
   {
     id: 'database',
-    name: 'Database SQL',
+    name: 'PostgreSQL',
     fullName: 'Database & Relational Storage',
     field: 'Bidang 03 // Data Storage',
     tech: 'PostgreSQL • MySQL',
@@ -84,7 +84,7 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
   },
   {
     id: 'cloud',
-    name: 'Cloud & SIJA',
+    name: 'SIJA Cloud',
     fullName: 'Cloud Infrastructure & DevOps',
     field: 'Bidang 04 // Infrastruktur',
     tech: 'SMKN 26 SIJA • Linux',
@@ -103,7 +103,7 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
   },
   {
     id: 'datascience',
-    name: 'Sains Data & AI',
+    name: 'TSDN AI',
     fullName: 'Data Science & Predictive ML',
     field: 'Bidang 05 // AI & Data',
     tech: 'Python • Top 7 TSDN',
@@ -641,24 +641,13 @@ export const HeroInteractiveAsset: React.FC<HeroInteractiveAssetProps> = ({ lang
               )}
             </div>
 
-            {/* ── HARD SKILL CLEAN MINIMAL LABEL ── */}
-            <div className="mt-1 flex flex-col items-center pointer-events-none transition-all duration-300">
-              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-midnight-0/90 border border-white/15 backdrop-blur-md shadow-md">
-                <span
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ backgroundColor: planet.color }}
-                />
-                <span
-                  className="font-mono text-[9px] sm:text-[10px] font-bold tracking-tight text-pearl whitespace-nowrap"
-                  style={{ color: isHovered ? planet.color : '#F8FAFC' }}
-                >
-                  {planet.name}
-                </span>
-              </div>
-              <span className="text-[7px] sm:text-[8px] font-mono text-mist/90 tracking-wider whitespace-nowrap mt-0.5 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-                {planet.tech}
-              </span>
-            </div>
+            {/* ── CLEAN BORDERLESS PLANET LABEL (No box, pure celestial typography) ── */}
+            <span
+              className="mt-1 font-mono text-[9px] sm:text-[10px] font-bold tracking-tight whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] pointer-events-none transition-colors"
+              style={{ color: isHovered ? planet.color : '#F8FAFC' }}
+            >
+              {planet.name}
+            </span>
 
             {/* ── INTERACTIVE HARD SKILL DETAIL HUD (Appears on Hover) ── */}
             {isHovered && (
