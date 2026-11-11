@@ -163,10 +163,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
         FLUID UNBOXED SPATIAL STAGING (No Rigid Master Enclosure Box - Modern, Open & Clean)
       */}
       <div className="relative w-full">
-        {/* Subtle Ambient Cosmic Haze for the Staging Area */}
-        <div className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-sapphire/20 blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-10 -right-20 w-96 h-96 rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/3 w-80 h-80 rounded-full bg-[#10B981]/10 blur-[110px] pointer-events-none" />
+        {/* Subtle Ambient Cosmic Haze for the Staging Area (Hardware-friendly blur on mobile) */}
+        <div className="absolute top-1/4 -left-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-10 -right-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[130px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/3 w-64 sm:w-80 h-64 sm:h-80 rounded-full bg-[#10B981]/10 blur-2xl sm:blur-[110px] pointer-events-none" />
 
         {/* 3-Column Decoupled Spatial Layout: Responsive 1-Col Mobile -> 2-Col Tablet -> 3-Col Desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-stretch relative z-10">

@@ -29,23 +29,13 @@ const ROLES_EN = [
   'Cloud & Modern Web Engineer',
 ];
 
-export const Hero: React.FC<HeroProps> = ({ lang }) => {
+// Isolated Typewriter Micro-Component: Prevents continuous Hero tree re-rendering
+const TypewriterText: React.FC<{ lang: 'id' | 'en' }> = ({ lang }) => {
   const roles = lang === 'id' ? ROLES_ID : ROLES_EN;
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Detect desktop viewports: Only desktop loads and renders the heavy 3D Three.js planet.
-  // Mobile iOS & Android remain 100% lightweight with zero 3D WebGL overhead.
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
-
-  // Smooth Typewriter Animation Engine
   useEffect(() => {
     const currentRole = roles[roleIndex % roles.length];
     let timer: ReturnType<typeof setTimeout>;
@@ -76,6 +66,29 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, roleIndex, roles]);
 
+  return (
+    <div className="flex items-center gap-2 text-sm sm:text-xl font-mono min-h-[28px] sm:min-h-[32px] pt-1">
+      <span className="text-champagne font-bold select-none">{'>_'}</span>
+      <span className="text-pearl font-medium tracking-tight">
+        {displayText}
+      </span>
+      <span className="inline-block w-2 sm:w-2.5 h-4 sm:h-5 bg-champagne ml-0.5 animate-pulse align-middle" />
+    </div>
+  );
+};
+
+export const Hero: React.FC<HeroProps> = ({ lang }) => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detect desktop viewports: Only desktop loads and renders the 3D Three.js planet.
+  // Mobile iOS & Android remain 100% lightweight with zero 3D WebGL overhead.
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
   const scrollTo = (id: string) => {
     smoothScrollTo(id, 80);
   };
@@ -85,9 +98,9 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
       id="hero"
       className="relative min-h-[92vh] flex items-center justify-center pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-visible"
     >
-      {/* Dynamic Ambient Hero Cosmic Haze */}
-      <div className="absolute top-1/4 -left-28 w-[500px] h-[500px] rounded-full bg-sapphire/20 blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] rounded-full bg-champagne/15 blur-[130px] pointer-events-none" />
+      {/* Dynamic Ambient Hero Cosmic Haze (Hardware-friendly blur on mobile) */}
+      <div className="absolute top-1/4 -left-28 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/3 w-[260px] sm:w-[400px] h-[260px] sm:h-[400px] rounded-full bg-champagne/15 blur-2xl sm:blur-[130px] pointer-events-none" />
 
       <div className="w-full max-w-6xl xl:max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
         {/* Left Column: Typography, Dynamic Typewriter & Intentional Persona Actions */}
@@ -102,13 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
             </h1>
 
             {/* Smooth Typewriter Terminal Line with Zero Layout Shift */}
-            <div className="flex items-center gap-2 text-sm sm:text-xl font-mono min-h-[28px] sm:min-h-[32px] pt-1">
-              <span className="text-champagne font-bold select-none">{'>_'}</span>
-              <span className="text-pearl font-medium tracking-tight">
-                {displayText}
-              </span>
-              <span className="inline-block w-2 sm:w-2.5 h-4 sm:h-5 bg-champagne ml-0.5 animate-pulse align-middle" />
-            </div>
+            <TypewriterText lang={lang} />
           </div>
 
           {/* Subtitle Statement */}

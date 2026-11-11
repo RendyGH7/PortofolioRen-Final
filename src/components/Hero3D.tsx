@@ -86,11 +86,11 @@ function createSeededNoise() {
  * and delicate bioluminescent night city constellations.
  * Dynamically scales resolution to ensure instant load on mobile (<15ms).
  */
-function createRealisticPlanetTextures(isMobile = false) {
+function createRealisticPlanetTextures(_isMobile = false) {
   const { noise3D, fbm3D } = createSeededNoise();
-  const width = isMobile ? 256 : 384;
-  const height = isMobile ? 128 : 192;
-  const continentOctaves = isMobile ? 3 : 4;
+  const width = 256;
+  const height = 128;
+  const continentOctaves = 3;
 
   // Albedo (Color Map)
   const albedoCanvas = document.createElement('canvas');
@@ -427,7 +427,8 @@ export const Hero3D: React.FC = () => {
     const height = container.clientHeight || 400;
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
+    // Optimized pixelRatio capped at 1.25: Prevents 4K/Retina GPU bottlenecks, locks smooth 60fps
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
@@ -465,8 +466,8 @@ export const Hero3D: React.FC = () => {
     const cloudTexture = createRealisticCloudTexture(isMobile);
     const satelliteTexture = createSatelliteTexture();
 
-    // 5. Dark Photorealistic Planet Surface Mesh
-    const sphereSegments = isMobile ? 36 : 64;
+    // 5. Dark Photorealistic Planet Surface Mesh (Optimized geometry for buttery smooth 60fps)
+    const sphereSegments = 38;
     const planetGeometry = new THREE.SphereGeometry(1.22, sphereSegments, sphereSegments);
     const planetMaterial = new THREE.MeshStandardMaterial({
       map: albedoTexture,
@@ -495,7 +496,7 @@ export const Hero3D: React.FC = () => {
     planetGroup.add(cloudMesh);
 
     // 7. Atmospheric Rayleigh Scattering Glow (Delicate thin blue limb - no cartoon outline!)
-    const atmosphereGeometry = new THREE.SphereGeometry(1.228, isMobile ? 32 : 48, isMobile ? 32 : 48);
+    const atmosphereGeometry = new THREE.SphereGeometry(1.228, 36, 36);
     const atmosphereMaterial = new THREE.ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
