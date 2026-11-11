@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = () => {
   };
 
   return (
-    <footer className="w-full bg-midnight-0/60 border-t border-white/[0.06] pt-12 pb-28 sm:pb-14 px-4 sm:px-6 lg:px-8 mt-24 relative z-20 backdrop-blur-xl">
+    <footer className="w-full bg-midnight-0/90 sm:bg-midnight-0/60 border-t border-white/[0.06] pt-12 pb-28 sm:pb-14 px-4 sm:px-6 lg:px-8 mt-24 relative z-20 sm:backdrop-blur-xl">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Main Architectural Strip */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 text-left">

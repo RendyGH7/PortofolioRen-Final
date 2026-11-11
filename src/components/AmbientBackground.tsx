@@ -31,7 +31,8 @@ export const AmbientBackground: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const isMobile = window.innerWidth < 768;
+    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
     const dims = {
       w: window.innerWidth,
       h: window.innerHeight,
@@ -71,7 +72,8 @@ export const AmbientBackground: React.FC = () => {
     const handleResize = () => {
       dims.w = window.innerWidth;
       dims.h = window.innerHeight;
-      const resizeDpr = Math.min(window.devicePixelRatio || 1, 2);
+      const currentIsMobile = window.innerWidth < 768;
+      const resizeDpr = currentIsMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = dims.w * resizeDpr;
       canvas.height = dims.h * resizeDpr;
       canvas.style.width = `${dims.w}px`;
@@ -104,7 +106,6 @@ export const AmbientBackground: React.FC = () => {
 
     // Multi-depth star field (Calibrated for peaceful, elegant cosmic depth)
     const stars: Star[] = [];
-    const isMobile = window.innerWidth < 768;
     const starCount = isMobile ? 68 : 320;
     const colors = isMobile ? mobileStarColors : desktopStarColors;
 
@@ -179,10 +180,15 @@ export const AmbientBackground: React.FC = () => {
 
       // Parallax smooth interpolation
       if (!prefersReducedMotion) {
-        mousePos.x += (mousePos.targetX - mousePos.x) * 0.05;
-        mousePos.y += (mousePos.targetY - mousePos.y) * 0.05;
-        // Scroll lerp creates physical inertia as user travels downward through space
-        scrollState.currentY += (scrollState.targetY - scrollState.currentY) * 0.08;
+        if (!isMobile) {
+          mousePos.x += (mousePos.targetX - mousePos.x) * 0.05;
+          mousePos.y += (mousePos.targetY - mousePos.y) * 0.05;
+          // Scroll lerp creates physical inertia as user travels downward through space
+          scrollState.currentY += (scrollState.targetY - scrollState.currentY) * 0.08;
+        } else {
+          // Sync scroll synchronously on mobile to avoid momentum scroll judder on iOS Safari
+          scrollState.currentY = window.scrollY || 0;
+        }
       }
 
       ctx.clearRect(0, 0, dims.w, dims.h);
@@ -199,10 +205,10 @@ export const AmbientBackground: React.FC = () => {
         const mouseFactor = s.layer === 1 ? 0.25 : s.layer === 2 ? 0.65 : 1.1;
 
         // Calculate screen coordinates with vertical cosmic descent
-        let drawY = s.y - scrollState.currentY * scrollFactor + mousePos.y * mouseFactor;
+        let drawY = s.y - scrollState.currentY * scrollFactor + (isMobile ? 0 : mousePos.y * mouseFactor);
         drawY = ((drawY % dims.h) + dims.h) % dims.h;
 
-        let drawX = s.x + mousePos.x * mouseFactor;
+        let drawX = s.x + (isMobile ? 0 : mousePos.x * mouseFactor);
         drawX = ((drawX % dims.w) + dims.w) % dims.w;
 
         // Twinkle Alpha calculation
@@ -223,7 +229,6 @@ export const AmbientBackground: React.FC = () => {
           }
         }
 
-        ctx.save();
         ctx.globalAlpha = alpha;
         ctx.fillStyle = s.color;
 
@@ -247,8 +252,8 @@ export const AmbientBackground: React.FC = () => {
           ctx.stroke();
         }
 
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
       // Meteors occasionally streaking through the cosmos
       if (!prefersReducedMotion) {
@@ -287,12 +292,16 @@ export const AmbientBackground: React.FC = () => {
           ctx.lineTo(m.x, m.y);
           ctx.stroke();
 
-          // Meteor starlight head
+          // Meteor starlight head (Without expensive ctx.shadowBlur which triggers CPU blur on WebKit)
           ctx.fillStyle = '#FFFFFF';
-          ctx.shadowColor = '#F5B027';
-          ctx.shadowBlur = 9;
           ctx.beginPath();
           ctx.arc(m.x, m.y, m.thickness * 1.3, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Soft starlight glow halo (Hardware-native vector circle instead of shadowBlur)
+          ctx.fillStyle = 'rgba(245, 176, 39, 0.4)';
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.thickness * 2.6, 0, Math.PI * 2);
           ctx.fill();
           ctx.restore();
         }
@@ -323,7 +332,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-0 left-0 right-0 h-[1000px]">
           {/* Sapphire Orbital Dawn Glow (Static Hardware-Accelerated Gradient) */}
           <div
-            className="absolute w-[65vw] h-[65vw] -top-[15vw] -right-[10vw] rounded-full opacity-30 blur-3xl md:blur-[120px] pointer-events-none"
+            className="absolute w-[65vw] h-[65vw] -top-[15vw] -right-[10vw] rounded-full opacity-30 blur-none md:blur-[120px] pointer-events-none transform-gpu"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #16213F 60%, transparent 80%)',
             }}
@@ -337,7 +346,7 @@ export const AmbientBackground: React.FC = () => {
             <div className="relative w-28 h-20 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-sm sm:blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
                     'radial-gradient(circle, rgba(245, 176, 39, 0.45) 0%, rgba(227, 154, 94, 0.25) 45%, rgba(99, 102, 241, 0.15) 70%, transparent 80%)',
@@ -530,13 +539,13 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 1: Photorealistic Ringed Gas Giant (Cassini / Kepler-186f Orbit) */}
           <div
-            className="absolute top-[8px] sm:top-[26px] md:top-[34px] -right-4 sm:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-30 sm:opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-70 sm:scale-100 origin-top-right"
+            className="absolute top-[8px] sm:top-[26px] md:top-[34px] -right-4 sm:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-30 sm:opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-70 sm:scale-100 origin-top-right transform-gpu"
             title="Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Bands & 3D Rings)"
           >
             <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-sm sm:blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
                     'radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(245, 176, 39, 0.22) 50%, transparent 75%)',
@@ -812,7 +821,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[1050px] left-0 right-0 h-[1100px]">
           {/* Cyan Aurora Cosmic Dust Sheet */}
           <div
-            className="absolute w-[60vw] h-[45vw] top-[100px] -left-[15vw] rounded-full opacity-30 blur-2xl md:blur-[140px]"
+            className="absolute w-[60vw] h-[45vw] top-[100px] -left-[15vw] rounded-full opacity-30 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #174E56 50%, transparent 80%)',
             }}
@@ -820,13 +829,13 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 4: Photorealistic Cyan Ice Gas Giant */}
           <div
-            className="absolute top-[220px] sm:top-[260px] left-[1%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[220px] sm:top-[260px] left-[1%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group transform-gpu"
             title="Cyan Ice Gas Giant (Kepler-452b Frosted Rings)"
           >
             <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-sm sm:blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
                     'radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, rgba(44, 122, 133, 0.25) 45%, transparent 75%)',
@@ -959,7 +968,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[2150px] left-0 right-0 h-[1300px]">
           {/* Majestic Spiral Galaxy Core */}
           <div
-            className="absolute w-[70vw] h-[70vw] top-[50px] right-[-10vw] rounded-full opacity-35 blur-2xl md:blur-[140px]"
+            className="absolute w-[70vw] h-[70vw] top-[50px] right-[-10vw] rounded-full opacity-35 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #1E336B 45%, #0F1830 75%, transparent 90%)',
             }}
@@ -967,13 +976,13 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 5: Photorealistic Amethyst Gas Giant */}
           <div
-            className="absolute top-[280px] sm:top-[320px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[280px] sm:top-[320px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group transform-gpu"
             title="Amethyst Gas Giant Exoplanet (Kepler-16b Orbital Rings)"
           >
             <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-sm sm:blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
                     'radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(107, 33, 168, 0.25) 45%, transparent 75%)',
@@ -1104,7 +1113,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Deep Indigo Stardust Stream across Projects */}
           <div
-            className="absolute w-[45vw] h-[35vw] top-[600px] left-[-8vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
+            className="absolute w-[45vw] h-[35vw] top-[600px] left-[-8vw] rounded-full opacity-25 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #4C6FD1 0%, #16213F 65%, transparent 85%)',
             }}
@@ -1117,7 +1126,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[3450px] left-0 right-0 h-[1200px]">
           {/* Radiant Solar Gold Supernova Remnant Nebula */}
           <div
-            className="absolute w-[65vw] h-[55vw] top-[80px] right-[-12vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
+            className="absolute w-[65vw] h-[55vw] top-[80px] right-[-12vw] rounded-full opacity-25 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #F5B027 0%, #D98218 45%, #6B3D06 70%, transparent 85%)',
             }}
@@ -1125,7 +1134,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* The Golden Crater Moon (Solar Satellite) */}
           <div
-            className="absolute top-[260px] right-[4%] md:right-[7%] z-10 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-700 pointer-events-none group"
+            className="absolute top-[260px] right-[4%] md:right-[7%] z-10 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-700 pointer-events-none group transform-gpu"
             title="Golden Moon (Solar Satellite)"
           >
             <div className="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">
@@ -1149,7 +1158,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Emerald Cosmic Filament behind Dev Studio Labs */}
           <div
-            className="absolute w-[50vw] h-[40vw] top-[550px] -left-[12vw] rounded-full opacity-25 blur-2xl md:blur-[140px]"
+            className="absolute w-[50vw] h-[40vw] top-[550px] -left-[12vw] rounded-full opacity-25 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #1A545D 55%, transparent 80%)',
             }}
@@ -1162,7 +1171,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[4650px] left-0 right-0 h-[1050px]">
           {/* Deep Indigo Cosmic Void */}
           <div
-            className="absolute w-[60vw] h-[50vw] top-[50px] left-[5vw] rounded-full opacity-28 blur-2xl md:blur-[140px]"
+            className="absolute w-[60vw] h-[50vw] top-[50px] left-[5vw] rounded-full opacity-28 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #1E2D54 0%, #0F1830 65%, transparent 85%)',
             }}
@@ -1170,13 +1179,13 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 6: Photorealistic Copper Ember Gas Giant */}
           <div
-            className="absolute top-[180px] sm:top-[220px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[180px] sm:top-[220px] right-[1%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group transform-gpu"
             title="Copper Ember Gas Giant Exoplanet (Proxima Centauri Rings)"
           >
             <div className="relative w-32 h-22 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
               {/* Volumetric Planetary Starlight Haze */}
               <div
-                className="absolute inset-2 rounded-full blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
+                className="absolute inset-2 rounded-full blur-sm sm:blur-[32px] opacity-45 pointer-events-none group-hover:opacity-75 transition-opacity duration-700"
                 style={{
                   background:
                     'radial-gradient(circle, rgba(244, 63, 94, 0.45) 0%, rgba(190, 18, 60, 0.25) 45%, rgba(245, 176, 39, 0.15) 70%, transparent 80%)',
@@ -1307,7 +1316,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Outer Stardust Haze */}
           <div
-            className="absolute w-[45vw] h-[45vw] top-[400px] right-[-8vw] rounded-full opacity-22 blur-2xl md:blur-[140px]"
+            className="absolute w-[45vw] h-[45vw] top-[400px] right-[-8vw] rounded-full opacity-22 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #3A58B8 0%, #16213F 60%, transparent 80%)',
             }}
@@ -1320,7 +1329,7 @@ export const AmbientBackground: React.FC = () => {
         <div className="absolute top-[5700px] left-0 right-0 bottom-0 min-h-[1400px]">
           {/* Stardust River flowing behind Contact & Footer */}
           <div
-            className="absolute w-[70vw] h-[60vw] top-[50px] left-1/2 -translate-x-1/2 rounded-full opacity-25 blur-2xl md:blur-[140px]"
+            className="absolute w-[70vw] h-[60vw] top-[50px] left-1/2 -translate-x-1/2 rounded-full opacity-25 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #2C7A85 0%, #1E336B 45%, #0A1020 80%, transparent 95%)',
             }}
@@ -1328,7 +1337,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Distant Terrestrial Dwarf Planet at Cosmic Edge */}
           <div
-            className="absolute top-[420px] left-[6%] md:left-[10%] z-10 flex items-center justify-center opacity-60 hover:opacity-90 transition-opacity duration-700"
+            className="absolute top-[420px] left-[6%] md:left-[10%] z-10 flex items-center justify-center opacity-60 hover:opacity-90 transition-opacity duration-700 transform-gpu"
             title="Cosmic Horizon Dwarf Planet"
           >
             <div
@@ -1342,7 +1351,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* Solar Warmth Glow on Footer Edge */}
           <div
-            className="absolute w-[50vw] h-[40vw] bottom-[40px] right-[5vw] rounded-full opacity-20 blur-2xl md:blur-[140px]"
+            className="absolute w-[50vw] h-[40vw] bottom-[40px] right-[5vw] rounded-full opacity-20 blur-none md:blur-[140px] transform-gpu"
             style={{
               background: 'radial-gradient(circle, #F5B027 0%, #D98218 45%, transparent 75%)',
             }}

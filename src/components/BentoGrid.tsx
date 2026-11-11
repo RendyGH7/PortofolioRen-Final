@@ -381,7 +381,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
             >
-              <div className="glass-3 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1 sm:gap-2 backdrop-blur-md">
+              <div className="glass-3 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full border border-sapphire/50 shadow-glass-md flex items-center gap-1 sm:gap-2">
                 <Code2 className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-sapphire shrink-0" />
                 <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-semibold text-pearl tracking-tight whitespace-nowrap">Full Stack Developer</span>
               </div>
@@ -394,7 +394,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
             >
-              <div className="glass-3 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1 sm:gap-2 backdrop-blur-md">
+              <div className="glass-3 px-2 xs:px-2.5 sm:px-3.5 py-0.5 sm:py-1.5 rounded-full border border-champagne/50 shadow-glass-md flex items-center gap-1 sm:gap-2">
                 <GraduationCap className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-champagne shrink-0" />
                 <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-mono text-champagne font-medium whitespace-nowrap">SMKN 26 Jakarta</span>
               </div>
@@ -417,7 +417,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
 
             {/* Bottom Floating Identity Capsule - COVERS THE CROPPED BOTTOM OF THE PHOTO */}
             <div className="absolute bottom-0 z-20 pointer-events-none flex flex-col items-center text-center">
-              <div className="glass-3 bg-midnight-0/95 sm:bg-midnight-0/90 px-3 xs:px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-full border border-champagne/45 shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_24px_rgba(245,176,39,0.22)] flex items-center justify-center gap-1.5 sm:gap-2.5 backdrop-blur-2xl">
+              <div className="glass-3 bg-midnight-0/95 sm:bg-midnight-0/90 px-3 xs:px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-full border border-champagne/45 shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_24px_rgba(245,176,39,0.22)] flex items-center justify-center gap-1.5 sm:gap-2.5">
                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-champagne shadow-[0_0_8px_#F5B027] shrink-0" />
                 <span className="text-[11px] xs:text-xs sm:text-sm font-semibold text-pearl tracking-tight whitespace-nowrap">
                   Rendy Fernando Tambunan

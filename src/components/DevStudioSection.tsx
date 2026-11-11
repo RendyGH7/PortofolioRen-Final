@@ -461,8 +461,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   return (
     <section id="studio" className="py-14 sm:py-20 px-3 xs:px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative text-left">
       {/* Ambient Cosmic Haze Glow */}
-      <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
-      <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-2xl sm:blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
+      <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 relative z-10">
@@ -506,7 +506,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       </div>
 
       {/* Main Interactive System Architecture Canvas */}
-      <div className="glass-2 rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg relative z-10 backdrop-blur-xl">
+      <div className="glass-2 rounded-2xl sm:rounded-3xl border border-white/10 overflow-hidden shadow-glass-lg relative z-10">
         
         {/* Top Architectural Telemetry Bar */}
         <div className="px-3.5 sm:px-6 py-3 bg-midnight-1/80 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">

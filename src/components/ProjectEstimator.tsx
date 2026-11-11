@@ -185,11 +185,11 @@ export const ProjectEstimator: React.FC<ProjectEstimatorProps> = ({ lang }) => {
     >
       {/* Background Starlight Ambient Halo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-champagne/15 via-sapphire/20 to-transparent blur-3xl opacity-80" />
+        <div className="w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-champagne/15 via-sapphire/20 to-transparent blur-xl sm:blur-3xl opacity-80 transform-gpu" />
       </div>
 
       {/* Main Glass Console */}
-      <div className="relative z-10 w-full glass-2 rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-5 border border-white/10 hover:border-champagne/35 transition-all duration-500 shadow-glass-lg backdrop-blur-md text-left">
+      <div className="relative z-10 w-full glass-2 rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-5 border border-white/10 hover:border-champagne/35 transition-all duration-500 shadow-glass-lg text-left">
         
         {/* Top Header Bar: Telemetry & Title */}
         <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-white/10 mb-3 sm:mb-3.5">

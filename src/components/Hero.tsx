@@ -88,8 +88,8 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
       className="relative min-h-[92vh] flex items-center justify-center pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-visible"
     >
       {/* Dynamic Ambient Hero Cosmic Haze (Hardware-friendly blur on mobile) */}
-      <div className="absolute top-1/4 -left-28 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-sapphire/20 blur-2xl sm:blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/3 w-[260px] sm:w-[400px] h-[260px] sm:h-[400px] rounded-full bg-champagne/15 blur-2xl sm:blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-28 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-sapphire/20 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
+      <div className="absolute top-1/2 left-1/3 w-[260px] sm:w-[400px] h-[260px] sm:h-[400px] rounded-full bg-champagne/15 blur-md sm:blur-[130px] pointer-events-none transform-gpu" />
 
       {/* Mobile Text Readability Soft Veil (Guarantees zero text interference from stars) */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_35%_35%,rgba(10,16,32,0.80)_0%,rgba(10,16,32,0.40)_60%,transparent_85%)] sm:hidden z-0" />
