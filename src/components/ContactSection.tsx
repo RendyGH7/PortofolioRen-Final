@@ -238,7 +238,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang }) => {
               {/* Location */}
               <div className="flex items-center gap-2.5 p-3 rounded-xl glass-1 border border-white/10">
                 <MapPin className="w-4 h-4 text-petrol shrink-0" />
-                <span className="text-pearl text-xs">{PERSONAL_DATA.location} (WIB)</span>
+                <span className="text-pearl text-xs">
+                  {lang === 'id' ? PERSONAL_DATA.address : PERSONAL_DATA.location} (WIB)
+                </span>
               </div>
             </div>
           </div>

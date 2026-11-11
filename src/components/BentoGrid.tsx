@@ -27,60 +27,74 @@ interface SkillDetail {
 
 const SKILL_DETAILS: SkillDetail[] = [
   {
-    name: 'React & TS',
+    name: 'Javascript',
     category: 'frontend',
     level: 90,
-    role: 'Frontend Engineering',
-    context: 'Komponen modular dengan TypeScript strict typing, state management terpusat, dan animasi smooth 60fps.',
+    role: 'Core Web & ESNext',
+    context: 'Manipulasi DOM native, Web Audio API, Canvas 2D, event-loop asynchronous, dan interaktivitas dinamis performa tinggi.',
   },
   {
-    name: 'Tailwind CSS',
+    name: 'Tailwind',
     category: 'frontend',
-    level: 95,
+    level: 90,
     role: 'Design Systems & UI',
-    context: 'Sistem desain atomik Midnight Glass, fluid typography, dark mode, dan arsitektur visual responsif.',
+    context: 'Sistem desain atomik Midnight Glass, fluid typography, dark mode, antarmuka responsif mobile-first, dan presisi visual.',
+  },
+  {
+    name: 'Git & GitHub',
+    category: 'backend',
+    level: 90,
+    role: 'Version Control & DevOps',
+    context: 'Manajemen percabangan repositori kolaboratif, pull request review, otomasi GitHub CI/CD, dan sinkronisasi deployment produksi.',
+  },
+  {
+    name: 'Typescript',
+    category: 'frontend',
+    level: 85,
+    role: 'Strict Typing & Tooling',
+    context: 'Arsitektur komponen tipe ketat, generic interfaces terstruktur, pencegahan runtime bug, dan maintainability jangka panjang.',
+  },
+  {
+    name: 'React',
+    category: 'frontend',
+    level: 85,
+    role: 'Component Architecture',
+    context: 'Arsitektur Single Page Application (SPA), state management terpusat (Redux/Zustand), custom hooks, dan render mulus 60fps.',
   },
   {
     name: 'Laravel',
     category: 'backend',
     level: 80,
     role: 'MVC Backend Architecture',
-    context: 'Pondasi RESTful API, Eloquent ORM, webhook pembayaran otomatis, dan autentikasi sesi aman pada RenStore.',
-  },
-  {
-    name: 'SQL Database',
-    category: 'data',
-    level: 85,
-    role: 'Relational Schema & Indexing',
-    context: 'Perancangan skema relasional, optimasi query berindeks B-tree, dan integritas transaksi ACID (PostgreSQL & MySQL).',
-  },
-  {
-    name: 'Python',
-    category: 'data',
-    level: 82,
-    role: 'Data Science & Modeling',
-    context: 'Pemodelan data analitik prediktif & machine learning pada Turnamen Sains Data Nasional (TSDN Top 7 Finalist).',
-  },
-  {
-    name: 'Node.js',
-    category: 'backend',
-    level: 86,
-    role: 'Runtime & Event Engine',
-    context: 'Micro-backend modular, penanganan asynchronous I/O, rate limiting, dan validasi schema Zod.',
+    context: 'Pondasi RESTful API, Eloquent ORM, webhook pembayaran otomatis, dan autentikasi sesi aman pada sistem e-commerce RenStore.',
   },
   {
     name: 'PHP',
     category: 'backend',
     level: 80,
     role: 'Server-Side Engineering',
-    context: 'Pemrograman backend berorientasi objek (OOP), integrasi database relasional, dan API controller terstruktur.',
+    context: 'Pemrograman backend OOP terstruktur, controller modular, validasi request ketat, dan integrasi database relasional.',
   },
   {
-    name: 'Cloud & Linux',
+    name: 'PostgreSQL',
     category: 'data',
-    level: 84,
-    role: 'DevOps & Infrastructure',
-    context: 'Manajemen server Linux VPS, konfigurasi Nginx reverse proxy, otomasi deployment Git, dan system hardening.',
+    level: 77,
+    role: 'Advanced Database & RLS',
+    context: 'Perancangan skema relasional, isolasi privasi data Row Level Security (RLS) di Supabase, dan integritas transaksi ACID.',
+  },
+  {
+    name: 'MySQL',
+    category: 'data',
+    level: 77,
+    role: 'Relational Schema & Querying',
+    context: 'Normalisasi tabel relasional, pengindeksan query efisien berkecepatan tinggi, dan integrasi backend Laravel/PHP.',
+  },
+  {
+    name: 'Python',
+    category: 'data',
+    level: 70,
+    role: 'Data Science & Modeling',
+    context: 'Analisis dataset skala besar, rekayasa fitur data statistik, dan pemodelan prediktif machine learning (TSDN Grand Finalist).',
   },
 ];
 
@@ -184,7 +198,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                   </span>
                 </div>
                 <span className="text-[10px] font-mono text-fog px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
-                  8 Keahlian
+                  {lang === 'id' ? '10 Keahlian' : '10 Skills'}
                 </span>
               </div>
 

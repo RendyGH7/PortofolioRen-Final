@@ -154,19 +154,19 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-champagne/30 transition-all">
                 <div className="flex items-center justify-between text-[10px] font-mono text-fog">
                   <span>FRONTEND</span>
-                  <span className="text-champagne font-semibold">98%</span>
+                  <span className="text-champagne font-semibold">90%</span>
                 </div>
-                <p className="text-xs font-semibold text-pearl mt-1">React 19 & TypeScript</p>
-                <p className="text-[10px] text-mist">Tailwind CSS • Modern UI</p>
+                <p className="text-xs font-semibold text-pearl mt-1">JS, TS & React</p>
+                <p className="text-[10px] text-mist">Tailwind CSS • UI/UX Design</p>
               </div>
 
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-sapphire/30 transition-all">
                 <div className="flex items-center justify-between text-[10px] font-mono text-fog">
                   <span>BACKEND</span>
-                  <span className="text-sapphire font-semibold">86%</span>
+                  <span className="text-sapphire font-semibold">80%</span>
                 </div>
-                <p className="text-xs font-semibold text-pearl mt-1">Laravel 11 & Node.js</p>
-                <p className="text-[10px] text-mist">PostgreSQL • REST API</p>
+                <p className="text-xs font-semibold text-pearl mt-1">Laravel & PHP</p>
+                <p className="text-[10px] text-mist">SQL Database • Git & GitHub</p>
               </div>
             </div>
           )}
@@ -176,11 +176,11 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
                 <span className="text-[10px] font-mono text-fog uppercase">Sistem Bisnis</span>
                 <p className="text-lg font-bold text-champagne font-mono">1.000+</p>
-                <p className="text-[10px] text-mist">Transaksi Sukses RenStore</p>
+                <p className="text-[10px] text-mist">Positive Reviews di Zeusx</p>
               </div>
 
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-                <span className="text-[10px] font-mono text-fog uppercase">Skalabilitas</span>
+                <span className="text-[10px] font-mono text-fog uppercase">Performa Web</span>
                 <p className="text-lg font-bold text-emerald-400 font-mono">99.9%</p>
                 <p className="text-[10px] text-mist">Target Uptime & Produksi</p>
               </div>
@@ -192,14 +192,14 @@ export const HeroOrbitalCockpit: React.FC<HeroOrbitalCockpitProps> = ({ lang }) 
               <div>
                 <div className="flex items-center gap-1.5 text-champagne text-xs font-bold">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Top 7 Finalis Nasional (TSDN)</span>
+                  <span>Grand Finalis TSDN (Top 7)</span>
                 </div>
                 <p className="text-[11px] text-mist mt-0.5">
-                  Turnamen Sains Data Nasional — Data Academy (Desember 2024)
+                  Turnamen Sains Data Nasional — Data Academy (Des 2024)
                 </p>
               </div>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-champagne/20 text-champagne shrink-0 ml-2">
-                Prestasi
+                Nasional
               </span>
             </div>
           )}

@@ -13,18 +13,20 @@ interface HeroProps {
 
 const ROLES_ID = [
   'Full Stack Web Developer',
-  'Laravel 11 & React 19 Architect',
-  'Founder of RenStore Platform',
-  'Top 7 Turnamen Sains Data Nasional',
-  'Cloud & Modern Web Engineer',
+  'Frontend Specialist & UI/UX',
+  'Web Developer @ PT Sistegra Emran Sentosa',
+  'Founder of RenStore Platform (1.000+ Reviews)',
+  'Grand Finalis Sains Data Nasional (TSDN)',
+  'Cloud Computing Mentor',
 ];
 
 const ROLES_EN = [
   'Full Stack Web Developer',
-  'Laravel 11 & React 19 Architect',
-  'Founder of RenStore Platform',
-  'Top 7 National Data Science Finalist',
-  'Cloud & Modern Web Engineer',
+  'Frontend Specialist & UI/UX',
+  'Web Developer @ PT Sistegra Emran Sentosa',
+  'Founder of RenStore Platform (1.000+ Reviews)',
+  'National Data Science Grand Finalist',
+  'Cloud Computing Mentor',
 ];
 
 // Isolated Typewriter Micro-Component: Prevents continuous Hero tree re-rendering

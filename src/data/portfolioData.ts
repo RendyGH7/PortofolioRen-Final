@@ -45,15 +45,24 @@ export interface AwardItem {
   description: string;
 }
 
+export interface SoftSkillItem {
+  name: string;
+  category: string;
+  level: number;
+}
+
 export const PERSONAL_DATA = {
   name: "Rendy Fernando Tambunan",
   nickname: "Rendy",
   monogram: "RFT",
   role: "Full Stack Developer",
-  location: "Jakarta Timur, DKI Jakarta",
+  location: "Kayu Ramin Street, East Jakarta, DKI",
+  address: "Jl. Kayu Ramin, Jakarta Timur, DKI Jakarta",
+  birthDate: "Jakarta, 17 November 2007",
   timeZone: "Asia/Jakarta (WIB • GMT+7)",
   email: "rendyftbaru@gmail.com",
   phone: "+62 896-6955-7444",
+  website: "https://renfertz.vercel.app/",
   web3FormsAccessKey: "", // Opsional: Dapatkan Access Key gratis di https://web3forms.com untuk pengiriman otomatis tanpa membuka email
   socials: {
     github: "https://github.com/RendyGH7",
@@ -63,11 +72,14 @@ export const PERSONAL_DATA = {
   },
   education: {
     school: "SMK Negeri 26 Jakarta",
+    schoolEn: "Vocational High School 26 Jakarta",
     major: "Sistem Informasi Jaringan dan Aplikasi (SIJA)",
     period: "2023 - 2027",
-    note: "Fokus kejuruan pada rekayasa perangkat lunak, arsitektur jaringan komputer, dan infrastruktur cloud.",
+    note: "Fokus kejuruan pada rekayasa perangkat lunak, pengembangan antarmuka interaktif modern, arsitektur jaringan komputer, dan infrastruktur cloud.",
   },
-  aspirations: ["Software Engineer", "Tech Entrepreneur"],
+  aspirations: ["Full Stack Developer", "Businessman"],
+  hobbies: ["Exercise", "Doing business"],
+  quote: "Never stop learning, create meaningful work, and strive for a bright future.",
   languages: [
     { name: "Indonesia", level: "Bahasa Ibu", pct: 100 },
     { name: "Inggris", level: "Kemampuan Kerja Profesional", pct: 85 },
@@ -78,114 +90,125 @@ export const PERSONAL_DATA = {
     textEn: "Available for projects & collaboration",
   },
   bio: {
-    id: "Full Stack Developer berbasis di Jakarta dengan spesialisasi pengembangan antarmuka interaktif, arsitektur sistem modular, dan solusi digital yang terukur.",
-    en: "Full Stack Developer based in Jakarta specializing in interactive interface engineering, modular system architecture, and measurable digital solutions.",
+    id: "Saya adalah Rendy Fernando Tambunan, siswa SMK Negeri 26 Jakarta jurusan SIJA dengan keahlian utama di bidang Frontend Development dan desain antarmuka. Memiliki kemampuan menciptakan antarmuka web modern, interaktif, dan user-friendly, serta memiliki minat kuat dalam dunia bisnis yang mendorong pola pikir kreatif, adaptif, dan berorientasi solusi.",
+    en: "My name is Rendy Fernando Tambunan, a student at SMK Negeri 26 Jakarta majoring in SIJA with expertise in Frontend Development and design. I have the ability to create modern, interactive, and user-friendly web interfaces. In addition, I also have a keen interest in business, which drives me to continue to develop with a creative, adaptive, and solution-oriented mindset.",
   },
 };
 
 export const HARD_SKILLS = [
-  { name: "React & TS", category: "Frontend", level: 90 },
-  { name: "Tailwind CSS", category: "Frontend", level: 95 },
+  { name: "Javascript", category: "Frontend", level: 90 },
+  { name: "Tailwind", category: "Frontend", level: 90 },
+  { name: "Git & GitHub", category: "Tools & DevOps", level: 90 },
+  { name: "Typescript", category: "Frontend", level: 85 },
+  { name: "React", category: "Frontend", level: 85 },
   { name: "Laravel", category: "Backend Framework", level: 80 },
-  { name: "Database (SQL)", category: "Database", level: 85 },
-  { name: "Python", category: "Backend & Data", level: 82 },
-  { name: "Node.js", category: "Backend", level: 86 },
   { name: "PHP", category: "Backend", level: 80 },
-  { name: "Cloud & Linux", category: "Infrastructure", level: 84 },
-  { name: "PostgreSQL / MySQL", category: "Database", level: 85 },
-  { name: "Kotlin & XML", category: "Mobile", level: 70 },
+  { name: "PostgreSQL", category: "Database", level: 77 },
+  { name: "MySQL", category: "Database", level: 77 },
+  { name: "Python", category: "Data & Backend", level: 70 },
+];
+
+export const SOFT_SKILLS: SoftSkillItem[] = [
+  { name: "Attitude", category: "Interpersonal", level: 99 },
+  { name: "Communication", category: "Kolaborasi", level: 95 },
+  { name: "Teamwork", category: "Kolaborasi", level: 94 },
+  { name: "Creativity", category: "Inovasi", level: 90 },
+  { name: "Responsibility", category: "Profesionalisme", level: 90 },
 ];
 
 export const AWARDS: AwardItem[] = [
   {
     id: "award-1",
-    title: "Grand Finalis (Top 7) Turnamen Sains Data Nasional (TSDN)",
+    title: "Grand Finalis Turnamen Sains Data Nasional (TSDN)",
     issuer: "Data Academy",
     date: "Desember 2024",
     level: "Tingkat Nasional",
-    description: "Meraih posisi 7 besar nasional dalam kompetisi analisis data skala besar dan pemodelan prediktif.",
+    description: "Meraih predikat Grand Finalis (Top 7) nasional dalam Turnamen Sains Data Nasional untuk pemodelan prediktif machine learning.",
   },
   {
     id: "award-2",
     title: "AI Upskilling Program with RSA",
     issuer: "Remote Skill Academy",
     date: "Juni 2025",
-    level: "Pelatihan & Sertifikasi Profesional",
-    description: "Penyelesaian intensif penerapan model kecerdasan artifisial terapan untuk efisiensi rekayasa perangkat lunak.",
+    level: "Sertifikasi Profesional AI",
+    description: "Pelatihan intensif implementasi model kecerdasan buatan terapan untuk efisiensi rekayasa perangkat lunak modern.",
   },
   {
     id: "award-3",
     title: "React Fundamental + Redux",
     issuer: "Skilvul",
     date: "September 2025",
-    level: "Sertifikasi Industri",
-    description: "Penguasaan arsitektur state terpusat, middleware asynchronous, dan lifecycle komponen React modern.",
-  },
-  {
-    id: "award-4",
-    title: "Peserta Seleksi LKS Web Design",
-    issuer: "SMK Negeri 26 Jakarta",
-    date: "Maret 2024",
-    level: "Seleksi Kejuruan Internal",
-    description: "Kompetisi desain web teknis mencakup standar aksesibilitas W3C, responsivitas presisi, dan performa kode.",
+    level: "Sertifikasi Industri Frontend",
+    description: "Penguasaan arsitektur state terpusat Redux, middleware asynchronous, dan arsitektur komponen React modern.",
   },
 ];
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
+    id: "exp-sistegra",
+    role: "Web Developer",
+    organization: "PT Sistegra Emran Sentosa",
+    period: "Mei - September 2026",
+    type: "Professional Web Development",
+    location: "Jakarta",
+    description: "Mengembangkan aplikasi web performa tinggi dengan arsitektur modern, implementasi antarmuka responsif, dan integrasi API yang handal.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "REST API"],
+    highlight: "Enterprise Web Systems",
+  },
+  {
     id: "exp-1",
     role: "Founder & Lead Developer",
-    organization: "Renfertz Store (Zeusx International)",
+    organization: "Renfertz Store (Zeusx)",
     period: "Agustus 2025 - Sekarang",
     type: "Digital Commerce",
-    location: "Global",
-    description: "Mendirikan dan mengelola platform layanan digital dengan catatan 1.000+ ulasan positif dari pengguna internasional.",
+    location: "Internasional",
+    description: "Mendirikan dan mengelola platform digital commerce di platform Zeusx dengan catatan 1.000+ ulasan positif dari pembeli internasional.",
     technologies: ["React", "API Automation", "Webhooks", "Security"],
-    highlight: "1.000+ Ulasan Positif",
+    highlight: "1.000+ Positive Reviews",
+  },
+  {
+    id: "exp-freelance",
+    role: "Freelance UI/UX Designer & Full Stack Web Developer",
+    organization: "Independen / Freelance",
+    period: "Mei 2025 - Sekarang",
+    type: "Freelance",
+    location: "Remote",
+    description: "Merancang antarmuka pengguna (UI/UX) modern yang user-friendly dan mengimplementasikannya ke dalam arsitektur Full Stack web berperforma tinggi.",
+    technologies: ["Figma", "React", "TypeScript", "Laravel", "Tailwind CSS"],
+    highlight: "End-to-End Delivery",
+  },
+  {
+    id: "exp-mentor",
+    role: "Cloud Computing Mentor",
+    organization: "IT Club SMK Negeri 26 Jakarta",
+    period: "Juli 2025 - Sekarang",
+    type: "Mentorship & Training",
+    location: "Jakarta",
+    description: "Menjadi mentor Cloud Computing bagi anggota IT Club, mengajarkan dasar komputasi awan, konfigurasi server Linux, dan infrastruktur sistem.",
+    technologies: ["Cloud Computing", "Linux Server", "Docker", "Networking"],
+    highlight: "IT Club Mentorship",
+  },
+  {
+    id: "exp-sollu",
+    role: "Game Developer (Contract)",
+    organization: "PT Sollu Filantropi Teknologi",
+    period: "Agustus - Desember 2024",
+    type: "Contract On-Site",
+    location: "Jakarta",
+    description: "Mengembangkan logika permainan interaktif, optimalisasi aset grafis, dan sinkronisasi data antar sesi pengguna secara on-site.",
+    technologies: ["Game Logic", "UI Scripting", "Asset Optimization"],
+    highlight: "Contract Game Dev",
   },
   {
     id: "exp-tsdn",
-    role: "Data Science & Predictive Modeling Finalist",
+    role: "Grand Finalis Data Science & Predictive Modeling",
     organization: "Turnamen Sains Data Nasional (TSDN) • Data Academy",
     period: "Oktober - Desember 2024",
     type: "Kompetisi Nasional",
     location: "Nasional",
-    description: "Menganalisis dataset skala besar (500k+ baris data), rekayasa fitur data statistik, dan merancang model prediktif machine learning hingga meraih posisi Top 7 Grand Finalis tingkat nasional.",
-    technologies: ["Python", "SQL", "Pandas", "Scikit-Learn", "Statistical Modeling"],
+    description: "Menganalisis dataset skala besar, rekayasa fitur data statistik, dan merancang model prediktif machine learning hingga meraih posisi Grand Finalis tingkat nasional.",
+    technologies: ["Python", "SQL", "Pandas", "Scikit-Learn", "Machine Learning"],
     highlight: "Top 7 Finalis Nasional",
-  },
-  {
-    id: "exp-2",
-    role: "Freelance UI/UX & Frontend Developer",
-    organization: "Independen",
-    period: "Mei 2025 - Sekarang",
-    type: "Freelance",
-    location: "Remote",
-    description: "Merancang dan membangun antarmuka web modern dengan fokus pada performa instan dan pengalaman pengguna mulus.",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Figma"],
-    highlight: "Klien UMKM & Startup",
-  },
-  {
-    id: "exp-3",
-    role: "Cloud Computing Mentor",
-    organization: "IT Club SMK Negeri 26 Jakarta",
-    period: "Juli 2025 - Sekarang",
-    type: "Mentorship",
-    location: "Jakarta",
-    description: "Membimbing anggota klub dalam fundamental komputasi awan, konfigurasi server Linux, dan praktik deployment web modern.",
-    technologies: ["Linux", "Cloud Infrastructure", "Docker", "Networking"],
-    highlight: "Membina 40+ Siswa",
-  },
-  {
-    id: "exp-4",
-    role: "Game Developer (Kontrak)",
-    organization: "PT Sollu Filantropi Teknologi",
-    period: "Agustus - Desember 2024",
-    type: "Kontrak On Site",
-    location: "Jakarta",
-    description: "Mengembangkan logika permainan interaktif, optimalisasi aset grafis, dan sinkronisasi data antar sesi pengguna.",
-    technologies: ["Game Logic", "UI Scripting", "Asset Optimization"],
-    highlight: "Pengembangan Tim On Site",
   },
 ];
 
@@ -193,9 +216,9 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "warisara",
     title: "WariSara",
-    subtitle: "Living Cultural Archive & Studio Kriya Interaktif",
+    subtitle: "Web/Mobile Apps • Living Cultural Archive & Studio Kriya",
     category: "Web App",
-    year: "2026",
+    year: "Oktober - November 2026",
     role: "Lead Frontend & Creative Technologist",
     summary: "Platform pelestarian budaya 38 provinsi Nusantara yang memadukan kartografi digital interaktif, studio kriya parametrik, dan penuturan audio pusaka lisan.",
     metrics: [
@@ -286,9 +309,9 @@ class BatikParametricEngine {
   {
     id: "renstore",
     title: "RenStore",
-    subtitle: "Modern Full-Stack E-Commerce Platform",
+    subtitle: "ECommerce Website • Modern Decoupled Platform",
     category: "E-Commerce",
-    year: "2026",
+    year: "Agustus - September 2026",
     role: "Founder & Full Stack Developer",
     summary: "Platform e-commerce modern berarsitektur decoupled dengan integrasi REST API Laravel 11, pembayaran QRIS dinamis, dan pengalaman transaksi instan.",
     metrics: [
@@ -360,9 +383,9 @@ class CheckoutController extends Controller
   {
     id: "monetra",
     title: "Monetra",
-    subtitle: "AI Personal Finance & Voice DSP Engine",
+    subtitle: "Web/Mobile Apps • AI Personal Finance & Voice DSP",
     category: "Web App",
-    year: "2026",
+    year: "September - Oktober 2026",
     role: "Full Stack Lead & AI Engineer",
     summary: "Asisten finansial cerdas bertenaga Google Gemini AI dan Web Audio DSP untuk pencatatan transaksi otomatis berbasis perintah suara.",
     metrics: [

@@ -12,8 +12,9 @@ import {
   Code2,
   Server,
   Users,
+  Sparkles,
 } from 'lucide-react';
-import { EXPERIENCES, AWARDS, PERSONAL_DATA } from '../data/portfolioData';
+import { EXPERIENCES, AWARDS, PERSONAL_DATA, SOFT_SKILLS } from '../data/portfolioData';
 
 interface ExperienceTimelineProps {
   lang: 'id' | 'en';
@@ -26,14 +27,14 @@ function renderHighlightIcon(highlight: string, isNationalAward: boolean) {
   if (isNationalAward || highlight.includes('Top 7') || highlight.includes('Nasional')) {
     return <Trophy className="w-3.5 h-3.5 text-champagne shrink-0" />;
   }
-  if (highlight.includes('Klien') || highlight.includes('UMKM') || highlight.includes('Startup')) {
+  if (highlight.includes('Enterprise') || highlight.includes('PT') || highlight.includes('Tim') || highlight.includes('Pengembangan')) {
+    return <Code2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
+  }
+  if (highlight.includes('Klien') || highlight.includes('UMKM') || highlight.includes('Startup') || highlight.includes('Delivery') || highlight.includes('Contract')) {
     return <Briefcase className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
   }
-  if (highlight.includes('Siswa') || highlight.includes('Membina')) {
+  if (highlight.includes('Siswa') || highlight.includes('Membina') || highlight.includes('Mentor')) {
     return <Users className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
-  }
-  if (highlight.includes('Tim') || highlight.includes('Pengembangan')) {
-    return <Code2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
   }
   return <CheckCircle2 className="w-3.5 h-3.5 text-[#6EE7B7] shrink-0" />;
 }
@@ -382,6 +383,74 @@ export const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ lang }) 
                 <p className="text-xs text-mist leading-relaxed mt-2">
                   Membina 40+ siswa di IT Club SMKN 26 Jakarta dalam fundamental komputasi awan, konfigurasi lingkungan dev, dan budaya kolaborasi Git.
                 </p>
+              </div>
+            </div>
+
+            {/* Soft Skills & Core Attributes from Updated CV */}
+            <div className="rounded-2xl p-5 sm:p-6 border border-white/10 bg-white/[0.02] mt-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-champagne" />
+                  <h4 className="font-display text-base text-pearl font-normal">
+                    {lang === 'id' ? 'Karakter & Soft Skill Profesional' : 'Professional Soft Skills & Mindset'}
+                  </h4>
+                </div>
+                <span className="text-[10px] font-mono text-fog px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 self-start sm:self-auto">
+                  {lang === 'id' ? 'Kompetensi Sikap & Kolaborasi' : 'Collaboration & Work Ethic'}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                {SOFT_SKILLS.map((skill) => (
+                  <div key={skill.name} className="p-3 rounded-xl bg-midnight-0/50 border border-white/10 flex flex-col justify-between">
+                    <span className="text-xs font-medium text-pearl">{skill.name}</span>
+                    <div className="mt-2.5 flex items-center justify-between gap-2">
+                      <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-champagne to-amber-500 rounded-full"
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                      <span className="font-mono text-[11px] font-semibold text-champagne shrink-0">{skill.level}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Aspirasi, Hobi & Penguasaan Bahasa */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-white/10 text-xs text-mist">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Aspirasi:</span>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {PERSONAL_DATA.aspirations.map((asp) => (
+                      <span key={asp} className="px-2 py-0.5 rounded-md bg-champagne/10 border border-champagne/25 text-champagne text-[11px] font-medium">
+                        {asp}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Hobi:</span>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {PERSONAL_DATA.hobbies.map((h) => (
+                      <span key={h} className="px-2 py-0.5 rounded-md bg-sapphire/15 border border-sapphire/30 text-pearl text-[11px]">
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-fog uppercase text-[10px] shrink-0">Bahasa:</span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {PERSONAL_DATA.languages.map((l) => (
+                      <span key={l.name} className="text-pearl text-[11px]">
+                        {l.name} <span className="font-mono text-champagne font-semibold">({l.pct}%)</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
