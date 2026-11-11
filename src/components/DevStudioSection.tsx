@@ -9,7 +9,6 @@ import {
   Zap,
   Sparkles,
   Rocket,
-  Move,
   Target,
   Flame,
 } from 'lucide-react';
@@ -61,14 +60,14 @@ class SoundSynth {
       const gain = this.ctx.createGain();
       osc.type = 'sawtooth';
       const now = this.ctx.currentTime;
-      osc.frequency.setValueAtTime(880, now);
-      osc.frequency.exponentialRampToValueAtTime(160, now + 0.08);
+      osc.frequency.setValueAtTime(740, now);
+      osc.frequency.exponentialRampToValueAtTime(180, now + 0.09);
       gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.08);
+      osc.stop(now + 0.09);
     } catch {
       // Audio muted
     }
@@ -83,14 +82,14 @@ class SoundSynth {
       const gain = this.ctx.createGain();
       osc.type = 'sawtooth';
       const now = this.ctx.currentTime;
-      osc.frequency.setValueAtTime(360, now);
-      osc.frequency.exponentialRampToValueAtTime(120, now + 0.1);
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.12);
       gain.gain.setValueAtTime(0.07, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.1);
+      osc.stop(now + 0.12);
     } catch {
       // Audio muted
     }
@@ -138,14 +137,14 @@ class SoundSynth {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(160, now);
-      osc.frequency.exponentialRampToValueAtTime(32, now + 0.32);
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.exponentialRampToValueAtTime(30, now + 0.35);
       gain.gain.setValueAtTime(0.24, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.32);
+      osc.stop(now + 0.35);
     } catch {
       // Audio muted
     }
@@ -161,13 +160,13 @@ class SoundSynth {
       osc.type = 'sine';
       const now = this.ctx.currentTime;
       osc.frequency.setValueAtTime(523.25, now);
-      osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(987.77, now + 0.14);
       gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.12);
+      osc.stop(now + 0.14);
     } catch {
       // Audio muted
     }
@@ -184,13 +183,13 @@ class SoundSynth {
       const now = this.ctx.currentTime;
       osc.frequency.setValueAtTime(440, now);
       osc.frequency.linearRampToValueAtTime(880, now + 0.1);
-      osc.frequency.linearRampToValueAtTime(1320, now + 0.2);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.frequency.linearRampToValueAtTime(1320, now + 0.22);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.25);
+      osc.stop(now + 0.28);
     } catch {
       // Audio muted
     }
@@ -206,13 +205,13 @@ class SoundSynth {
       osc.type = 'square';
       const now = this.ctx.currentTime;
       osc.frequency.setValueAtTime(120, now);
-      osc.frequency.linearRampToValueAtTime(60, now + 0.15);
-      gain.gain.setValueAtTime(0.16, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.frequency.linearRampToValueAtTime(55, now + 0.16);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.15);
+      osc.stop(now + 0.16);
     } catch {
       // Audio muted
     }
@@ -324,6 +323,16 @@ interface Particle {
   size: number;
 }
 
+interface FloatingText {
+  x: number;
+  y: number;
+  text: string;
+  color: string;
+  alpha: number;
+  vy: number;
+  size: number;
+}
+
 export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'gameover' | 'victory'>('idle');
   const [score, setScore] = useState(0);
@@ -338,6 +347,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   });
   const [lives, setLives] = useState(3);
   const [combo, setCombo] = useState(1);
+  const [buffTimeLeft, setBuffTimeLeft] = useState(0);
   const [soundOn, setSoundOn] = useState<boolean>(() => sound.isEnabled());
   const [isNewRecord, setIsNewRecord] = useState(false);
 
@@ -367,6 +377,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
     asteroids: [] as Asteroid[],
     crystals: [] as Crystal[],
     particles: [] as Particle[],
+    floatingTexts: [] as FloatingText[],
     score: 0,
     lives: 3,
     combo: 1,
@@ -384,7 +395,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   const spawnExplosion = useCallback((x: number, y: number, color: string, count = 14) => {
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 3.5 + 1.2;
+      const speed = Math.random() * 3.2 + 1.0;
       gameRef.current.particles.push({
         x,
         y,
@@ -395,6 +406,19 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         size: Math.random() * 2.5 + 1.5,
       });
     }
+  }, []);
+
+  // Floating text feedback helper for Points, Buffs, and K.O.s
+  const spawnFloatingText = useCallback((x: number, y: number, text: string, color = '#F5B027', size = 12) => {
+    gameRef.current.floatingTexts.push({
+      x,
+      y,
+      text,
+      color,
+      alpha: 1,
+      vy: -32,
+      size,
+    });
   }, []);
 
   // Start / Restart game
@@ -413,9 +437,9 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       tripleLaserTime: 0,
       lastShotTime: 0,
       lastSpawnAsteroid: performance.now(),
-      lastSpawnCrystal: performance.now() + 600,
-      lastSpawnDrone: performance.now() + 1800,
-      lastSpawnHazard: performance.now() + 2800,
+      lastSpawnCrystal: performance.now() + 800,
+      lastSpawnDrone: performance.now() + 3000,
+      lastSpawnHazard: performance.now() + 3500,
       screenShake: 0,
       bullets: [],
       enemyBullets: [],
@@ -425,6 +449,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       asteroids: [],
       crystals: [],
       particles: [],
+      floatingTexts: [],
       score: 0,
       lives: 3,
       combo: 1,
@@ -435,6 +460,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
     setScore(0);
     setLives(3);
     setCombo(1);
+    setBuffTimeLeft(0);
     setIsNewRecord(false);
     setGameState('playing');
     sound.playPowerup();
@@ -466,7 +492,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       const w = canvas.width;
       const h = canvas.height;
 
-      // ── Progressive Difficulty Factor (0.0 at start, scales to 1.0 at 15,000 points) ──
+      // ── Progressive Difficulty Factor (Smoother & More Accessible curve) ──
       const diff = Math.min(1, g.score / GOAL_SCORE);
 
       // ── Check Goal Victory Condition ──
@@ -500,7 +526,16 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       g.shipY = h - 45;
 
       if (g.invulnerableTime > 0) g.invulnerableTime -= dt;
-      if (g.tripleLaserTime > 0) g.tripleLaserTime -= dt;
+
+      // Update Active Triple Laser Buff
+      if (g.tripleLaserTime > 0) {
+        g.tripleLaserTime -= dt;
+        if (Math.floor(g.tripleLaserTime * 2) !== Math.floor((g.tripleLaserTime + dt) * 2)) {
+          setBuffTimeLeft(Math.max(0, Math.ceil(g.tripleLaserTime)));
+        }
+      } else if (buffTimeLeft > 0) {
+        setBuffTimeLeft(0);
+      }
 
       // Combo decay timer
       if (g.comboTimer > 0) {
@@ -511,25 +546,25 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         }
       }
 
-      // ── Auto-fire twin or triple lasers every 220ms ──
-      if (now - g.lastShotTime > 220) {
+      // ── Auto-fire twin or triple lasers (Reduced attack speed: comfortable ~330ms pace) ──
+      if (now - g.lastShotTime > 340) {
         g.lastShotTime = now;
         sound.playLaser();
 
         if (g.tripleLaserTime > 0) {
-          g.bullets.push({ x: g.shipX, y: g.shipY - 14, vx: 0, vy: -13 });
-          g.bullets.push({ x: g.shipX - 10, y: g.shipY - 10, vx: -2.4, vy: -12 });
-          g.bullets.push({ x: g.shipX + 10, y: g.shipY - 10, vx: 2.4, vy: -12 });
+          g.bullets.push({ x: g.shipX, y: g.shipY - 14, vx: 0, vy: -12 });
+          g.bullets.push({ x: g.shipX - 12, y: g.shipY - 10, vx: -2.0, vy: -11.5 });
+          g.bullets.push({ x: g.shipX + 12, y: g.shipY - 10, vx: 2.0, vy: -11.5 });
         } else {
-          g.bullets.push({ x: g.shipX - 8, y: g.shipY - 10, vx: 0, vy: -13 });
-          g.bullets.push({ x: g.shipX + 8, y: g.shipY - 10, vx: 0, vy: -13 });
+          g.bullets.push({ x: g.shipX - 9, y: g.shipY - 10, vx: 0, vy: -12 });
+          g.bullets.push({ x: g.shipX + 9, y: g.shipY - 10, vx: 0, vy: -12 });
         }
       }
 
       // ══════════════════════════════════════════════════════
-      // 1. ASTEROID SPAWNER (Progressive: faster & more frequent as score approaches 15k)
+      // 1. ASTEROID SPAWNER (Comfortable cadence: 520ms-1250ms, gentle fall speed)
       // ══════════════════════════════════════════════════════
-      const asteroidInterval = Math.max(340, 1050 - Math.floor(diff * 680));
+      const asteroidInterval = Math.max(520, 1250 - Math.floor(diff * 580));
       if (now - g.lastSpawnAsteroid > asteroidInterval) {
         g.lastSpawnAsteroid = now;
 
@@ -539,55 +574,55 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         let vx = 0;
         let vy = 0;
         let type: 'top' | 'flank_left' | 'flank_right' | 'heavy' = 'top';
-        let size = Math.random() * 12 + 18;
+        let size = Math.random() * 10 + 18;
         let hp = 1;
 
-        // Flank attack chances increase as score gets higher
-        const flankLeftThreshold = 0.18 + diff * 0.12;
-        const flankRightThreshold = flankLeftThreshold + 0.18 + diff * 0.12;
+        // Flank attack thresholds (Gentle & fair)
+        const flankLeftThreshold = 0.14 + diff * 0.10;
+        const flankRightThreshold = flankLeftThreshold + 0.14 + diff * 0.10;
 
         if (rand < flankLeftThreshold) {
-          // Left Flank
+          // Left Flank (Gentler speed: 50-95 px/s)
           type = 'flank_left';
           spawnX = -25;
-          spawnY = Math.random() * (h * 0.52) + 30;
-          vx = Math.random() * 65 + 75 + diff * 80;
-          vy = Math.random() * 45 + 35 + diff * 25;
-          size = Math.random() * 10 + 16;
+          spawnY = Math.random() * (h * 0.45) + 35;
+          vx = Math.random() * 40 + 55 + diff * 40;
+          vy = Math.random() * 30 + 25 + diff * 20;
+          size = Math.random() * 8 + 16;
           hp = 1;
         } else if (rand < flankRightThreshold) {
           // Right Flank
           type = 'flank_right';
           spawnX = w + 25;
-          spawnY = Math.random() * (h * 0.52) + 30;
-          vx = -(Math.random() * 65 + 75 + diff * 80);
-          vy = Math.random() * 45 + 35 + diff * 25;
-          size = Math.random() * 10 + 16;
+          spawnY = Math.random() * (h * 0.45) + 35;
+          vx = -(Math.random() * 40 + 55 + diff * 40);
+          vy = Math.random() * 30 + 25 + diff * 20;
+          size = Math.random() * 8 + 16;
           hp = 1;
-        } else if (rand < 0.75 && g.score > 800) {
-          // Heavy Asteroid: larger, higher HP, splits on destruction
+        } else if (rand < 0.75 && g.score > 1200) {
+          // Heavy Asteroid (Splits into 2 smaller fragments on destroy)
           type = 'heavy';
           spawnX = Math.random() * (w - 80) + 40;
           spawnY = -35;
-          vx = (Math.random() - 0.5) * 35;
-          vy = Math.random() * 30 + 45 + diff * 35;
-          size = Math.random() * 12 + 28;
-          hp = diff > 0.6 ? 4 : 3;
+          vx = (Math.random() - 0.5) * 25;
+          vy = Math.random() * 25 + 38 + diff * 25;
+          size = Math.random() * 10 + 26;
+          hp = diff > 0.6 ? 3 : 2;
         } else {
-          // Standard Top Spawn
+          // Standard Top Spawn (Comfortable fall velocity: 45-95 px/s)
           type = 'top';
           spawnX = Math.random() * (w - 60) + 30;
           spawnY = -30;
-          vx = (Math.random() - 0.5) * 45;
-          vy = Math.random() * 45 + 65 + diff * 85;
-          size = Math.random() * 12 + 18;
-          hp = size > 26 ? 2 : 1;
+          vx = (Math.random() - 0.5) * 35;
+          vy = Math.random() * 30 + 45 + diff * 50;
+          size = Math.random() * 10 + 17;
+          hp = size > 25 ? 2 : 1;
         }
 
         const numPts = 7;
         const pts: number[] = [];
         for (let p = 0; p < numPts; p++) {
-          pts.push(size * (0.75 + Math.random() * 0.35));
+          pts.push(size * (0.78 + Math.random() * 0.32));
         }
 
         g.asteroids.push({
@@ -600,19 +635,19 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           maxHp: hp,
           speed: Math.hypot(vx, vy),
           rot: Math.random() * Math.PI * 2,
-          rotSpeed: (Math.random() - 0.5) * 2.8,
+          rotSpeed: (Math.random() - 0.5) * 2.2,
           points: pts,
           type,
         });
       }
 
       // ══════════════════════════════════════════════════════
-      // 2. HOSTILE ENEMY DRONE SPAWNER (They shoot targeted plasma bolts!)
+      // 2. HOSTILE ENEMY DRONE SPAWNER (Appears at 1,200 pts, relaxed shooting rate)
       // ══════════════════════════════════════════════════════
-      const maxConcurrentDrones = diff < 0.25 ? 1 : diff < 0.65 ? 2 : 3;
-      const droneInterval = Math.max(3000, 6500 - diff * 3500);
+      const maxConcurrentDrones = diff < 0.35 ? 1 : diff < 0.75 ? 2 : 2;
+      const droneInterval = Math.max(4500, 7500 - diff * 2500);
       if (
-        g.score >= 800 &&
+        g.score >= 1200 &&
         g.drones.length < maxConcurrentDrones &&
         now - g.lastSpawnDrone > droneInterval
       ) {
@@ -621,22 +656,22 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           id: now + Math.random(),
           x: Math.random() * (w - 120) + 60,
           y: -35,
-          targetY: Math.random() * 70 + 45,
-          vx: (Math.random() > 0.5 ? 1 : -1) * (65 + diff * 45),
-          hp: diff > 0.55 ? 3 : 2,
-          maxHp: diff > 0.55 ? 3 : 2,
-          lastShotTime: now + 600, // delay first shot after entrance
-          shotInterval: Math.max(1100, 2300 - diff * 1000),
+          targetY: Math.random() * 60 + 45,
+          vx: (Math.random() > 0.5 ? 1 : -1) * (50 + diff * 35),
+          hp: 2,
+          maxHp: 2,
+          lastShotTime: now + 1200, // gentle delay before first shot
+          shotInterval: Math.max(2200, 3400 - diff * 1000), // comfortable 2.2s - 3.4s firing rate
         });
       }
 
       // ══════════════════════════════════════════════════════
-      // 3. SPACE HAZARDS: PLASMA MINES (Traps that explode into shockwaves!)
+      // 3. SPACE HAZARDS: PLASMA MINES (Tembak untuk picu ledakan EMP pembersih layar!)
       // ══════════════════════════════════════════════════════
-      const maxHazards = diff < 0.4 ? 1 : 2;
-      const hazardInterval = Math.max(4200, 7800 - diff * 3400);
+      const maxHazards = 1;
+      const hazardInterval = Math.max(5500, 8500 - diff * 3000);
       if (
-        g.score >= 1200 &&
+        g.score >= 1500 &&
         g.hazards.length < maxHazards &&
         now - g.lastSpawnHazard > hazardInterval
       ) {
@@ -645,28 +680,28 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           id: now + Math.random(),
           x: Math.random() * (w - 80) + 40,
           y: -30,
-          vx: (Math.random() - 0.5) * 22,
-          vy: Math.random() * 20 + 32 + diff * 15,
-          radius: 16,
+          vx: (Math.random() - 0.5) * 18,
+          vy: Math.random() * 15 + 28 + diff * 10,
+          radius: 17,
           pulse: 0,
         });
       }
 
       // ══════════════════════════════════════════════════════
-      // 4. CRYSTALS SPAWNER (Collectibles / Powerups)
+      // 4. CRYSTALS SPAWNER (Collectibles / Powerups / Buffs)
       // ══════════════════════════════════════════════════════
-      if (now - g.lastSpawnCrystal > 2500) {
+      if (now - g.lastSpawnCrystal > 2400) {
         g.lastSpawnCrystal = now;
         const rand = Math.random();
         const type: 'gold' | 'sapphire' | 'shield' =
-          rand < 0.65 ? 'gold' : rand < 0.88 ? 'sapphire' : 'shield';
+          rand < 0.60 ? 'gold' : rand < 0.85 ? 'sapphire' : 'shield';
         const val = type === 'gold' ? 100 : type === 'sapphire' ? 150 : 50;
 
         g.crystals.push({
           x: Math.random() * (w - 60) + 30,
           y: -25,
           size: type === 'shield' ? 15 : 13,
-          speed: Math.random() * 30 + 65,
+          speed: Math.random() * 25 + 55,
           rot: 0,
           type,
           val,
@@ -686,14 +721,14 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 6. UPDATE HOSTILE DRONES & AI SHOOTING
+      // 6. UPDATE HOSTILE DRONES & TELEGRAPH AIMING
       // ══════════════════════════════════════════════════════
       for (let di = g.drones.length - 1; di >= 0; di--) {
         const d = g.drones[di];
 
         // Smooth glide down into combat zone
         if (d.y < d.targetY) {
-          d.y += 95 * dt;
+          d.y += 85 * dt;
         }
 
         // Horizontal strafe
@@ -706,16 +741,15 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           d.vx = -Math.abs(d.vx);
         }
 
-        // Hostile Targeted Plasma Bolt Shooting
+        // Hostile Targeted Plasma Bolt Shooting (Dodgeable speed: 130-175 px/s)
         if (d.y >= d.targetY - 5 && now - d.lastShotTime > d.shotInterval) {
           d.lastShotTime = now;
           sound.playEnemyLaser();
 
-          // Calculate aimed trajectory directly toward player ship
           const dx = g.shipX - d.x;
           const dy = g.shipY - d.y;
           const angle = Math.atan2(dy, dx);
-          const bulletSpeed = 195 + diff * 65;
+          const bulletSpeed = 135 + diff * 40; // much easier to see & dodge
 
           g.enemyBullets.push({
             x: d.x,
@@ -740,7 +774,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               const gained = 250 * g.combo;
               g.score += gained;
               g.combo = Math.min(10, g.combo + 1);
-              g.comboTimer = 3.0;
+              g.comboTimer = 3.5;
+              spawnFloatingText(d.x, d.y - 10, `+${gained} DRONE K.O.!`, '#F5B027', 13);
               setScore(g.score);
               setCombo(g.combo);
               g.drones.splice(di, 1);
@@ -751,7 +786,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 7. UPDATE ENEMY BULLETS
+      // 7. UPDATE ENEMY BULLETS (Fair hit-radius: 12px)
       // ══════════════════════════════════════════════════════
       for (let ebi = g.enemyBullets.length - 1; ebi >= 0; ebi--) {
         const eb = g.enemyBullets[ebi];
@@ -759,13 +794,14 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         eb.y += eb.vy * dt;
 
         // Collision: Enemy Bullet vs Player Ship
-        if (Math.hypot(eb.x - g.shipX, eb.y - g.shipY) < 18) {
+        if (Math.hypot(eb.x - g.shipX, eb.y - g.shipY) < 13) {
           g.enemyBullets.splice(ebi, 1);
           if (g.invulnerableTime <= 0) {
             sound.playHit();
             spawnExplosion(g.shipX, g.shipY, '#EF4444', 22);
-            g.screenShake = 0.28;
-            g.invulnerableTime = 1.6;
+            spawnFloatingText(g.shipX, g.shipY - 20, '-1 PERISAI', '#EF4444', 12);
+            g.screenShake = 0.25;
+            g.invulnerableTime = 2.2; // Generous recovery window
             g.lives -= 1;
             g.combo = 1;
             setLives(g.lives);
@@ -796,25 +832,24 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           continue;
         }
 
-        // Out of screen bounds
         if (eb.y > h + 30 || eb.y < -30 || eb.x < -30 || eb.x > w + 30) {
           g.enemyBullets.splice(ebi, 1);
         }
       }
 
       // ══════════════════════════════════════════════════════
-      // 8. UPDATE SPACE HAZARDS (Plasma Mines & EMP Detonation)
+      // 8. UPDATE SPACE HAZARDS (Plasma Mines & Tactical EMP Shockwaves)
       // ══════════════════════════════════════════════════════
       for (let hi = g.hazards.length - 1; hi >= 0; hi--) {
         const hz = g.hazards[hi];
         hz.x += hz.vx * dt;
         hz.y += hz.vy * dt;
-        hz.pulse += dt * 4.2;
+        hz.pulse += dt * 3.8;
 
         let detonated = false;
         let triggeredByLaser = false;
 
-        // Check if player laser shoots the mine (Tactical EMP trigger!)
+        // Player laser shoots the mine (Tactical EMP trigger!)
         for (let bi = g.bullets.length - 1; bi >= 0; bi--) {
           const b = g.bullets[bi];
           if (Math.hypot(b.x - hz.x, b.y - hz.y) < hz.radius + 6) {
@@ -825,14 +860,15 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           }
         }
 
-        // Check if ship bumps into mine trap
-        if (!detonated && Math.hypot(g.shipX - hz.x, g.shipY - hz.y) < hz.radius + 14) {
+        // Ship bumps into mine trap
+        if (!detonated && Math.hypot(g.shipX - hz.x, g.shipY - hz.y) < hz.radius + 10) {
           detonated = true;
           if (g.invulnerableTime <= 0) {
             sound.playHit();
             spawnExplosion(g.shipX, g.shipY, '#EF4444', 24);
-            g.screenShake = 0.32;
-            g.invulnerableTime = 1.6;
+            spawnFloatingText(g.shipX, g.shipY - 20, '-1 PERISAI', '#EF4444', 12);
+            g.screenShake = 0.3;
+            g.invulnerableTime = 2.2;
             g.lives -= 1;
             g.combo = 1;
             setLives(g.lives);
@@ -860,20 +896,21 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           sound.playMineExplosion();
           spawnExplosion(hz.x, hz.y, '#F43F5E', 24);
           spawnExplosion(hz.x, hz.y, '#38BDF8', 16);
-          g.screenShake = 0.35;
+          g.screenShake = 0.32;
 
           // Expanding EMP shockwave
           g.shockwaves.push({
             x: hz.x,
             y: hz.y,
             radius: 10,
-            maxRadius: 115,
+            maxRadius: 120,
             alpha: 1,
           });
 
-          // If shot by player, EMP blast obliterates nearby threats!
+          // If shot by player, EMP blast clears nearby threats!
           if (triggeredByLaser) {
-            const blastRadius = 115;
+            const blastRadius = 120;
+            spawnFloatingText(hz.x, hz.y - 15, '⚡ LEDAKAN EMP!', '#38BDF8', 13);
 
             // Obliterate asteroids in blast radius
             for (let ai = g.asteroids.length - 1; ai >= 0; ai--) {
@@ -881,7 +918,9 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               if (Math.hypot(a.x - hz.x, a.y - hz.y) < blastRadius) {
                 spawnExplosion(a.x, a.y, '#F5B027', 12);
                 g.asteroids.splice(ai, 1);
-                g.score += 65 * g.combo;
+                const empPts = 60 * g.combo;
+                g.score += empPts;
+                spawnFloatingText(a.x, a.y, `+${empPts}`, '#F5B027', 11);
               }
             }
 
@@ -903,6 +942,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                 if (d.hp <= 0) {
                   spawnExplosion(d.x, d.y, '#F5B027', 16);
                   g.score += 250 * g.combo;
+                  spawnFloatingText(d.x, d.y, `+${250 * g.combo} EMP K.O.!`, '#38BDF8', 12);
                   g.drones.splice(di, 1);
                 }
               }
@@ -926,8 +966,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       // ══════════════════════════════════════════════════════
       for (let si = g.shockwaves.length - 1; si >= 0; si--) {
         const sw = g.shockwaves[si];
-        sw.radius += 240 * dt;
-        sw.alpha -= 1.8 * dt;
+        sw.radius += 230 * dt;
+        sw.alpha -= 1.6 * dt;
         if (sw.radius >= sw.maxRadius || sw.alpha <= 0) {
           g.shockwaves.splice(si, 1);
         }
@@ -967,28 +1007,28 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                 g.asteroids.push({
                   x: a.x - 12,
                   y: a.y,
-                  vx: -55,
-                  vy: 65,
+                  vx: -45,
+                  vy: 55,
                   size: 14,
                   hp: 1,
                   maxHp: 1,
-                  speed: 85,
+                  speed: 70,
                   rot: a.rot,
-                  rotSpeed: -3,
+                  rotSpeed: -2.5,
                   points: subPts1,
                   type: 'top',
                 });
                 g.asteroids.push({
                   x: a.x + 12,
                   y: a.y,
-                  vx: 55,
-                  vy: 65,
+                  vx: 45,
+                  vy: 55,
                   size: 14,
                   hp: 1,
                   maxHp: 1,
-                  speed: 85,
+                  speed: 70,
                   rot: a.rot,
-                  rotSpeed: 3,
+                  rotSpeed: 2.5,
                   points: subPts2,
                   type: 'top',
                 });
@@ -997,8 +1037,9 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
               const gained = 50 * g.combo;
               g.score += gained;
               g.combo = Math.min(10, g.combo + 1);
-              g.comboTimer = 2.5;
+              g.comboTimer = 3.0;
 
+              spawnFloatingText(a.x, a.y - 8, `+${gained}`, '#F5B027', 11);
               setScore(g.score);
               setCombo(g.combo);
               g.asteroids.splice(i, 1);
@@ -1007,14 +1048,15 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           }
         }
 
-        // Collision: Ship vs Asteroid
+        // Collision: Ship vs Asteroid (Fair hit-radius: size + 9)
         if (a && a.hp > 0) {
           const shipDist = Math.hypot(g.shipX - a.x, g.shipY - a.y);
-          if (shipDist < a.size + 14 && g.invulnerableTime <= 0) {
+          if (shipDist < a.size + 9 && g.invulnerableTime <= 0) {
             sound.playHit();
             spawnExplosion(g.shipX, g.shipY, '#EF4444', 22);
+            spawnFloatingText(g.shipX, g.shipY - 20, '-1 PERISAI', '#EF4444', 12);
             g.screenShake = 0.28;
-            g.invulnerableTime = 1.6;
+            g.invulnerableTime = 2.2;
             g.lives -= 1;
             g.combo = 1;
             setLives(g.lives);
@@ -1053,7 +1095,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 11. UPDATE CRYSTALS (Collectibles)
+      // 11. UPDATE CRYSTALS & BUFF ACTIVATION
       // ══════════════════════════════════════════════════════
       for (let ci = g.crystals.length - 1; ci >= 0; ci--) {
         const c = g.crystals[ci];
@@ -1067,16 +1109,20 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           spawnExplosion(c.x, c.y, colColor, 16);
 
           if (c.type === 'shield') {
+            sound.playPowerup();
             if (g.lives < 3) {
               g.lives += 1;
               setLives(g.lives);
             }
-            g.tripleLaserTime = 8.0;
+            g.tripleLaserTime = 8.5; // Activate Triple Laser Buff
+            setBuffTimeLeft(9);
+            spawnFloatingText(c.x, c.y - 12, '⚡ +PERISAI & TRIPLE LASER!', '#10B981', 13);
           } else {
             const gained = c.val * g.combo;
             g.score += gained;
             g.combo = Math.min(10, g.combo + 1);
-            g.comboTimer = 3.0;
+            g.comboTimer = 3.5;
+            spawnFloatingText(c.x, c.y - 10, `+${gained} PTS`, colColor, 12);
             setScore(g.score);
             setCombo(g.combo);
           }
@@ -1091,7 +1137,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 12. UPDATE PARTICLES
+      // 12. UPDATE PARTICLES & FLOATING TEXTS
       // ══════════════════════════════════════════════════════
       for (let pi = g.particles.length - 1; pi >= 0; pi--) {
         const p = g.particles[pi];
@@ -1100,6 +1146,15 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         p.alpha -= dt * 2.2;
         if (p.alpha <= 0) {
           g.particles.splice(pi, 1);
+        }
+      }
+
+      for (let fti = g.floatingTexts.length - 1; fti >= 0; fti--) {
+        const ft = g.floatingTexts[fti];
+        ft.y += ft.vy * dt;
+        ft.alpha -= dt * 1.1;
+        if (ft.alpha <= 0) {
+          g.floatingTexts.splice(fti, 1);
         }
       }
 
@@ -1127,6 +1182,25 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.moveTo(gx, 0);
         ctx.lineTo(gx, h);
         ctx.stroke();
+      }
+
+      // ── Flank Attack Warnings (Edge Markers) ──
+      for (let ai = 0; ai < g.asteroids.length; ai++) {
+        const a = g.asteroids[ai];
+        if (a.type === 'flank_left' && a.x < 30) {
+          ctx.save();
+          ctx.fillStyle = '#F43F5E';
+          ctx.font = 'bold 10px monospace';
+          ctx.fillText('◄ FLANK!', 10, Math.max(30, Math.min(h - 30, a.y)));
+          ctx.restore();
+        } else if (a.type === 'flank_right' && a.x > w - 30) {
+          ctx.save();
+          ctx.fillStyle = '#F43F5E';
+          ctx.font = 'bold 10px monospace';
+          ctx.textAlign = 'right';
+          ctx.fillText('FLANK! ►', w - 10, Math.max(30, Math.min(h - 30, a.y)));
+          ctx.restore();
+        }
       }
 
       // Render EMP Shockwaves
@@ -1159,7 +1233,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
       ctx.globalAlpha = 1;
 
-      // Render Space Hazards (Plasma Mines)
+      // Render Space Hazards (Plasma Mines with Clear Warning Tag)
       for (let hi = 0; hi < g.hazards.length; hi++) {
         const hz = g.hazards[hi];
         ctx.save();
@@ -1194,18 +1268,39 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.fill();
         ctx.stroke();
 
-        // Pulsing Core Core
+        // Pulsing Core
         ctx.fillStyle = '#EF4444';
         ctx.beginPath();
         ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
         ctx.fill();
 
+        // Distinct HUD label above hazard
+        ctx.font = 'bold 8.5px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#F43F5E';
+        ctx.fillText('[RANJAU EMP]', 0, -hz.radius - 8);
+
         ctx.restore();
       }
 
-      // Render Hostile Enemy Drones
+      // Render Hostile Enemy Drones (With Telegraph Aiming Line & Overhead HP)
       for (let di = 0; di < g.drones.length; di++) {
         const d = g.drones[di];
+
+        // Telegraph laser line before shooting (fair telegraph warning)
+        const timeUntilShot = d.shotInterval - (now - d.lastShotTime);
+        if (d.y >= d.targetY - 5 && timeUntilShot <= 650 && timeUntilShot > 0) {
+          ctx.save();
+          ctx.strokeStyle = 'rgba(239, 68, 68, 0.45)';
+          ctx.lineWidth = 1.2;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y + 12);
+          ctx.lineTo(g.shipX, g.shipY);
+          ctx.stroke();
+          ctx.restore();
+        }
+
         ctx.save();
         ctx.translate(d.x, d.y);
 
@@ -1214,7 +1309,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.strokeStyle = '#F43F5E';
         ctx.lineWidth = 1.8;
         ctx.beginPath();
-        ctx.moveTo(0, 16);    // Front gun nose pointing down
+        ctx.moveTo(0, 16);    // Front gun nose
         ctx.lineTo(16, -10);  // Right wingtip
         ctx.lineTo(6, -6);    // Right indent
         ctx.lineTo(0, -10);   // Engine bay
@@ -1240,14 +1335,17 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.arc(-12, -10, 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Health bar above drone
-        if (d.hp < d.maxHp) {
-          const barW = 24;
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-          ctx.fillRect(-barW / 2, -18, barW, 3);
-          ctx.fillStyle = '#EF4444';
-          ctx.fillRect(-barW / 2, -18, (d.hp / d.maxHp) * barW, 3);
-        }
+        // Clear Overhead Drone HP Bar & Label
+        ctx.font = 'bold 8px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#F43F5E';
+        ctx.fillText(`DRONE [HP ${d.hp}/${d.maxHp}]`, 0, -22);
+
+        const barW = 26;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(-barW / 2, -18, barW, 3.5);
+        ctx.fillStyle = '#EF4444';
+        ctx.fillRect(-barW / 2, -18, (d.hp / d.maxHp) * barW, 3.5);
 
         ctx.restore();
       }
@@ -1269,21 +1367,20 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
       ctx.restore();
 
-      // Render Player Bullets
+      // Render Player Bullets (Comfortable width 5px x 16px)
       ctx.fillStyle = g.tripleLaserTime > 0 ? '#38BDF8' : '#F5B027';
       for (let bi = 0; bi < g.bullets.length; bi++) {
         const b = g.bullets[bi];
         ctx.beginPath();
-        ctx.roundRect(b.x - 2, b.y - 7, 4, 14, 2);
+        ctx.roundRect(b.x - 2.5, b.y - 8, 5, 16, 2.5);
         ctx.fill();
       }
 
-      // Render Crystals (Collectibles)
+      // Render Crystals & Buff Items with Clear Text Badges
       for (let ci = 0; ci < g.crystals.length; ci++) {
         const c = g.crystals[ci];
         ctx.save();
         ctx.translate(c.x, c.y);
-        ctx.rotate(c.rot);
 
         const gemColor = c.type === 'gold' ? '#F5B027' : c.type === 'sapphire' ? '#38BDF8' : '#10B981';
         ctx.fillStyle = gemColor;
@@ -1291,11 +1388,26 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.lineWidth = 1.2;
 
         if (c.type === 'shield') {
+          // Circular shield buff orb
           ctx.beginPath();
           ctx.arc(0, 0, c.size, 0, Math.PI * 2);
           ctx.fill();
           ctx.stroke();
+
+          // Pulsing halo
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(0, 0, c.size + 4, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Clear label beside item
+          ctx.font = 'bold 8px monospace';
+          ctx.textAlign = 'left';
+          ctx.fillStyle = '#10B981';
+          ctx.fillText('BUFF PERISAI', c.size + 4, 3);
         } else {
+          ctx.rotate(c.rot);
           ctx.beginPath();
           ctx.moveTo(0, -c.size);
           ctx.lineTo(c.size * 0.75, 0);
@@ -1304,12 +1416,18 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           ctx.closePath();
           ctx.fill();
           ctx.stroke();
+
+          ctx.rotate(-c.rot);
+          ctx.font = 'bold 8px monospace';
+          ctx.textAlign = 'left';
+          ctx.fillStyle = gemColor;
+          ctx.fillText(`+${c.val}P`, c.size + 4, 3);
         }
 
         ctx.restore();
       }
 
-      // Render Asteroids with flank fiery tails
+      // Render Asteroids with HP indicators
       for (let ai = 0; ai < g.asteroids.length; ai++) {
         const a = g.asteroids[ai];
         ctx.save();
@@ -1366,6 +1484,16 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.fill();
 
         ctx.restore();
+
+        // Show HP indicator pips on multi-hit asteroids
+        if (a.maxHp > 1) {
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 8px monospace';
+          ctx.fillStyle = '#F5B027';
+          ctx.fillText(`${'●'.repeat(a.hp)}`, a.x, a.y - a.size - 4);
+          ctx.restore();
+        }
       }
 
       // Render Player Starship
@@ -1420,15 +1548,63 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.arc(-14, 10, 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Active Shield Aura if powered up
+        // Active Triple Laser / Shield Aura with 3 Orbiting Energy Orbs
         if (g.tripleLaserTime > 0) {
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.6)';
-          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.75)';
+          ctx.lineWidth = 1.6;
           ctx.beginPath();
-          ctx.arc(0, 0, 24, 0, Math.PI * 2);
+          ctx.arc(0, 0, 25, 0, Math.PI * 2);
           ctx.stroke();
+
+          // 3 orbiting energy nodes
+          for (let oi = 0; oi < 3; oi++) {
+            const orbAngle = (now / 200) + (oi * Math.PI * 2) / 3;
+            const ox = Math.cos(orbAngle) * 25;
+            const oy = Math.sin(orbAngle) * 25;
+            ctx.fillStyle = '#38BDF8';
+            ctx.beginPath();
+            ctx.arc(ox, oy, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
 
+        ctx.restore();
+      }
+
+      // ── Render In-Arena Floating Text Particles (+50, +100, +BUFF, etc.) ──
+      ctx.save();
+      ctx.textAlign = 'center';
+      for (let fti = 0; fti < g.floatingTexts.length; fti++) {
+        const ft = g.floatingTexts[fti];
+        ctx.globalAlpha = Math.max(0, ft.alpha);
+        ctx.font = `bold ${ft.size}px monospace`;
+        ctx.fillStyle = ft.color;
+        ctx.shadowColor = ft.color;
+        ctx.shadowBlur = 6;
+        ctx.fillText(ft.text, ft.x, ft.y);
+      }
+      ctx.restore();
+
+      // ── Active Buff Floating Banner at Arena Top ──
+      if (g.tripleLaserTime > 0) {
+        ctx.save();
+        ctx.textAlign = 'center';
+        const bannerW = 200;
+        const bannerH = 22;
+        const bannerX = w / 2;
+        const bannerY = 22;
+
+        ctx.fillStyle = 'rgba(15, 24, 48, 0.88)';
+        ctx.strokeStyle = '#38BDF8';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.roundRect(bannerX - bannerW / 2, bannerY - bannerH / 2, bannerW, bannerH, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = 'bold 9.5px monospace';
+        ctx.fillStyle = '#38BDF8';
+        ctx.fillText(`⚡ TRIPLE LASER: ${g.tripleLaserTime.toFixed(1)}s`, bannerX, bannerY + 3.5);
         ctx.restore();
       }
 
@@ -1437,7 +1613,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
     animRef.id = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animRef.id);
-  }, [gameState, spawnExplosion]);
+  }, [gameState, spawnExplosion, spawnFloatingText, buffTimeLeft]);
 
   // Touch and Mouse Controls
   const handlePointerMove = (clientX: number) => {
@@ -1509,7 +1685,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       <div className="absolute top-1/2 -left-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-sapphire/20 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
       <div className="absolute -top-10 -right-28 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-champagne/15 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
 
-      {/* ── Section Header (Clean, Spacious, No Bloated Text) ── */}
+      {/* ── Section Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 gap-4 relative z-10">
         <div>
           <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl text-pearl font-normal tracking-tight">
@@ -1559,6 +1735,14 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             {combo > 1 && (
               <span className="px-2 py-0.5 rounded bg-champagne/20 border border-champagne/40 text-champagne text-[10px] font-bold animate-pulse">
                 {combo}x COMBO
+              </span>
+            )}
+
+            {/* Active Buff HUD Badge */}
+            {buffTimeLeft > 0 && (
+              <span className="hidden xs:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 text-[9.5px] font-bold animate-pulse">
+                <Zap className="w-3 h-3 text-cyan-300" />
+                <span>TRIPLE LASER ({buffTimeLeft}s)</span>
               </span>
             )}
           </div>
@@ -1615,45 +1799,68 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             className="w-full block cursor-crosshair"
           />
 
-          {/* ── OVERLAY A: Start Screen (Spacious, Clean, Zero Emoticons) ── */}
+          {/* ── OVERLAY A: Start Screen (Detailed Legend for Enemies, Buffs & Points) ── */}
           {gameState === 'idle' && (
-            <div className="absolute inset-0 bg-midnight-0/88 backdrop-blur-md flex flex-col items-center justify-center p-6 sm:p-10 text-center z-20 animate-fade-in">
-              <div className="w-14 h-14 rounded-2xl bg-champagne/15 border border-champagne/40 flex items-center justify-center text-champagne shadow-[0_0_24px_rgba(245,176,39,0.35)] mb-3">
-                <Rocket className="w-7 h-7 text-champagne" />
+            <div className="absolute inset-0 bg-midnight-0/88 backdrop-blur-md flex flex-col items-center justify-center p-5 sm:p-8 text-center z-20 animate-fade-in overflow-y-auto">
+              <div className="w-12 h-12 rounded-2xl bg-champagne/15 border border-champagne/40 flex items-center justify-center text-champagne shadow-[0_0_24px_rgba(245,176,39,0.35)] mb-2">
+                <Rocket className="w-6 h-6 text-champagne" />
               </div>
 
               <h3 className="font-display text-xl sm:text-2xl font-bold text-pearl tracking-tight">
                 Cosmic Orbit Defender
               </h3>
-              <p className="text-mist text-xs sm:text-sm max-w-sm mt-1.5">
+              <p className="text-mist text-xs sm:text-sm max-w-sm mt-1">
                 {lang === 'id'
-                  ? 'Kendalikan pesawat tempur, hindari proyektil musuh, dan capai target 15.000 poin!'
-                  : 'Pilot your starship, evade hostile plasma, and reach the 15,000 pts goal!'}
+                  ? 'Tembak musuh & ranjau, ambil kristal buff, dan hindari tembakan plasma!'
+                  : 'Shoot enemies & mines, collect buff crystals, and evade hostile plasma!'}
               </p>
 
-              {/* Spacious 3-Pill Tactical Brief */}
-              <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5 my-5 max-w-md w-full text-[10px] font-mono">
-                <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col items-center">
-                  <Move className="w-4 h-4 text-pearl" />
-                  <span className="text-pearl mt-2 font-semibold">{lang === 'id' ? 'Kemudi' : 'Maneuver'}</span>
-                  <span className="text-fog text-[9px] mt-0.5">{lang === 'id' ? 'Sentuh & Geser' : 'Touch & Drag'}</span>
+              {/* Detailed 3-Column Visual Guide: Musuh, Buff/Skill, dan Poin */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 my-4 max-w-xl w-full text-[10.5px] font-mono text-left">
+                {/* Column 1: Musuh & Bahaya */}
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-rose-500/20 flex flex-col justify-between">
+                  <div className="flex items-center gap-1.5 text-rose-400 font-bold mb-1">
+                    <Target className="w-3.5 h-3.5" />
+                    <span>{lang === 'id' ? 'Musuh & Ranjau' : 'Enemies & Traps'}</span>
+                  </div>
+                  <ul className="space-y-1 text-mist text-[9.5px]">
+                    <li>• <b className="text-pearl">Asteroid:</b> +50 Poin</li>
+                    <li>• <b className="text-pearl">Drone:</b> +250 Pts (Tembak)</li>
+                    <li>• <b className="text-pearl">Ranjau:</b> Tembak untuk EMP!</li>
+                  </ul>
                 </div>
-                <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col items-center">
-                  <Target className="w-4 h-4 text-rose-400" />
-                  <span className="text-rose-400 mt-2 font-semibold">{lang === 'id' ? 'Drone & Ranjau' : 'Drones & Mines'}</span>
-                  <span className="text-fog text-[9px] mt-0.5">{lang === 'id' ? 'Tembak & Hindari' : 'Shoot & Evade'}</span>
+
+                {/* Column 2: Buff & Skill User */}
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-cyan-500/20 flex flex-col justify-between">
+                  <div className="flex items-center gap-1.5 text-cyan-400 font-bold mb-1">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>{lang === 'id' ? 'Buff & Skill' : 'Buffs & Skills'}</span>
+                  </div>
+                  <ul className="space-y-1 text-mist text-[9.5px]">
+                    <li>• <b className="text-emerald-400">Perisai:</b> +1 Nyawa & Shield</li>
+                    <li>• <b className="text-cyan-300">Triple Laser:</b> Tembakan 3 arah</li>
+                    <li>• <b className="text-champagne">Combo:</b> Skor s/d 10x lipat!</li>
+                  </ul>
                 </div>
-                <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col items-center">
-                  <Trophy className="w-4 h-4 text-champagne" />
-                  <span className="text-champagne mt-2 font-semibold">{lang === 'id' ? 'Target Misi' : 'Mission Goal'}</span>
-                  <span className="text-fog text-[9px] mt-0.5">15.000 Pts</span>
+
+                {/* Column 3: Koleksi Poin */}
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-champagne/20 flex flex-col justify-between">
+                  <div className="flex items-center gap-1.5 text-champagne font-bold mb-1">
+                    <Trophy className="w-3.5 h-3.5" />
+                    <span>{lang === 'id' ? 'Kristal Poin' : 'Point Crystals'}</span>
+                  </div>
+                  <ul className="space-y-1 text-mist text-[9.5px]">
+                    <li>• <b className="text-amber-400">Safir:</b> +150 Poin</li>
+                    <li>• <b className="text-yellow-400">Emas:</b> +100 Poin</li>
+                    <li>• <b className="text-pearl">Target:</b> 15.000 Poin Menang</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Launch Button */}
               <button
                 onClick={startGame}
-                className="btn-champagne px-8 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-lg cursor-pointer"
+                className="btn-champagne px-8 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-lg cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-midnight-0" />
                 <span>{lang === 'id' ? 'Mulai Ekspedisi' : 'Launch Starship'}</span>
@@ -1759,14 +1966,14 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           )}
         </div>
 
-        {/* ── Bottom Quick Instruction Strip (Clean & Uncluttered) ── */}
+        {/* ── Bottom Quick Instruction Strip ── */}
         <div className="px-5 sm:px-7 py-3 bg-midnight-1/80 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-fog">
           <div className="flex items-center gap-2">
             <Flame className="w-3.5 h-3.5 text-rose-400 shrink-0" />
             <span>
               {lang === 'id'
-                ? 'Drone musuh menembakkan plasma terarah. Tembak ranjau untuk ledakan EMP pembersih area!'
-                : 'Hostile drones fire targeted plasma. Shoot mines to trigger an area-clearing EMP blast!'}
+                ? 'Garis merah putus-putus menandakan arah tembakan drone. Tembak ranjau untuk ledakan EMP!'
+                : 'Dashed red lines telegraph drone fire. Shoot plasma mines to trigger an EMP blast!'}
             </span>
           </div>
           <span className="text-champagne font-semibold shrink-0">
