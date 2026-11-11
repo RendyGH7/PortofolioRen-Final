@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
-import { lockScroll, unlockScroll, forceUnlockScroll } from '../utils/scrollLock';
+import { lockScroll, unlockScroll, forceUnlockScroll, smoothScrollTo } from '../utils/scrollLock';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -72,27 +72,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     forceUnlockScroll();
 
     setTimeout(() => {
-      if (id === 'hero') {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-        return;
-      }
-
-      const element = document.getElementById(id);
-      if (element) {
-        const navOffset = 80;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = element.getBoundingClientRect().top;
-        const targetPosition = elementRect - bodyRect - navOffset;
-
-        window.scrollTo({
-          top: Math.max(0, targetPosition),
-          behavior: 'smooth',
-        });
-      }
-    }, 120);
+      smoothScrollTo(id, 80);
+    }, 60);
   };
 
   return (

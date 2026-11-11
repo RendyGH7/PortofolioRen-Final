@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquareCode, X, Send, Bot, ArrowUpRight } from 'lucide-react';
+import { smoothScrollTo } from '../utils/scrollLock';
 
 interface Message {
   id: string;
@@ -134,17 +135,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
 
   const scrollTo = (sectionId: string) => {
     setIsOpen(false);
-    const el = document.getElementById(sectionId);
-    if (el) {
-      const navOffset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elRect = el.getBoundingClientRect().top;
-      const targetPosition = elRect - bodyRect - navOffset;
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth',
-      });
-    }
+    smoothScrollTo(sectionId, 80);
   };
 
   return (
@@ -213,7 +204,7 @@ export const AskRendyAI: React.FC<AskRendyAIProps> = ({ isModalOpen = false }) =
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto py-3 space-y-3 pr-1 text-left">
+          <div className="flex-1 overflow-y-auto overscroll-contain py-3 space-y-3 pr-1 text-left">
             {messages.map((msg) => (
               <div
                 key={msg.id}

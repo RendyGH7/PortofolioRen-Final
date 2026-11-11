@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 import { Hero3D } from './Hero3D';
+import { smoothScrollTo } from '../utils/scrollLock';
 
 interface HeroProps {
   lang: 'id' | 'en';
@@ -64,17 +65,7 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
   }, [displayText, isDeleting, roleIndex, roles]);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const navOffset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elRect = el.getBoundingClientRect().top;
-      const targetPosition = elRect - bodyRect - navOffset;
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth',
-      });
-    }
+    smoothScrollTo(id, 80);
   };
 
   return (

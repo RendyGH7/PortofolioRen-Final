@@ -219,7 +219,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ lang, onModalO
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-3 rounded-2xl p-4 sm:p-6 space-y-3.5 sm:space-y-4 text-left relative shadow-glass-lg border border-white/10"
+              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto overscroll-contain glass-3 rounded-2xl p-4 sm:p-6 space-y-3.5 sm:space-y-4 text-left relative shadow-glass-lg border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
             {/* Modal Header */}

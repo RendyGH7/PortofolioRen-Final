@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
+import { smoothScrollTo } from '../utils/scrollLock';
 import { GithubIcon, LinkedinIcon, InstagramIcon, TikTokIcon } from './SocialIcons';
 
 interface FooterProps {
   onOpenTerminal?: () => void;
 }
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 export const Footer: React.FC<FooterProps> = () => {
   const [time, setTime] = useState('');
@@ -29,21 +32,11 @@ export const Footer: React.FC<FooterProps> = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smoothScrollTo('hero', 0);
   };
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const navOffset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elRect = el.getBoundingClientRect().top;
-      const targetPosition = elRect - bodyRect - navOffset;
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth',
-      });
-    }
+    smoothScrollTo(id, 80);
   };
 
   return (
@@ -161,7 +154,7 @@ export const Footer: React.FC<FooterProps> = () => {
 
           <div className="flex items-center gap-4">
             <span className="text-[11px] text-fog/80">
-              © {new Date().getFullYear()} Rendy Fernando Tambunan
+              © {CURRENT_YEAR} Rendy Fernando Tambunan
             </span>
 
             <button

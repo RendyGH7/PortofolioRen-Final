@@ -115,14 +115,21 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
-/* Subtle Film Grain */
+/* Subtle Film Grain (Desktop only to guarantee 60-120fps smooth scrolling on iOS and Android) */
 .film-grain {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 40;
   opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .film-grain {
+    display: block;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
 }
 
 /* Ambient Background Blobs */
@@ -227,15 +234,20 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   overflow-x: hidden;
   min-height: 100vh;
   max-width: 100%;
-  -webkit-overflow-scrolling: touch;
 }
 
 #root {
@@ -244,12 +256,11 @@ body {
   min-height: 100vh;
 }
 
-/* Hardened Modal / Drawer Scroll Lock */
+/* Hardened Modal / Drawer Scroll Lock (Touch-Friendly: Never traps modals or mobile gestures) */
 html.overflow-locked,
 body.overflow-locked {
   overflow: hidden !important;
-  overscroll-behavior: contain !important;
-  touch-action: none !important;
+  overscroll-behavior: none !important;
 }
 
 /* Reduced Transparency & Reduced Motion */

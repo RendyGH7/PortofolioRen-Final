@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import { PERSONAL_DATA } from '../data/portfolioData';
+import { smoothScrollTo } from '../utils/scrollLock';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 interface CommandPaletteProps {
@@ -48,18 +49,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const scrollTo = (sectionId: string) => {
     onClose();
     setTimeout(() => {
-      const el = document.getElementById(sectionId);
-      if (el) {
-        const navOffset = 80;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elRect = el.getBoundingClientRect().top;
-        const targetPosition = elRect - bodyRect - navOffset;
-        window.scrollTo({
-          top: Math.max(0, targetPosition),
-          behavior: 'smooth',
-        });
-      }
-    }, 120);
+      smoothScrollTo(sectionId, 80);
+    }, 60);
   };
 
   const copyToClipboard = (text: string, label: string) => {
@@ -261,7 +252,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         )}
 
         {/* Results Stream */}
-        <div className="max-h-72 overflow-y-auto space-y-1 pr-1">
+        <div className="max-h-72 overflow-y-auto overscroll-contain space-y-1 pr-1">
           {filtered.length === 0 ? (
             <div className="py-8 text-center text-xs text-fog">
               Tidak ada perintah yang sesuai.

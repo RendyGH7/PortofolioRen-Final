@@ -32,6 +32,15 @@ export function App() {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+
+    // Master fail-safe: Ensure the site ALWAYS unlocks and becomes visible within 2.2s no matter what
+    const failsafe = setTimeout(() => {
+      setIsLoading(false);
+      setContentVisible(true);
+      forceUnlockScroll();
+    }, 2200);
+
+    return () => clearTimeout(failsafe);
   }, []);
 
   // Safe reference-counted scroll lock for preloader and all modals

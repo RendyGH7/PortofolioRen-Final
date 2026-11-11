@@ -81,9 +81,10 @@ export const AmbientBackground: React.FC = () => {
       '#F5B027', // K-Class Radiant Amber
     ];
 
-    // Multi-depth star field (Optimized: 100 on mobile, 220 on desktop for 60fps buttery scrolling)
+    // Multi-depth star field (Optimized: 40 on mobile, 160 on desktop for 60-120fps buttery scrolling)
     const stars: Star[] = [];
-    const starCount = Math.min(Math.floor((dims.w * dims.h) / 5500), dims.w < 768 ? 100 : 220);
+    const isMobile = dims.w < 768;
+    const starCount = Math.min(Math.floor((dims.w * dims.h) / 6000), isMobile ? 40 : 160);
 
     const initStars = () => {
       stars.length = 0;
@@ -201,8 +202,8 @@ export const AmbientBackground: React.FC = () => {
         ctx.restore();
       }
 
-      // Meteors occasionally streaking through the cosmos
-      if (!prefersReducedMotion) {
+      // Meteors occasionally streaking through the cosmos (Desktop only)
+      if (!prefersReducedMotion && !isMobile) {
         const now = Date.now();
         if (now - lastMeteorTime > 4500 + Math.random() * 3200) {
           spawnMeteor();
@@ -282,7 +283,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Replaces Spiral Galaxy) */}
           <div
-            className="absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 hidden sm:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Golden Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Belts and 3D Rings)"
           >
             <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -481,7 +482,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 1: Photorealistic Ringed Gas Giant (Cassini / Kepler-186f Orbit) */}
           <div
-            className="absolute top-[48px] sm:top-[26px] md:top-[34px] right-[2%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[48px] sm:top-[26px] md:top-[34px] right-[2%] md:right-[4%] lg:right-[5%] z-0 hidden sm:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Bands & 3D Rings)"
           >
             <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -679,7 +680,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 2: Deep Terrestrial Exoplanet (Lower-Left Deep Space) */}
           <div
-            className="absolute top-[640px] sm:top-[680px] left-[3%] sm:left-[5%] md:left-[6%] z-0 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[640px] sm:top-[680px] left-[3%] sm:left-[5%] md:left-[6%] z-0 hidden sm:flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Terrestrial Exoplanet (Proxima Centauri b)"
           >
             <div className="relative w-22 h-22 sm:w-26 sm:h-26 md:w-28 md:h-28 flex items-center justify-center">
@@ -713,7 +714,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 3: Starlight Lunar Satellite (Lower-Right Cosmic Horizon) */}
           <div
-            className="absolute top-[730px] sm:top-[770px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-65 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[730px] sm:top-[770px] right-[4%] sm:right-[7%] md:right-[9%] z-0 hidden sm:flex items-center justify-center opacity-65 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Starlight Lunar Satellite (Titan Minor)"
           >
             <div className="relative w-18 h-18 sm:w-20 sm:h-20 md:w-22 md:h-22 flex items-center justify-center">
@@ -771,7 +772,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 4: Photorealistic Cyan Ice Gas Giant (Kepler-452b Frosted Rings) */}
           <div
-            className="absolute top-[260px] left-[2%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[260px] left-[2%] sm:left-[3%] md:left-[4%] lg:left-[5%] z-0 hidden sm:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Cyan Ice Gas Giant (Kepler-452b Frosted Rings)"
           >
             <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -918,7 +919,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 5: Photorealistic Amethyst Gas Giant (Kepler-16b Orbital Rings) */}
           <div
-            className="absolute top-[320px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[320px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 hidden sm:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Amethyst Gas Giant Exoplanet (Kepler-16b Orbital Rings)"
           >
             <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -1121,7 +1122,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 6: Photorealistic Copper Ember Gas Giant (Proxima Centauri Rings) */}
           <div
-            className="absolute top-[220px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[220px] right-[2%] sm:right-[3%] md:right-[4%] lg:right-[5%] z-0 hidden sm:flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Copper Ember Gas Giant Exoplanet (Proxima Centauri Rings)"
           >
             <div className="relative w-52 h-36 sm:w-60 sm:h-40 md:w-68 md:h-46 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">

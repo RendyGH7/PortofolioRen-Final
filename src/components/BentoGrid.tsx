@@ -299,26 +299,28 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             />
 
-            {/* 2. Concentric Golden Horizon Prestige Ring */}
+            {/* 2. Concentric Golden Horizon Prestige Ring (Clean spherical contour without backdrop-filter clipping bug) */}
             <div
-              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/30 bg-gradient-to-b from-champagne/10 via-sapphire/5 to-transparent backdrop-blur-[1px] shadow-[0_0_45px_rgba(245,176,39,0.18)] pointer-events-none transition-transform duration-500 ease-out"
+              className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] pointer-events-none transition-transform duration-500 ease-out"
               style={{
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
               }}
             />
 
-            {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders) */}
+            {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Seamless Radial Gradient, Zero Box Clamping) */}
             <div
-              className="absolute top-12 sm:top-16 left-1/2 -translate-x-1/2 w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-tr from-champagne/35 via-amber-500/20 to-transparent blur-[55px] pointer-events-none transition-transform duration-300"
+              className="absolute top-6 sm:top-8 lg:top-10 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full pointer-events-none transition-transform duration-300"
               style={{
+                background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.52) 0%, rgba(245, 176, 39, 0.32) 26%, rgba(217, 130, 24, 0.12) 48%, rgba(245, 176, 39, 0.02) 65%, transparent 75%)',
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.4}px), ${tilt.shadowY * 1.4}px)`,
               }}
             />
 
-            {/* 4. Deep Royal Sapphire Nebula Core (Torso & Atmosphere) */}
+            {/* 4. Deep Royal Sapphire Nebula Core (Torso & Atmospheric Depth) */}
             <div
-              className="absolute top-1/3 left-1/2 -translate-x-1/2 w-60 h-60 sm:w-72 sm:h-72 lg:w-88 lg:h-88 rounded-full bg-sapphire/40 blur-[80px] pointer-events-none transition-transform duration-300"
+              className="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 sm:w-96 sm:h-96 lg:w-[440px] lg:h-[440px] rounded-full pointer-events-none transition-transform duration-300"
               style={{
+                background: 'radial-gradient(circle at center, rgba(76, 111, 209, 0.30) 0%, rgba(76, 111, 209, 0.10) 45%, transparent 72%)',
                 transform: `translate(calc(-50% + ${-tilt.shadowX * 1.2}px), ${-tilt.shadowY * 1.2}px)`,
               }}
             />
@@ -372,7 +374,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.75)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300 [mask-image:linear-gradient(to_bottom,black_calc(100%-14px),transparent_100%)]"
+                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] filter drop-shadow-[0_16px_32px_rgba(0,0,0,0.60)] group-hover:drop-shadow-[0_0_35px_rgba(245,176,39,0.35)] transition-all duration-300 [mask-image:linear-gradient(to_bottom,black_calc(100%-16px),transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%-16px),transparent_100%)]"
                 loading="lazy"
               />
             </div>

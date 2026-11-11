@@ -39,14 +39,14 @@ export const ScrollFadeSection: React.FC<ScrollFadeSectionProps> = ({
   return (
     <div ref={containerRef} id={id} className={`w-full ${className}`}>
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
+        initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{
           once: true,
-          amount: 0.04,
+          margin: '80px 0px -20px 0px',
         }}
         transition={{
-          duration: 0.5,
+          duration: 0.4,
           ease: [0.16, 1, 0.3, 1],
         }}
       >

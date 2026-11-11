@@ -168,7 +168,7 @@ export const TerminalEasterEgg: React.FC<TerminalEasterEggProps> = ({ isOpen, on
         </div>
 
         {/* Terminal Body */}
-        <div className="flex-1 p-4 font-mono text-xs overflow-y-auto space-y-3 bg-midnight-0/95">
+        <div className="flex-1 p-4 font-mono text-xs overflow-y-auto overscroll-contain space-y-3 bg-midnight-0/95">
           {logs.map((log, index) => (
             <div key={index} className="space-y-1">
               <div className="flex items-center gap-2 text-pearl">

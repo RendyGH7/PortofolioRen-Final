@@ -24,6 +24,20 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
   const [showContent, setShowContent] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
+  const isMobile =
+    typeof window !== 'undefined' &&
+    (window.innerWidth < 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
+
+  // ── Absolute Hard Safety Failsafe: Under NO circumstance will loading stay stuck ─
+  useEffect(() => {
+    const maxSafeTime = isMobile ? 1100 : 2200;
+    const failsafe = setTimeout(() => {
+      setIsExiting(true);
+      setTimeout(() => onComplete?.(), 200);
+    }, maxSafeTime);
+    return () => clearTimeout(failsafe);
+  }, [isMobile, onComplete]);
+
   // ── 1. Canvas: Alive Space, Moving Planets, Twinkling Stars & Animated Central Planet ─
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,18 +45,19 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let raf: number;
-    let w = (canvas.width = window.innerWidth);
-    let h = (canvas.height = window.innerHeight);
+    const dims = {
+      w: (canvas.width = window.innerWidth),
+      h: (canvas.height = window.innerHeight),
+    };
 
     const onResize = () => {
       if (!canvas) return;
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+      dims.w = canvas.width = window.innerWidth;
+      dims.h = canvas.height = window.innerHeight;
     };
     window.addEventListener('resize', onResize);
 
-    // ── Generate Dense Multi-Layer Starfield (320 stars) ──
+    // ── Generate Multi-Layer Starfield (Ultra-optimized for mobile) ──
     interface Star {
       x: number;
       y: number;
@@ -56,7 +71,9 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       hasGlint: boolean;
     }
 
-    const STAR_COUNT = Math.min(320, Math.floor((w * h) / 3800));
+    const STAR_COUNT = isMobile
+      ? Math.min(45, Math.floor((dims.w * dims.h) / 9000))
+      : Math.min(180, Math.floor((dims.w * dims.h) / 4500));
     const STAR_COLORS = [
       '255,255,255', // Pure Diamond White
       '147,197,253', // Ice Sapphire
@@ -74,8 +91,8 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
         : Math.random() * 1.0 + 0.6;
 
       return {
-        x: Math.random() * w,
-        y: Math.random() * h,
+        x: Math.random() * dims.w,
+        y: Math.random() * dims.h,
         r,
         a: Math.random() * 0.6 + 0.35,
         speed: Math.random() * 0.03 + 0.012,
@@ -99,16 +116,16 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       max: number;
     }
     const shots: Shot[] = [];
-    let lastShot = 0;
+    const renderState = { t: 0, lastShot: 0, raf: 0 };
 
     // ── Draw Small Background Moving Planets ──
     const drawBackgroundPlanets = (t: number) => {
       // 1. Crimson Terrestrial Planet (Mars-like, orbiting upper left)
-      const p1OrbitX = w * 0.2;
-      const p1OrbitY = h * 0.22;
-      const p1x = p1OrbitX + Math.cos(t * 0.32) * (w * 0.07);
-      const p1y = p1OrbitY + Math.sin(t * 0.32) * (h * 0.04);
-      const p1r = Math.min(w, h) * 0.018 + 7;
+      const p1OrbitX = dims.w * 0.2;
+      const p1OrbitY = dims.h * 0.22;
+      const p1x = p1OrbitX + Math.cos(t * 0.32) * (dims.w * 0.07);
+      const p1y = p1OrbitY + Math.sin(t * 0.32) * (dims.h * 0.04);
+      const p1r = Math.min(dims.w, dims.h) * 0.018 + 7;
 
       ctx.save();
       // Planet 1 atmosphere corona
@@ -151,11 +168,11 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       ctx.restore();
 
       // 2. Emerald Gas Dwarf with Delicate Rings (upper right)
-      const p2OrbitX = w * 0.82;
-      const p2OrbitY = h * 0.28;
-      const p2x = p2OrbitX + Math.cos(-t * 0.25 + 1.5) * (w * 0.08);
-      const p2y = p2OrbitY + Math.sin(-t * 0.25 + 1.5) * (h * 0.05);
-      const p2r = Math.min(w, h) * 0.022 + 9;
+      const p2OrbitX = dims.w * 0.82;
+      const p2OrbitY = dims.h * 0.28;
+      const p2x = p2OrbitX + Math.cos(-t * 0.25 + 1.5) * (dims.w * 0.08);
+      const p2y = p2OrbitY + Math.sin(-t * 0.25 + 1.5) * (dims.h * 0.05);
+      const p2r = Math.min(dims.w, dims.h) * 0.022 + 9;
 
       ctx.save();
       // Back half of tiny ring
@@ -204,11 +221,11 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       ctx.restore();
 
       // 3. Icy Violet Moon (drifting lower left background)
-      const p3OrbitX = w * 0.16;
-      const p3OrbitY = h * 0.68;
-      const p3x = p3OrbitX + Math.cos(t * 0.2 + 3.2) * (w * 0.06);
-      const p3y = p3OrbitY + Math.sin(t * 0.2 + 3.2) * (h * 0.04);
-      const p3r = Math.min(w, h) * 0.015 + 6;
+      const p3OrbitX = dims.w * 0.16;
+      const p3OrbitY = dims.h * 0.68;
+      const p3x = p3OrbitX + Math.cos(t * 0.2 + 3.2) * (dims.w * 0.06);
+      const p3y = p3OrbitY + Math.sin(t * 0.2 + 3.2) * (dims.h * 0.04);
+      const p3r = Math.min(dims.w, dims.h) * 0.015 + 6;
 
       ctx.save();
       const p3Body = ctx.createRadialGradient(
@@ -235,9 +252,9 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       // Smooth dynamic levitation and subtle floating motion
       const floatY = Math.sin(t * 1.5) * 8.5;
       const floatX = Math.cos(t * 0.9) * 4;
-      const cx = w / 2 + floatX;
-      const cy = h * 0.36 + floatY;
-      const R = Math.min(w, h) * 0.125;
+      const cx = dims.w / 2 + floatX;
+      const cy = dims.h * 0.36 + floatY;
+      const R = Math.min(dims.w, dims.h) * 0.125;
 
       // Dynamic precession angle and tilt wobble
       const ringAngle = -0.38 + Math.sin(t * 0.8) * 0.035;
@@ -454,23 +471,23 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
     };
 
     // ── Main Render Loop ──
-    let t = 0;
     const render = (now: number) => {
-      t += 0.016;
-      ctx.clearRect(0, 0, w, h);
+      renderState.t += 0.016;
+      const currentT = renderState.t;
+      ctx.clearRect(0, 0, dims.w, dims.h);
 
       // 1. Draw Twinkling and Drifting Stars
       for (const s of stars) {
         // Drift position
         s.x += s.vx;
         s.y += s.vy;
-        if (s.x < 0) s.x = w;
-        if (s.x > w) s.x = 0;
-        if (s.y < 0) s.y = h;
-        if (s.y > h) s.y = 0;
+        if (s.x < 0) s.x = dims.w;
+        if (s.x > dims.w) s.x = 0;
+        if (s.y < 0) s.y = dims.h;
+        if (s.y > dims.h) s.y = 0;
 
         // Pulsing twinkle
-        const alpha = s.a + Math.sin(t * s.speed * 60 + s.phase) * 0.28;
+        const alpha = s.a + Math.sin(currentT * s.speed * 60 + s.phase) * 0.28;
         const a = Math.max(0.08, Math.min(1, alpha));
 
         ctx.beginPath();
@@ -497,75 +514,78 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
         }
       }
 
-      // 2. Draw Moving Small Background Planets
-      drawBackgroundPlanets(t);
+      // 2. Draw Moving Small Background Planets (Desktop only for peak mobile performance)
+      if (!isMobile) {
+        drawBackgroundPlanets(currentT);
+      }
 
       // 3. Draw Animated Central Gas Giant
-      drawCentralPlanet(t);
+      drawCentralPlanet(currentT);
 
-      // 4. Spawn & Draw Meteors / Shooting Stars
-      if (now - lastShot > 1800 && Math.random() < 0.07) {
+      // 4. Spawn & Draw Meteors / Shooting Stars (Desktop only)
+      if (!isMobile && now - renderState.lastShot > 1800 && Math.random() < 0.07) {
         const angle = (Math.PI / 4) + (Math.random() - 0.5) * 0.35;
         shots.push({
-          x: Math.random() * w * 0.85,
-          y: Math.random() * h * 0.4,
+          x: Math.random() * dims.w * 0.85,
+          y: Math.random() * dims.h * 0.4,
           vx: Math.cos(angle) * (9 + Math.random() * 8),
           vy: Math.sin(angle) * (9 + Math.random() * 8),
           len: 80 + Math.random() * 110,
           life: 0,
           max: 30 + Math.random() * 20,
         });
-        lastShot = now;
+        renderState.lastShot = now;
       }
 
-      for (let i = shots.length - 1; i >= 0; i--) {
-        const ss = shots[i];
-        ss.x += ss.vx;
-        ss.y += ss.vy;
-        ss.life++;
-        const p = ss.life / ss.max;
-        const alpha = p < 0.25 ? (p / 0.25) * 0.9 : (1 - (p - 0.25) / 0.75) * 0.9;
-        const hyp = Math.hypot(ss.vx, ss.vy);
-        const tailX = ss.x - (ss.vx / hyp) * ss.len;
-        const tailY = ss.y - (ss.vy / hyp) * ss.len;
+      if (!isMobile) {
+        for (let i = shots.length - 1; i >= 0; i--) {
+          const ss = shots[i];
+          ss.x += ss.vx;
+          ss.y += ss.vy;
+          ss.life++;
+          const p = ss.life / ss.max;
+          const alpha = p < 0.25 ? (p / 0.25) * 0.9 : (1 - (p - 0.25) / 0.75) * 0.9;
+          const hyp = Math.hypot(ss.vx, ss.vy);
+          const tailX = ss.x - (ss.vx / hyp) * ss.len;
+          const tailY = ss.y - (ss.vy / hyp) * ss.len;
 
-        const g = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
-        g.addColorStop(0, 'rgba(255,255,255,0)');
-        g.addColorStop(0.65, `rgba(147,197,253,${alpha * 0.6})`);
-        g.addColorStop(1, `rgba(255,255,255,${alpha})`);
+          const g = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
+          g.addColorStop(0, 'rgba(255,255,255,0)');
+          g.addColorStop(0.65, `rgba(147,197,253,${alpha * 0.6})`);
+          g.addColorStop(1, `rgba(255,255,255,${alpha})`);
 
-        ctx.beginPath();
-        ctx.moveTo(tailX, tailY);
-        ctx.lineTo(ss.x, ss.y);
-        ctx.strokeStyle = g;
-        ctx.lineWidth = 1.6;
-        ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(tailX, tailY);
+          ctx.lineTo(ss.x, ss.y);
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
 
-        if (ss.life >= ss.max) shots.splice(i, 1);
+          if (ss.life >= ss.max) shots.splice(i, 1);
+        }
       }
 
-      raf = requestAnimationFrame(render);
+      renderState.raf = requestAnimationFrame(render);
     };
 
-    raf = requestAnimationFrame(render);
+    renderState.raf = requestAnimationFrame(render);
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(renderState.raf);
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [isMobile]);
 
-  // ── 2. Progress bar driven by rAF (zero React re-renders per frame) ─────────
+  // ── 2. Progress bar driven by rAF (Zero React re-renders, ultra-fast on mobile) ──
   useEffect(() => {
-    const DURATION = 4200; // 4.2 seconds — smooth cinematic rhythm
+    // Ultra-snappy on mobile (700ms), crisp & cinematic on desktop (1350ms)
+    const DURATION = isMobile ? 700 : 1350;
     const start = performance.now();
-    let raf: number;
+    const tickState = { raf: 0 };
 
     const tick = (now: number) => {
       const raw = Math.min((now - start) / DURATION, 1);
-      // Quintic ease-in-out curve
-      const eased = raw < 0.5
-        ? 4 * raw * raw * raw
-        : 1 - Math.pow(-2 * raw + 2, 3) / 2;
+      // Fast ease-out curve
+      const eased = 1 - Math.pow(1 - raw, 3);
       const pct = Math.min(Math.round(eased * 100), 100);
 
       if (progressBarRef.current) {
@@ -576,43 +596,43 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
       }
 
       if (raw < 1) {
-        raf = requestAnimationFrame(tick);
+        tickState.raf = requestAnimationFrame(tick);
       } else {
         setTimeout(() => {
           setIsExiting(true);
-          setTimeout(() => onComplete?.(), 700);
-        }, 350);
+          setTimeout(() => onComplete?.(), 260);
+        }, 120);
       }
     };
 
-    const t1 = setTimeout(() => setShowContent(true), 80);
-    raf = requestAnimationFrame(tick);
+    const t1 = setTimeout(() => setShowContent(true), 40);
+    tickState.raf = requestAnimationFrame(tick);
 
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(tickState.raf);
       clearTimeout(t1);
     };
-  }, [onComplete]);
+  }, [isMobile, onComplete]);
 
   // ── 3. Text Phase Rotation ──────────────────────────────────────────────────
   useEffect(() => {
-    const PHASE_DURATION = 1380;
+    const PHASE_DURATION = isMobile ? 380 : 650;
     let idx = 0;
     const interval = setInterval(() => {
       idx = (idx + 1) % TEXT_PHASES.length;
       setPhaseIdx(idx);
     }, PHASE_DURATION);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
   const phase = TEXT_PHASES[phaseIdx];
 
-  // ── 4. Skip on click ─────────────────────────────────────────────────────────
+  // ── 4. Skip on click / tap ──────────────────────────────────────────────────
   const handleSkip = () => {
     if (progressBarRef.current) progressBarRef.current.style.width = '100%';
     if (percentRef.current) percentRef.current.textContent = '100%';
     setIsExiting(true);
-    setTimeout(() => onComplete?.(), 350);
+    setTimeout(() => onComplete?.(), 180);
   };
 
   return (
@@ -621,13 +641,27 @@ export const CosmicPreloader: React.FC<CosmicPreloaderProps> = ({
         <motion.div
           key="preloader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.06, filter: 'blur(20px)' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, scale: 1.04, filter: 'blur(12px)' }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           onClick={handleSkip}
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center select-none overflow-hidden cursor-pointer"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center select-none overflow-hidden cursor-pointer touch-none"
           style={{ background: 'radial-gradient(ellipse at 50% 60%, #0a0f2e 0%, #03060f 100%)' }}
         >
-          {/* Canvas: Alive space, stars, moving planets & animated central planet */}
+          {/* Top-Right Explicit One-Tap Skip Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSkip();
+            }}
+            className="absolute top-5 right-5 z-30 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 active:scale-95 border border-white/20 text-xs font-mono text-pearl transition-all flex items-center gap-1.5 shadow-md"
+            aria-label="Lewati animasi intro"
+          >
+            <span>{_lang === 'id' ? 'Lewati' : 'Skip'}</span>
+            <span className="text-champagne">→</span>
+          </button>
+
+          {/* Canvas: Alive space, stars & animated central planet */}
           <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
           {/* Nebula atmospheric ambient glows */}
