@@ -102,21 +102,21 @@ const HARD_SKILL_PLANETS: PlanetHardSkill[] = [
     glow: 'rgba(45, 212, 191, 0.45)',
   },
   {
-    id: 'datascience',
-    name: 'TSDN AI',
-    fullName: 'Data Science & Predictive ML',
-    field: 'Bidang 05 // AI & Data',
-    tech: 'Python • Top 7 TSDN',
-    level: 'Grand Finalis',
-    descId: 'Grand Finalis Top 7 Turnamen Sains Data Nasional (TSDN), pemodelan Machine Learning & analitik.',
-    descEn: 'Top 7 Grand Finalist at National Data Science Tournament (TSDN), ML modeling & analytics.',
-    skills: ['Python', 'Scikit-Learn', 'Pandas', 'Predictive Modeling', 'TSDN Top 7'],
+    id: 'business',
+    name: 'Bisnis Digital',
+    fullName: 'Bisnis Digital & Strategi Produk',
+    field: 'Bidang 05 // Bisnis & Solusi',
+    tech: 'E-Commerce • Monetisasi',
+    level: 'Mindset & Eksekusi',
+    descId: 'Pola pikir wirausaha, perancangan model bisnis digital, integrasi e-commerce & payment gateway, serta solusi bisnis berorientasi profit.',
+    descEn: 'Entrepreneurial mindset, digital business models, e-commerce & payment gateway integration, and profit-oriented tech solutions.',
+    skills: ['E-Commerce', 'Model Bisnis', 'Payment QRIS', 'Strategi Produk', 'Analisis Pasar'],
     rx: 52,
     ry: 30.5,
     speed: 6.8,
     startAngle: 220,
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
     color: '#C084FC',
     glow: 'rgba(192, 132, 252, 0.45)',
   },
@@ -606,36 +606,40 @@ export const HeroInteractiveAsset: React.FC<HeroInteractiveAssetProps> = ({ lang
                 </div>
               )}
 
-              {/* ── PLANET 5: SAINS DATA & AI (Exotic Amethyst Pulsar Exoplanet) ── */}
-              {planet.id === 'datascience' && (
+              {/* ── PLANET 5: BISNIS DIGITAL (Royal Amethyst & Gold Commerce World) ── */}
+              {planet.id === 'business' && (
                 <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
                   <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
                     <defs>
-                      <radialGradient id="aiSurface" cx="30%" cy="28%" r="70%">
+                      <radialGradient id="bizSurface" cx="30%" cy="28%" r="70%">
                         <stop offset="0%" stopColor="#FAF5FF" />
-                        <stop offset="22%" stopColor="#D8B4FE" />
+                        <stop offset="22%" stopColor="#E9D5FF" />
                         <stop offset="50%" stopColor="#A855F7" />
                         <stop offset="82%" stopColor="#6B21A8" />
                         <stop offset="100%" stopColor="#1E0338" />
                       </radialGradient>
-                      <radialGradient id="aiLimb" cx="28%" cy="26%" r="72%">
+                      <radialGradient id="bizLimb" cx="28%" cy="26%" r="72%">
                         <stop offset="70%" stopColor="transparent" />
-                        <stop offset="90%" stopColor="#C084FC" stopOpacity="0.5" />
+                        <stop offset="90%" stopColor="#C084FC" stopOpacity="0.55" />
                         <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
                       </radialGradient>
-                      <clipPath id="aiClip">
+                      <clipPath id="bizClip">
                         <circle cx="50" cy="50" r="42" />
                       </clipPath>
                     </defs>
-                    <circle cx="50" cy="50" r="42" fill="url(#aiSurface)" />
-                    {/* Exotic Data Storm Eye */}
-                    <g clipPath="url(#aiClip)">
-                      <circle cx="46" cy="52" r="16" fill="#581C87" opacity="0.5" />
-                      <path d="M 16 44 Q 50 36 84 44 L 84 48 Q 50 40 16 48 Z" fill="#F3E8FF" opacity="0.4" />
+                    <circle cx="50" cy="50" r="42" fill="url(#bizSurface)" />
+                    {/* Global Digital Commerce & Trade Meridian Lines */}
+                    <g clipPath="url(#bizClip)" opacity="0.6">
+                      {/* Equator & Latitude Trade Arcs */}
+                      <ellipse cx="50" cy="50" rx="40" ry="14" fill="none" stroke="#F5B027" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.75" />
+                      <ellipse cx="50" cy="50" rx="20" ry="40" fill="none" stroke="#E9D5FF" strokeWidth="1" opacity="0.4" />
+                      {/* Commerce Golden Node */}
+                      <circle cx="58" cy="46" r="3" fill="#F5B027" />
+                      <circle cx="58" cy="46" r="5" fill="none" stroke="#FDE047" strokeWidth="0.8" opacity="0.6" />
                     </g>
-                    <circle cx="50" cy="50" r="42" fill="url(#aiLimb)" />
-                    {/* Pulsar Quantum Core Sparkle */}
-                    <circle cx="50" cy="50" r="2" fill="#FFFFFF" />
+                    <circle cx="50" cy="50" r="42" fill="url(#bizLimb)" />
+                    {/* Golden Prosperity Crown Sparkle */}
+                    <circle cx="34" cy="32" r="2" fill="#FFFFFF" opacity="0.9" />
                   </svg>
                 </div>
               )}
