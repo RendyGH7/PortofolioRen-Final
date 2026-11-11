@@ -19,6 +19,9 @@ interface Meteor {
   angle: number;
   opacity: number;
   thickness: number;
+  isComet?: boolean;
+  tailColor?: string;
+  glowColor?: string;
 }
 
 export const AmbientBackground: React.FC = () => {
@@ -85,7 +88,7 @@ export const AmbientBackground: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     // Cosmic starlight color spectrum (Authentic astronomical stellar classifications)
-    const desktopStarColors = [
+    const starColors = [
       '#FFFFFF', // O/A-Class Pure Starlight
       '#F8FAFC', // Diamond Starlight
       '#BAE6FD', // B-Class Blue Giant
@@ -95,37 +98,27 @@ export const AmbientBackground: React.FC = () => {
       '#F5B027', // K-Class Radiant Amber
     ];
 
-    // Elegant, non-distracting soft stellar palette for mobile
-    const mobileStarColors = [
-      '#FFFFFF',
-      '#F1F5F9',
-      '#E2E8F0',
-      '#BAE6FD',
-      '#FFFDF5',
-    ];
-
-    // Multi-depth star field (Calibrated for peaceful, elegant cosmic depth)
+    // Multi-depth star field (Expansive cosmic depth with crystal clarity across mobile & desktop)
     const stars: Star[] = [];
-    const starCount = isMobile ? 68 : 320;
-    const colors = isMobile ? mobileStarColors : desktopStarColors;
+    const starCount = isMobile ? 150 : 320;
 
     const initStars = () => {
       stars.length = 0;
       for (let i = 0; i < starCount; i++) {
         const layer = isMobile
-          ? Math.random() < 0.65 ? 1 : Math.random() < 0.90 ? 2 : 3
+          ? Math.random() < 0.58 ? 1 : Math.random() < 0.86 ? 2 : 3
           : Math.random() < 0.52 ? 1 : Math.random() < 0.84 ? 2 : 3;
 
-        const color = colors[Math.floor(Math.random() * colors.length)];
+        const color = starColors[Math.floor(Math.random() * starColors.length)];
         stars.push({
           x: Math.random() * dims.w,
           y: Math.random() * dims.h,
           size: isMobile
             ? layer === 1
-              ? Math.random() * 0.35 + 0.3
+              ? Math.random() * 0.45 + 0.55
               : layer === 2
-                ? Math.random() * 0.45 + 0.5
-                : Math.random() * 0.55 + 0.75
+                ? Math.random() * 0.65 + 0.85
+                : Math.random() * 0.90 + 1.25
             : layer === 1
               ? Math.random() * 0.8 + 0.6
               : layer === 2
@@ -133,10 +126,10 @@ export const AmbientBackground: React.FC = () => {
                 : Math.random() * 2.2 + 1.8,
           baseAlpha: isMobile
             ? layer === 1
-              ? Math.random() * 0.15 + 0.15
+              ? Math.random() * 0.22 + 0.30
               : layer === 2
-                ? Math.random() * 0.18 + 0.22
-                : Math.random() * 0.20 + 0.35
+                ? Math.random() * 0.25 + 0.42
+                : Math.random() * 0.28 + 0.58
             : layer === 1
               ? Math.random() * 0.35 + 0.35
               : layer === 2
@@ -152,20 +145,32 @@ export const AmbientBackground: React.FC = () => {
 
     initStars();
 
-    // Shooting stars / Meteors
+    // Shooting stars & Comets with radiant starlight tails
     const meteors: Meteor[] = [];
     let lastMeteorTime = Date.now();
 
     const spawnMeteor = () => {
-      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.22;
+      const isComet = Math.random() < 0.25; // 25% chance of majestic comet
+      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.24;
+
+      const cometHues = [
+        { tail: 'rgba(245, 176, 39,', glow: 'rgba(253, 224, 71, 0.45)' }, // Solar Amber
+        { tail: 'rgba(103, 232, 249,', glow: 'rgba(147, 197, 253, 0.45)' }, // Ice Cyan Stardust
+        { tail: 'rgba(168, 85, 247,', glow: 'rgba(216, 180, 254, 0.45)' }, // Violet Nebula
+      ];
+      const style = isComet ? cometHues[Math.floor(Math.random() * cometHues.length)] : null;
+
       meteors.push({
-        x: Math.random() * dims.w * 0.9,
-        y: Math.random() * (dims.h * 0.4),
-        length: Math.random() * 100 + 75,
-        speed: Math.random() * 8 + 13,
+        x: Math.random() * dims.w * 0.95,
+        y: Math.random() * (dims.h * 0.45),
+        length: isComet ? Math.random() * 130 + 110 : Math.random() * 95 + 65,
+        speed: isComet ? Math.random() * 5 + 7.5 : Math.random() * 8 + 13,
         angle,
         opacity: 1,
-        thickness: Math.random() * 1.6 + 1.1,
+        thickness: isComet ? Math.random() * 1.4 + 1.8 : Math.random() * 1.1 + 1.0,
+        isComet,
+        tailColor: style ? style.tail : 'rgba(245, 176, 39,',
+        glowColor: style ? style.glow : 'rgba(245, 176, 39, 0.4)',
       });
     };
 
@@ -212,22 +217,15 @@ export const AmbientBackground: React.FC = () => {
         drawX = ((drawX % dims.w) + dims.w) % dims.w;
 
         // Twinkle Alpha calculation
-        let alpha = prefersReducedMotion
+        const alpha = prefersReducedMotion
           ? s.baseAlpha
           : Math.min(
-              isMobile ? 0.6 : 1,
+              1,
               Math.max(
-                0.1,
-                s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * (isMobile ? 0.12 : 0.28)
+                0.12,
+                s.baseAlpha + Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * (isMobile ? 0.22 : 0.28)
               )
             );
-
-        // Content protection on mobile: gently attenuate stars in the central reading zone so typography is 100% sharp
-        if (isMobile) {
-          if (drawX > dims.w * 0.04 && drawX < dims.w * 0.96 && drawY > dims.h * 0.08 && drawY < dims.h * 0.88) {
-            alpha = alpha * 0.45;
-          }
-        }
 
         ctx.globalAlpha = alpha;
         ctx.fillStyle = s.color;
@@ -255,11 +253,11 @@ export const AmbientBackground: React.FC = () => {
       }
       ctx.globalAlpha = 1;
 
-      // Meteors occasionally streaking through the cosmos
+      // Meteors & Comets streaking through the cosmos
       if (!prefersReducedMotion) {
         const now = Date.now();
-        const meteorInterval = isMobile ? 5500 : 4000;
-        if (now - lastMeteorTime > meteorInterval + Math.random() * 3200) {
+        const meteorInterval = isMobile ? 2600 : 3200;
+        if (now - lastMeteorTime > meteorInterval + Math.random() * 1800) {
           spawnMeteor();
           lastMeteorTime = now;
         }
@@ -268,9 +266,9 @@ export const AmbientBackground: React.FC = () => {
           const m = meteors[j];
           m.x += Math.cos(m.angle) * m.speed;
           m.y += Math.sin(m.angle) * m.speed;
-          m.opacity -= 0.015;
+          m.opacity -= m.isComet ? 0.010 : 0.016;
 
-          if (m.opacity <= 0 || m.x > dims.w + 100 || m.y > dims.h + 100) {
+          if (m.opacity <= 0 || m.x > dims.w + 120 || m.y > dims.h + 120) {
             meteors.splice(j, 1);
             continue;
           }
@@ -279,8 +277,10 @@ export const AmbientBackground: React.FC = () => {
           const tailY = m.y - Math.sin(m.angle) * m.length;
 
           const gradient = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
-          gradient.addColorStop(0, 'rgba(245, 176, 39, 0)');
-          gradient.addColorStop(0.65, `rgba(142, 168, 245, ${m.opacity * 0.6})`);
+          const baseColor = m.tailColor || 'rgba(245, 176, 39,';
+          gradient.addColorStop(0, `${baseColor} 0)`);
+          gradient.addColorStop(0.55, `${baseColor} ${m.opacity * 0.6})`);
+          gradient.addColorStop(0.85, `rgba(186, 230, 253, ${m.opacity * 0.85})`);
           gradient.addColorStop(1, `rgba(255, 255, 255, ${m.opacity})`);
 
           ctx.save();
@@ -292,17 +292,26 @@ export const AmbientBackground: React.FC = () => {
           ctx.lineTo(m.x, m.y);
           ctx.stroke();
 
-          // Meteor starlight head (Without expensive ctx.shadowBlur which triggers CPU blur on WebKit)
+          // Meteor starlight nucleus
           ctx.fillStyle = '#FFFFFF';
           ctx.beginPath();
-          ctx.arc(m.x, m.y, m.thickness * 1.3, 0, Math.PI * 2);
+          ctx.arc(m.x, m.y, m.thickness * (m.isComet ? 1.6 : 1.3), 0, Math.PI * 2);
           ctx.fill();
 
-          // Soft starlight glow halo (Hardware-native vector circle instead of shadowBlur)
-          ctx.fillStyle = 'rgba(245, 176, 39, 0.4)';
+          // Soft starlight coma glow halo
+          ctx.fillStyle = m.glowColor || 'rgba(245, 176, 39, 0.4)';
           ctx.beginPath();
-          ctx.arc(m.x, m.y, m.thickness * 2.6, 0, Math.PI * 2);
+          ctx.arc(m.x, m.y, m.thickness * (m.isComet ? 3.4 : 2.6), 0, Math.PI * 2);
           ctx.fill();
+
+          // Comets receive extra outer stardust coma haze
+          if (m.isComet) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+            ctx.beginPath();
+            ctx.arc(m.x, m.y, m.thickness * 5.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
           ctx.restore();
         }
       }
@@ -338,9 +347,9 @@ export const AmbientBackground: React.FC = () => {
             }}
           />
 
-          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Desktop only to keep mobile header clean) */}
+          {/* SPREAD CELESTIAL BODY: Photorealistic Ringed Gold Gas Giant (Warm Amber/Champagne with 3D Rings) */}
           <div
-            className="hidden sm:flex absolute top-[16px] sm:top-[38px] md:top-[48px] left-[1%] md:left-[3%] lg:left-[5%] z-0 items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="flex absolute top-[16px] sm:top-[38px] md:top-[48px] -left-8 sm:left-[3%] lg:left-[5%] z-0 items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-55 sm:scale-100 origin-top-left transform-gpu"
             title="Golden Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Belts and 3D Rings)"
           >
             <div className="relative w-28 h-20 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -539,7 +548,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 1: Photorealistic Ringed Gas Giant (Cassini / Kepler-186f Orbit) */}
           <div
-            className="absolute top-[8px] sm:top-[26px] md:top-[34px] -right-4 sm:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-30 sm:opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-70 sm:scale-100 origin-top-right transform-gpu"
+            className="absolute top-[8px] sm:top-[26px] md:top-[34px] -right-4 sm:right-[4%] lg:right-[5%] z-0 flex items-center justify-center opacity-85 hover:opacity-100 transition-all duration-700 pointer-events-none group scale-60 sm:scale-100 origin-top-right transform-gpu"
             title="Gas Giant Exoplanet (Photorealistic Atmospheric Cloud Bands & 3D Rings)"
           >
             <div className="relative w-36 h-28 sm:w-64 sm:h-44 md:w-72 md:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
@@ -804,7 +813,7 @@ export const AmbientBackground: React.FC = () => {
           </div>
 
           {/* Subtle Cosmic Constellation Web in Negative Space */}
-          <div className="absolute top-[220px] right-[2%] sm:right-[4%] z-0 hidden lg:block opacity-35 pointer-events-none">
+          <div className="absolute top-[220px] right-[2%] sm:right-[4%] z-0 opacity-40 pointer-events-none scale-75 sm:scale-100 origin-top-right">
             <svg width="120" height="160" viewBox="0 0 120 160" fill="none">
               <line x1="20" y1="30" x2="65" y2="80" stroke="rgba(245, 176, 39, 0.35)" strokeWidth="0.8" strokeDasharray="3 3" />
               <line x1="65" y1="80" x2="100" y2="140" stroke="rgba(96, 165, 250, 0.35)" strokeWidth="0.8" strokeDasharray="3 3" />

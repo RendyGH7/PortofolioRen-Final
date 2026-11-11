@@ -91,8 +91,8 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
       <div className="absolute top-1/4 -left-28 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-sapphire/20 blur-md sm:blur-[140px] pointer-events-none transform-gpu" />
       <div className="absolute top-1/2 left-1/3 w-[260px] sm:w-[400px] h-[260px] sm:h-[400px] rounded-full bg-champagne/15 blur-md sm:blur-[130px] pointer-events-none transform-gpu" />
 
-      {/* Mobile Text Readability Soft Veil (Guarantees zero text interference from stars) */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_35%_35%,rgba(10,16,32,0.80)_0%,rgba(10,16,32,0.40)_60%,transparent_85%)] sm:hidden z-0" />
+      {/* Mobile Ambient Vignette (Keeps deep cosmic starry sky vibrant while text remains crystal clear) */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_35%,rgba(10,16,32,0.30)_0%,transparent_75%)] sm:hidden z-0" />
 
       <div className="w-full max-w-6xl xl:max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
         {/* Left Column: Typography, Dynamic Typewriter & Intentional Persona Actions */}
