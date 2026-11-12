@@ -343,9 +343,9 @@ body.overflow-locked {
 .group:hover .profile-photo-aura,
 .profile-photo-aura.profile-photo-aura-active,
 .profile-photo-aura-active {
-  filter: drop-shadow(0 0 20px rgba(245, 176, 39, 0.85))
-          drop-shadow(0 0 48px rgba(245, 176, 39, 0.60))
-          drop-shadow(0 0 95px rgba(245, 176, 39, 0.35));
+  filter: drop-shadow(0 0 16px rgba(245, 176, 39, 0.70))
+          drop-shadow(0 0 38px rgba(245, 176, 39, 0.45))
+          drop-shadow(0 0 75px rgba(245, 176, 39, 0.25));
 }
 
 @media (prefers-reduced-motion: reduce) {

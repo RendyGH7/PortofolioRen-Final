@@ -340,7 +340,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate(calc(-50% + ${tilt.shadowX * 0.6}px), calc(-50% + ${tilt.shadowY * 0.6}px))`,
               }}
             >
-              <div className={`w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-120 border-sapphire/60 shadow-[0_0_80px_rgba(76,111,209,0.45)]' : 'group-hover:scale-120 group-hover:border-sapphire/50 group-hover:shadow-[0_0_70px_rgba(76,111,209,0.35)]'}`} />
+              <div className={`w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-115 border-sapphire/50 shadow-[0_0_65px_rgba(76,111,209,0.35)]' : 'group-hover:scale-115 group-hover:border-sapphire/40 group-hover:shadow-[0_0_55px_rgba(76,111,209,0.28)]'}`} />
             </div>
 
             {/* 2. Concentric Golden Horizon Prestige Ring (Expands dynamically on hover) */}
@@ -350,7 +350,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
               }}
             >
-              <div className={`w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-115 border-champagne/70 shadow-[0_0_95px_rgba(245,176,39,0.55)]' : 'group-hover:scale-115 group-hover:border-champagne/65 group-hover:shadow-[0_0_90px_rgba(245,176,39,0.50)]'}`} />
+              <div className={`w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-110 border-champagne/60 shadow-[0_0_75px_rgba(245,176,39,0.40)]' : 'group-hover:scale-110 group-hover:border-champagne/55 group-hover:shadow-[0_0_70px_rgba(245,176,39,0.35)]'}`} />
             </div>
 
             {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Expands softly on hover) */}
@@ -361,9 +361,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className={`w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'opacity-100 scale-135' : 'opacity-80 group-hover:opacity-100 group-hover:scale-135'}`}
+                className={`w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'opacity-90 scale-125' : 'opacity-75 group-hover:opacity-90 group-hover:scale-125'}`}
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.65) 0%, rgba(245, 176, 39, 0.42) 28%, rgba(217, 130, 24, 0.18) 50%, rgba(245, 176, 39, 0.04) 70%, transparent 85%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.52) 0%, rgba(245, 176, 39, 0.34) 28%, rgba(217, 130, 24, 0.14) 50%, rgba(245, 176, 39, 0.03) 70%, transparent 85%)',
                 }}
               />
             </div>
@@ -376,9 +376,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className={`w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out blur-3xl shrink-0 ${isPhotoHovered ? 'opacity-100 scale-125' : 'opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-125'}`}
+                className={`w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out blur-3xl shrink-0 ${isPhotoHovered ? 'opacity-85 scale-120' : 'opacity-0 scale-75 group-hover:opacity-85 group-hover:scale-120'}`}
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.60) 0%, rgba(245, 176, 39, 0.38) 35%, rgba(217, 130, 24, 0.15) 60%, transparent 80%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.48) 0%, rgba(245, 176, 39, 0.30) 35%, rgba(217, 130, 24, 0.12) 60%, transparent 80%)',
                 }}
               />
             </div>
