@@ -2015,9 +2015,6 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                 <h3 className="font-display text-xl sm:text-3xl font-bold text-pearl tracking-tight">
                   {lang === 'id' ? 'MISI BERHASIL!' : 'MISSION ACCOMPLISHED!'}
                 </h3>
-                <p className="text-emerald-400 font-mono text-xs sm:text-sm font-semibold mt-0.5 sm:mt-1">
-                  {lang === 'id' ? 'ORBIT DISTABILKAN // RANK: ACE PILOT' : 'ORBIT STABILIZED // RANK: ACE PILOT'}
-                </p>
                 <p className="text-mist text-[11px] sm:text-sm max-w-sm mt-1 leading-relaxed">
                   {lang === 'id'
                     ? `Target ${GOAL_SCORE.toLocaleString()} poin tercapai! Pertahanan sektor antariksa telah aman.`
