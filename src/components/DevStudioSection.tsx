@@ -359,6 +359,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
     shipX: 200,
     shipY: 340,
     targetShipX: 200,
+    targetShipY: 340,
     shipWidth: 32,
     shipHeight: 38,
     invulnerableTime: 0,
@@ -431,6 +432,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       shipX: w / 2,
       shipY: h - 50,
       targetShipX: w / 2,
+      targetShipY: h - 50,
       shipWidth: 32,
       shipHeight: 38,
       invulnerableTime: 0,
@@ -520,10 +522,11 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         return;
       }
 
-      // ── Update Ship position with smooth lerp ──
-      g.shipX += (g.targetShipX - g.shipX) * 0.22;
+      // ── Update Ship position with responsive 2D lerp (Follows mouse on desktop, finger gestures on mobile/tablet) ──
+      g.shipX += (g.targetShipX - g.shipX) * 0.35;
+      g.shipY += (g.targetShipY - g.shipY) * 0.35;
       g.shipX = Math.max(22, Math.min(w - 22, g.shipX));
-      g.shipY = h - 45;
+      g.shipY = Math.max(65, Math.min(h - 35, g.shipY));
 
       if (g.invulnerableTime > 0) g.invulnerableTime -= dt;
 
@@ -546,8 +549,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         }
       }
 
-      // ── Auto-fire twin or triple lasers (Reduced attack speed: comfortable ~330ms pace) ──
-      if (now - g.lastShotTime > 340) {
+      // ── Auto-fire twin or triple lasers (Reduced attack speed: calibrated ~420ms pace) ──
+      if (now - g.lastShotTime > 420) {
         g.lastShotTime = now;
         sound.playLaser();
 
@@ -562,9 +565,9 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 1. ASTEROID SPAWNER (Comfortable cadence: 520ms-1250ms, gentle fall speed)
+      // 1. ASTEROID SPAWNER (Balanced cadence: 480ms-1180ms, calibrated fall speed)
       // ══════════════════════════════════════════════════════
-      const asteroidInterval = Math.max(520, 1250 - Math.floor(diff * 580));
+      const asteroidInterval = Math.max(480, 1180 - Math.floor(diff * 600));
       if (now - g.lastSpawnAsteroid > asteroidInterval) {
         g.lastSpawnAsteroid = now;
 
@@ -582,12 +585,12 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         const flankRightThreshold = flankLeftThreshold + 0.14 + diff * 0.10;
 
         if (rand < flankLeftThreshold) {
-          // Left Flank (Gentler speed: 50-95 px/s)
+          // Left Flank
           type = 'flank_left';
           spawnX = -25;
           spawnY = Math.random() * (h * 0.45) + 35;
-          vx = Math.random() * 40 + 55 + diff * 40;
-          vy = Math.random() * 30 + 25 + diff * 20;
+          vx = Math.random() * 40 + 58 + diff * 42;
+          vy = Math.random() * 30 + 28 + diff * 22;
           size = Math.random() * 8 + 16;
           hp = 1;
         } else if (rand < flankRightThreshold) {
@@ -595,8 +598,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           type = 'flank_right';
           spawnX = w + 25;
           spawnY = Math.random() * (h * 0.45) + 35;
-          vx = -(Math.random() * 40 + 55 + diff * 40);
-          vy = Math.random() * 30 + 25 + diff * 20;
+          vx = -(Math.random() * 40 + 58 + diff * 42);
+          vy = Math.random() * 30 + 28 + diff * 22;
           size = Math.random() * 8 + 16;
           hp = 1;
         } else if (rand < 0.75 && g.score > 1200) {
@@ -605,16 +608,16 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           spawnX = Math.random() * (w - 80) + 40;
           spawnY = -35;
           vx = (Math.random() - 0.5) * 25;
-          vy = Math.random() * 25 + 38 + diff * 25;
+          vy = Math.random() * 25 + 42 + diff * 28;
           size = Math.random() * 10 + 26;
           hp = diff > 0.6 ? 3 : 2;
         } else {
-          // Standard Top Spawn (Comfortable fall velocity: 45-95 px/s)
+          // Standard Top Spawn (Comfortable fall velocity: 52-107 px/s)
           type = 'top';
           spawnX = Math.random() * (w - 60) + 30;
           spawnY = -30;
           vx = (Math.random() - 0.5) * 35;
-          vy = Math.random() * 30 + 45 + diff * 50;
+          vy = Math.random() * 30 + 52 + diff * 55;
           size = Math.random() * 10 + 17;
           hp = size > 25 ? 2 : 1;
         }
@@ -642,10 +645,10 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       }
 
       // ══════════════════════════════════════════════════════
-      // 2. HOSTILE ENEMY DRONE SPAWNER (Appears at 1,200 pts, relaxed shooting rate)
+      // 2. HOSTILE ENEMY DRONE SPAWNER (Appears at 1,200 pts, calibrated shooting rate)
       // ══════════════════════════════════════════════════════
       const maxConcurrentDrones = diff < 0.35 ? 1 : diff < 0.75 ? 2 : 2;
-      const droneInterval = Math.max(4500, 7500 - diff * 2500);
+      const droneInterval = Math.max(4200, 7000 - diff * 2500);
       if (
         g.score >= 1200 &&
         g.drones.length < maxConcurrentDrones &&
@@ -661,7 +664,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           hp: 2,
           maxHp: 2,
           lastShotTime: now + 1200, // gentle delay before first shot
-          shotInterval: Math.max(2200, 3400 - diff * 1000), // comfortable 2.2s - 3.4s firing rate
+          shotInterval: Math.max(2000, 3100 - diff * 1000), // calibrated 2.0s - 3.1s firing rate
         });
       }
 
@@ -749,7 +752,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           const dx = g.shipX - d.x;
           const dy = g.shipY - d.y;
           const angle = Math.atan2(dy, dx);
-          const bulletSpeed = 135 + diff * 40; // much easier to see & dodge
+          const bulletSpeed = 145 + diff * 35;
 
           g.enemyBullets.push({
             x: d.x,
@@ -1502,6 +1505,10 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         ctx.save();
         ctx.translate(g.shipX, g.shipY);
 
+        // Dynamic aerodynamic bank tilt based on lateral steering
+        const bankAngle = Math.max(-0.22, Math.min(0.22, (g.targetShipX - g.shipX) * 0.012));
+        ctx.rotate(bankAngle);
+
         // Thruster exhaust flame
         const flameLen = Math.random() * 8 + 10;
         const grad = ctx.createLinearGradient(0, 10, 0, 10 + flameLen);
@@ -1615,42 +1622,162 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
     return () => cancelAnimationFrame(animRef.id);
   }, [gameState, spawnExplosion, spawnFloatingText, buffTimeLeft]);
 
-  // Touch and Mouse Controls
-  const handlePointerMove = (clientX: number) => {
+  // Mutable Touch Drag State for Mobile & Tablet (Moves ship smoothly in the exact direction of finger gestures)
+  const touchStateRef = useRef<{
+    active: boolean;
+    startX: number;
+    startY: number;
+    shipStartX: number;
+    shipStartY: number;
+  }>({
+    active: false,
+    startX: 0,
+    startY: 0,
+    shipStartX: 200,
+    shipStartY: 340,
+  });
+
+  // Touch Handlers for Mobile & Tablet (Gestural directional drag without thumb obstruction)
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (gameState !== 'playing' || e.touches.length === 0) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const touchX = ((touch.clientX - rect.left) / rect.width) * canvas.width;
+    const touchY = ((touch.clientY - rect.top) / rect.height) * canvas.height;
+
+    touchStateRef.current = {
+      active: true,
+      startX: touchX,
+      startY: touchY,
+      shipStartX: gameRef.current.shipX,
+      shipStartY: gameRef.current.shipY,
+    };
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (gameState !== 'playing' || e.touches.length === 0) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const touchX = ((touch.clientX - rect.left) / rect.width) * canvas.width;
+    const touchY = ((touch.clientY - rect.top) / rect.height) * canvas.height;
+
+    if (!touchStateRef.current.active) {
+      touchStateRef.current = {
+        active: true,
+        startX: touchX,
+        startY: touchY,
+        shipStartX: gameRef.current.shipX,
+        shipStartY: gameRef.current.shipY,
+      };
+    }
+
+    const deltaX = touchX - touchStateRef.current.startX;
+    const deltaY = touchY - touchStateRef.current.startY;
+
+    const newTargetX = touchStateRef.current.shipStartX + deltaX;
+    const newTargetY = touchStateRef.current.shipStartY + deltaY;
+
+    gameRef.current.targetShipX = Math.max(22, Math.min(canvas.width - 22, newTargetX));
+    gameRef.current.targetShipY = Math.max(65, Math.min(canvas.height - 35, newTargetY));
+  };
+
+  const handleTouchEnd = () => {
+    touchStateRef.current.active = false;
+  };
+
+  // Mouse Move Handler for Desktop (Directly follows mouse cursor position across the canvas)
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (gameState !== 'playing') return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const relativeX = ((clientX - rect.left) / rect.width) * canvas.width;
-    gameRef.current.targetShipX = relativeX;
+    const relativeX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    const relativeY = ((e.clientY - rect.top) / rect.height) * canvas.height;
+    gameRef.current.targetShipX = Math.max(22, Math.min(canvas.width - 22, relativeX));
+    gameRef.current.targetShipY = Math.max(65, Math.min(canvas.height - 35, relativeY));
   };
 
-  const handleTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    if (gameState === 'playing') {
-      e.preventDefault();
-      handlePointerMove(e.touches[0].clientX);
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    handlePointerMove(e.clientX);
-  };
-
-  // Keyboard navigation
+  // Window-level Mouse, Touch, & Keyboard tracking during active gameplay
   useEffect(() => {
     if (gameState !== 'playing') return;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const step = 30;
-      if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
-        gameRef.current.targetShipX -= step;
-      } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
-        gameRef.current.targetShipX += step;
+    // Desktop: Continue following mouse cursor even when moving rapidly near canvas boundaries
+    const handleWindowMouseMove = (e: MouseEvent) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (
+        e.clientX >= rect.left - 60 &&
+        e.clientX <= rect.right + 60 &&
+        e.clientY >= rect.top - 60 &&
+        e.clientY <= rect.bottom + 60
+      ) {
+        const relativeX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+        const relativeY = ((e.clientY - rect.top) / rect.height) * canvas.height;
+        gameRef.current.targetShipX = Math.max(22, Math.min(canvas.width - 22, relativeX));
+        gameRef.current.targetShipY = Math.max(65, Math.min(canvas.height - 35, relativeY));
       }
     };
 
+    // Mobile & Tablet: Continue directional touch drag if finger slides slightly past canvas border
+    const handleWindowTouchMove = (e: TouchEvent) => {
+      if (!touchStateRef.current.active || e.touches.length === 0) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      const touchX = ((touch.clientX - rect.left) / rect.width) * canvas.width;
+      const touchY = ((touch.clientY - rect.top) / rect.height) * canvas.height;
+
+      const deltaX = touchX - touchStateRef.current.startX;
+      const deltaY = touchY - touchStateRef.current.startY;
+
+      const newTargetX = touchStateRef.current.shipStartX + deltaX;
+      const newTargetY = touchStateRef.current.shipStartY + deltaY;
+
+      gameRef.current.targetShipX = Math.max(22, Math.min(canvas.width - 22, newTargetX));
+      gameRef.current.targetShipY = Math.max(65, Math.min(canvas.height - 35, newTargetY));
+    };
+
+    const handleWindowTouchEnd = () => {
+      touchStateRef.current.active = false;
+    };
+
+    // Keyboard navigation (Supports Arrow keys and WASD for full 2D mobility)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const step = 32;
+      const canvas = canvasRef.current;
+      const maxW = canvas ? canvas.width - 22 : 400;
+      const maxH = canvas ? canvas.height - 35 : 400;
+
+      if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
+        gameRef.current.targetShipX = Math.max(22, gameRef.current.targetShipX - step);
+      } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
+        gameRef.current.targetShipX = Math.min(maxW, gameRef.current.targetShipX + step);
+      } else if (e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') {
+        gameRef.current.targetShipY = Math.max(65, gameRef.current.targetShipY - step);
+      } else if (e.key === 'ArrowDown' || e.key.toLowerCase() === 's') {
+        gameRef.current.targetShipY = Math.min(maxH, gameRef.current.targetShipY + step);
+      }
+    };
+
+    window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('touchmove', handleWindowTouchMove, { passive: true });
+    window.addEventListener('touchend', handleWindowTouchEnd);
+    window.addEventListener('touchcancel', handleWindowTouchEnd);
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+      window.removeEventListener('touchmove', handleWindowTouchMove);
+      window.removeEventListener('touchend', handleWindowTouchEnd);
+      window.removeEventListener('touchcancel', handleWindowTouchEnd);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [gameState]);
 
   // Sync canvas resolution with container
@@ -1673,7 +1800,8 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
       if (gameRef.current.shipX === 200) {
         gameRef.current.shipX = w / 2;
         gameRef.current.targetShipX = w / 2;
-        gameRef.current.shipY = h - 45;
+        gameRef.current.shipY = h - 50;
+        gameRef.current.targetShipY = h - 50;
       }
     };
 
@@ -1796,9 +1924,12 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         <div className="relative w-full flex items-center justify-center bg-midnight-0 select-none overflow-hidden touch-none">
           <canvas
             ref={canvasRef}
-            onTouchStart={handleTouch}
-            onTouchMove={handleTouch}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
             onMouseMove={handleMouseMove}
+            onMouseDown={handleMouseMove}
             className="w-full block cursor-crosshair"
           />
 
