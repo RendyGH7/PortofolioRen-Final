@@ -780,7 +780,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 3: Starlight Lunar Satellite (Lower-Right Cosmic Horizon) */}
           <div
-            className="absolute top-[730px] sm:top-[770px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-65 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[830px] xs:top-[850px] sm:top-[770px] right-[4%] sm:right-[7%] md:right-[9%] z-0 flex items-center justify-center opacity-65 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Starlight Lunar Satellite (Titan Minor)"
           >
             <div className="relative w-18 h-18 sm:w-20 sm:h-20 md:w-22 md:h-22 flex items-center justify-center">
