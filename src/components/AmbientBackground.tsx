@@ -746,7 +746,7 @@ export const AmbientBackground: React.FC = () => {
 
           {/* SPREAD CELESTIAL BODY 2: Deep Terrestrial Exoplanet (Lower-Left Deep Space) */}
           <div
-            className="absolute top-[460px] xs:top-[480px] sm:top-[680px] left-[3%] sm:left-[5%] md:left-[6%] z-0 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-700 pointer-events-none group"
+            className="absolute top-[515px] xs:top-[530px] sm:top-[680px] left-[3%] sm:left-[5%] md:left-[6%] z-0 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-700 pointer-events-none group"
             title="Terrestrial Exoplanet (Proxima Centauri b)"
           >
             <div className="relative w-22 h-22 sm:w-26 sm:h-26 md:w-28 md:h-28 flex items-center justify-center">
