@@ -18,7 +18,7 @@ interface DevStudioSectionProps {
   lang: 'id' | 'en';
 }
 
-const GOAL_SCORE = 15000;
+const GOAL_SCORE = 50000;
 
 // ── Synthesized Web Audio Engine (0KB download, zero latency) ──
 class SoundSynth {
@@ -1704,7 +1704,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             <Trophy className="w-4 h-4 text-champagne" />
             <div className="flex flex-col">
               <span className="text-[9px] font-mono text-fog leading-none uppercase">{lang === 'id' ? 'Target Misi' : 'Mission Goal'}</span>
-              <span className="font-mono text-xs font-bold text-champagne tabular-nums mt-0.5">15.000 PTS</span>
+              <span className="font-mono text-xs font-bold text-champagne tabular-nums mt-0.5">{GOAL_SCORE.toLocaleString()} PTS</span>
             </div>
           </div>
 
@@ -1852,7 +1852,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                   <ul className="space-y-1 text-mist text-[9.5px]">
                     <li>• <b className="text-amber-400">Safir:</b> +150 Poin</li>
                     <li>• <b className="text-yellow-400">Emas:</b> +100 Poin</li>
-                    <li>• <b className="text-pearl">Target:</b> 15.000 Poin Menang</li>
+                    <li>• <b className="text-pearl">Target:</b> {lang === 'id' ? `${GOAL_SCORE.toLocaleString()} Poin Menang` : `${GOAL_SCORE.toLocaleString()} Pts to Win`}</li>
                   </ul>
                 </div>
               </div>
@@ -1997,7 +1997,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             </span>
           </div>
           <span className="text-champagne font-semibold shrink-0">
-            {lang === 'id' ? 'Target Misi: 15.000 Poin' : 'Mission Goal: 15,000 Pts'}
+            {lang === 'id' ? `Target Misi: ${GOAL_SCORE.toLocaleString()} Poin` : `Mission Goal: ${GOAL_SCORE.toLocaleString()} Pts`}
           </span>
         </div>
       </div>
