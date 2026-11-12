@@ -7,7 +7,7 @@ import {
   RotateCcw,
   Shield,
   Zap,
-  Sparkles,
+  Award,
   Rocket,
   Target,
   Flame,
@@ -1709,7 +1709,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           </div>
 
           <div className="glass-1 px-3.5 py-2 rounded-xl border border-white/10 flex items-center gap-2.5 shadow-sm">
-            <Sparkles className="w-4 h-4 text-pearl" />
+            <Award className="w-4 h-4 text-pearl" />
             <div className="flex flex-col">
               <span className="text-[9px] font-mono text-fog leading-none uppercase">{lang === 'id' ? 'Rekor Terbaik' : 'High Score'}</span>
               <span className="font-mono text-xs font-bold text-pearl tabular-nums mt-0.5">{highScore.toLocaleString()}</span>
@@ -1871,7 +1871,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
           {/* ── OVERLAY B: Victory Screen (15,000 Points Milestone Reached!) ── */}
           {gameState === 'victory' && (
             <div className="absolute inset-0 bg-midnight-0/92 backdrop-blur-md flex flex-col items-center justify-center p-6 sm:p-10 text-center z-20 animate-fade-in">
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-champagne shadow-[0_0_32px_rgba(245,176,39,0.5)] mb-3 animate-bounce">
+              <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-champagne shadow-[0_0_24px_rgba(245,176,39,0.3)] mb-3">
                 <Trophy className="w-8 h-8 text-champagne" />
               </div>
 
@@ -1887,7 +1887,20 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                   : `${GOAL_SCORE.toLocaleString()} pts goal reached! Orbital defense sector secured.`}
               </p>
 
-              <div className="glass-1 p-4 rounded-2xl border border-white/10 my-4 w-72 max-w-full space-y-1.5">
+              <div className="glass-1 p-4 rounded-xl border border-white/10 my-4 w-72 max-w-full space-y-2">
+                {isNewRecord && (
+                  <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono">
+                    <div className="flex items-center gap-1.5">
+                      <Award className="w-3.5 h-3.5 shrink-0" />
+                      <span className="font-semibold tracking-wide">
+                        {lang === 'id' ? 'Rekor Baru Terpecahkan' : 'New Personal Best'}
+                      </span>
+                    </div>
+                    <span className="text-[10px] uppercase font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded">
+                      {lang === 'id' ? 'Terbaik' : 'Best'}
+                    </span>
+                  </div>
+                )}
                 <div className="flex items-center justify-between text-xs font-mono text-fog">
                   <span>{lang === 'id' ? 'Skor Akhir' : 'Final Score'}</span>
                   <span className="text-sm font-bold text-champagne tabular-nums">{score.toLocaleString()}</span>
@@ -1936,15 +1949,22 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
                 </span>
               </div>
 
-              {isNewRecord && (
-                <div className="mt-2.5 px-3 py-1 rounded-full bg-champagne/20 border border-champagne/50 text-champagne text-[11px] font-mono font-bold flex items-center gap-1.5 animate-bounce">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>{lang === 'id' ? 'REKOR BARU TERCAPAI!' : 'NEW HIGH SCORE!'}</span>
-                </div>
-              )}
-
               {/* Score Recap Card */}
-              <div className="glass-1 p-4 rounded-2xl border border-white/10 my-4 w-72 max-w-full space-y-1.5">
+              <div className="glass-1 p-4 rounded-xl border border-white/10 my-4 w-72 max-w-full space-y-2">
+                {isNewRecord && (
+                  <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono">
+                    <div className="flex items-center gap-1.5">
+                      <Award className="w-3.5 h-3.5 shrink-0" />
+                      <span className="font-semibold tracking-wide">
+                        {lang === 'id' ? 'Rekor Baru Terpecahkan' : 'New Personal Best'}
+                      </span>
+                    </div>
+                    <span className="text-[10px] uppercase font-bold text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded">
+                      {lang === 'id' ? 'Terbaik' : 'Best'}
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between text-xs font-mono text-fog">
                   <span>{lang === 'id' ? 'Skor Akhir' : 'Final Score'}</span>
                   <span className="text-sm font-bold text-champagne tabular-nums">{score.toLocaleString()}</span>
