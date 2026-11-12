@@ -1640,6 +1640,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
   // Touch Handlers for Mobile & Tablet (Gestural directional drag without thumb obstruction)
   const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (gameState !== 'playing' || e.touches.length === 0) return;
+    e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -1658,6 +1659,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
   const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (gameState !== 'playing' || e.touches.length === 0) return;
+    e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -1921,7 +1923,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
         </div>
 
         {/* ── Active Canvas Arena ── */}
-        <div className="relative w-full flex items-center justify-center bg-midnight-0 select-none overflow-hidden touch-none">
+        <div className={`relative w-full flex items-center justify-center bg-midnight-0 select-none overflow-hidden ${gameState === 'playing' ? 'touch-none' : 'touch-pan-y'}`}>
           <canvas
             ref={canvasRef}
             onTouchStart={handleTouchStart}
@@ -1930,12 +1932,12 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
             onTouchCancel={handleTouchEnd}
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseMove}
-            className="w-full block cursor-crosshair"
+            className={`w-full block ${gameState === 'playing' ? 'cursor-crosshair touch-none' : 'touch-pan-y'}`}
           />
 
           {/* ── OVERLAY A: Start Screen (Detailed Legend for Enemies, Buffs & Points) ── */}
           {gameState === 'idle' && (
-            <div className="absolute inset-0 bg-midnight-0/90 backdrop-blur-md flex flex-col p-3.5 sm:p-6 text-center z-20 animate-fade-in overflow-y-auto overscroll-contain">
+            <div className="absolute inset-0 bg-midnight-0/90 backdrop-blur-md flex flex-col p-3.5 sm:p-6 text-center z-20 animate-fade-in overflow-y-auto touch-pan-y">
               <div className="my-auto flex flex-col items-center w-full max-w-xl mx-auto py-1 sm:py-2">
                 <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-champagne/15 border border-champagne/40 flex items-center justify-center text-champagne shadow-[0_0_20px_rgba(245,176,39,0.3)] mb-1.5 sm:mb-2">
                   <Rocket className="w-5 h-5 sm:w-6 sm:h-6 text-champagne" />
@@ -2006,7 +2008,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
           {/* ── OVERLAY B: Victory Screen (50,000 Points Milestone Reached!) ── */}
           {gameState === 'victory' && (
-            <div className="absolute inset-0 bg-midnight-0/92 backdrop-blur-md flex flex-col p-4 sm:p-8 text-center z-20 animate-fade-in overflow-y-auto overscroll-contain">
+            <div className="absolute inset-0 bg-midnight-0/92 backdrop-blur-md flex flex-col p-4 sm:p-8 text-center z-20 animate-fade-in overflow-y-auto touch-pan-y">
               <div className="my-auto flex flex-col items-center w-full max-w-sm mx-auto py-2">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-champagne shadow-[0_0_24px_rgba(245,176,39,0.3)] mb-2.5 sm:mb-3">
                   <Trophy className="w-7 h-7 sm:w-8 sm:h-8 text-champagne" />
@@ -2062,7 +2064,7 @@ export const DevStudioSection: React.FC<DevStudioSectionProps> = ({ lang }) => {
 
           {/* ── OVERLAY C: Game Over Screen ── */}
           {gameState === 'gameover' && (
-            <div className="absolute inset-0 bg-midnight-0/90 backdrop-blur-md flex flex-col p-4 sm:p-8 text-center z-20 animate-fade-in overflow-y-auto overscroll-contain">
+            <div className="absolute inset-0 bg-midnight-0/90 backdrop-blur-md flex flex-col p-4 sm:p-8 text-center z-20 animate-fade-in overflow-y-auto touch-pan-y">
               <div className="my-auto flex flex-col items-center w-full max-w-sm mx-auto py-2">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-[0_0_24px_rgba(244,63,94,0.35)] mb-2">
                   <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-rose-400" />
