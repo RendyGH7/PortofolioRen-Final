@@ -104,24 +104,41 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
   const [greetingToast, setGreetingToast] = useState(false);
   const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Mouse Parallax tracking for the center cutout
+  // Mouse & Touch Parallax tracking for the center cutout
   const centerStageRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, shadowX: 0, shadowY: 0 });
+  const [isPhotoHovered, setIsPhotoHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
     if (!centerStageRef.current) return;
     const rect = centerStageRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    const rotateY = (x / (rect.width / 2)) * 8;
-    const rotateX = -(y / (rect.height / 2)) * 8;
+    const rotateY = (x / (rect.width / 2)) * 9;
+    const rotateX = -(y / (rect.height / 2)) * 9;
     setTilt({
       rotateX,
       rotateY,
-      shadowX: -x * 0.12,
-      shadowY: -y * 0.12,
+      shadowX: -x * 0.14,
+      shadowY: -y * 0.14,
+    });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!centerStageRef.current || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const rect = centerStageRef.current.getBoundingClientRect();
+    const x = touch.clientX - rect.left - rect.width / 2;
+    const y = touch.clientY - rect.top - rect.height / 2;
+
+    const rotateY = (x / (rect.width / 2)) * 7;
+    const rotateX = -(y / (rect.height / 2)) * 7;
+    setTilt({
+      rotateX,
+      rotateY,
+      shadowX: -x * 0.1,
+      shadowY: -y * 0.1,
     });
   };
 
@@ -298,8 +315,18 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
           {/* ================= CENTER STAGE (4 Cols): ENLARGED & PROMINENT PROFILE CENTERPIECE ================= */}
           <div
             ref={centerStageRef}
+            onMouseEnter={() => setIsPhotoHovered(true)}
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave={() => {
+              setIsPhotoHovered(false);
+              handleMouseLeave();
+            }}
+            onTouchStart={() => setIsPhotoHovered(true)}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={() => {
+              setTimeout(() => setIsPhotoHovered(false), 1400);
+              handleMouseLeave();
+            }}
             onClick={handlePhotoClick}
             className="md:col-span-2 lg:col-span-4 flex flex-col items-center justify-end relative order-1 lg:order-2 min-h-[380px] xs:min-h-[420px] sm:min-h-[480px] md:min-h-[520px] lg:min-h-[580px] select-none cursor-pointer group pt-2 pb-0 h-full overflow-visible"
             title="Klik untuk sapaan interaktif Rendy"
@@ -313,7 +340,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate(calc(-50% + ${tilt.shadowX * 0.6}px), calc(-50% + ${tilt.shadowY * 0.6}px))`,
               }}
             >
-              <div className="w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 transition-all duration-700 ease-out group-hover:scale-120 group-hover:border-sapphire/50 group-hover:shadow-[0_0_70px_rgba(76,111,209,0.35)] shrink-0" />
+              <div className={`w-[320px] h-[320px] sm:w-[390px] sm:h-[390px] lg:w-[440px] lg:h-[440px] rounded-full border border-sapphire/20 transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-120 border-sapphire/60 shadow-[0_0_80px_rgba(76,111,209,0.45)]' : 'group-hover:scale-120 group-hover:border-sapphire/50 group-hover:shadow-[0_0_70px_rgba(76,111,209,0.35)]'}`} />
             </div>
 
             {/* 2. Concentric Golden Horizon Prestige Ring (Expands dynamically on hover) */}
@@ -323,7 +350,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
                 transform: `translate(calc(-50% + ${tilt.shadowX * 1.0}px), calc(-50% + ${tilt.shadowY * 1.0}px))`,
               }}
             >
-              <div className="w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out group-hover:scale-115 group-hover:border-champagne/55 group-hover:shadow-[0_0_70px_rgba(245,176,39,0.38)] shrink-0" />
+              <div className={`w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] lg:w-[350px] lg:h-[350px] rounded-full border border-champagne/35 bg-gradient-to-b from-champagne/15 via-sapphire/5 to-transparent shadow-[0_0_55px_rgba(245,176,39,0.25)] transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'scale-115 border-champagne/70 shadow-[0_0_95px_rgba(245,176,39,0.55)]' : 'group-hover:scale-115 group-hover:border-champagne/65 group-hover:shadow-[0_0_90px_rgba(245,176,39,0.50)]'}`} />
             </div>
 
             {/* 3. Radiant Champagne Solar Corona (Behind Head & Shoulders - Expands softly on hover) */}
@@ -334,9 +361,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out opacity-75 group-hover:opacity-90 group-hover:scale-130 shrink-0"
+                className={`w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 rounded-full transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'opacity-100 scale-135' : 'opacity-80 group-hover:opacity-100 group-hover:scale-135'}`}
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.50) 0%, rgba(245, 176, 39, 0.32) 28%, rgba(217, 130, 24, 0.14) 50%, rgba(245, 176, 39, 0.03) 70%, transparent 85%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 211, 105, 0.65) 0%, rgba(245, 176, 39, 0.42) 28%, rgba(217, 130, 24, 0.18) 50%, rgba(245, 176, 39, 0.04) 70%, transparent 85%)',
                 }}
               />
             </div>
@@ -349,9 +376,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className="w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out opacity-0 scale-75 group-hover:opacity-75 group-hover:scale-120 blur-3xl shrink-0"
+                className={`w-[360px] h-[360px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] rounded-full transition-all duration-700 ease-out blur-3xl shrink-0 ${isPhotoHovered ? 'opacity-100 scale-125' : 'opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-125'}`}
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.42) 0%, rgba(245, 176, 39, 0.26) 35%, rgba(217, 130, 24, 0.10) 60%, transparent 80%)',
+                  background: 'radial-gradient(circle at center, rgba(255, 215, 110, 0.60) 0%, rgba(245, 176, 39, 0.38) 35%, rgba(217, 130, 24, 0.15) 60%, transparent 80%)',
                 }}
               />
             </div>
@@ -364,7 +391,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               }}
             >
               <div
-                className="w-80 h-80 sm:w-96 sm:h-96 lg:w-[440px] lg:h-[440px] rounded-full transition-all duration-700 ease-out opacity-75 group-hover:opacity-100 group-hover:scale-120 shrink-0"
+                className={`w-80 h-80 sm:w-96 sm:h-96 lg:w-[440px] lg:h-[440px] rounded-full transition-all duration-700 ease-out shrink-0 ${isPhotoHovered ? 'opacity-100 scale-125' : 'opacity-75 group-hover:opacity-100 group-hover:scale-120'}`}
                 style={{
                   background: 'radial-gradient(circle at center, rgba(76, 111, 209, 0.35) 0%, rgba(76, 111, 209, 0.12) 50%, transparent 75%)',
                 }}
@@ -376,7 +403,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
 
             {/* Floating Holographic Pill 1: Full Stack Developer (Top Left - Raised Slightly) */}
             <div
-              className="absolute top-1.5 sm:top-2.5 left-1.5 xs:left-2 sm:left-4 lg:left-6 z-20 pointer-events-none"
+              className="absolute top-1.5 sm:top-2.5 left-1.5 xs:left-2 sm:left-4 lg:left-6 z-20 pointer-events-none transition-transform duration-300"
               style={{
                 transform: `translate3d(${tilt.rotateY * 2.2}px, ${tilt.rotateX * 2.2}px, 20px)`,
               }}
@@ -389,7 +416,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
 
             {/* Floating Holographic Pill 2: SMKN 26 Jakarta SIJA (Top Right - Raised Slightly to Clear Head) */}
             <div
-              className="absolute top-2 sm:top-4 right-1.5 xs:right-2 sm:right-4 lg:right-6 z-20 pointer-events-none"
+              className="absolute top-2 sm:top-4 right-1.5 xs:right-2 sm:right-4 lg:right-6 z-20 pointer-events-none transition-transform duration-300"
               style={{
                 transform: `translate3d(${-tilt.rotateY * 2.2}px, ${-tilt.rotateX * 2.2}px, 25px)`,
               }}
@@ -410,7 +437,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ lang }) => {
               <img
                 src="/assets/people/me-cutout.png"
                 alt="Rendy Fernando Tambunan - Cutout Profile"
-                className="w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] profile-photo-aura"
+                className={`w-full h-auto object-contain max-h-[330px] xs:max-h-[370px] sm:max-h-[440px] md:max-h-[475px] lg:max-h-[505px] profile-photo-aura ${isPhotoHovered ? 'profile-photo-aura-active' : ''}`}
                 loading="lazy"
               />
             </div>
